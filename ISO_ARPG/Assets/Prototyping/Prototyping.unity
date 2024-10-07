@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 1145469107}
   - component: {fileID: 1145469106}
   - component: {fileID: 1145469105}
+  - component: {fileID: 1145469110}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -372,6 +373,8 @@ MonoBehaviour:
   rotSpeed: 10
   damageCube: {fileID: 2037354150}
   attackDelay: 0.5
+  skills:
+  - {fileID: 1145469110}
 --- !u!136 &1145469106
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -461,6 +464,24 @@ Transform:
   - {fileID: 2037354154}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1145469110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145469104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f2885147498154ba37d8114f340e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skName: invalid
+  skDescription: invalid
+  cooldown: -1
+  activeTime: -1
+  ripplePrefab: {fileID: 7973247359512846486, guid: 3d8ceaa5adfbbc846be29eff1c3b9c7a, type: 3}
+  rippleOffset: {x: 0, y: -1, z: 0}
 --- !u!1 &1280883469
 GameObject:
   m_ObjectHideFlags: 0

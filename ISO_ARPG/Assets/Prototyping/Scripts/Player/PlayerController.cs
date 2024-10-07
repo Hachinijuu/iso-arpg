@@ -24,8 +24,18 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveTarget;
 
+    public List<Skill> skills = new List<Skill>();
+
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (skills.Count > 0)
+            {
+                skills[0].UseSkill();
+            }
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
