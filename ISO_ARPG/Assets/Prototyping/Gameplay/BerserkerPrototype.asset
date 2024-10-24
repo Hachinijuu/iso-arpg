@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922056ffdd71cbd43be9d7c8f9b0dc4b, type: 3}
+  m_Name: BerserkerPrototype
+  m_EditorClassIdentifier: 
+  className: PrototypeBerserker
+  classDescription: test text
+  classIcon: {fileID: 0}
+  moveSpeed: 10
+  rotationSpeed: 10
+  health: 100
+  mana: 100
+  strength: 100
+  agility: 100
+  wisdom: 100
+  abilities:
+  - {fileID: 11400000, guid: 1470d5fb98a638243b0c830aa80cb0a6, type: 2}
+  - {fileID: 11400000, guid: c94eb9f9234c6f844a12b9855305fa7b, type: 2}
+  identityAbility: {fileID: 11400000, guid: e7964f4c0b6ea2b4f8602f14ce24c4f4, type: 2}
+  identityCost: 0
