@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     bool attacking = false;
     bool canMove = true;
 
+    [SerializeField]
+    private bool moveHeld = false;
+
     private Vector3 moveTarget;
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
@@ -47,9 +50,25 @@ public class PlayerController : MonoBehaviour
     public void MapPlayerActions()
     {
         // map player controls to the actions
-        input.actions["MoveConfirmed"].performed += context =>  // right click
+        input.actions["MoveConfirmed"].canceled += context =>  // right click
         {
-            GetMoveTarget();
+            moveHeld = false;
+            if (canMove)
+                GetMoveTarget();
+        };
+        input.actions["MoveConfirmed"].started += context =>
+        {
+            moveHeld = true;
+            if (canMove)
+                GetMoveTarget();
+        };
+        input.actions["StopMove"].started += context =>
+        {
+            HandleMoveLock(true);
+        };
+        input.actions["StopMove"].canceled += context =>
+        {
+            HandleMoveLock(false);
         };
         input.actions["BasicAttack"].performed += context =>
         {
@@ -87,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     public void InitAbilities()
     {
-        foreach (Ability ab in stats.Class.Abilities)             // adding all of the abilities to the dictionary
+        foreach (Ability ab in stats.Class.Abilities)                   // adding all of the abilities to the dictionary
         {
             canUseAbility.Add(ab, true);
         }
@@ -96,6 +115,10 @@ public class PlayerController : MonoBehaviour
     #endregion
     private void Update()
     {
+        if (moveHeld && canMove)
+        {
+            GetMoveTarget();
+        }
         if (moveTarget != Vector3.zero) // handling movement
         {
             if (canMove)
@@ -152,6 +175,17 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("Not on the ground...");
             }
         }
+    }
+
+    void HandleMoveLock(bool locked)
+    {
+        if (locked)
+        {
+            canMove = false;
+            moveTarget = transform.position; // reset target to where player is standing;
+        }
+        else
+            canMove = true;
     }
     #endregion
     #region PLAYER ACTIONS
