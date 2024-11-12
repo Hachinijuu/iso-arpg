@@ -6,9 +6,11 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerStats))]
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Options")]
+    // move these options to game manager
     public bool useMana;
     public bool useCooldowns;
 
@@ -19,15 +21,15 @@ public class PlayerController : MonoBehaviour
     // input 
     PlayerInput input;
 
+    PlayerMovement movement;
+
+    // public variables
+
     public bool debugLogs = false;
 
+    // accessors
+    public bool isAttacking { get { return attacking; } }
     bool attacking = false;
-    bool canMove = true;
-
-    [SerializeField]
-    private bool moveHeld = false;
-
-    private Vector3 moveTarget;
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     #endregion
@@ -36,44 +38,16 @@ public class PlayerController : MonoBehaviour
     #region INITALIZATION
     private void Awake()
     {
-        if (input == null)
-            input = GetComponent<PlayerInput>();
+        // getting references to necessary components on this object
+        stats = GetComponent<PlayerStats>();
+        input = GetComponent<PlayerInput>();
+        movement = GetComponent<PlayerMovement>();
 
-        // input is handled here instead of reinit, because reinit can be used on class switching maybe?
-        if (input != null)
-            MapPlayerActions();
-        else
-            Debug.LogError("No player input to map actions to!");
-
+        MapPlayerActions();
         InitalizePlayer();
     }
-    public void MapPlayerActions()
+    void MapPlayerActions()
     {
-        // map player controls to the actions
-        input.actions["MoveConfirmed"].canceled += context =>  // right click
-        {
-            moveHeld = false;
-            if (canMove)
-                GetMoveTarget();
-        };
-        input.actions["MoveConfirmed"].started += context =>
-        {
-            moveHeld = true;
-            if (canMove)
-                GetMoveTarget();
-        };
-        input.actions["StopMove"].started += context =>
-        {
-            HandleMoveLock(true);
-        };
-        input.actions["StopMove"].canceled += context =>
-        {
-            HandleMoveLock(false);
-        };
-        input.actions["BasicAttack"].performed += context =>
-        {
-            Attack();
-        };
         input.actions["Ab1"].performed += context =>
         {
             UseAbility(0);
@@ -88,6 +62,13 @@ public class PlayerController : MonoBehaviour
         };
     }
 
+    void UnmapPlayerActions()
+    {
+        input.actions["Ab1"].performed -= context => { UseAbility(0); };
+        input.actions["Ab2"].performed -= context => { UseAbility(1); };
+        input.actions["IDab"].performed -= context => { UseIdentityAbility(); };
+    }
+
     public void InitalizePlayer()           // this can be used for reinit, so be cautious of what to place here.
     {
         if (stats != null)
@@ -96,7 +77,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Player has no stats to read from!");
 
         attacking = false;
-        canMove = true;
 
         if (stats.Class.Abilities.Count > 0)
             InitAbilities();
@@ -113,87 +93,8 @@ public class PlayerController : MonoBehaviour
         canUseAbility.Add(stats.Class.IdentityAbility, true);           // adding the identity ability to the dictionary
     }
     #endregion
-    private void Update()
-    {
-        if (moveHeld && canMove)
-        {
-            GetMoveTarget();
-        }
-        if (moveTarget != Vector3.zero) // handling movement
-        {
-            if (canMove)
-            {
-                UpdateRotation();
-                UpdatePosition();
-            }
-        }
-    }
 
-    #region MOVEMENT
-    private void UpdateRotation()
-    {
-        // get the direction
-        Vector3 dir = moveTarget - transform.position;
-        dir.Normalize();
-        Quaternion targetRot = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, stats.Speed * Time.deltaTime);
-    }
-    private void UpdatePosition()
-    {
-        moveTarget.y = transform.position.y;
-        transform.position = Vector3.MoveTowards(transform.position, moveTarget, stats.RotationSpeed * Time.deltaTime);
-
-        // if the destination is reached.
-        if (transform.position == moveTarget)
-        {
-            moveTarget = Vector3.zero;
-        }
-    }
-
-    // call this whenever the mouse is clicked
-    void GetMoveTarget()
-    {
-        RaycastHit hit;
-
-        // for the raycast call, experiment with the layer masking to only interact with the physics on the relevant layer
-        // need to check if mouse is on valid location (ground layer)
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
-        {
-            if (debugLogs)
-                Debug.Log("Hit: " + LayerMask.LayerToName(hit.transform.gameObject.layer));
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                moveTarget = hit.point;
-                // initialize a game object or particle using this move target to show the player where there click will move them (after clicked, little indicator to show)
-
-                if (debugLogs)
-                    Debug.Log("Set move point to: " + moveTarget);
-            }
-            else
-            {
-                if (debugLogs)
-                    Debug.Log("Not on the ground...");
-            }
-        }
-    }
-
-    void HandleMoveLock(bool locked)
-    {
-        if (locked)
-        {
-            canMove = false;
-            moveTarget = transform.position; // reset target to where player is standing;
-        }
-        else
-            canMove = true;
-    }
-    #endregion
     #region PLAYER ACTIONS
-    void Attack()
-    {
-        if (debugLogs)
-            Debug.Log("Attacking!");
-    }
     #region Ability System
     void UseAbility(int index)
     {
@@ -312,9 +213,9 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator HandleStop(Ability abilityUsed)
     {
-        canMove = false;
+        movement.CanMove = false;
         yield return new WaitForSeconds(abilityUsed.ActiveTime);
-        yield return canMove = true;
+        yield return movement.CanMove = true;
     }
     IEnumerator HandleCooldown(Ability abilityUsed)
     {
