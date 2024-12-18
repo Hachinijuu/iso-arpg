@@ -419,8 +419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useMana: 1
   useCooldowns: 1
-  stats: {fileID: 1145469110}
-  debugLogs: 0
 --- !u!136 &1145469106
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -523,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerClass: {fileID: 11400000, guid: ef11219a447d50e47b878fb1fd653ef5, type: 2}
-  mixedWith: {fileID: 0}
+  ID_Fusion: {fileID: 0}
 --- !u!114 &1145469111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552e2088c77abea409f4665359029e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveType: 1
 --- !u!195 &1145469113
 NavMeshAgent:
   m_ObjectHideFlags: 0

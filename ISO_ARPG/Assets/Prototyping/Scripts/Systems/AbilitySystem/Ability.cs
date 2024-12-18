@@ -50,6 +50,7 @@ public class Ability : ScriptableObject
 
     #region FUNCTIONALITY
     // call this function in the input handler, if the user can use their ability it will be used, otherwise - output can't
+
     public virtual void UseAbility(GameObject actor)        // the actor is WHO used the ability
     {
         AbilityAction(actor);           // tell the action who used the ability

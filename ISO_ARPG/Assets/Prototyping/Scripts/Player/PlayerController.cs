@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,20 +16,15 @@ public class PlayerController : MonoBehaviour
     public bool useCooldowns;
 
     #region VARIABLES
-    [SerializeField]
     PlayerStats stats;
-
-    // input 
     PlayerInput input;
-
     PlayerMovement movement;
 
     // public variables
-
-    public bool debugLogs = false;
-
     // accessors
     public bool isAttacking { get { return attacking; } }
+    
+    // private variables
     bool attacking = false;
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
@@ -78,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         attacking = false;
 
-        if (stats.Class.Abilities.Count > 0)
+        if (stats.Class.abilities.Count > 0)
             InitAbilities();
         else
             Debug.LogWarning("No abilities to read from");
@@ -86,32 +82,40 @@ public class PlayerController : MonoBehaviour
 
     public void InitAbilities()
     {
-        foreach (Ability ab in stats.Class.Abilities)                   // adding all of the abilities to the dictionary
+        foreach (Ability ab in stats.Class.abilities)                   // adding all of the abilities to the dictionary
         {
             canUseAbility.Add(ab, true);
         }
-        canUseAbility.Add(stats.Class.IdentityAbility, true);           // adding the identity ability to the dictionary
+        canUseAbility.Add(stats.Class.identityAbility, true);           // adding the identity ability to the dictionary
     }
     #endregion
 
+    private void Update()
+    {
+        
+    }
+
     #region PLAYER ACTIONS
+    // Handle targetting
+
+
     #region Ability System
     void UseAbility(int index)
     {
         if (stats != null)
         {
-            if (stats.Class.Abilities != null && stats.Class.Abilities.Count > 0)   // if the class has abilities
+            if (stats.Class.abilities != null && stats.Class.abilities.Count > 0)   // if the class has abilities
             {
-                if (index < stats.Class.Abilities.Count)                            // if the requested ability is within the list of abilities
+                if (index < stats.Class.abilities.Count)                            // if the requested ability is within the list of abilities
                 {
-                    Ability ability = stats.Class.Abilities[index];                 // get a reference to the ability
+                    Ability ability = stats.Class.abilities[index];                 // get a reference to the ability
 
                     // different settings -- organized in each option for easier logic breakdown
                     if (useMana && useCooldowns)
                     {
                         if (canUseAbility[ability])                 // ability is not on cooldown, first step of usage
                         {
-                            if ((stats.Mana - ability.Cost) < 0)    // not enough mana to use the ability
+                            if ((stats.Mana.Value - ability.Cost) < 0)    // not enough mana to use the ability
                             {
                                 Debug.Log("Not enough mana to use: " + ability.Name + ", it costs: " + ability.Cost);
                             }
@@ -120,7 +124,7 @@ public class PlayerController : MonoBehaviour
                                 ability.UseAbility(gameObject);             // use the ability
                                 Debug.Log("Used: " + ability.Name);
                                 canUseAbility[ability] = false;             // flag it as used
-                                stats.SetMana(stats.Mana - ability.Cost);   // consume mana
+                                stats.Mana.Value -= ability.Cost;   // consume mana
                                 if (ability.StopsMovement)
                                 {
                                     StartCoroutine(HandleStop(ability));
@@ -134,7 +138,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else if (useMana)
                     {
-                        if ((stats.Mana - ability.Cost) < 0)    // not enough mana to use the ability
+                        if ((stats.Mana.Value - ability.Cost) < 0)    // not enough mana to use the ability
                         {
                             Debug.Log("Not enough mana to use: " + ability.Name + ", it costs: " + ability.Cost);
                         }
@@ -142,7 +146,7 @@ public class PlayerController : MonoBehaviour
                         {
                             ability.UseAbility(gameObject);             // use the ability
                             Debug.Log("Used: " + ability.Name);
-                            stats.SetMana(stats.Mana - ability.Cost);   // consume mana
+                            stats.Mana.Value -= ability.Cost;   // consume mana
                             if (ability.StopsMovement)
                                 StartCoroutine(HandleStop(ability));
                         }
@@ -183,27 +187,24 @@ public class PlayerController : MonoBehaviour
     {
         if (stats != null)
         {
-            if (stats.Class.IdentityAbility != null)
+            if (stats.Class.identityAbility != null)
             {
                 // check if the player has enough mana/gauge built up
-                if (canUseAbility[stats.Class.IdentityAbility])    // if the ability can be used
+                if (canUseAbility[stats.Class.identityAbility])    // if the ability can be used
                 {
-                    if (stats.IdentityValue == stats.Class.IdentityCost)                    // check if there is enough identity gauge built up to use the skill
+                    if (stats.ID_Bar.Value == stats.ID_Bar.MaxValue)                    // check if there is enough identity gauge built up to use the skill
                     {
-                        stats.Class.IdentityAbility.UseAbility(gameObject);                 // use the ability
-                        Debug.Log("Used: " + stats.Class.IdentityAbility.Name);
+                        stats.Class.identityAbility.UseAbility(gameObject);                 // use the ability
+                        Debug.Log("Used: " + stats.Class.identityAbility.Name);
                         if (useCooldowns)
                         { 
-                            canUseAbility[stats.Class.IdentityAbility] = false;                 // set flag to indicate it has been used
-                            StartCoroutine(HandleCooldown(stats.Class.IdentityAbility));    // start the clock for the countdown
+                            canUseAbility[stats.Class.identityAbility] = false;                 // set flag to indicate it has been used
+                            StartCoroutine(HandleCooldown(stats.Class.identityAbility));    // start the clock for the countdown
                         }
                     }
                     else
                         Debug.Log("Identity gauge has not been built up enough");
                 }
-                else
-                    if (debugLogs)
-                    Debug.Log("Cannot use: " + stats.Class.IdentityAbility + ", it is flagged as used: " + canUseAbility[stats.Class.IdentityAbility]);
             }
             else
                 Debug.LogWarning("No identity ability exists");
@@ -213,9 +214,9 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator HandleStop(Ability abilityUsed)
     {
-        movement.CanMove = false;
+        movement.HandleStops(true);
         yield return new WaitForSeconds(abilityUsed.ActiveTime);
-        yield return movement.CanMove = true;
+        movement.HandleStops(false);
     }
     IEnumerator HandleCooldown(Ability abilityUsed)
     {
@@ -226,11 +227,11 @@ public class PlayerController : MonoBehaviour
     // DEBUG FUNCTIONS
     public void ResetAbilityUsage() // will reset used flags for all abilities
     {
-        foreach (Ability ab in stats.Class.Abilities)
+        foreach (Ability ab in stats.Class.abilities)
         {
             canUseAbility[ab] = true;
         }
-        canUseAbility[stats.Class.IdentityAbility] = true;
+        canUseAbility[stats.Class.identityAbility] = true;
     }
 
     #endregion
