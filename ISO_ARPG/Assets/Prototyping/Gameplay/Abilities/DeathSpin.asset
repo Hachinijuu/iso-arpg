@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d498717c179d115448fb3516b1d50936, type: 3}
-  m_Name: BerserkerAb2
+  m_Script: {fileID: 11500000, guid: 5b6e9a407ca27774caba05c3b7179136, type: 3}
+  m_Name: DeathSpin
   m_EditorClassIdentifier: 
   abilityIcon: {fileID: 0}
   abilityName: Death Spin
   abilityDescription: invalid
   cooldown: 5
-  activeTime: -1
-  cost: 10
+  activeTime: 0
+  cost: 5
   stopsMovement: 0
+  channelAbility: 1
+  interval: 1

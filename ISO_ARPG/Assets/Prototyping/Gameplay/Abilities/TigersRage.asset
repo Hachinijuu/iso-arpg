@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d498717c179d115448fb3516b1d50936, type: 3}
-  m_Name: BerserkerIdAb
+  m_Script: {fileID: 11500000, guid: 51315f0c5b692c34f9f594c4df7c8989, type: 3}
+  m_Name: TigersRage
   m_EditorClassIdentifier: 
   abilityIcon: {fileID: 0}
-  abilityName: Tiger's Swiftness
+  abilityName: Tiger's Rage
   abilityDescription: invalid
-  cooldown: -1
-  activeTime: -1
-  cost: -1
+  cooldown: 10
+  activeTime: 20
+  cost: 100
   stopsMovement: 0
+  channelAbility: 0
+  interval: -1

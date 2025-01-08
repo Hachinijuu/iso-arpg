@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d498717c179d115448fb3516b1d50936, type: 3}
-  m_Name: BerserkerAb1
+  m_Script: {fileID: 11500000, guid: dcaf9b9423565bf4597c7247bb0c9043, type: 3}
+  m_Name: RagingSwing
   m_EditorClassIdentifier: 
   abilityIcon: {fileID: 0}
   abilityName: Raging Swing
   abilityDescription: invalid
-  cooldown: 15
-  activeTime: 2
-  cost: 20
+  cooldown: 5
+  activeTime: 1
+  cost: 10
   stopsMovement: 1
+  channelAbility: 0
+  interval: -1
+  action: {fileID: 0}

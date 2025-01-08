@@ -10,6 +10,7 @@ using UnityEngine;
 // This class contains the upper limits of stats
 public static class StatLimits 
 {
+    public const int MOVE_MAX = 10;
     public const int STAT_MAX = 100000;
     public const int TRACKED_STAT_MAX = 10000;
 

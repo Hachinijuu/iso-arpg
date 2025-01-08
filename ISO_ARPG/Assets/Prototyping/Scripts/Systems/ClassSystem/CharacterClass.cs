@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,22 +33,22 @@ public class CharacterClass : ScriptableObject
 
     #region Stats
     [Header("Movement Stats")]
-    public float moveSpeed = -1f;
-    public float rotationSpeed = -1f;
+    [Range(0, StatLimits.MOVE_MAX)] public float moveSpeed = -1f;
+    [Range(0, StatLimits.MOVE_MAX)] public float rotationSpeed = -1f;
 
     [Header("Stats")]
-    public float health = -1f;
-    public float mana = -1f;
-    public float strength = -1f;
-    public float dexterity = -1f;
-    public float intelligence = -1f;
+    [Range(0, StatLimits.TRACKED_STAT_MAX)] public float health = -1f;
+    [Range(0, StatLimits.TRACKED_STAT_MAX)] public float mana = -1f;
+    [Range(0, StatLimits.STAT_MAX)] public float strength = -1f;
+    [Range(0, StatLimits.STAT_MAX)] public float dexterity = -1f;
+    [Range(0, StatLimits.STAT_MAX)] public float intelligence = -1f;
     #endregion
 
     #region Abilities
     [Header("Abilities")]
     public List<Ability> abilities = new List<Ability>();
     public Ability identityAbility = null;
-    public float identityCost;                  // what needs to be built up in order to use the identity skill
+    //public float identityCost;                  // what needs to be built up in order to use the identity skill
     #endregion
     #endregion
 }

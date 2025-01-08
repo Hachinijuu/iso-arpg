@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor.Playables;
 using UnityEngine;
 
 public class DebugMenu : MonoBehaviour
@@ -23,9 +20,9 @@ public class DebugMenu : MonoBehaviour
         stats.Mana.SetValue(stats.Mana.MaxValue);
     }
 
-    void ListenTimer(Ability used, GameObject go)
+    void ListenTimer(AbilityEventArgs e)
     {
-        StartCoroutine(StatCountdown(used));
+        StartCoroutine(StatCountdown(e.Ability));
     }
 
     IEnumerator StatCountdown(Ability onCd)

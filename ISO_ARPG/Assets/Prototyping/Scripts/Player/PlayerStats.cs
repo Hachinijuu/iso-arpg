@@ -65,7 +65,7 @@ public class PlayerStats : MonoBehaviour
     {
         health = new TrackedStat(TrackedStatTypes.HEALTH, playerClass.health, playerClass.health);
         mana = new TrackedStat(TrackedStatTypes.MANA, playerClass.mana, playerClass.mana);
-        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityCost);
+        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
     }
 
     public void LoadSubstats()

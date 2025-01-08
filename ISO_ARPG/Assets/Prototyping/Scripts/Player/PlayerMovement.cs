@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Read controls via external game manager script -- cache locally?
+    enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
     enum MoveInput { CLICK, DIRECTIONAL }
     [SerializeField] MoveInput moveType;
-    // Click to move is mouse click to move
-    // Directional is WASD / Joystick
+    // CLICK is mouse click to move / hold to move
+    // DIRECTIONAL is WASD / Joystick
 
     // Classes
     NavMeshAgent agent;
@@ -22,8 +20,11 @@ public class PlayerMovement : MonoBehaviour
 
     // Variables
     Vector3 moveTarget;
+    Vector3 lookDirection;
     private bool canMove;
     private bool moveHeld;
+
+    [SerializeField] int rotationSpeed;
 
     private void Awake()
     {
@@ -83,15 +84,14 @@ public class PlayerMovement : MonoBehaviour
 
         switch (moveType)
         {
-            case MoveInput.CLICK:
-                HandleClickToMove();
-                break;
             case MoveInput.DIRECTIONAL:
                 HandleDirectionalMove();
                 break;
+            case MoveInput.CLICK:
+            default:
+                HandleClickToMove();
+                break;
         }
-
-
     }
 
     void HandleClickToMove()
@@ -114,6 +114,25 @@ public class PlayerMovement : MonoBehaviour
         // create a projection point based on the direction
         moveTarget = new Vector3(currPoint.x + h, currPoint.y, currPoint.z + v);
     }
+
+    void HandleRotation()
+    {
+        // For mouse keyboard controls, drive rotation by mouse
+
+        // Get look direction relative to the mouse position in the world
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        {
+            Vector3 mousePoint = hit.point;
+
+            lookDirection = mousePoint - transform.position;
+            lookDirection.Normalize(); // Normalize the look direction
+        }
+
+        // Apply the look
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
     public void HandleStops(bool stop)
     {
         agent.isStopped = stop;             // stop the agent in place
@@ -128,15 +147,18 @@ public class PlayerMovement : MonoBehaviour
             GetMoveTarget();
         }
         else if (moveType == MoveInput.CLICK)
-        { 
+        {
             if (moveHeld)                   // If the move key is pressed
             {
                 GetMoveTarget();            // Get where to move
-            }  
+            }
         }
         if (canMove)                     // If the player can move
         {
-            agent.SetDestination(moveTarget);       // Move to the target
+            agent.destination = moveTarget;       // Move to the target
         }
+
+        // Regardless of movement handle the character's rotation
+        HandleRotation();
     }
 }
