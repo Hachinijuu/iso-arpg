@@ -1,27 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Ability Event Arguments Class
+// Allows additional arguments to be created as necessary
 public class AbilityEventArgs
 {
     public Ability Ability { get; private set; }
-    //public AbilityAction Action { get; private set; }
     public GameObject Actor { get; private set; }
 
     public AbilityEventArgs()
     {
         Ability = null;
-        //Action = null;
         Actor = null;
     }
-    public AbilityEventArgs(Ability ability, /*AbilityAction action, */GameObject actor)
+    public AbilityEventArgs(Ability ability, GameObject actor)
     {
         Ability = ability;
-        //Action = action;
         Actor = actor;
     }
 }
-
-//[CreateAssetMenu(fileName = "Ability", menuName = "sykcorSystems/Abilities", order = 2)]
 public abstract class Ability : ScriptableObject
 {
     #region VARIABLES
@@ -60,23 +57,23 @@ public abstract class Ability : ScriptableObject
     [SerializeField] protected bool stopsMovement = false;  // if the ability stops player movement
     [SerializeField] protected bool channelAbility = false; // if the ability can be held (channeled)
     [SerializeField] protected float interval = -1f;        // the interval of when to consume (channeled)
-
-    //[Header("Action")]
-    //[SerializeField] protected AbilityAction action;
     #endregion
     #endregion
 
     #region FUNCTIONALITY
-    // call this function in the input handler, if the user can use their ability it will be used, otherwise - output can't
+    protected abstract void Fire(Ability ab, GameObject actor); // This function must be overriden by base classes, it should contain the actions / effects of the ability.
 
-    public abstract void Fire(Ability ab, GameObject actor);
-    public virtual void UseAbility(GameObject actor)        // the actor is WHO used the ability
+    // call this function in the input handler, if the user can use their ability it will be used, otherwise - output can't
+    public virtual void UseAbility(GameObject actor)            // the actor is WHO used the ability
     {
-        Fire(this, actor);        // Use the ability assigned to this info holder.
-        FireAbilityUsed(new AbilityEventArgs(this,/* action, */actor));     // fire off the event with THIS ability, and the actor, allowing any listens to use this information
-        //if (action != null)
-        //{ 
-        //}
+        Fire(this, actor);
+        FireAbilityUsed(new AbilityEventArgs(this, actor));     // fire off the event with THIS ability, and the actor, allowing any listens to use this information
+    }
+
+    // This function does not need to be overriden, but if/when - it can be used for ability cleanup or decaying effects.
+    public virtual void EndAbility(GameObject actor)
+    { 
+        FireAbilityEnded(new AbilityEventArgs(this, actor));
     }
     #endregion
 
@@ -84,7 +81,12 @@ public abstract class Ability : ScriptableObject
     public delegate void AbilityUsed(AbilityEventArgs args);
     public event AbilityUsed onAbilityUsed;
 
-    void FireAbilityUsed(AbilityEventArgs e) { if (onAbilityUsed != null) onAbilityUsed(e); }
+    public delegate void AbilityEnded(AbilityEventArgs args);
+    public event AbilityEnded onAbilityEnded;
+
+    private void FireAbilityUsed(AbilityEventArgs e) { if (onAbilityUsed != null) onAbilityUsed(e); }
+    private void FireAbilityEnded(AbilityEventArgs e) { if (onAbilityEnded != null) onAbilityEnded(e); }
+
 
     #endregion
 }

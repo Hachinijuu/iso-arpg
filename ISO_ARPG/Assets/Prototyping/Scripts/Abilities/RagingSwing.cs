@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RagingSwing", menuName = "sykcorSystems/Abilities/Berserker/RagingSwing", order = 4)]
 public class RagingSwing : Ability
 {
-    public override void Fire(Ability ab, GameObject actor)
+    protected override void Fire(Ability ab, GameObject actor)
     {
         //Debug.Log("Raging Swing");
         //throw new System.NotImplementedException();

@@ -11,8 +11,14 @@ public class DebugMenu : MonoBehaviour
 
     public void Start()
     {
-        stats.Class.abilities[0].onAbilityUsed += ListenTimer;
-        stats.Class.abilities[1].onAbilityUsed += ListenTimer;
+        // Listen for onAbilityEnded for the countdowns, because for channeled abilities, the ability will not go on cooldown until channeling has been completed
+        // This may be changed later on, but events can be called accordingly.
+        // NOTE: For UI displays, listening for abilityUsed / abilityEnded might cause issues with timer displays
+        // Players can continously press the buttons even though the timer has not yet completed, causing the timer to reset its display
+        // This can be remedied by the AbilityHandler sending information to the UI of it's internal cooldown count. (most likely solution)
+
+        stats.Class.abilities[0].onAbilityEnded += ListenTimer;
+        stats.Class.abilities[1].onAbilityEnded += ListenTimer;
     }
 
     public void ResetMana()

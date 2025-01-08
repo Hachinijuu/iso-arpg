@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TigersRage", menuName = "sykcorSystems/Abilities/Berserker/TigersRage", order = 4)]
 public class TigersRage : Ability
 {
-    public override void Fire(Ability ab, GameObject actor)
+    protected override void Fire(Ability ab, GameObject actor)
     {
         //Debug.Log("Tigers Rage");
         //throw new System.NotImplementedException();

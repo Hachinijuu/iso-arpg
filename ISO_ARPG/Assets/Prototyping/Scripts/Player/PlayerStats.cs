@@ -50,11 +50,11 @@ public class PlayerStats : MonoBehaviour
 
     public void LoadStats()
     {
-        LoadMainStats();
+        LoadDefaultMainStats();
         LoadTrackedStats();
         LoadSubstats();
     }
-    public void LoadMainStats()
+    public void LoadDefaultMainStats()
     { 
         strength = new MainStat(MainStatTypes.STRENGTH, playerClass.strength);
         dexterity = new MainStat(MainStatTypes.DEXTERITY, playerClass.dexterity);
