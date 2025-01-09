@@ -14,20 +14,49 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     void MapPlayerActions()
     {
-        input.actions["Ab1"].started += context => { AbilityBegan(0);};
-        input.actions["Ab1"].canceled += context => { AbilityEnded(0);};
-        input.actions["Ab2"].started += context => { AbilityBegan(1);};
-        input.actions["Ab2"].canceled += context => { AbilityEnded(1);};
-        input.actions["IDab"].performed += context => { UseIdentityAbility(); };
+        //input.actions["Ab1"].started += context => { AbilityBegan(0);};
+        //input.actions["Ab1"].canceled += context => { AbilityEnded(0);};
+        //input.actions["Ab2"].started += context => { AbilityBegan(1);};
+        //input.actions["Ab2"].canceled += context => { AbilityEnded(1);};
+        //input.actions["IDab"].performed += context => { UseIdentityAbility(); };
+
+        // Future: when mapping actions, account for which ability is in the respective HUD slot (NOT the class loading)
+        // i.e HUD can load character information to display and record, input will be relative to the display for proper correspondence?
+
+        // For now...
+
+            // For single use abilities, can use .performed event
+            // For channel abilities, need to listen to both .started and .canceled
+        for (int i = 1; i <= stats.Class.abilities.Count; i++)
+        {
+            string keyName = "Ab" + i;
+            Ability ab = stats.Class.abilities[i-1];
+            if (ab is ChannelAbility)
+            {
+                input.actions[keyName].started += context => {AbilityBegan(ab);};
+                input.actions[keyName].canceled += context => {AbilityEnded(ab);};
+            }
+            else
+                input.actions[keyName].performed += context => {AbilityBegan(ab);};
+        }
+        input.actions["IDab"].performed += context => {UseIdentityAbility(stats.Class.identityAbility);};
     }
 
     void UnmapPlayerActions()
     {
-        input.actions["Ab1"].started -= context => { AbilityBegan(0); };
-        input.actions["Ab1"].canceled -= context => { AbilityEnded(0);};
-        input.actions["Ab2"].started -= context => { AbilityBegan(1); };
-        input.actions["Ab2"].canceled -= context => { AbilityEnded(1); };
-        input.actions["IDab"].performed -= context => { UseIdentityAbility(); };
+        for (int i = 1; i <= stats.Class.abilities.Count; i++)
+        {
+            string keyName = "Ab" + i;
+            Ability ab = stats.Class.abilities[i-1];
+            if (ab is ChannelAbility)
+            {
+                input.actions[keyName].started -= context => {AbilityBegan(ab);};
+                input.actions[keyName].canceled -= context => {AbilityEnded(ab);};
+            }
+            else
+                input.actions[keyName].performed -= context => {AbilityBegan(ab);};
+        }
+        input.actions["IDab"].performed -= context => {UseIdentityAbility(stats.Class.identityAbility);};
     }
 
 
@@ -36,7 +65,6 @@ public class PlayerAbilityHandler : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         input = GetComponent<PlayerInput>();
 
-        MapPlayerActions();
 
         if (stats != null)
         {
@@ -46,8 +74,12 @@ public class PlayerAbilityHandler : MonoBehaviour
             }
             else
                 Debug.LogWarning("[AbilityHandler]: No abilities to read from");
-
         }
+        // ORDER MATTERS
+        // Abilities must be initialized before mapping the inputs
+        // This is because the functions that are mapped, respond to the types of abilities that are loaded.
+
+        MapPlayerActions();
     }
 
     private void OnDestroy()
@@ -63,114 +95,86 @@ public class PlayerAbilityHandler : MonoBehaviour
         canUseAbility.Add(stats.Class.identityAbility, true);
     }
 
-    void AbilityBegan(int index)
+    void AbilityBegan(Ability ab)
     {
-        if (stats != null)                                                          // If player stats exists
+        if (ab != null)
         {
-            if (stats.Class.abilities != null && stats.Class.abilities.Count > 0)   // If the class has abilities assigned to it
+            // Check if the ability is not on cooldown
+            if (canUseAbility[ab])
             {
-                if (index < stats.Class.abilities.Count)                            // If the requested index is within the list
+                // Check if the player has enough mana to use the ability
+                if ((stats.Mana.Value - ab.Cost) < 0) // If consumed mana results in less, not enough mana
                 {
-                    Ability ab = stats.Class.abilities[index];  // Get a reference to the ability at the provided index
-
-                    // Check if the ability is not on cooldown
-                    if (canUseAbility[ab])
-                    {
-                        // Check if the player has enough mana to use the ability
-                        if ((stats.Mana.Value - ab.Cost) < 0) // If consumed mana resultes in less, not enough mana
-                        {
-                            Debug.Log("[AbilityHandler]: Not enough mana to use " + ab.Name + " (" + stats.Mana.Value + " / " + ab.Cost + ")");
-                        }
-                        else    // Player has enough mana to use the ability
-                        {
-                            if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);
-                            held = true;                        // Set value to keypressed (held)
-                            ab.UseAbility(gameObject);          // Use the ability
-                            stats.Mana.Value -= ab.Cost;        // Consume the cost of mana
-                            //if (ab.StopsMovement) // need to have a reference to the player controller to do agent stopping
-                            //    
-                            if (!ab.Channelable)                // If the ability is not channelable
-                                AbilityEnded(index);            // End the ability
-                            else                                // Ability is channelable (can hold)
-                                StartCoroutine(HandleHeld(index, ab));  // Account for the channeling
-                        }
-                    }
-                    else
-                        Debug.Log("[AbilityHandler]: Cannot use: " + ab.Name);
+                    Debug.Log("[AbilityHandler]: Not enough mana to use " + ab.Name + " (" + stats.Mana.Value + " / " + ab.Cost + ")");
+                    return; // Early return
                 }
-                else
-                    Debug.LogWarning("[AbilityHandler]: Requested ability index: " + index + " is out of range");
+                // Player has enough mana to use the ability
+
+                held = true;                    // Set value to keypressed (held)
+                stats.Mana.Value -= ab.Cost;    // Consume the cost of mana
+                ab.UseAbility(gameObject);      // Use the ability
+
+                // Check what type of ability it is (Channel vs Single)
+                if (ab is ChannelAbility channelAb)   // If it is a Channel-able ability
+                {
+                    StartCoroutine(HandleHeld(channelAb));  // Handle the consumption of the hold
+                }
+                else // Single press ability
+                {
+                    AbilityEnded(ab);   // End the ability early
+                }
+                if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);
             }
             else
-                Debug.LogWarning("[AbilityHandler]: Class has no abilities");
+                Debug.Log("[AbilityHandler]: Cannot use: " + ab.Name);
         }
-        else
-            Debug.LogWarning("[AbilityHandler]: Player has no stats to read abilities from!");
     }
 
-    void AbilityEnded(int index)
+    void AbilityEnded(Ability ab)
     {
-        held = false;
-        if (stats != null)                                                          // If player stats exists
+        if (ab != null)
         {
-            if (stats.Class.abilities != null && stats.Class.abilities.Count > 0)   // If the class has abilities assigned to it
-            {
-                if (index < stats.Class.abilities.Count)                            // If the requested index is within the list
-                {
-                    Ability ab = stats.Class.abilities[index];  // Get a reference to the ability at the provided index
-                    ab.EndAbility(gameObject);                  // Tell the ability to call it's end event
-                    canUseAbility[ab] = false;                  // Flag usage
-                    StartCoroutine(HandleCooldown(ab));         // Start handling the cooldown for this ability
-                    if (showDebug) Debug.Log("[AbilityHandler]: " + ab.Name + " ended");
-                }
-
-                // WARNINGS: These warnings will output if the character is setup incomplete / incorrectly
-                else
-                    Debug.LogWarning("[AbilityHandler]: Requested ability index: " + index + " is out of range");
-            }
-            else
-                Debug.LogWarning("[AbilityHandler]: Class has no abilities");
+            held = false;                       // Key is not held anymore
+            ab.EndAbility(gameObject);          // Call the abilities' end
+            canUseAbility[ab] = false;          // Flag ability usage
+            StopCoroutine("HandleHeld");        // Stop the handle held coroutine
+            StartCoroutine(HandleCooldown(ab)); // Start the cooldown for the ability
+            if (showDebug) Debug.Log("[AbilityHandler]: " + ab.Name + " ended");    // Output ability ended
         }
-        else
-            Debug.LogWarning("[AbilityHandler]: Player has no stats to read abilities from!");
     }
 
-    void UseIdentityAbility()
+    void UseIdentityAbility(Ability ab)
     {
-        if (stats != null)
+        if (ab != null)
         {
-            if (stats.Class.identityAbility != null)
+            if (canUseAbility[ab])
             {
-                Ability ab = stats.Class.identityAbility;
-                if (canUseAbility[ab])  // Check if the ability is not on cooldown
+                if (stats.ID_Bar.Value == stats.ID_Bar.MaxValue)                // Check if there is enough of the gauge built up
                 {
-                    if (stats.ID_Bar.Value == stats.ID_Bar.MaxValue)            // Check if there is enough of the gauge built up
-                    {
-                        if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);
-                        ab.UseAbility(gameObject);                              // Use the ability
-                        canUseAbility[ab] = false;                              // Flag usage
-                        stats.ID_Bar.Value -= ab.Cost;                          // Consume gauge
-                        HandleCooldown(ab);                                     // Start handling the cooldown for this ability
-                    }
+                    ab.UseAbility(gameObject);          // Use the ability
+                    canUseAbility[ab] = false;          // Flag usage
+                    stats.ID_Bar.Value -= ab.Cost;      // Consume gauge
+                    HandleCooldown(ab);                 // Start handling the cooldown for this ability  
+                    if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used
                 }
-
+                
             }
         }
     }
 
-    IEnumerator HandleHeld(int index, Ability used)
+    IEnumerator HandleHeld(ChannelAbility used)
     {
         // Channeled abilities will consume cost every n seconds
         // This will be defined by the abilities interval
         do
         {
-            if (showDebug) Debug.Log("[AbilityHandler] Using " + used.Name);
             yield return new WaitForSeconds(used.Interval);
             // Once the time has passed
+            if (showDebug) Debug.Log("[AbilityHandler] Using " + used.Name);
             if ((stats.Mana.Value - used.Cost) < 0) // If the consumed mana would result in no remaining mana
             {
                 if (showDebug) Debug.Log("[AbilityHandler]: No more mana to use: " + used.Name);
-                AbilityEnded(index);                    // End the ability
+                AbilityEnded(used);                    // End the ability
             }
             else    // Remaining mana, consume it.
             {
@@ -181,6 +185,9 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     IEnumerator HandleCooldown(Ability used)
     {
+        // With this wrapper functionality, PlayerAbilityHandler do calculations here (if CDR) and have updated cooldown values.
+        // If theres a reference to the HUD controller, then the HUD's cooldown can also be called here for 1:1 timer
+
         yield return new WaitForSeconds(used.Cooldown); // Wait for the cooldown time
         canUseAbility[used] = true;                     // Allow usage again (time has passed)
     }

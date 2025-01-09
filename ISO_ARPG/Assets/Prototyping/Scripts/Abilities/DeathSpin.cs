@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DeathSpin", menuName = "sykcorSystems/Abilities/Berserker/DeathSpin", order = 4)]
-public class DeathSpin : Ability
+public class DeathSpin : ChannelAbility
 {
     protected override void Fire(Ability ab, GameObject actor)
     {
