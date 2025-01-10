@@ -25,21 +25,21 @@ public class PlayerAbilityHandler : MonoBehaviour
 
         // For now...
 
-            // For single use abilities, can use .performed event
-            // For channel abilities, need to listen to both .started and .canceled
+        // For single use abilities, can use .performed event
+        // For channel abilities, need to listen to both .started and .canceled
         for (int i = 1; i <= stats.Class.abilities.Count; i++)
         {
             string keyName = "Ab" + i;
-            Ability ab = stats.Class.abilities[i-1];
+            Ability ab = stats.Class.abilities[i - 1];
             if (ab is ChannelAbility)
             {
-                input.actions[keyName].started += context => {AbilityBegan(ab);};
-                input.actions[keyName].canceled += context => {AbilityEnded(ab);};
+                input.actions[keyName].started += context => { AbilityBegan(ab); };
+                input.actions[keyName].canceled += context => { AbilityEnded(ab); };
             }
             else
-                input.actions[keyName].performed += context => {AbilityBegan(ab);};
+                input.actions[keyName].performed += context => { AbilityBegan(ab); };
         }
-        input.actions["IDab"].performed += context => {UseIdentityAbility(stats.Class.identityAbility);};
+        input.actions["IDab"].performed += context => { UseIdentityAbility(stats.Class.identityAbility); };
     }
 
     void UnmapPlayerActions()
@@ -47,16 +47,16 @@ public class PlayerAbilityHandler : MonoBehaviour
         for (int i = 1; i <= stats.Class.abilities.Count; i++)
         {
             string keyName = "Ab" + i;
-            Ability ab = stats.Class.abilities[i-1];
+            Ability ab = stats.Class.abilities[i - 1];
             if (ab is ChannelAbility)
             {
-                input.actions[keyName].started -= context => {AbilityBegan(ab);};
-                input.actions[keyName].canceled -= context => {AbilityEnded(ab);};
+                input.actions[keyName].started -= context => { AbilityBegan(ab); };
+                input.actions[keyName].canceled -= context => { AbilityEnded(ab); };
             }
             else
-                input.actions[keyName].performed -= context => {AbilityBegan(ab);};
+                input.actions[keyName].performed -= context => { AbilityBegan(ab); };
         }
-        input.actions["IDab"].performed -= context => {UseIdentityAbility(stats.Class.identityAbility);};
+        input.actions["IDab"].performed -= context => { UseIdentityAbility(stats.Class.identityAbility); };
     }
 
 
@@ -114,6 +114,9 @@ public class PlayerAbilityHandler : MonoBehaviour
                 stats.Mana.Value -= ab.Cost;    // Consume the cost of mana
                 ab.UseAbility(gameObject);      // Use the ability
 
+                // Set the ability to used
+                canUseAbility[ab] = false;
+
                 // Check what type of ability it is (Channel vs Single)
                 if (ab is ChannelAbility channelAb)   // If it is a Channel-able ability
                 {
@@ -130,15 +133,26 @@ public class PlayerAbilityHandler : MonoBehaviour
         }
     }
 
+
+    // ISSUE TO RESOLVE
+    // While on cooldown, ability ended can be called again, causing the cooldown to restart.
+    // Don't want to run cooldown unless ability was actually used.
+
+    // Have it bound to performed actions -> can dictate if/when an actions is performed (complete)
+    // For hold-bound events, the performed would be whenever the conditions is met...
+    // But on release is not performed...
+
     void AbilityEnded(Ability ab)
     {
         if (ab != null)
         {
             held = false;                       // Key is not held anymore
             ab.EndAbility(gameObject);          // Call the abilities' end
-            canUseAbility[ab] = false;          // Flag ability usage
             StopCoroutine("HandleHeld");        // Stop the handle held coroutine
-            StartCoroutine(HandleCooldown(ab)); // Start the cooldown for the ability
+            // ONLY start the cooldown if the ability CAN BE USED
+
+            if (!canUseAbility[ab])
+                StartCoroutine(HandleCooldown(ab)); // Start the cooldown for the ability
             if (showDebug) Debug.Log("[AbilityHandler]: " + ab.Name + " ended");    // Output ability ended
         }
     }
@@ -157,10 +171,12 @@ public class PlayerAbilityHandler : MonoBehaviour
                     HandleCooldown(ab);                 // Start handling the cooldown for this ability  
                     if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used
                 }
-                
+
             }
         }
     }
+
+    // This function exists because value assignments ContextCallbacks is not very reliable (Only exists within the frame of the callback)
 
     IEnumerator HandleHeld(ChannelAbility used)
     {
@@ -192,3 +208,12 @@ public class PlayerAbilityHandler : MonoBehaviour
         canUseAbility[used] = true;                     // Allow usage again (time has passed)
     }
 }
+
+
+// Ability System can be refactored to make use of bool events...
+// IsPressed
+// WasPressedThisFrame
+// WasReleasedThisFrame
+
+// BUT - since context callbacks are already setup, that is probably the way to go about it.
+// Need to handle active event, NOT call CD reset if the cooldown is already ticking...

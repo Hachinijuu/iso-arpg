@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
     // Read controls via external game manager script -- cache locally?
@@ -14,23 +15,31 @@ public class PlayerMovement : MonoBehaviour
     // Classes
     NavMeshAgent agent;
     PlayerInput input;
+    Animator anim;
 
     // Public Accessors
     public bool CanMove { get { return canMove; } set { canMove = value; } }
+    public bool CanRotate { get { return canRotate; } set { canRotate = value; } }
+    public float Speed { get { return Speed; } set { speed = value; } }
 
+    public bool UseAnimations { get { return useAnimations; } set { useAnimations = value; } }
     // Variables
     Vector3 moveTarget;
     Vector3 lookDirection;
-    private bool canMove;
-    private bool moveHeld;
+    private bool canMove = true;
+    private bool canRotate = true;
+    private bool moveHeld = false;
+    private bool useAnimations = true;
 
-    [SerializeField] int rotationSpeed;
+    [SerializeField] int rotationSpeed = 20;
+    private float speed;
 
     private void Awake()
     {
         // get the references on THIS object
         agent = GetComponent<NavMeshAgent>();
         input = GetComponent<PlayerInput>();
+        anim = GetComponent<Animator>();
 
         // map inputs
         MapMovementActions();
@@ -156,9 +165,40 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)                     // If the player can move
         {
             agent.destination = moveTarget;       // Move to the target
+            speed = agent.velocity.normalized.magnitude;
         }
 
         // Regardless of movement handle the character's rotation
-        HandleRotation();
+        if (canRotate)
+            HandleRotation();
+
+        // Animation handling
+
+        //Vector3 dir = moveTarget - transform.position;
+        //dir.Normalize(); // Normalize the look direction
+        //Debug.Log(dir.magnitude);
+
+        //Debug.Log(agent.velocity.normalized.magnitude);
+
+        if (UseAnimations)
+        {
+            anim.SetFloat("Speed", speed);
+        }
+
+        //if (useAnimations)
+        //{
+        //    float curSpeed = agent.velocity.normalized.magnitude;
+        //    if (curSpeed > 0.75)
+        //    {
+        //        // Clamp the value dead on
+        //        curSpeed = 1;
+        //    }
+        //    //Debug.Log(curSpeed);
+        //    anim.SetFloat("Speed", curSpeed);
+        //
+        //}
+
+        // Need to get the magnitude in the movement direction
+
     }
 }
