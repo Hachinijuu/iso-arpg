@@ -1,18 +1,115 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.UI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : AdvancedFSM
 {
-    // Start is called before the first frame update
-    void Start()
+    public const int MELEEATTACK_DIST = 35;
+    public const int RANGEATTACK_DIST = 55;
+    public const int CHASE_DIST = 80;
+
+    public bool debugDraw;
+    public Text StateText;
+    private string text;
+
+    //Set/Get/Decrement/Add to Health functions
+    public int health;
+    public int GetHealth() { return health; }
+    public void SetHealth(int inHealth) { health = inHealth; }
+    public void DecHealth(int amount) { health = Mathf.Max(0, health - amount); }
+    public void AddHealth(int amount) { health = Mathf.Min(100, health + amount); }
+
+    [HideInInspector]
+    public UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+    // public SlotManager playerSlotManager;
+
+    private string GetStateString()
     {
+        string state = "NONE";
+        if (CurrentState.ID == FSMStateID.Dead)
+        {
+            state = "DEAD";
+        }
         
+        else if (CurrentState.ID == FSMStateID.Chase)
+        {
+            state = "CHASING";
+        }
+
+        else if (CurrentState.ID == FSMStateID.RangedAttack)            
+        {
+            state = "RANGEDATTACK";
+        }
+        else if (CurrentState.ID == FSMStateID.MeleeAttack)
+        {
+            state = "MELEEATTACK";
+        }
+        
+        else if (CurrentState.ID == FSMStateID.Regenerating)
+        {
+            state = "REGENERATING";
+        }
+
+        state = state + " H " + health;
+
+        return state;
+    }
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Initialize()
     {
-        
+        GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
+        playerTransform = objPlayer.transform;
+        health = 50;        
+        text = StateText.text;
     }
+
+
+    protected override void FSMUpdate()
+    {
+        if (CurrentState == null) return;
+        arrowElapsedTime += Time.deltaTime;
+        CurrentState.Reason(playerTransform, transform);
+        CurrentState.Act(playerTransform, transform);
+        StateText.text = text + GetStateString();
+        if (debugDraw)
+        {
+            UsefullFunctions.DebugRay(transform.position, transform.forward * 5.0f, Color.red);
+        }
+    }
+
+    // TODO: Fill in the States
+    //Create States
+
+    // Dead State
+
+
+    // Chase State
+
+
+
+    // Melee Attack State
+
+    // Ranged Attack State
+
+    // Regenerate State
+
+  // ADD all states here
+  // AddFSMState(chase);        // Starting state
+  // AddFSMState(rangedAttack);
+  // AddFSMState(meleeAttack);   
+  // AddFSMState(regen);
+  // AddFSMState(dead);
+
+
+
+
 }
