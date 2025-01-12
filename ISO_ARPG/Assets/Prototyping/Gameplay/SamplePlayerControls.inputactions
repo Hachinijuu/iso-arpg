@@ -15,15 +15,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BasicAttack",
-                    "type": "Button",
-                    "id": "52dc9e4f-3edf-4c20-a7d8-b4bd7dadf09c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Ab1",
                     "type": "Button",
                     "id": "75488701-4f01-4ae3-9c06-4f1ca6626fab",
@@ -67,13 +58,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TargetLocked",
+                    "type": "Button",
+                    "id": "1f13b8ca-af4b-4b65-a389-3ee5fb54aa6f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "5eec648e-d0be-4b0b-9b8f-5fc3097817d5",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -94,30 +94,8 @@
                 },
                 {
                     "name": "",
-                    "id": "a9171e07-c6b0-4c6e-863d-2b99848b9046",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BasicAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e4f79867-a2f9-481d-9e5a-8a027870b232",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BasicAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d51827c8-3f62-4dd1-817a-5fcb6e9d9e4b",
-                    "path": "<Keyboard>/1",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -139,7 +117,7 @@
                 {
                     "name": "",
                     "id": "54c6d348-8d10-4316-98f3-7bb74463307f",
-                    "path": "<Keyboard>/2",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -256,6 +234,17 @@
                     "action": "DirectionalMove",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "38a82dfb-cd83-41e3-ad6a-3941f1c11986",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TargetLocked",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

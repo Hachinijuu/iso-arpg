@@ -1,10 +1,15 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DebugMenu : MonoBehaviour
 {
     public PlayerStats stats;
     public PlayerController controller;
+
+    //private static string targetTextStatic = "Target: ";
+    private string hoverText;
+    private string targetText;
 
     float ab1Timer;
     float ab2Timer;
@@ -57,6 +62,16 @@ public class DebugMenu : MonoBehaviour
             }
         }
     }
+
+    public void UpdateTargetText(string value)
+    {
+        targetText = "Target: " + value;
+    }
+
+    public void UpdateHoverText(string value)
+    {
+        hoverText = "Hovering: " + value;
+    }
     private void OnGUI()
     {
         // displaying the user stats
@@ -76,5 +91,8 @@ public class DebugMenu : MonoBehaviour
 
         GUI.Label(new Rect(20, 300, 200, 20), "Ab1 CD: " + Mathf.RoundToInt(ab1Timer));
         GUI.Label(new Rect(20, 320, 200, 20), "Ab2 CD: " + Mathf.RoundToInt(ab2Timer));
+
+        GUI.Label(new Rect(20, 340, 200, 20), hoverText);
+        GUI.Label(new Rect(20, 360, 200, 20), targetText);
     }
 }
