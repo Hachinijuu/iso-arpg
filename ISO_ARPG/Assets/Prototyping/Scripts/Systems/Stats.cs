@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 // This stat class is to organize data in a more effective manner
 // With customized types, comparing and referencing stat combinations should be easier
 // i.e Gear with x stats gives bonus
 
 #region STAT LIMITS
 // This class contains the upper limits of stats
-public static class StatLimits 
+public static class StatLimits
 {
     public const int MOVE_MAX = 10;
     public const int STAT_MAX = 100000;
@@ -22,7 +18,7 @@ public static class StatLimits
 #region STAT TYPES
 // Main Stat types are stats that every class will have by default, they are STANDALONE stats that INFLUENCE other stats
 public enum MainStatTypes
-{ 
+{
     NONE,
     STRENGTH,       // modifier to berserker damage, health and armour
     DEXTERITY,      // modifier to hunter damage, speed and dodge
@@ -32,7 +28,7 @@ public enum MainStatTypes
 
 // Tracked Stats are stats that will change in value during gameplay, they keep track of current and maximum values
 public enum TrackedStatTypes
-{ 
+{
     NONE,
     HEALTH,
     MANA,
@@ -48,7 +44,8 @@ public enum SubStatTypes
     ATTACK_SPEED,   // attack speed
     ARMOUR,         // damage reduction
     DODGE,          // chance to dodge
-    CRIT_CHANCE     // chance to crit
+    CRIT_CHANCE,    // chance to crit
+    CRIT_DAMAGE,    // damage of critical strikes
 }
 #endregion
 
@@ -56,9 +53,12 @@ public enum SubStatTypes
 
 #region Framework
 // Base class for stats, adheres to no stat type
+
+[System.Serializable]
 public class Stat
-{ 
+{
     // Data
+    public int test;
     public virtual float Value { get { return value; } set { SetValue(value); } }
     protected float value;
 
@@ -80,6 +80,7 @@ public class Stat
 }
 
 // Stat that has an upper limit that it will not exceed.
+[System.Serializable]
 public class ClampedStat : Stat
 {
     // Public accessors
@@ -101,7 +102,7 @@ public class ClampedStat : Stat
             this.value = 0;                                             // use the zero (NOTE: if we want negative stats, this check can be removed)
         }
         else                                                            // otherwise, the stat exceeds the max value
-        { 
+        {
             this.value = StatLimits.STAT_MAX;                           // clamp the stat to the max provided
         }
         FireChanged(value); // tell the listeners the new value
@@ -112,6 +113,7 @@ public class ClampedStat : Stat
 #region Gameplay
 
 // Main stats keep track of which type they are bound to
+[System.Serializable]
 public class MainStat : ClampedStat
 {
     // Data
@@ -122,6 +124,7 @@ public class MainStat : ClampedStat
     public MainStat(MainStatTypes type, float value) : base(value) { this.type = type; }
 }
 
+[System.Serializable]
 public class SubStat : ClampedStat
 {
     // Data
@@ -132,6 +135,7 @@ public class SubStat : ClampedStat
     public SubStat(SubStatTypes type, float value) : base(value) { this.type = type; }
 }
 
+[System.Serializable]
 public class TrackedStat : ClampedStat
 {
     // Data
@@ -142,7 +146,9 @@ public class TrackedStat : ClampedStat
     // Public Data Accessors
     public float OldValue { get { return oldValue; } }
 
-    public float MaxValue { get { return maxValue; }
+    public float MaxValue
+    {
+        get { return maxValue; }
         set
         {
             if (maxValue + value <= StatLimits.TRACKED_STAT_MAX)
@@ -158,7 +164,7 @@ public class TrackedStat : ClampedStat
     public TrackedStat() : base() { }
     public TrackedStat(TrackedStatTypes type, float value) : base(value) { type = TrackedStatTypes.NONE; }
     public TrackedStat(TrackedStatTypes type, float value, float maxValue)
-    { 
+    {
         type = TrackedStatTypes.NONE;
         MaxValue = maxValue;                    // This will set the classes' maxValue to the value passed in, and do bounds checking
         SetClampedValue(value, this.maxValue);  // Clamp the passed in value to the max value

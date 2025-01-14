@@ -15,13 +15,17 @@ MonoBehaviour:
   className: PrototypeBerserker
   classDescription: test text
   classIcon: {fileID: 0}
-  moveSpeed: 10
-  rotationSpeed: 10
-  health: 100
-  mana: 100
+  Health:
+    test: 0
+    type: 1
+  Mana:
+    test: 0
+    type: 2
   strength: 100
   dexterity: 0
   intelligence: 0
+  moveSpeed: 10
+  rotationSpeed: 10
   abilities:
   - {fileID: 11400000, guid: ca987c1651b1bf841a8ac1c5ec3ef31b, type: 2}
   - {fileID: 11400000, guid: 27f59117273001a4497088ea10b423b6, type: 2}

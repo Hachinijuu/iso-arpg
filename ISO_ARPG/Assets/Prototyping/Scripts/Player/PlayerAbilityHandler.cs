@@ -144,6 +144,8 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     void AbilityEnded(Ability ab)
     {
+        // Cooldowns will be activated based on key release - DO NOT WANT THIS TO HAPPEN
+
         if (ab != null)
         {
             held = false;                       // Key is not held anymore
@@ -166,7 +168,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                 if (stats.ID_Bar.Value == stats.ID_Bar.MaxValue)                // Check if there is enough of the gauge built up
                 {
                     ab.UseAbility(gameObject);          // Use the ability
-                    canUseAbility[ab] = false;          // Flag usage
+                    //canUseAbility[ab] = false;          // Flag usage
                     stats.ID_Bar.Value -= ab.Cost;      // Consume gauge
                     HandleCooldown(ab);                 // Start handling the cooldown for this ability  
                     if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used

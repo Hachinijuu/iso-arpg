@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class PlayerStats : MonoBehaviour
 
     #region Public Accessors
     public CharacterClass Class { get { return playerClass; } }
-    public Ability Fusion { get { return ID_Fusion; } } 
+    public Ability Fusion { get { return ID_Fusion; } }
     public TrackedStat Health { get { return health; } }
     public TrackedStat Mana { get { return mana; } }
     public TrackedStat ID_Bar { get { return idBar; } }
@@ -33,7 +31,25 @@ public class PlayerStats : MonoBehaviour
     MainStat dexterity;
     MainStat intelligence;
 
+
+    // Gameplay
+    Stat numProjectiles;
+    Stat numChains;
+
+    // Utility
     SubStat moveSpeed;
+
+    // Offensive
+    SubStat damage;
+    SubStat attackSpeed;
+    SubStat critChance;
+    SubStat critDamage;
+
+    // Defensive
+    SubStat dodge;
+    SubStat armour;
+
+
 
     #endregion
 
@@ -55,22 +71,22 @@ public class PlayerStats : MonoBehaviour
         LoadSubstats();
     }
     public void LoadDefaultMainStats()
-    { 
-        strength = new MainStat(MainStatTypes.STRENGTH, playerClass.strength);
-        dexterity = new MainStat(MainStatTypes.DEXTERITY, playerClass.dexterity);
-        intelligence = new MainStat(MainStatTypes.INTELLIGENCE, playerClass.intelligence);
+    {
+        //strength = new MainStat(MainStatTypes.STRENGTH, playerClass.strength);
+        //dexterity = new MainStat(MainStatTypes.DEXTERITY, playerClass.dexterity);
+        //intelligence = new MainStat(MainStatTypes.INTELLIGENCE, playerClass.intelligence);
     }
 
     public void LoadTrackedStats()
     {
-        health = new TrackedStat(TrackedStatTypes.HEALTH, playerClass.health, playerClass.health);
-        mana = new TrackedStat(TrackedStatTypes.MANA, playerClass.mana, playerClass.mana);
-        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
+        //health = new TrackedStat(TrackedStatTypes.HEALTH, playerClass.health, playerClass.health);
+        //mana = new TrackedStat(TrackedStatTypes.MANA, playerClass.mana, playerClass.mana);
+        //idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
     }
 
     public void LoadSubstats()
-    { 
-        moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
+    {
+        //moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
     }
 
     #endregion

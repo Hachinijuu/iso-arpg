@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     // Read controls via external game manager script -- cache locally?
-    enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
-    enum MoveInput { CLICK, DIRECTIONAL }
-    [SerializeField] MoveInput moveType;
+    public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
+    public enum MoveInput { CLICK, DIRECTIONAL }
+    public MoveInput moveType;
     // CLICK is mouse click to move / hold to move
     // DIRECTIONAL is WASD / Joystick
 
@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     public bool CanMove { get { return canMove; } set { canMove = value; } }
     public bool CanRotate { get { return canRotate; } set { canRotate = value; } }
     public float Speed { get { return Speed; } set { speed = value; } }
+
+    // Expose this property to allow movement to be driven externally (by mouse holding)
+    public bool MoveHeld { get { return moveHeld; } set { moveHeld = value; } }
 
     public bool UseAnimations { get { return useAnimations; } set { useAnimations = value; } }
     // Variables

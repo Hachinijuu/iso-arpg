@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -7,7 +5,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private GameObject target = null;
 
-    [SerializeField]   
+    [SerializeField]
     private Vector3 offset;
 
     [SerializeField]
@@ -19,7 +17,7 @@ public class CameraController : MonoBehaviour
         if (target == null)
             target = GameObject.FindGameObjectWithTag("Player");
 
-        angle.x = 50;
+        //angle.x = 0;
     }
 
     private void LateUpdate()

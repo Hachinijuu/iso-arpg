@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]             // Input
 [RequireComponent(typeof(PlayerMovement))]          // Movement
 [RequireComponent(typeof(PlayerAbilityHandler))]    // Abilities
+[RequireComponent(typeof(MouseTarget))]             // Hover Targetting
 
 [RequireComponent(typeof(AudioSource))]             // Audio
 [RequireComponent(typeof(Animator))]                // Animations
