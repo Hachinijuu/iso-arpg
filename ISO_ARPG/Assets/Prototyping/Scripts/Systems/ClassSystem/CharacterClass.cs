@@ -36,19 +36,29 @@ public class CharacterClass : ScriptableObject
     [Header("Main Stats")]
     public TrackedStat Health;
     public TrackedStat Mana;
-    [Range(0, StatLimits.STAT_MAX)] public float strength = -1f;
-    [Range(0, StatLimits.STAT_MAX)] public float dexterity = -1f;
-    [Range(0, StatLimits.STAT_MAX)] public float intelligence = -1f;
+    public MainStat Strength;
+    public MainStat Dexterity;
+    public MainStat Intelligence;
 
     [Header("Gameplay Stats")]
-
-    [Header("Defensive Stats")]
-
-    [Header("Offensive Stats")]
+    public Stat Projectiles;
+    public Stat Chains;
 
     [Header("Movement Stats")]
-    [Range(0, StatLimits.MOVE_MAX)] public float moveSpeed = -1f;
+    public SubStat moveSpeed;
     [Range(0, StatLimits.MOVE_MAX)] public float rotationSpeed = -1f;
+
+    [Header("Offensive Stats")]
+    public SubStat Damage;
+    public SubStat AttackSpeed;
+    public SubStat CritDamage;
+    public SubStat CritChance;
+    
+    [Header("Defensive Stats")]
+    public SubStat Armour;
+    public SubStat Dodge;
+
+
     #endregion
 
     #region Abilities

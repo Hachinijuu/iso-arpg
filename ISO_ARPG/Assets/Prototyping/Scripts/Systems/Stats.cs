@@ -1,9 +1,13 @@
 // This stat class is to organize data in a more effective manner
 // With customized types, comparing and referencing stat combinations should be easier
 // i.e Gear with x stats gives bonus
+using System;
+using UnityEngine;
 
 #region STAT LIMITS
 // This class contains the upper limits of stats
+
+
 public static class StatLimits
 {
     public const int MOVE_MAX = 10;
@@ -58,9 +62,9 @@ public enum SubStatTypes
 public class Stat
 {
     // Data
-    public int test;
     public virtual float Value { get { return value; } set { SetValue(value); } }
-    protected float value;
+
+    [SerializeField] protected float value;
 
     // Constructors
     public Stat() { value = -1; }
@@ -141,7 +145,7 @@ public class TrackedStat : ClampedStat
     // Data
     public TrackedStatTypes type;
     protected float oldValue;
-    protected float maxValue;
+    [SerializeField] protected float maxValue;
 
     // Public Data Accessors
     public float OldValue { get { return oldValue; } }

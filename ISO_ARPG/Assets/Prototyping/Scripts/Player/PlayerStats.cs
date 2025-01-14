@@ -38,16 +38,17 @@ public class PlayerStats : MonoBehaviour
 
     // Utility
     SubStat moveSpeed;
+    Stat rotationSpeed;
 
     // Offensive
     SubStat damage;
     SubStat attackSpeed;
-    SubStat critChance;
     SubStat critDamage;
+    SubStat critChance;
 
     // Defensive
-    SubStat dodge;
     SubStat armour;
+    SubStat dodge;
 
 
 
@@ -55,39 +56,75 @@ public class PlayerStats : MonoBehaviour
 
     public void Start()
     {
-        LoadStats();
+        LoadDefaultClassStats();
+        //LoadStats();
     }
 
     public void InitializePlayerStats()
     {
         // this will load stats externally keeping player progress, for now just LoadStats wrapper
-        LoadStats();
+        //LoadStats();
     }
 
     public void LoadStats()
     {
-        LoadDefaultMainStats();
-        LoadTrackedStats();
-        LoadSubstats();
-    }
-    public void LoadDefaultMainStats()
-    {
-        //strength = new MainStat(MainStatTypes.STRENGTH, playerClass.strength);
-        //dexterity = new MainStat(MainStatTypes.DEXTERITY, playerClass.dexterity);
-        //intelligence = new MainStat(MainStatTypes.INTELLIGENCE, playerClass.intelligence);
+        //LoadDefaultMainStats();
+        //LoadTrackedStats();
+        //LoadSubstats();
     }
 
-    public void LoadTrackedStats()
+    public void LoadDefaultClassStats()
     {
-        //health = new TrackedStat(TrackedStatTypes.HEALTH, playerClass.health, playerClass.health);
-        //mana = new TrackedStat(TrackedStatTypes.MANA, playerClass.mana, playerClass.mana);
-        //idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
-    }
+        // main tracking
+        health = playerClass.Health;
+        mana = playerClass.Mana;
+        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
 
-    public void LoadSubstats()
-    {
-        //moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
+        // main stats
+        strength = playerClass.Strength;
+        dexterity = playerClass.Dexterity;
+        intelligence = playerClass.Intelligence;
+
+        // gameplay stats
+        numProjectiles = playerClass.Projectiles;
+        numChains = playerClass.Chains;
+
+        // utility stats
+        moveSpeed = playerClass.moveSpeed;
+        rotationSpeed.Value = playerClass.rotationSpeed;
+
+        // offensive stats
+        damage = playerClass.Damage;
+        attackSpeed = playerClass.AttackSpeed;
+        critDamage = playerClass.CritDamage;
+        critChance = playerClass.CritChance;
+
+        armour = playerClass.Armour;
+        dodge = playerClass.Dodge;
+        
+        // defensive stats
+
+
     }
+    //public void LoadDefaultMainStats()
+    //{
+    //    strength = 
+    //    //strength = new MainStat(MainStatTypes.STRENGTH, playerClass.strength);
+    //    //dexterity = new MainStat(MainStatTypes.DEXTERITY, playerClass.dexterity);
+    //    //intelligence = new MainStat(MainStatTypes.INTELLIGENCE, playerClass.intelligence);
+    //}
+    //
+    //public void LoadTrackedStats()
+    //{
+    //    //health = new TrackedStat(TrackedStatTypes.HEALTH, playerClass.health, playerClass.health);
+    //    //mana = new TrackedStat(TrackedStatTypes.MANA, playerClass.mana, playerClass.mana);
+    //    //idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
+    //}
+    //
+    //public void LoadSubstats()
+    //{
+    //    //moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
+    //}
 
     #endregion
 }
