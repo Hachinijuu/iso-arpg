@@ -101,7 +101,7 @@ public class AdvancedFSM : FSM
     ///  doesn´t have a target state for the transition passed, 
     /// an ERROR message is printed.
     /// </summary>
-    public void PerformTransistion(Transition trans)
+    public void PerformTransition(Transition trans)
     {
         // Check for NullTransition before changing the current state
         if (trans == Transition.None)

@@ -68,8 +68,9 @@ public class EnemyController : AdvancedFSM
     {
         GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
         playerTransform = objPlayer.transform;
-        health = 50;        
-        text = StateText.text;
+        health = 50;
+        ConstructFSM();
+       // text = StateText.text;
     }
 
 
@@ -85,30 +86,32 @@ public class EnemyController : AdvancedFSM
             UsefullFunctions.DebugRay(transform.position, transform.forward * 5.0f, Color.red);
         }
     }
+    private void ConstructFSM()
+    {
 
-    // TODO: Fill in the States
-    //Create States
+        // TODO: Fill in the States
+        //Create States
 
-    // Dead State
-
-
-    // Chase State
-
+        // Dead State
 
 
-    // Melee Attack State
+        // Chase State
+        ChaseState chase = new ChaseState(this);
 
-    // Ranged Attack State
 
-    // Regenerate State
+        // Melee Attack State
 
-  // ADD all states here
-  // AddFSMState(chase);        // Starting state
-  // AddFSMState(rangedAttack);
-  // AddFSMState(meleeAttack);   
-  // AddFSMState(regen);
-  // AddFSMState(dead);
+        // Ranged Attack State
 
+        // Regenerate State
+
+        // ADD all states here
+        AddFSMState(chase);        // Starting state
+                                   // AddFSMState(rangedAttack);
+                                   // AddFSMState(meleeAttack);   
+                                   // AddFSMState(regen);
+                                   // AddFSMState(dead);
+    }
 
 
 

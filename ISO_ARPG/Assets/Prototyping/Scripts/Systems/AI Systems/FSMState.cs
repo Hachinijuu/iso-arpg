@@ -20,7 +20,7 @@ public abstract class FSMState
     protected Dictionary<Transition, FSMStateID> map = new Dictionary<Transition, FSMStateID>();
     protected FSMStateID stateID;
     public FSMStateID ID { get { return stateID; } }
-    protected Vector3 desPos;
+    protected Vector3 destPos;
     protected float curSpeed;
 
     public void AddTransistion(Transition transition, FSMStateID id)
