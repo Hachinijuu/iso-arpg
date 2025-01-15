@@ -31,6 +31,11 @@ public class DebugMenu : MonoBehaviour
         stats.Mana.SetValue(stats.Mana.MaxValue);
     }
 
+    public void FillIDBar()
+    { 
+        stats.ID_Bar.SetValue(stats.ID_Bar.MaxValue);
+    }
+
     void ListenTimer(AbilityEventArgs e)
     {
         StartCoroutine(StatCountdown(e.Ability));
@@ -78,7 +83,8 @@ public class DebugMenu : MonoBehaviour
         GUI.Box(new Rect(10, 100, 200, 360), "Player Stats");
         GUI.Label(new Rect(20, 120, 200, 20), "Health: " + stats.Health.Value + " / " + stats.Health.MaxValue);
         GUI.Label(new Rect(20, 140, 200, 20), "Mana: " + stats.Mana.Value + " / " + stats.Mana.MaxValue);
-        GUI.Label(new Rect(20, 160, 200, 20), "Speed: " + stats.MoveSpeed.Value);
+        GUI.Label(new Rect(20, 160, 200, 20), "ID: " + stats.ID_Bar.Value + " / " + stats.ID_Bar.MaxValue);
+        //GUI.Label(new Rect(20, 160, 200, 20), "Mana: " + stats.Mana.Value + " / " + stats.Mana.MaxValue);
         //GUI.Label(new Rect(20, 180, 200, 20), "Rotation: " + stats.RotationSpeed);
         GUI.Label(new Rect(20, 200, 200, 20), "Strength: " + stats.STR.Value);
         GUI.Label(new Rect(20, 220, 200, 20), "Dexterity: " + stats.DEX.Value);
@@ -88,11 +94,14 @@ public class DebugMenu : MonoBehaviour
             ResetMana();
         if (GUI.Button(new Rect(20, 280, 180, 20), "Reset Ability Used"))
             controller.ResetAbilityUsage();
+        if (GUI.Button(new Rect(20, 300, 180, 20), "Fill ID"))
+            FillIDBar();
 
-        GUI.Label(new Rect(20, 300, 200, 20), "Ab1 CD: " + Mathf.RoundToInt(ab1Timer));
-        GUI.Label(new Rect(20, 320, 200, 20), "Ab2 CD: " + Mathf.RoundToInt(ab2Timer));
 
-        GUI.Label(new Rect(20, 340, 200, 20), hoverText);
-        GUI.Label(new Rect(20, 360, 200, 20), targetText);
+        GUI.Label(new Rect(20, 320, 200, 20), "Ab1 CD: " + Mathf.RoundToInt(ab1Timer));
+        GUI.Label(new Rect(20, 340, 200, 20), "Ab2 CD: " + Mathf.RoundToInt(ab2Timer));
+
+        GUI.Label(new Rect(20, 360, 200, 20), hoverText);
+        GUI.Label(new Rect(20, 380, 200, 20), targetText);
     }
 }

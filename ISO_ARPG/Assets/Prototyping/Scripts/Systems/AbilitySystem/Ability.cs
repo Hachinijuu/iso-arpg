@@ -13,6 +13,11 @@ public class AbilityEventArgs
         Ability = null;
         Actor = null;
     }
+    public AbilityEventArgs(Ability ability)
+    {
+        Ability = ability;
+        Actor = null;
+    }
     public AbilityEventArgs(Ability ability, GameObject actor)
     {
         Ability = ability;
@@ -68,6 +73,11 @@ public abstract class Ability : ScriptableObject
     public virtual void EndAbility(GameObject actor)
     { 
         FireAbilityEnded(new AbilityEventArgs(this, actor));
+    }
+
+    public virtual void EndAbility()
+    {
+        FireAbilityEnded(new AbilityEventArgs());
     }
     #endregion
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
@@ -7,18 +8,41 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] Ability ID_Fusion;             // the selected fusion to add passively
 
+
+    // Any additional abilities the player can get through gameplay
+    public List<PassiveAbility> passives;
+
     #region Public Accessors
     public CharacterClass Class { get { return playerClass; } }
     public Ability Fusion { get { return ID_Fusion; } }
+    
+    // Tracked Stats
     public TrackedStat Health { get { return health; } }
     public TrackedStat Mana { get { return mana; } }
     public TrackedStat ID_Bar { get { return idBar; } }
 
+    // Main Stats
     public MainStat STR { get { return strength; } }
     public MainStat DEX { get { return dexterity; } }
     public MainStat INT { get { return intelligence; } }
 
+    // Gameplay Stats
+    public Stat Projectiles { get { return numProjectiles; } }
+    public Stat Chains { get { return numChains; } }
+
+    // Utility
     public SubStat MoveSpeed { get { return moveSpeed; } }
+
+    // Offensive
+    public SubStat Damage { get { return damage; } }
+    public SubStat AttackSpeed { get { return attackSpeed; } }
+    public SubStat CritDamage { get { return critDamage; } }
+    public SubStat CritChance { get { return critChance; } }
+
+    // Defensive
+    public SubStat Armour {  get { return armour; } }
+    public SubStat Dodge { get { return dodge; } }  
+
 
     #endregion
 
@@ -49,9 +73,6 @@ public class PlayerStats : MonoBehaviour
     // Defensive
     SubStat armour;
     SubStat dodge;
-
-
-
     #endregion
 
     public void Start()
@@ -75,34 +96,38 @@ public class PlayerStats : MonoBehaviour
 
     public void LoadDefaultClassStats()
     {
+        // Need to copy or create new values
+        // Assigning = would just make the reference, and change the base
+
         // main tracking
-        health = playerClass.Health;
-        mana = playerClass.Mana;
+
+        health = new TrackedStat(playerClass.Health);
+        mana = new TrackedStat(playerClass.Mana);
         idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
 
         // main stats
-        strength = playerClass.Strength;
-        dexterity = playerClass.Dexterity;
-        intelligence = playerClass.Intelligence;
+        strength = new MainStat(playerClass.Strength);
+        dexterity = new MainStat(playerClass.Dexterity);
+        intelligence = new MainStat(playerClass.Intelligence);
 
         // gameplay stats
-        numProjectiles = playerClass.Projectiles;
-        numChains = playerClass.Chains;
+        numProjectiles = new Stat(playerClass.Projectiles);
+        numChains = new Stat(playerClass.Chains);
 
         // utility stats
-        moveSpeed = playerClass.moveSpeed;
-        rotationSpeed.Value = playerClass.rotationSpeed;
+        moveSpeed = new SubStat(playerClass.moveSpeed);
+        //rotationSpeed.Value += playerClass.rotationSpeed;
 
         // offensive stats
-        damage = playerClass.Damage;
-        attackSpeed = playerClass.AttackSpeed;
-        critDamage = playerClass.CritDamage;
-        critChance = playerClass.CritChance;
+        damage = new SubStat(playerClass.Damage);
+        attackSpeed = new SubStat(playerClass.AttackSpeed);
+        critDamage = new SubStat(playerClass.CritDamage);
+        critChance = new SubStat(playerClass.CritChance);
 
-        armour = playerClass.Armour;
-        dodge = playerClass.Dodge;
-        
         // defensive stats
+        armour = new SubStat(playerClass.Armour);
+        dodge = new SubStat(playerClass.Dodge);
+        
 
 
     }

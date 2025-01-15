@@ -65,6 +65,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         input = GetComponent<PlayerInput>();
 
+        // Listen for passive ability activation
 
         if (stats != null)
         {
@@ -85,6 +86,18 @@ public class PlayerAbilityHandler : MonoBehaviour
     private void OnDestroy()
     {
         UnmapPlayerActions();
+    }
+
+    public void AddPassiveListeners()
+    {
+        foreach (PassiveAbility pAb in stats.passives)
+        { 
+            // Add listeners
+        }
+    }
+    public void RemovePassiveListeners()
+    { 
+    
     }
     public void InitAbilities()
     {
@@ -121,6 +134,10 @@ public class PlayerAbilityHandler : MonoBehaviour
                 if (ab is ChannelAbility channelAb)   // If it is a Channel-able ability
                 {
                     StartCoroutine(HandleHeld(channelAb));  // Handle the consumption of the hold
+                }
+                else if (ab is PassiveAbility passiveAb)
+                { 
+                    StartCoroutine(HandlePassive(passiveAb));
                 }
                 else // Single press ability
                 {
@@ -168,12 +185,12 @@ public class PlayerAbilityHandler : MonoBehaviour
                 if (stats.ID_Bar.Value == stats.ID_Bar.MaxValue)                // Check if there is enough of the gauge built up
                 {
                     ab.UseAbility(gameObject);          // Use the ability
-                    //canUseAbility[ab] = false;          // Flag usage
+                    canUseAbility[ab] = false;          // Flag usage
                     stats.ID_Bar.Value -= ab.Cost;      // Consume gauge
-                    HandleCooldown(ab);                 // Start handling the cooldown for this ability  
+                    StartCoroutine(HandlePassive(ab as  PassiveAbility)); 
+                    StartCoroutine(HandleCooldown(ab));                 // Start handling the cooldown for this ability  
                     if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used
                 }
-
             }
         }
     }
@@ -197,8 +214,36 @@ public class PlayerAbilityHandler : MonoBehaviour
             else    // Remaining mana, consume it.
             {
                 stats.Mana.Value -= used.Cost;          // Consume the cost of mana
+                used.OnTick();  // Call the tick action
             }
         } while (held);
+    }
+
+    IEnumerator HandlePassive(PassiveAbility used)
+    {
+        float intervalTime = 0;
+        float activeTime = 0;
+        do
+        {
+            yield return new WaitForEndOfFrame();
+            intervalTime += Time.deltaTime;
+            activeTime += Time.deltaTime;
+
+            if (activeTime > used.ActiveTime)
+            {
+                canUseAbility[used] = true; // Time has elapsed
+                used.EndAbility(gameObject);
+                if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " ended");
+                break;                      // Exit the loop - coroutine finished
+            }
+            if (intervalTime > used.IntervalTime)
+            {
+                used.OnTick();      // Call the tick action
+                if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " tick");
+                intervalTime = 0;   // Reset the count
+            }
+        }
+        while (!canUseAbility[used]); // While this ability cannot be used (because it has been used)
     }
 
     IEnumerator HandleCooldown(Ability used)

@@ -69,6 +69,10 @@ public class Stat
     // Constructors
     public Stat() { value = -1; }
     public Stat(float value) { this.value = value; }
+    public Stat(Stat copy)
+    {
+        Copy(copy);
+    }
 
     // Event Callbacks
     public delegate void ValueChanged(float value);
@@ -80,6 +84,11 @@ public class Stat
     {
         this.value = value;
         FireChanged(value); // Tell the listeners the new value
+    }
+
+    public virtual void Copy(Stat other)
+    { 
+        this.value = other.value;
     }
 }
 
@@ -93,6 +102,11 @@ public class ClampedStat : Stat
     // Constructors
     public ClampedStat() : base() { }
     public ClampedStat(float value) : base(value) { }
+
+    public ClampedStat(ClampedStat copy)
+    { 
+        Copy(copy);
+    }
 
     // Functionality
     public virtual void SetClampedValue(float value, float maxValue)
@@ -126,6 +140,17 @@ public class MainStat : ClampedStat
     // Constructors
     public MainStat() : base() { type = MainStatTypes.NONE; }
     public MainStat(MainStatTypes type, float value) : base(value) { this.type = type; }
+
+    public virtual void Copy(MainStat other)
+    {
+        this.value = other.value;
+        this.type = other.type;
+    }
+
+    public MainStat(MainStat copy)
+    {
+        Copy(copy);
+    }
 }
 
 [System.Serializable]
@@ -137,6 +162,17 @@ public class SubStat : ClampedStat
     // Constructors
     public SubStat() : base() { type = SubStatTypes.NONE; }
     public SubStat(SubStatTypes type, float value) : base(value) { this.type = type; }
+
+    public SubStat(SubStat copy)
+    { 
+        Copy(copy);
+    }
+
+    public virtual void Copy(SubStat other)
+    {
+        this.value = other.value;
+        this.type = other.type;
+    }
 }
 
 [System.Serializable]
@@ -173,6 +209,11 @@ public class TrackedStat : ClampedStat
         MaxValue = maxValue;                    // This will set the classes' maxValue to the value passed in, and do bounds checking
         SetClampedValue(value, this.maxValue);  // Clamp the passed in value to the max value
     }
+    public TrackedStat(TrackedStat copy)
+    { 
+        Copy(copy);
+    }
+
 
     // Functionality
     public override void SetClampedValue(float value, float maxValue)
@@ -180,6 +221,14 @@ public class TrackedStat : ClampedStat
         oldValue = this.value;                  // Store the old value
         base.SetClampedValue(value, maxValue);  // Update the value to the new one
         FireChanged(value);                     // Tell the listeners the new value
+    }
+
+    public virtual void Copy(TrackedStat other)
+    {
+        this.value = other.value;
+        this.oldValue = other.oldValue;
+        this.maxValue = other.maxValue;
+        this.type = other.type;
     }
 }
 
