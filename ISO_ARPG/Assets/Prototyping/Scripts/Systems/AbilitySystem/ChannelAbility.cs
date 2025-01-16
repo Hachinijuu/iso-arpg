@@ -9,6 +9,7 @@ public class ChannelAbility : Ability
     //public bool Channelable {get {return canChannel;}}
     public float Interval { get { return interval; } }
     //private bool canChannel = true; // Because it is a channel-able ablility, this is always true.
+    [Header("Channel Settings")]
     [SerializeField] protected float interval = -1f;
 
     // Overrides abstract Fire method, but does not do anything

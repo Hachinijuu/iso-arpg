@@ -6,7 +6,10 @@ using UnityEngine.Timeline;
 [CreateAssetMenu(fileName = "TigersRage", menuName = "sykcorSystems/Abilities/Berserker/TigersRage", order = 4)]
 public class TigersRage : PassiveAbility
 {
+    AudioSource source;
     private Vector3 defaultScale;
+
+    [Header("Stat Adjusments")]
     public float scaleFactor = 1.5f;
 
     // Currently used as multipliers
@@ -21,11 +24,14 @@ public class TigersRage : PassiveAbility
         // When this is fired, apply the effects / bonuses for the passive ability, call end once duration has passed.
 
         stats = actor.GetComponent<PlayerStats>();
+        source = actor.GetComponent<AudioSource>();
 
         if (stats != null)
         {
             defaultScale = actor.transform.localScale;      // cache the scale
             actor.transform.localScale *= scaleFactor;      // resize the character
+
+            source.PlayOneShot(abilityActivated);
 
             // add increased stats
             stats.Health.MaxValue *= maxHealthIncrease;

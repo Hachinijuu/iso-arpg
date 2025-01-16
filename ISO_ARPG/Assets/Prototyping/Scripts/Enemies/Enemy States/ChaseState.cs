@@ -58,9 +58,10 @@ public class ChaseState : FSMState
        //     destPos = enemyControl.playerSlotManager.GetSlotPosition(availableSlotIndex);
        // }
         //NPC DEATH
-        if (enemyControl.GetHealth() == 0)
+        if (enemyControl.stats.Health.Value == 0)
         {
-           // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.gameObject);
+            // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.gameObject);
+            Debug.Log("[ChaseState]: Performing death transition");
             enemyControl.PerformTransition(Transition.NoHealth);
 
             return;
@@ -83,7 +84,7 @@ public class ChaseState : FSMState
     //Act
     public override void Act(Transform player, Transform npc)
     {
-        Debug.Log("ACT!");
+        //Debug.Log("ACT!");
         //Rotate towards Position
         Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
         //Snap
@@ -98,7 +99,7 @@ public class ChaseState : FSMState
             enemyControl.navMeshAgent.destination = destPos;
             speed = enemyControl.navMeshAgent.velocity.magnitude;
             anim.SetFloat("Speed",speed);
-            Debug.Log("Chase");
+            //Debug.Log("Chase");
         }
         
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : EntityStats
 {
     // Player Stats has an active tracker of what the player currently has, health, mana, and their stats.
     #region VARIABLES
@@ -17,7 +17,6 @@ public class PlayerStats : MonoBehaviour
     public Ability Fusion { get { return ID_Fusion; } }
     
     // Tracked Stats
-    public TrackedStat Health { get { return health; } }
     public TrackedStat Mana { get { return mana; } }
     public TrackedStat ID_Bar { get { return idBar; } }
 
@@ -47,7 +46,6 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Stats
-    TrackedStat health;
     TrackedStat mana;
     TrackedStat idBar;
 

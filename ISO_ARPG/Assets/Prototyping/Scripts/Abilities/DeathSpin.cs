@@ -4,15 +4,31 @@ using UnityEngine;
 public class DeathSpin : ChannelAbility
 {
     Animator anim;
+    AudioSource source;
     PlayerMovement move;
+    Hitbox[] hitboxes;
+
     protected override void Fire(Ability ab, GameObject actor)
     {
         anim = actor.GetComponent<Animator>();
+        source = actor.GetComponent<AudioSource>();
+        hitboxes = actor.GetComponentsInChildren<Hitbox>();
         move = actor.GetComponent<PlayerMovement>();
 
         if (anim != null)
         {
             anim.SetBool("Ability2", true);
+        }
+        if (source != null)
+        {
+            source.clip = abilityActivated;
+            source.loop = true;
+            source.Play();
+        }
+
+        if (hitboxes != null)
+        {
+            SetDamageDetection(true);
         }
 
         if (move != null)
@@ -33,11 +49,27 @@ public class DeathSpin : ChannelAbility
     {
         base.EndAbility(actor);
         anim.SetBool("Ability2", false);
+        SetDamageDetection(false);
+
+        source.clip = null;
+        source.loop = false;
+        source.Stop();
         if (move.moveType == PlayerMovement.MoveInput.CLICK)
         {
             move.MoveHeld = false;           // Allow this to drive movement
         }
         move.UseAnimations = true;
         move.CanRotate = true;
+    }
+
+    void SetDamageDetection(bool on)
+    {
+        if (hitboxes != null && hitboxes.Length > 0)
+        {
+            for (int i = 0; i < hitboxes.Length; i++)
+            {
+                hitboxes[i].ApplyDamage = on;
+            }
+        }
     }
 }

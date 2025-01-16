@@ -56,6 +56,9 @@ public abstract class Ability : ScriptableObject
     [SerializeField] protected bool stopsMovement = false;  // if the ability stops player movement
     //[SerializeField] protected bool channelAbility = false; // if the ability can be held (channeled)
     //[SerializeField] protected float interval = -1f;        // the interval of when to consume (channeled)
+
+    [Header("Audio")]
+    [SerializeField] protected AudioClip abilityActivated;
     #endregion
     #endregion
 

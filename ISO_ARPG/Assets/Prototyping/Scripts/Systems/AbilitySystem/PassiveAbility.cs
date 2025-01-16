@@ -5,9 +5,10 @@ using UnityEngine;
 public class PassiveAbility : Ability
 {
     public float ActiveTime { get { return activeTime; } }
-    [SerializeField] protected float activeTime = -1f;      // the active time window of the skills activity
-
     public float IntervalTime { get { return interval; } }
+    
+    [Header("Passive Settings")]
+    [SerializeField] protected float activeTime = -1f;      // the active time window of the skills activity
     [SerializeField] protected float interval = -1f;        // the interval time between when ticks occur
 
     float curTime;
