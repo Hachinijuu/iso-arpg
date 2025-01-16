@@ -2714,7 +2714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7054311e8e97c4545b8c51eb4cafaa3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source: {fileID: 2076443995}
   damage: 5
 --- !u!65 &195230164
 BoxCollider:
@@ -8867,7 +8867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7054311e8e97c4545b8c51eb4cafaa3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source: {fileID: 2076443995}
   damage: 5
 --- !u!65 &669392757
 BoxCollider:
@@ -21408,6 +21408,10 @@ PrefabInstance:
       propertyPath: dbMenu
       value: 
       objectReference: {fileID: 1284090545}
+    - target: {fileID: 524167332827663909, guid: bfea9227bf0a849429fbde9c1f5804c1, type: 3}
+      propertyPath: showDebug
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 895018571205994152, guid: bfea9227bf0a849429fbde9c1f5804c1, type: 3}
       propertyPath: m_Controller
       value: 

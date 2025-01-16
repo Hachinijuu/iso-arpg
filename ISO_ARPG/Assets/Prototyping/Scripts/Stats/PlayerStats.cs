@@ -9,9 +9,17 @@ public class PlayerStats : EntityStats
     [SerializeField] Ability ID_Fusion;             // the selected fusion to add passively
 
 
+
     // Any additional abilities the player can get through gameplay
     public List<PassiveAbility> passives;
 
+    // Instead of casting abilities through the playerClass, load the abilities into this class
+    
+    public List<Ability> abilities;
+    public Ability Identity { get { return identity; } }
+    Ability identity;
+    
+    
     #region Public Accessors
     public CharacterClass Class { get { return playerClass; } }
     public Ability Fusion { get { return ID_Fusion; } }
@@ -73,9 +81,10 @@ public class PlayerStats : EntityStats
     SubStat dodge;
     #endregion
 
-    public void Start()
+    public void Awake()
     {
         LoadDefaultClassStats();
+        LoadAbilities();
         //LoadStats();
     }
 
@@ -128,6 +137,12 @@ public class PlayerStats : EntityStats
         
 
 
+    }
+
+    public void LoadAbilities()
+    {
+        abilities = playerClass.abilities;
+        identity = playerClass.identityAbility;
     }
     //public void LoadDefaultMainStats()
     //{

@@ -15,6 +15,7 @@ public class DeathSpin : ChannelAbility
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
         move = actor.GetComponent<PlayerMovement>();
 
+        //Debug.Log(hitboxes.Length);
         if (anim != null)
         {
             anim.SetBool("Ability2", true);

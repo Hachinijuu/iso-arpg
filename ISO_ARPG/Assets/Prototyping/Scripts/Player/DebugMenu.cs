@@ -84,7 +84,7 @@ public class DebugMenu : MonoBehaviour
         GUI.Label(new Rect(20, 120, 200, 20), "Health: " + stats.Health.Value + " / " + stats.Health.MaxValue);
         GUI.Label(new Rect(20, 140, 200, 20), "Mana: " + stats.Mana.Value + " / " + stats.Mana.MaxValue);
         GUI.Label(new Rect(20, 160, 200, 20), "ID: " + stats.ID_Bar.Value + " / " + stats.ID_Bar.MaxValue);
-        //GUI.Label(new Rect(20, 160, 200, 20), "Mana: " + stats.Mana.Value + " / " + stats.Mana.MaxValue);
+        GUI.Label(new Rect(20, 180, 200, 20), "Speed: " + stats.MoveSpeed.Value);
         //GUI.Label(new Rect(20, 180, 200, 20), "Rotation: " + stats.RotationSpeed);
         GUI.Label(new Rect(20, 200, 200, 20), "Strength: " + stats.STR.Value);
         GUI.Label(new Rect(20, 220, 200, 20), "Dexterity: " + stats.DEX.Value);

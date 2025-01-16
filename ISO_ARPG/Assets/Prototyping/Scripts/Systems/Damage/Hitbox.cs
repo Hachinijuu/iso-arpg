@@ -26,6 +26,7 @@ public class Hitbox : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         // Only do detections if damage can be applied
@@ -35,7 +36,8 @@ public class Hitbox : MonoBehaviour
         }
 
         if (other.CompareTag("Hurtbox"))
-        { 
+        {
+            Debug.Log("HURTBOX FOUND");
             Hurtbox hb = other.GetComponent<Hurtbox>();
             if (hb != null)
             {

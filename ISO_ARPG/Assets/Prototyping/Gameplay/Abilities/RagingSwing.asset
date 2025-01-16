@@ -16,9 +16,13 @@ MonoBehaviour:
   abilityName: Raging Swing
   abilityDescription: invalid
   cooldown: 5
-  activeTime: 1
   cost: 10
   stopsMovement: 1
-  channelAbility: 0
-  interval: -1
-  action: {fileID: 0}
+  abilityActivated: {fileID: 8300000, guid: 2a7905c458b687542a6162ff41960e4b, type: 3}
+  stacks: 0
+  maxStacks: 5
+  StackStats:
+  - value: 1
+    type: 2
+  - value: 1
+    type: 3
