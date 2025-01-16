@@ -14,7 +14,7 @@ public class ChaseState : FSMState
   public ChaseState(EnemyController enemy)
   {
         stateID = FSMStateID.Chase;
-        curSpeed = 5.0f;        
+        curSpeed = 2.0f;        
         enemyControl = enemy;
         moving = true;
         enemyControl.navMeshAgent.speed = curSpeed;
