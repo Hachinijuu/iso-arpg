@@ -22,11 +22,6 @@ public class PlayerController : MonoBehaviour
     PlayerMovement movement;
 
     // public variables
-    // accessors
-    public bool isAttacking { get { return attacking; } }
-
-    // private variables
-    bool attacking = false;
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     #endregion

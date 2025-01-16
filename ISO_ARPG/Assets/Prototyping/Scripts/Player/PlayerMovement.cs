@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     // CLICK is mouse click to move / hold to move
     // DIRECTIONAL is WASD / Joystick
 
+    [SerializeField] LayerMask moveMask;
+
     // Classes
     NavMeshAgent agent;
     PlayerInput input;
@@ -108,8 +110,10 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleClickToMove()
     {
+
+
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
         {
             moveTarget = hit.point;
         }
@@ -133,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Get look direction relative to the mouse position in the world
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
         {
             Vector3 mousePoint = hit.point;
 
