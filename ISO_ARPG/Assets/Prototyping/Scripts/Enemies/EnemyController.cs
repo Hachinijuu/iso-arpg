@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class EnemyController : AdvancedFSM
@@ -14,13 +16,11 @@ public class EnemyController : AdvancedFSM
     private string text;
 
     //Set/Get/Decrement/Add to Health functions
-
-    public EntityStats stats;
-    //public int health;
-    //public int GetHealth() { return health; }
-    //public void SetHealth(int inHealth) { health = inHealth; }
-    //public void DecHealth(int amount) { health = Mathf.Max(0, health - amount); }
-    //public void AddHealth(int amount) { health = Mathf.Min(100, health + amount); }
+    public int health;
+    public int GetHealth() { return health; }
+    public void SetHealth(int inHealth) { health = inHealth; }
+    public void DecHealth(int amount) { health = Mathf.Max(0, health - amount); }
+    public void AddHealth(int amount) { health = Mathf.Min(100, health + amount); }
 
     [HideInInspector]
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
@@ -54,7 +54,7 @@ public class EnemyController : AdvancedFSM
             state = "REGENERATING";
         }
 
-        //state = state + " H " + health;
+        state = state + " H " + health;
 
         return state;
     }
@@ -68,13 +68,7 @@ public class EnemyController : AdvancedFSM
     {
         GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
         playerTransform = objPlayer.transform;
-
-        if (stats == null)
-        { 
-            stats = new EntityStats();
-        }
-
-        //health = new TrackedStat(TrackedStatTypes.HEALTH, 100, 100);
+        health = 50;
         ConstructFSM();
        // text = StateText.text;
     }
@@ -86,7 +80,7 @@ public class EnemyController : AdvancedFSM
         arrowElapsedTime += Time.deltaTime;
         CurrentState.Reason(playerTransform, transform);
         CurrentState.Act(playerTransform, transform);
-        //StateText.text = text + GetStateString();
+        StateText.text = text + GetStateString();
         if (debugDraw)
         {
             UsefullFunctions.DebugRay(transform.position, transform.forward * 5.0f, Color.red);
@@ -99,11 +93,11 @@ public class EnemyController : AdvancedFSM
         //Create States
 
         // Dead State
-        DeadState dead = new DeadState(this);
+
 
         // Chase State
         ChaseState chase = new ChaseState(this);
-        chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
+
 
         // Melee Attack State
 
@@ -116,19 +110,9 @@ public class EnemyController : AdvancedFSM
                                    // AddFSMState(rangedAttack);
                                    // AddFSMState(meleeAttack);   
                                    // AddFSMState(regen);
-        AddFSMState(dead);
+                                   // AddFSMState(dead);
     }
 
 
-    private void OnDestroy()
-    {
-        // When this controller is destroyed, delete the states...
-
-        // Go through all the states added, and delete them
-
-        // This will not be called since the list will be imploded on the destruction of the class.
-        //DeleteState(FSMStateID.Chase);
-        //DeleteState(FSMStateID.Dead);
-    }
 
 }
