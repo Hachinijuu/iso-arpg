@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class PlayerStats : EntityStats
 {
@@ -63,6 +64,7 @@ public class PlayerStats : EntityStats
 
 
     // Gameplay
+    Stat attackRange;
     Stat numProjectiles;
     Stat numChains;
 
@@ -141,8 +143,12 @@ public class PlayerStats : EntityStats
 
     public void LoadAbilities()
     {
-        abilities = playerClass.abilities;
-        identity = playerClass.identityAbility;
+        // Copying the list values into the playable
+        foreach (Ability ab in playerClass.abilities)
+        {
+            abilities.Add(Instantiate(ab));
+        }
+        identity = Instantiate(playerClass.identityAbility);    // Create a 'new' identity based on what the class has for game use
     }
     //public void LoadDefaultMainStats()
     //{

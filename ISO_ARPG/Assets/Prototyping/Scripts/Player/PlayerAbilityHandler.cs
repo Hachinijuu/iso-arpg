@@ -8,6 +8,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     [SerializeField] bool showDebug = false;
     PlayerStats stats;
     PlayerInput input;
+    MouseTarget mouseTarget;
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     bool held;
@@ -64,6 +65,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     {
         stats = GetComponent<PlayerStats>();
         input = GetComponent<PlayerInput>();
+        mouseTarget = GetComponent<MouseTarget>();
 
         // Listen for passive ability activation
 
