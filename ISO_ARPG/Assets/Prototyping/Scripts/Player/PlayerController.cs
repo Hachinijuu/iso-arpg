@@ -16,12 +16,27 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Animator))]                // Animations
 public class PlayerController : MonoBehaviour
 {
+    // Public References
+    // Any classes that need to access player values can find through GameManager's static reference
+
+    public PlayerStats Stats { get { return stats; } }
+    public PlayerInput Input { get { return input; } }
+    public PlayerMovement Movement { get { return Movement; } }
+    public PlayerAbilityHandler AbilityHandler { get { return AbilityHandler; } }
+    public MouseTarget PlayerTarget { get { return playerTarget; } }
+    public AudioSource AudioSource { get { return audioSource; } }
+    public Animator Animator { get { return animator; } }
+    
     #region VARIABLES
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
+    PlayerAbilityHandler handler;
+    MouseTarget playerTarget;
+    AudioSource audioSource;
+    Animator animator;
 
-    // public variables
+
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     #endregion

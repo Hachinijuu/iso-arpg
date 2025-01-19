@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     // Read controls via external game manager script -- cache locally?
-    public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
     public enum MoveInput { CLICK, DIRECTIONAL }
     public MoveInput moveType;
     // CLICK is mouse click to move / hold to move
@@ -51,6 +50,16 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.onMoveChanged += UpdateMoveType;
+    }
+
+    private void UpdateMoveType(MoveInput type)
+    {
+        moveType = type;
+    }
+
     private void OnDestroy()
     {
         UnmapMovementActions();
@@ -84,8 +93,7 @@ public class PlayerMovement : MonoBehaviour
     private void UnmapMovementActions()
     {
         // unmap all regardless of which input is used
-        //input.actions["DirectionalMove"].started -= context => { };
-        //input.actions["DirectionalMove"].canceled -= context => { };
+
         input.actions["MoveConfirmed"].started -= context => { };
         input.actions["MoveConfirmed"].canceled -= context => { };
         input.actions["StopMove"].started -= context => { };
@@ -110,8 +118,6 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleClickToMove()
     {
-
-
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
         {
@@ -169,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
                 GetMoveTarget();            // Get where to move
             }
         }
-        if (canMove)                     // If the player can move
+        if (canMove)                        // If the player can move
         {
             agent.destination = moveTarget;       // Move to the target
             speed = agent.velocity.normalized.magnitude;
@@ -180,32 +186,10 @@ public class PlayerMovement : MonoBehaviour
             HandleRotation();
 
         // Animation handling
-
-        //Vector3 dir = moveTarget - transform.position;
-        //dir.Normalize(); // Normalize the look direction
-        //Debug.Log(dir.magnitude);
-
-        //Debug.Log(agent.velocity.normalized.magnitude);
-
         if (UseAnimations)
         {
             anim.SetFloat("Speed", speed);
         }
-
-        //if (useAnimations)
-        //{
-        //    float curSpeed = agent.velocity.normalized.magnitude;
-        //    if (curSpeed > 0.75)
-        //    {
-        //        // Clamp the value dead on
-        //        curSpeed = 1;
-        //    }
-        //    //Debug.Log(curSpeed);
-        //    anim.SetFloat("Speed", curSpeed);
-        //
-        //}
-
-        // Need to get the magnitude in the movement direction
 
     }
 }

@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager Instance { get { return instance; } }
+
+    private static GameManager instance;
+
+    public static PlayerController controller;
+    public enum GameState { MENU, PLAYING, PAUSE }
+    public GameState currGameState;
+
+    public enum ControlType {  MOUSE_KEYBOARD, CONTROLLER }
+    public ControlType controls;
+
+    public PlayerMovement.MoveInput moveType;
+
+    public delegate void moveChanged(PlayerMovement.MoveInput value);
+    public event moveChanged onMoveChanged;
+
+    void FireMoveChanged (PlayerMovement.MoveInput value) { if (onMoveChanged != null) onMoveChanged(value); }
+
+    private void Awake()
     {
-        
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        moveType = controller.Movement.moveType;
     }
 }
