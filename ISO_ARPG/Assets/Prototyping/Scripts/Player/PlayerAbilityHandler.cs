@@ -28,10 +28,10 @@ public class PlayerAbilityHandler : MonoBehaviour
 
         // For single use abilities, can use .performed event
         // For channel abilities, need to listen to both .started and .canceled
-        for (int i = 1; i <= stats.abilities.Count; i++)
+        for (int i = 1; i <= stats.Abilities.Count; i++)
         {
             string keyName = "Ab" + i;
-            Ability ab = stats.abilities[i - 1];
+            Ability ab = stats.Abilities[i - 1];
             if (ab is ChannelAbility)
             {
                 input.actions[keyName].started += context => { AbilityBegan(ab); };
@@ -45,10 +45,10 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     void UnmapPlayerActions()
     {
-        for (int i = 1; i <= stats.abilities.Count; i++)
+        for (int i = 1; i <= stats.Abilities.Count; i++)
         {
             string keyName = "Ab" + i;
-            Ability ab = stats.abilities[i - 1];
+            Ability ab = stats.Abilities[i - 1];
             if (ab is ChannelAbility)
             {
                 input.actions[keyName].started -= context => { AbilityBegan(ab); };
@@ -71,7 +71,7 @@ public class PlayerAbilityHandler : MonoBehaviour
 
         if (stats != null)
         {
-            if (stats.abilities.Count > 0)
+            if (stats.Abilities.Count > 0)
             {
                 InitAbilities();
             }
@@ -103,7 +103,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     }
     public void InitAbilities()
     {
-        foreach (Ability ab in stats.abilities)
+        foreach (Ability ab in stats.Abilities)
         {
             canUseAbility.Add(ab, true);
         }

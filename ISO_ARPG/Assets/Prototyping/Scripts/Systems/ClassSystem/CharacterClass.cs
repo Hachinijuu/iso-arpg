@@ -19,18 +19,6 @@ public class CharacterClass : ScriptableObject
 
     public Image classIcon;
     #endregion
-    // maximum values
-    //#region Constants
-    //public const float MAX_SPEED = 100;
-    //public const float MAX_ROTSPEED = 100;
-    //
-    //public const float MAX_HEALTH = 1000000;
-    //public const float MAX_MANA = 1000000;
-    //public const float MAX_STRENGTH = 1000000;
-    //public const float MAX_AGILITY = 1000000;
-    //public const float MAX_WISDOM = 1000000;
-    //#endregion
-
     #region Stats
 
     [Header("Main Stats")]
@@ -63,8 +51,8 @@ public class CharacterClass : ScriptableObject
 
     #region Abilities
     [Header("Abilities")]
-    public List<Ability> abilities = new List<Ability>();
-    public Ability identityAbility = null;
+    public List<Ability> Abilities = new List<Ability>();
+    public Ability IdentityAbility = null;
     //public float identityCost;                  // what needs to be built up in order to use the identity skill
     #endregion
     #endregion

@@ -22,8 +22,8 @@ public class DebugMenu : MonoBehaviour
         // Players can continously press the buttons even though the timer has not yet completed, causing the timer to reset its display
         // This can be remedied by the AbilityHandler sending information to the UI of it's internal cooldown count. (most likely solution)
 
-        stats.Class.abilities[0].onAbilityEnded += ListenTimer;
-        stats.Class.abilities[1].onAbilityEnded += ListenTimer;
+        stats.Abilities[0].onAbilityEnded += ListenTimer;
+        stats.Abilities[1].onAbilityEnded += ListenTimer;
     }
 
     public void ResetMana()
@@ -44,7 +44,7 @@ public class DebugMenu : MonoBehaviour
     IEnumerator StatCountdown(Ability onCd)
     {
         bool loop = true;
-        if (onCd == stats.Class.abilities[0])
+        if (onCd == stats.Abilities[0])
         {
             ab1Timer = onCd.Cooldown;
             while (loop)
@@ -55,7 +55,7 @@ public class DebugMenu : MonoBehaviour
                 yield return null;
             }
         }
-        else if (onCd == stats.Class.abilities[1])
+        else if (onCd == stats.Abilities[1])
         {
             ab2Timer = onCd.Cooldown;
             while (loop)

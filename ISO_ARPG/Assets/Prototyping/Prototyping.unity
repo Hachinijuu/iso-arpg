@@ -195,6 +195,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00564a47bf91b53468d38b5cdc5f5e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  healthSlider: {fileID: 865930895}
+  manaSlider: {fileID: 600516862}
+  ab1:
+    abImage: {fileID: 1278865239}
+    name: {fileID: 1609204775}
+    description: {fileID: 0}
+    cost: {fileID: 0}
+    cooldown: {fileID: 0}
+  ab2:
+    abImage: {fileID: 960839855}
+    name: {fileID: 1929964271}
+    description: {fileID: 0}
+    cost: {fileID: 0}
+    cooldown: {fileID: 0}
+  idAbility:
+    abImage: {fileID: 1795245101}
+    name: {fileID: 1841243482}
+    description: {fileID: 0}
+    cost: {fileID: 0}
+    cooldown: {fileID: 0}
 --- !u!114 &299004900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1452,7 +1473,6 @@ GameObject:
   - component: {fileID: 985346025}
   - component: {fileID: 985346024}
   - component: {fileID: 985346027}
-  - component: {fileID: 985346028}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1560,18 +1580,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 919132149059551869}
   damage: 5
---- !u!114 &985346028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985346022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b656406d1882ff0489809ca88a65a446, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &992080804
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,7 +2573,6 @@ GameObject:
   - component: {fileID: 1364620300}
   - component: {fileID: 1364620299}
   - component: {fileID: 1364620302}
-  - component: {fileID: 1364620303}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2673,18 +2680,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 919132149059551869}
   damage: 5
---- !u!114 &1364620303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364620297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b656406d1882ff0489809ca88a65a446, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1378349044
 GameObject:
   m_ObjectHideFlags: 0

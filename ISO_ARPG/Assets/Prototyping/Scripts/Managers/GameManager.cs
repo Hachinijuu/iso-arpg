@@ -29,6 +29,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        moveType = controller.Movement.moveType;
+        if (controller == null)
+        { 
+            controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        }
+
+        if (controller != null)
+        { 
+            moveType = controller.Movement.moveType;
+        }
     }
 }

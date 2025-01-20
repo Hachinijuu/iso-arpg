@@ -9,14 +9,15 @@ public class PlayerStats : EntityStats
 
     [SerializeField] Ability ID_Fusion;             // the selected fusion to add passively
 
-
-
     // Any additional abilities the player can get through gameplay
     public List<PassiveAbility> passives;
 
     // Instead of casting abilities through the playerClass, load the abilities into this class
+
+    //public List<Ability> Abilities { get { return abilities; } }
+    public List<Ability> Abilities;
     
-    public List<Ability> abilities;
+    //private List<Ability> abilities;
     public Ability Identity { get { return identity; } }
     Ability identity;
     
@@ -83,10 +84,10 @@ public class PlayerStats : EntityStats
     SubStat dodge;
     #endregion
 
-    public void Awake()
+    public void Start()
     {
-        LoadDefaultClassStats();
-        LoadAbilities();
+        //LoadDefaultClassStats();
+        //LoadAbilities();
         //LoadStats();
     }
 
@@ -94,6 +95,8 @@ public class PlayerStats : EntityStats
     {
         // this will load stats externally keeping player progress, for now just LoadStats wrapper
         //LoadStats();
+        LoadDefaultClassStats();
+        LoadAbilities();
     }
 
     public void LoadStats()
@@ -112,7 +115,7 @@ public class PlayerStats : EntityStats
 
         health = new TrackedStat(playerClass.Health);
         mana = new TrackedStat(playerClass.Mana);
-        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
+        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.IdentityAbility.Cost);
 
         // main stats
         strength = new MainStat(playerClass.Strength);
@@ -144,11 +147,11 @@ public class PlayerStats : EntityStats
     public void LoadAbilities()
     {
         // Copying the list values into the playable
-        foreach (Ability ab in playerClass.abilities)
+        foreach (Ability ab in playerClass.Abilities)
         {
-            abilities.Add(Instantiate(ab));
+            Abilities.Add(Instantiate(ab));
         }
-        identity = Instantiate(playerClass.identityAbility);    // Create a 'new' identity based on what the class has for game use
+        identity = Instantiate(playerClass.IdentityAbility);    // Create a 'new' identity based on what the class has for game use
     }
     //public void LoadDefaultMainStats()
     //{

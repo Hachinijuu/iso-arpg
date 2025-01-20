@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
 
     public PlayerStats Stats { get { return stats; } }
     public PlayerInput Input { get { return input; } }
-    public PlayerMovement Movement { get { return Movement; } }
-    public PlayerAbilityHandler AbilityHandler { get { return AbilityHandler; } }
+    public PlayerMovement Movement { get { return movement; } }
+    public PlayerAbilityHandler AbilityHandler { get { return handler; } }
     public MouseTarget PlayerTarget { get { return playerTarget; } }
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
@@ -81,11 +81,11 @@ public class PlayerController : MonoBehaviour
     // DEBUG FUNCTIONS
     public void ResetAbilityUsage() // will reset used flags for all abilities
     {
-        foreach (Ability ab in stats.Class.abilities)
+        foreach (Ability ab in stats.Class.Abilities)
         {
             canUseAbility[ab] = true;
         }
-        canUseAbility[stats.Class.identityAbility] = true;
+        canUseAbility[stats.Class.IdentityAbility] = true;
     }
 
     #endregion
