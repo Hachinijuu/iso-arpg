@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
@@ -8,8 +6,8 @@ public class Hurtbox : MonoBehaviour
     // IT WILL BE FLESHED ONCE STAT LOADING AND CHARACTER INFORMATION IS ORGANIZED
 
     // Get a reference to the health on the specified object
-    [SerializeField] EntityStats stats;
-    
+    [SerializeField] protected EntityStats stats;
+
     //TrackedStat health;
 
     // Start is called before the first frame update
@@ -21,7 +19,7 @@ public class Hurtbox : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         stats.Health.Value -= damage;
         Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");
