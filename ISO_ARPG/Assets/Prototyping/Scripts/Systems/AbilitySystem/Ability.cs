@@ -32,6 +32,8 @@ public abstract class Ability : ScriptableObject
     public string Name { get { return abilityName; } }
     public string Description { get { return abilityDescription; } }
     public float Cooldown { get { return cooldown; } }
+    public float CurrCooldown { get { return currCooldown; } set { currCooldown = value; FireCooldownChanged(currCooldown); } }
+    public bool OnCooldown { get { return currCooldown > 0; } }
     public float Cost { get { return cost; } }
     public bool StopsMovement { get { return stopsMovement; } }
     #endregion
@@ -59,6 +61,9 @@ public abstract class Ability : ScriptableObject
 
     [Header("Audio")]
     [SerializeField] protected AudioClip abilityActivated;
+
+    // Internals
+    protected float currCooldown;
     #endregion
     #endregion
 
@@ -91,8 +96,12 @@ public abstract class Ability : ScriptableObject
     public delegate void AbilityEnded(AbilityEventArgs args);
     public event AbilityEnded onAbilityEnded;
 
+    public delegate void CooldownChanged(float value);
+    public event CooldownChanged onCooldownChanged;
+
     private void FireAbilityUsed(AbilityEventArgs e) { if (onAbilityUsed != null) onAbilityUsed(e); }
     private void FireAbilityEnded(AbilityEventArgs e) { if (onAbilityEnded != null) onAbilityEnded(e); }
+    private void FireCooldownChanged(float value) { if (onCooldownChanged != null) onCooldownChanged(value); }
 
 
     #endregion

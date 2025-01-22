@@ -172,7 +172,7 @@ public class PlayerAbilityHandler : MonoBehaviour
             StopCoroutine("HandleHeld");        // Stop the handle held coroutine
             // ONLY start the cooldown if the ability CAN BE USED
 
-            if (!canUseAbility[ab])
+            if (!ab.OnCooldown) // Only put it on cooldown if it's not already on cooldown
                 StartCoroutine(HandleCooldown(ab)); // Start the cooldown for the ability
             if (showDebug) Debug.Log("[AbilityHandler]: " + ab.Name + " ended");    // Output ability ended
         }
@@ -253,7 +253,21 @@ public class PlayerAbilityHandler : MonoBehaviour
         // With this wrapper functionality, PlayerAbilityHandler do calculations here (if CDR) and have updated cooldown values.
         // If theres a reference to the HUD controller, then the HUD's cooldown can also be called here for 1:1 timer
 
-        yield return new WaitForSeconds(used.Cooldown); // Wait for the cooldown time
+        // FUNCTION REWRITTEN TO CONTAIN ACTIVE COOLDOWN INSTEAD OF WAIT FOR SECONDS
+        // THIS ALLOWS FOR CENTRALIZED COOLDOWN NUMBERS, INSTEAD OF CAUSING EACH SCRIPT TO HANDLE THEIR OWN COOLDOWNS ON ABILITYENDED
+        bool onCd = true;
+        float currTime = used.Cooldown;
+        do
+        {
+            currTime -= Time.deltaTime;
+            used.CurrCooldown = currTime;
+            if (currTime < 0)
+                onCd = false;
+            yield return new WaitForEndOfFrame();
+        }
+        while (onCd);
+
+        //yield return new WaitForSeconds(used.Cooldown); // Wait for the cooldown time
         canUseAbility[used] = true;                     // Allow usage again (time has passed)
     }
 }

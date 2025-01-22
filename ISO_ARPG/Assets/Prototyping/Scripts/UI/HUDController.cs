@@ -1,30 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-
-[System.Serializable]
-public class UIAbility
-{
-    public Image abImage;
-    public TMP_Text name;
-    public TMP_Text description;
-    public TMP_Text cost;
-    public TMP_Text cooldown;
-    public void LoadFromAbility(Ability toLoad)
-    {
-        Debug.Log("[HUD]: Loading " + toLoad.name);
-        abImage = toLoad.Icon;
-        name.text = toLoad.Name;
-        //description.text = toLoad.Description;
-        //cost.text = toLoad.Cost;
-        //cooldown.text = toLoad.Cooldown;
-    }
-}
 
 public class HUDController : MonoBehaviour
 {
+    [SerializeField] Camera cam;
     [SerializeField] PlayerController player;
 
     [SerializeField] Slider healthSlider;
@@ -43,13 +23,13 @@ public class HUDController : MonoBehaviour
     private void Start()
     {
         if (player == null)
-        { 
+        {
             // If the player controller is not assigned in editor, find the component through the player
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
 
         if (player != null)
-        { 
+        {
             playerStats = player.Stats;
             health = playerStats.Health;
             mana = playerStats.Mana;
@@ -57,7 +37,7 @@ public class HUDController : MonoBehaviour
 
         if (healthSlider != null)
             UpdateHealthSlider(health.Value);
-        else    
+        else
             Debug.LogWarning("[HUD]: Health slider missing reference");
 
         if (manaSlider != null)
@@ -65,37 +45,8 @@ public class HUDController : MonoBehaviour
         else
             Debug.LogWarning("[HUD]: Health slider missing reference");
 
-        AddEventListeners();
         LoadAbilities();
-    }
-
-    // EVENT FUNCTIONALITY
-    private void AddEventListeners()
-    {
-        playerStats.Health.Changed += UpdateHealthSlider;
-        playerStats.Mana.Changed += UpdateManaSlider;
-    }
-
-    private void RemoveEventListeners()
-    { 
-        playerStats.Health.Changed -= UpdateHealthSlider;
-        playerStats.Mana.Changed -= UpdateManaSlider;
-    }
-
-
-    // UI FUNCTIONS
-    public void UpdateHealthSlider(float value)
-    {
-        // With these changes, it is possible to interpolate from old value to new values (show the change gradually rather than snap)
-
-        healthSlider.maxValue = health.MaxValue;
-        healthSlider.value = value;
-    }
-
-    public void UpdateManaSlider(float value)
-    { 
-        manaSlider.maxValue = mana.MaxValue;
-        manaSlider.value = value;
+        AddEventListeners();
     }
 
     public void LoadAbilities()
@@ -107,4 +58,144 @@ public class HUDController : MonoBehaviour
             idAbility.LoadFromAbility(playerStats.Identity);
         }
     }
+
+    // EVENT MAPPING
+    private void AddEventListeners()
+    {
+        playerStats.Health.Changed += UpdateHealthSlider;
+        playerStats.Mana.Changed += UpdateManaSlider;
+        AddCooldownListeners();
+    }
+
+    private void RemoveEventListeners()
+    {
+        playerStats.Health.Changed -= UpdateHealthSlider;
+        playerStats.Mana.Changed -= UpdateManaSlider;
+    }
+
+    public void AddCooldownListeners()
+    {
+        playerStats.Abilities[0].onCooldownChanged += context => 
+        { UpdateCooldownSlider(ab1, context); ShowCooldownText(ab1, playerStats.Abilities[0]); UpdateCooldownText(ab1, context); };
+        playerStats.Abilities[1].onCooldownChanged += context => 
+        { UpdateCooldownSlider(ab2, context); ShowCooldownText(ab2, playerStats.Abilities[1]); UpdateCooldownText(ab2, context); };
+        playerStats.Identity.onCooldownChanged += context => 
+        { UpdateCooldownSlider(idAbility, context); ShowCooldownText(idAbility, playerStats.Identity); UpdateCooldownText(idAbility, context); };
+    }
+
+    public void RemoveCooldownListeners()
+    {
+        playerStats.Abilities[0].onCooldownChanged -= context => { UpdateCooldownSlider(ab1, context); UpdateCooldownText(ab1, context); };
+        playerStats.Abilities[1].onCooldownChanged -= context => { UpdateCooldownSlider(ab2, context); UpdateCooldownText(ab2, context); };
+        playerStats.Identity.onCooldownChanged -= context => { UpdateCooldownSlider(idAbility, context); UpdateCooldownText(idAbility, context); };
+    }
+
+    // UI FUNCTIONS
+    public void UpdateHealthSlider(float value)
+    {
+        // With these changes, it is possible to interpolate from old value to new values (show the change gradually rather than snap)
+
+        healthSlider.maxValue = health.MaxValue;
+        healthSlider.value = value;
+    }
+
+    public void UpdateManaSlider(float value)
+    {
+        manaSlider.maxValue = mana.MaxValue;
+        manaSlider.value = value;
+    }
+
+    public void ShowCooldownText(UIAbility ui, Ability ab)
+    {
+        ui.cooldown.gameObject.SetActive(ab.OnCooldown);
+    }
+
+    public void UpdateCooldownSlider(UIAbility ui, float value)
+    {
+        ui.cooldown.text = Mathf.RoundToInt(value).ToString();
+    }
+
+    public void UpdateCooldownText(UIAbility ui, float value)
+    {
+        ui.cd_slider.value = value;
+    }
+
+    // Multipurpose to be implemented in editor
+    // When clicked it sets the specified component to active displaying the onscreen element
+    public void ToggleUIElement(GameObject toToggle)
+    {
+        if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
+            toToggle.SetActive(true);
+        else                                // If it is active, shut it off
+            toToggle.SetActive(false);
+    }
+
+    public void ToggleUIElementShift(GameObject toToggle)
+    {
+        RectTransform rt = toToggle.GetComponent<RectTransform>();
+
+        if (rt != null)
+        {
+            Rect newCam = new Rect (0,0,1,1);
+            if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
+            {
+                toToggle.SetActive(true);
+                newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
+            }
+            else                                // If it is active, shut it off
+            { 
+                toToggle.SetActive(false);
+            }
+            cam.rect = newCam;
+        }
+    }
+
+    public void ShiftCamera(GameObject offset)
+    { 
+        RectTransform rt = offset.GetComponent<RectTransform>();
+
+        if (rt != null)
+        {
+            // do some math to setup camera
+            Rect newCam = new Rect(0, 0, 1, 1);
+            newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
+            cam.rect = newCam;
+        }
+    }
+
+    //IEnumerator ShiftCamera(Rect target)
+    //{
+    //    float buffer = 0.05f;
+    //
+    //    // do some math to get interpolation targets
+    //
+    //    float moveFactor = 0.025f;
+    //    int moveWidth = 1;
+    //    int moveHeight = 1;
+    //
+    //    // if the target is less, we want to decrease
+    //    if (target.width < cam.rect.width)
+    //    {
+    //        moveWidth = -1;
+    //    }
+    //
+    //    Rect newCam = cam.rect;
+    //    bool shifted = false;
+    //    do
+    //    {
+    //        // once it is close enough, lock the values
+    //        newCam.width += (moveFactor * moveWidth) * Time.deltaTime;
+    //        if (newCam.width + buffer > cam.rect.width || newCam.width + buffer < cam.rect.width)
+    //        {
+    //            shifted = true;
+    //            newCam = target;
+    //        }
+    //
+    //
+    //        cam.rect = newCam;
+    //        yield return new WaitForEndOfFrame();
+    //    }
+    //    while (!shifted);
+    //
+    //}
 }
