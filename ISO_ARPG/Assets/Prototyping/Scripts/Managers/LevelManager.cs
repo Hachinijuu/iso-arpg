@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
+public struct CellIndex
+{
+    // Custom container for index, uses INT instead of Vector2 float
+    public int x;
+    public int y;
+
+    public CellIndex(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+}
+
+[System.Serializable]
 public class Cell 
 {
     public int x;
@@ -10,7 +25,6 @@ public class Cell
     public Vector3 position;    // this is the centre of the cell in gamespace
     public Bounds boundingBox;
     public bool isObstacle = false;
-
     public Cell()
     {
         x = 0;
@@ -46,6 +60,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int numEnemies;
     [SerializeField] private int numDestructibles;
 
+    [SerializeField] private Cell playerCell;
+
     public List<string> gridBlockTags;
 
     [Header("Debug")]
@@ -58,7 +74,7 @@ public class LevelManager : MonoBehaviour
     // This would allow the AI manager and destructibles to be spawned randomly throughout the level
     
     // Grid info
-    private Vector3 origin;
+    [SerializeField] private Vector3 origin;
     public Cell[,] cells; // 2D array of grid cells  
     public GameObject[] obstacles;
     private List<Collider> obstacleColliders;
@@ -66,6 +82,7 @@ public class LevelManager : MonoBehaviour
     int gColumns;
 
     // Gameplay info
+    PlayerController player;                // Reference to the player
     List<GameObject> levelEnemies;          // The enemies to spawn in this level
     List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
     float timeSpent;                        // The time spent in the level
@@ -97,6 +114,11 @@ public class LevelManager : MonoBehaviour
 
     public void Start()
     {
+        player = GameManager.controller;
+        if (player == null)
+            Debug.Log("[LevelManager]: Failed to reference player");
+
+        playerCell = GetCellFromIndex(GetIndexFromPoint(player.transform.position));
         StartCoroutine(HandlePlayLevel());
     }
 
@@ -107,7 +129,11 @@ public class LevelManager : MonoBehaviour
         while (!levelComplete)
         {
             timeSpent += Time.deltaTime;
-            yield return new WaitForFixedUpdate();
+            //GetIndexFromPoint(player.transform.position);
+            //GetIndexFromPosition(player.transform.position);
+            UpdatePlayerCell();
+            //Debug.Log(timeSpent);
+            yield return null;
         }
     }
 
@@ -146,7 +172,7 @@ public class LevelManager : MonoBehaviour
         {
             for (int col = 0; col < gColumns; col++)
             {
-                Cell cell = new Cell(row, col);
+                Cell cell = new Cell(col, row);
                 Vector3 cellPos = origin;
                 cellPos.x += (cellSize * row);
                 cellPos.z -= (cellSize * col);
@@ -196,6 +222,81 @@ public class LevelManager : MonoBehaviour
     {
         return toCheck.boundingBox.Contains(point);
     }
+
+    // Active Grid allows grid tiles to detect real-time gameplay information
+    // This will provide the player location
+
+    public void UpdatePlayerCell()
+    {
+        if (playerCell != null) // if the player cell has already been found
+        {
+            // check the magnitude between the player and the cell
+            // if the magnitude is NOT larger than the size of a cell,
+            //Debug.Log((Vector3.SqrMagnitude(playerCell.position - player.transform.position)) > cellSize);
+            //Debug.Log(!(Vector3.SqrMagnitude(playerCell.position - player.transform.position) > cellSize));
+            if (!(Vector3.SqrMagnitude(playerCell.position - player.transform.position) > cellSize))
+            {
+                return;
+            }
+            else
+            {
+                CellIndex cellIndex = GetIndexFromPoint(player.transform.position);
+                playerCell = GetCellFromIndex(cellIndex);
+            }
+        }
+    }
+
+    public bool PointInBounds(Vector3 point)
+    {
+        float width = gRows * cellSize;
+        float height = gColumns * cellSize;
+
+        return ((point.x >= origin.x) && (point.x <= (origin.x + width)) &&
+                (point.z <= origin.z) && (point.z >= (origin.z - height)));
+    }
+    public CellIndex GetIndexFromPoint(Vector3 pos)
+    {
+        // SHOULD ADD CHECK TO PREVENT A SEARCH POS IN NON PLAYSPACE
+        Debug.Log(PointInBounds(pos));
+        if (PointInBounds(pos))
+        {
+            pos -= origin; // gets the difference between the point and the origin
+
+            // start counting the rows and columns from the grid point
+            int row = (int)(pos.x / cellSize);
+            int col = (int)(pos.z / cellSize);
+
+            // based on where the origin is, normalize the values to be non-negative
+            if (origin.x < 0)
+                col *= -1;
+            else
+                row *= -1;
+
+            return new CellIndex(row, col);
+        }
+        return new CellIndex(-1, -1); // return a vector with an INVALID location in the array
+    }
+
+    // Get the cell given two int values
+    public Cell GetCellFromIndex(int x, int y)
+    {
+        if (x != -1 && y != -1)
+        {
+            return cells[x, y];
+        }
+        return null;
+    }
+
+    // Get the cell given a package of 2 int values
+    public Cell GetCellFromIndex(CellIndex packIndex)
+    {
+        if (packIndex.x != -1 && packIndex.y != -1)
+        {
+            return cells[packIndex.x, packIndex.y];
+        }
+        return null;
+    }
+
     #endregion
     private void OnDrawGizmos() 
     {
@@ -208,9 +309,9 @@ public class LevelManager : MonoBehaviour
             {
                 Vector3 cell;
                 if (DrawFullTile)
-                    cell = new Vector3(cellSize, 0.125f, cellSize);
+                    cell = new Vector3(cellSize, 0, cellSize);
                 else
-                    cell = new Vector3(cellSize / cellSize, 0.125f, cellSize / cellSize);
+                    cell = new Vector3(cellSize / cellSize, 0, cellSize / cellSize);
                 for (int row = 0; row < gRows; row++)
                 {
                     for (int col = 0; col < gColumns; col++)
@@ -230,7 +331,7 @@ public class LevelManager : MonoBehaviour
                         Cell currentCell = cells[row,col];
 
                         if (!currentCell.isObstacle)
-                            Gizmos.DrawWireCube(currentCell.boundingBox.center, currentCell.boundingBox.size);
+                            Gizmos.DrawWireCube(currentCell.position, cell);
                     }
                 }
             }

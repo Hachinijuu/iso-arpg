@@ -3038,10 +3038,19 @@ MonoBehaviour:
   cellTrim: 1
   numEnemies: 0
   numDestructibles: 0
+  playerCell:
+    x: 0
+    y: 0
+    position: {x: 0, y: 0, z: 0}
+    boundingBox:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    isObstacle: 0
   gridBlockTags:
   - Obstacles
   ShowCubes: 1
   DrawFullTile: 1
+  origin: {x: 0, y: 0, z: 0}
   obstacles:
   - {fileID: 604482112}
 --- !u!4 &1118122321
@@ -5413,6 +5422,10 @@ PrefabInstance:
     - target: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
       propertyPath: m_Name
       value: M_Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6208220367471519025, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
       propertyPath: m_LocalPosition.x
