@@ -31,8 +31,8 @@ public class CircleUtility
             Vector3 posOnCircle;
 
             posOnCircle.x = Mathf.Cos(Mathf.Deg2Rad * angle);
-            posOnCircle.y = Mathf.Sin(Mathf.Deg2Rad * angle);
-            posOnCircle.z = 0;
+            posOnCircle.z = Mathf.Sin(Mathf.Deg2Rad * angle);
+            posOnCircle.y = 0;
             circlePositions.Add(posOnCircle);
             angle += ANGLE_INC;
         }

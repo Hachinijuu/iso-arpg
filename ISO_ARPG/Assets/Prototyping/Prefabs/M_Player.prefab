@@ -1974,8 +1974,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f0048b53123414db878088c62b3465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health:
+    value: -1
+    type: 0
+    maxValue: 0
   playerClass: {fileID: 0}
   ID_Fusion: {fileID: 0}
+  passives: []
+  Abilities: []
 --- !u!114 &7147149295602361087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2041,6 +2047,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveType: 0
+  moveMask:
+    serializedVersion: 2
+    m_Bits: 0
   rotationSpeed: 20
 --- !u!114 &524167332827663909
 MonoBehaviour:

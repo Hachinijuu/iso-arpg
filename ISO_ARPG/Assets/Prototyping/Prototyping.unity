@@ -3134,8 +3134,8 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
-      maxSpawn: 50
-      minSpawn: 20
+      maxSpawn: 150
+      minSpawn: 125
     destructiblesToSpawn: []
   levelArea: {fileID: 1704307633}
   cellSize: 5
@@ -5256,7 +5256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overFlowThreshold: 1.5
   bufferThreshold: 1.5
-  spawnDistance: 25
+  minSpawnDistance: 10
+  maxSpawnDistance: 15
   enemyPools:
   - {fileID: 1247245237}
   - {fileID: 1118024428}

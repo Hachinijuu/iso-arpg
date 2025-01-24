@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -23,8 +25,12 @@ public class AIManager : MonoBehaviour
 
     [SerializeField] float overFlowThreshold = 2.0f;    // if there is this much more, it is considered overflow (multiply, 1 = 1)
     [SerializeField] float bufferThreshold = 1.5f;      // buffer value (multipled, 1 = 1)
-    [SerializeField] float spawnDistance = 5.0f;
+
+    [SerializeField] float minSpawnDistance = 2.5f;
+    [SerializeField] float maxSpawnDistance = 5.0f;
     [SerializeField] ObjectPool[] enemyPools;
+
+    private List <Vector3> spawnLocations;
 
     #region UNITY FUNCTIONS
     void Start()
@@ -95,6 +101,7 @@ public class AIManager : MonoBehaviour
     {
         // Get the cell the player is in
         // Build a circle, spawn enemy bundles at those positions
+        spawnLocations = new List<Vector3>();
         foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
         {
             GameObject enemy = group.entity;
@@ -106,21 +113,27 @@ public class AIManager : MonoBehaviour
                     int numEnemies = Random.Range(group.minSpawn, group.maxSpawn);
                     for (int i = 0; i < numEnemies; i++)
                     {
+                        int rotIndex = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
+                        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+
+                        // Getting the rotation around the player
                         if (player != null)
                         {
-                            Vector3 offsetPos = player.transform.position * spawnDistance;
-                            Vector3 spawnPos = offsetPos;
-                            int rotIndex = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
-                            spawnPos.x = offsetPos.x + (CircleUtility.CircleListInstance[rotIndex].x);
-                            spawnPos.x = offsetPos.x + (CircleUtility.CircleListInstance[rotIndex].x);
-                            spawnPos.y = LevelManager.Instance.FloorOffset;
+                            Vector3 offsetPos = player.transform.position + (player.transform.forward * spawnDistance);
+                            Vector3 spawnPos= player.transform.position;
 
+                            spawnPos.x += (CircleUtility.CircleListInstance[rotIndex].x * spawnDistance);
+                            spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z* spawnDistance);
+                            spawnPos.y = LevelManager.Instance.FloorOffset;
+                            spawnLocations.Add(spawnPos);
+                            Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
                             GameObject enemyGroup = pool.GetPooledObject();
                             if (enemyGroup != null)
                             {
                                 enemyGroup.transform.position = spawnPos;
                                 enemyGroup.SetActive(true);
                             }
+                            yield return new WaitForSeconds(0.25f);
                         }
                     }
                 }
@@ -133,4 +146,25 @@ public class AIManager : MonoBehaviour
         yield return null;
     }
     #endregion
+
+    Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f); 
+    private void OnDrawGizmos() 
+    {
+        Gizmos.color = Color.magenta;
+        if (spawnLocations != null && spawnLocations.Count > 0)
+        {
+            foreach (Vector3 pos in spawnLocations)
+            {
+                Gizmos.DrawCube(pos, cubeSize);
+            }
+        }
+        if (CircleUtility.CircleListInstance != null && CircleUtility.CircleListInstance.Count > 0)
+        {
+            Gizmos.color = Color.green;
+            foreach (Vector3 dot in CircleUtility.CircleListInstance)
+            {
+                Gizmos.DrawCube(dot, cubeSize);
+            }
+        }    
+    }
 }
