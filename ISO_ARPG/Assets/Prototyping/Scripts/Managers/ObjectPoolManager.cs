@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjectPoolManager : MonoBehaviour
 {
+
+    // MAY GET RID OF THIS CLASS AND HAVE EACH RESPECTIVE MANAGER HANDLER THEIR OWN OBJECT POOLS
+    // PROBABLY MORE ORGANIZED TO STRUCTURE WITH RESPECTIVE POOLS
     public enum PoolTypes { PROJECTILE }
     public static ObjectPoolManager Instance { get { return instance; } }
     private static ObjectPoolManager instance;

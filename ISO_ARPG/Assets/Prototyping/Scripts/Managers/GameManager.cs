@@ -20,12 +20,27 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-    public static PlayerController controller;
-    public enum GameState { MENU, PLAYING, PAUSE }
+    public PlayerController Player { get {return controller; } }
+    private PlayerController controller;
+    public enum GameState { MENU, LOADING, PLAYING, PAUSE }
     public GameState currGameState;
 
     public enum eLevel { HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
     public eLevel level;
+
+    // references to managers
+    //public DestructibleManager DestructManager {get { return destructManager; } }
+    //[SerializeField] DestructibleManager destructManager;    // THIS WILL EXIST PERSISTENTLY
+    //
+    //public AIManager AIManager { get { return aiManager; } }
+    //[SerializeField] AIManager aiManager;                    // THIS WILL EXIST PERSISTENTLY
+    //
+    //public LevelManager LevelManager { get { return levelManager; } }
+    //[SerializeField] LevelManager levelManager;              // THIS WILL EXIST IN THE SCENE
+
+    // Logic Sequence:
+    // When loading into a level, get the levelManager and it's information to use in the destructManager and aiManager
+    // GameManager acts as an inital bridge
 
     public enum ControlType {  MOUSE_KEYBOARD, CONTROLLER }
     public ControlType controls;
@@ -50,7 +65,6 @@ public class GameManager : MonoBehaviour
         { 
             controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
-
         if (controller != null)
         { 
             moveType = controller.Movement.moveType;

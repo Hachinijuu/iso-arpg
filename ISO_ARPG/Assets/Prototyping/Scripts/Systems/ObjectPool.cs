@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
-{
-    public static ObjectPool Instance {get {return instance;}}
-    private static ObjectPool instance;
-
+{//
+    //public static ObjectPool Instance { get { return instance; } }
+    //private static ObjectPool instance;
+    public GameObject Prefab { get { return pooledPrefab; } } 
     [SerializeField] GameObject pooledPrefab;
     public List<GameObject> pooledObjects;
+    [SerializeField] int minPooledObjects = 2;
     [SerializeField] int numPooledObjects = 5;
 
+    public bool CanGrow { get {return canGrow; } set { canGrow = value; } }
     [SerializeField] bool canGrow = false;
 
     private void Awake()
     {
-        instance = this;
+        // /instance = this;
     }
 
     private void Start()
@@ -29,6 +31,25 @@ public class ObjectPool : MonoBehaviour
         {
             CreatePooledObject();
         }
+    }
+
+    public void GrowPool(int toAdd)
+    {
+        canGrow = true;
+        for (int i = 0; i < toAdd; i++)
+        {
+            CreatePooledObject();
+        }
+        canGrow = false;
+    }
+    public void ShrinkPool(int toRemove)
+    {
+        if (toRemove > pooledObjects.Count - minPooledObjects)  // If the requested amount to remove would bleed into the minimum
+        {
+            // Calculate the amount to remove to meet the minimum
+            toRemove = pooledObjects.Count - minPooledObjects; // What I have - Amount I need = How much I can take to be left with what I need // 10 - 2 = 8, I can take 8 away from 10 to be left with 2
+        }
+        pooledObjects.RemoveRange(pooledObjects.Count - toRemove, toRemove);    // Index to start from is the end - the amount to remove, remove the amount
     }
 
     GameObject CreatePooledObject()

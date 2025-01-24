@@ -3,41 +3,27 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
-public struct CellIndex
+[System.Serializable]
+public struct EntityNumber
 {
-    // Custom container for index, uses INT instead of Vector2 float
-    public int x;
-    public int y;
-
-    public CellIndex(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
+    public GameObject entity;
+    public int maxSpawn;
+    public int minSpawn;
 }
 
 [System.Serializable]
-public class Cell 
+public class LevelDetails
 {
-    public int x;
-    public int y;
-    public Vector3 position;    // this is the centre of the cell in gamespace
-    public Bounds boundingBox;
-    public bool isObstacle = false;
-    public Cell()
-    {
-        x = 0;
-        y = 0;
-    }
-    public Cell(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
+
+    // Use of lists instead of dictionaries because dictionaries cannot be set in editor
+    public List<EntityNumber> enemiesToSpawn;
+    public List<EntityNumber> destructiblesToSpawn;
 }
 public class LevelManager : MonoBehaviour
 {
+    // Level Managers WILL NOT be persistent
+    // They are bound to a scene and provide the relevant information for the given scene
+    // They will get references to other persistent managers in order to handle certain scenarios
     private static LevelManager instance = null;
     public static LevelManager Instance
     {
@@ -51,18 +37,19 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
-    public int EnemyNumber { get {return numEnemies; } }
-    public int DestructibleNumber { get {return numDestructibles; } }
-    [Header("Settings")]    
+    [Header("Level Settings")]
+    [SerializeField] private LevelDetails details;
+    public LevelDetails Details { get { return details; } }
+
+    public float FloorOffset { get { return floorOffset; } }
+    private float floorOffset = 0.25f;
+
+    [Header("Grid Settings")]    
     [SerializeField] private NavMeshSurface levelArea;
     [SerializeField] private int cellSize = 10;
     [SerializeField] private int cellTrim = 1;
-    [SerializeField] private int numEnemies;
-    [SerializeField] private int numDestructibles;
-
-    [SerializeField] private Cell playerCell;
-
     public List<string> gridBlockTags;
+    private Cell playerCell;
 
     [Header("Debug")]
     public bool ShowCubes;
@@ -83,8 +70,8 @@ public class LevelManager : MonoBehaviour
 
     // Gameplay info
     PlayerController player;                // Reference to the player
-    List<GameObject> levelEnemies;          // The enemies to spawn in this level
-    List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
+    //List<GameObject> levelEnemies;          // The enemies to spawn in this level
+    //List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
     float timeSpent;                        // The time spent in the level
     bool levelComplete = false;
 
@@ -114,7 +101,8 @@ public class LevelManager : MonoBehaviour
 
     public void Start()
     {
-        player = GameManager.controller;
+        if (player == null)
+            player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         if (player == null)
             Debug.Log("[LevelManager]: Failed to reference player");
 
