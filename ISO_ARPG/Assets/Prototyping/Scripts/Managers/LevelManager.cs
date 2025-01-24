@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int cellSize = 10;
     [SerializeField] private int cellTrim = 1;
     public List<string> gridBlockTags;
-    private Cell playerCell;
+    [SerializeField] private Cell playerCell;
 
     [Header("Debug")]
     public bool ShowCubes;
@@ -73,6 +73,8 @@ public class LevelManager : MonoBehaviour
     //List<GameObject> levelEnemies;          // The enemies to spawn in this level
     //List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
     float timeSpent;                        // The time spent in the level
+
+    public bool LevelComplete { get { return levelComplete; } }
     bool levelComplete = false;
 
 

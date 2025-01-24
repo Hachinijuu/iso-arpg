@@ -3134,10 +3134,10 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 5095577007935930100, guid: a5573b8037c797a409af034ff83ae166, type: 3}
-      maxSpawn: 75
+      maxSpawn: 50
       minSpawn: 50
     - entity: {fileID: 3316580897243374200, guid: 5ca3df04d776e3149abb9d69c6203b7e, type: 3}
-      maxSpawn: 75
+      maxSpawn: 50
       minSpawn: 50
     destructiblesToSpawn: []
   levelArea: {fileID: 1704307633}
@@ -3145,6 +3145,14 @@ MonoBehaviour:
   cellTrim: 1
   gridBlockTags:
   - Obstacles
+  playerCell:
+    x: 0
+    y: 0
+    position: {x: 0, y: 0, z: 0}
+    boundingBox:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    isObstacle: 0
   ShowCubes: 1
   DrawFullTile: 1
   origin: {x: 0, y: 0, z: 0}
@@ -5261,6 +5269,7 @@ MonoBehaviour:
   bufferThreshold: 1.5
   minSpawnDistance: 20
   maxSpawnDistance: 40
+  updateInterval: 0.5
   spawnInterval: 0.01
   enemyPools:
   - {fileID: 1247245237}

@@ -19,13 +19,15 @@ public class AIManager : MonoBehaviour
 
     // AI Manager gets the information from the level manager, get a reference to the level manager, can also use the instance
     PlayerController player;
-    LevelManager levelManager;
+    //LevelManager levelManager;
 
     [SerializeField] float overFlowThreshold = 2.0f;    // if there is this much more, it is considered overflow (multiply, 1 = 1)
     [SerializeField] float bufferThreshold = 1.5f;      // buffer value (multipled, 1 = 1)
 
     [SerializeField] float minSpawnDistance = 2.5f;
     [SerializeField] float maxSpawnDistance = 5.0f;
+
+    [SerializeField] float updateInterval = 0.5f;
 
     [Range(0, 3.0f)]
     [SerializeField] float spawnInterval = 1.0f;
@@ -143,10 +145,46 @@ public class AIManager : MonoBehaviour
         }
         yield return null;
     }
+
+    // Commands will be sent on intervals based on the distance from the player
+    // See Level Manager Cell/Grid System for spacing and boundaries
     IEnumerator SendCommands()
     {
+        // While the level has not ended, send out commands to enemies
+        while (!LevelManager.Instance.LevelComplete)
+        {
+
+        }
         yield return null;
     }
+
+    // Modify FSM to include update frequency variable
+    // This will determine how often the FSM updates
+
+    // Need flocking behaviours in chase state to stay next to the leader of the unit group
+    // This will keep the update and behaviour of the unit's relatively similar
+
+    // When dying, make use of events for transitions, because otherwise the FSM will rely on update variables
+    // This reliance will cause enemies not to die even if they have ran out of health.
+
+    // Have an event for the interval changed event, this will change all of the intervals of the FSM's IN THE BUNDLE
+    // Upon spawning, the update interval will be set based on the distance
+    // Every now and then update the interval values
+    // Or whenever the player enters the player ranges, update their intervals
+
+    private void UpdatePlayerValue(GameObject leader)
+    {
+        EnemyController enemyControl = null;
+        enemyControl.GetComponent<EnemyController>();
+
+        // Because the expense is at the SET DESTINATION
+        // (Path Recalcuation)
+        // Call the path updates and recalcuations here, sending the data to the enemy controller
+
+        // Or, reduce FSM update frequency of the enemy controllers.
+        // Look at FSM base class, and tweak the update frequency based on the distance
+    }
+
     #endregion
 
     Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f);
