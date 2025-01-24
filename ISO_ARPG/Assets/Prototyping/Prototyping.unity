@@ -3097,10 +3097,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dc3ee4713c6224899f06d0869c7799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledPrefab: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
+  pooledPrefab: {fileID: 3316580897243374200, guid: 5ca3df04d776e3149abb9d69c6203b7e, type: 3}
   pooledObjects: []
   minPooledObjects: 2
-  numPooledObjects: 150
+  numPooledObjects: 100
   canGrow: 0
 --- !u!1 &1118122319
 GameObject:
@@ -3133,9 +3133,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   details:
     enemiesToSpawn:
-    - entity: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
-      maxSpawn: 150
-      minSpawn: 125
+    - entity: {fileID: 5095577007935930100, guid: a5573b8037c797a409af034ff83ae166, type: 3}
+      maxSpawn: 75
+      minSpawn: 50
+    - entity: {fileID: 3316580897243374200, guid: 5ca3df04d776e3149abb9d69c6203b7e, type: 3}
+      maxSpawn: 75
+      minSpawn: 50
     destructiblesToSpawn: []
   levelArea: {fileID: 1704307633}
   cellSize: 5
@@ -3820,10 +3823,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dc3ee4713c6224899f06d0869c7799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledPrefab: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
+  pooledPrefab: {fileID: 5095577007935930100, guid: a5573b8037c797a409af034ff83ae166, type: 3}
   pooledObjects: []
   minPooledObjects: 2
-  numPooledObjects: 150
+  numPooledObjects: 100
   canGrow: 0
 --- !u!1 &1263357573
 GameObject:
@@ -5256,8 +5259,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overFlowThreshold: 1.5
   bufferThreshold: 1.5
-  minSpawnDistance: 10
-  maxSpawnDistance: 15
+  minSpawnDistance: 20
+  maxSpawnDistance: 40
+  spawnInterval: 0.01
   enemyPools:
   - {fileID: 1247245237}
   - {fileID: 1118024428}

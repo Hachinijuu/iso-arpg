@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour
     public float FloorOffset { get { return floorOffset; } }
     private float floorOffset = 0.25f;
 
-    [Header("Grid Settings")]    
+    [Header("Grid Settings")]
     [SerializeField] private NavMeshSurface levelArea;
     [SerializeField] private int cellSize = 10;
     [SerializeField] private int cellTrim = 1;
@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
 
     // Level manager builds a grid for other systems in the level to utilize
     // This would allow the AI manager and destructibles to be spawned randomly throughout the level
-    
+
     // Grid info
     [SerializeField] private Vector3 origin;
     public Cell[,] cells; // 2D array of grid cells  
@@ -75,18 +75,18 @@ public class LevelManager : MonoBehaviour
     float timeSpent;                        // The time spent in the level
     bool levelComplete = false;
 
-    
+
     // TODO:
     // add local difficulty scaling
 
 
-// UNITY FUNCTIONS
-    private void Awake() 
+    // UNITY FUNCTIONS
+    private void Awake()
     {
         InitLevel();
     }
 
-// LEVEL MANAGER FUNCTIONS
+    // LEVEL MANAGER FUNCTIONS
     public void InitLevel()
     {
         GetObstacles();
@@ -200,8 +200,8 @@ public class LevelManager : MonoBehaviour
             {
                 for (int j = 0; j < gColumns; j++)
                 {
-                    if (col.bounds.Intersects(cells[i,j].boundingBox))
-                        cells[i,j].isObstacle = true;
+                    if (col.bounds.Intersects(cells[i, j].boundingBox))
+                        cells[i, j].isObstacle = true;
                 }
             }
         }
@@ -245,7 +245,7 @@ public class LevelManager : MonoBehaviour
     public CellIndex GetIndexFromPoint(Vector3 pos)
     {
         // SHOULD ADD CHECK TO PREVENT A SEARCH POS IN NON PLAYSPACE
-        Debug.Log(PointInBounds(pos));
+        //Debug.Log(PointInBounds(pos));
         if (PointInBounds(pos))
         {
             pos -= origin; // gets the difference between the point and the origin
@@ -286,7 +286,7 @@ public class LevelManager : MonoBehaviour
     }
 
     #endregion
-    private void OnDrawGizmos() 
+    private void OnDrawGizmos()
     {
         if (ShowCubes)
         {
@@ -316,7 +316,7 @@ public class LevelManager : MonoBehaviour
                             if (col % 2 == 0)
                                 Gizmos.color = Color.blue;
                         }
-                        Cell currentCell = cells[row,col];
+                        Cell currentCell = cells[row, col];
 
                         if (!currentCell.isObstacle)
                             Gizmos.DrawWireCube(currentCell.position, cell);

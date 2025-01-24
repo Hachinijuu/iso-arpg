@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class AIManager : MonoBehaviour 
+public class AIManager : MonoBehaviour
 {
     private static AIManager instance = null;
     public static AIManager Instance
@@ -28,9 +26,12 @@ public class AIManager : MonoBehaviour
 
     [SerializeField] float minSpawnDistance = 2.5f;
     [SerializeField] float maxSpawnDistance = 5.0f;
+
+    [Range(0, 3.0f)]
+    [SerializeField] float spawnInterval = 1.0f;
     [SerializeField] ObjectPool[] enemyPools;
 
-    private List <Vector3> spawnLocations;
+    private List<Vector3> spawnLocations;
 
     #region UNITY FUNCTIONS
     void Start()
@@ -44,7 +45,7 @@ public class AIManager : MonoBehaviour
     // level manager will send out data to all the enemies within the level
     // get rid of the object pool manager and have this level manager builds the pools accordingly
 
-#region SCENE LOADS
+    #region SCENE LOADS
     // When a level (scene) is loading, call this function
     public void LevelLoading()
     {
@@ -54,7 +55,7 @@ public class AIManager : MonoBehaviour
         // Get the number of enemies in the pool * overflowThreshold
         // If it is over the threshold, remove some enemies
         // If it is not, do not adjust the pool
-        
+
         //BalanceEnemyNumbers();
         StartCoroutine(SpawnEnemies());
     }
@@ -96,7 +97,7 @@ public class AIManager : MonoBehaviour
     {
 
     }
-#endregion
+    #endregion
     IEnumerator SpawnEnemies()
     {
         // Get the cell the player is in
@@ -105,6 +106,7 @@ public class AIManager : MonoBehaviour
         foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
         {
             GameObject enemy = group.entity;
+            Debug.Log("[AIManager]: Spawning " + enemy.name);
             foreach (ObjectPool pool in enemyPools)
             {
                 // Cycle the number of enemies to spawn
@@ -120,20 +122,20 @@ public class AIManager : MonoBehaviour
                         if (player != null)
                         {
                             Vector3 offsetPos = player.transform.position + (player.transform.forward * spawnDistance);
-                            Vector3 spawnPos= player.transform.position;
+                            Vector3 spawnPos = player.transform.position;
 
                             spawnPos.x += (CircleUtility.CircleListInstance[rotIndex].x * spawnDistance);
-                            spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z* spawnDistance);
+                            spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z * spawnDistance);
                             spawnPos.y = LevelManager.Instance.FloorOffset;
                             spawnLocations.Add(spawnPos);
-                            Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
+                            //Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
                             GameObject enemyGroup = pool.GetPooledObject();
                             if (enemyGroup != null)
                             {
                                 enemyGroup.transform.position = spawnPos;
                                 enemyGroup.SetActive(true);
                             }
-                            yield return new WaitForSeconds(0.25f);
+                            yield return new WaitForSeconds(spawnInterval);
                         }
                     }
                 }
@@ -147,8 +149,8 @@ public class AIManager : MonoBehaviour
     }
     #endregion
 
-    Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f); 
-    private void OnDrawGizmos() 
+    Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f);
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
         if (spawnLocations != null && spawnLocations.Count > 0)
@@ -165,6 +167,6 @@ public class AIManager : MonoBehaviour
             {
                 Gizmos.DrawCube(dot, cubeSize);
             }
-        }    
+        }
     }
 }
