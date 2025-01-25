@@ -3117,7 +3117,7 @@ MonoBehaviour:
   pooledPrefab: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
   pooledObjects: []
   minPooledObjects: 2
-  numPooledObjects: 250
+  numPooledObjects: 100
   canGrow: 0
 --- !u!1 &1118122319
 GameObject:
@@ -3151,11 +3151,11 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
-      maxSpawn: 250
-      minSpawn: 250
+      maxSpawn: 100
+      minSpawn: 100
     - entity: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
-      maxSpawn: 250
-      minSpawn: 250
+      maxSpawn: 100
+      minSpawn: 100
     destructiblesToSpawn: []
   levelArea: {fileID: 1704307633}
   cellSize: 5
@@ -3851,7 +3851,7 @@ MonoBehaviour:
   pooledPrefab: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
   pooledObjects: []
   minPooledObjects: 2
-  numPooledObjects: 250
+  numPooledObjects: 100
   canGrow: 0
 --- !u!1 &1263357573
 GameObject:
@@ -5473,14 +5473,14 @@ MonoBehaviour:
   - {fileID: 1118024428}
   spawnInterval: 0.01
   nearInterval:
-    range: 25
+    range: 15
     time: 0.25
   regularInterval:
     range: 50
-    time: 0.75
+    time: 0.5
   farInterval:
     range: 75
-    time: 3
+    time: 1
 --- !u!1 &1909425051
 GameObject:
   m_ObjectHideFlags: 0

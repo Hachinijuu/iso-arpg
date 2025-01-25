@@ -25,6 +25,8 @@ public class EnemyController : AdvancedFSM
     [HideInInspector]
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
 
+    [SerializeField] Hurtbox hurtbox;
+
     // public SlotManager playerSlotManager;
 
     private string GetStateString()
@@ -63,22 +65,27 @@ public class EnemyController : AdvancedFSM
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
     }
-
     protected override void Initialize()
     {
         GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
-        playerTransform = objPlayer.transform;
-
+        playerTransform = objPlayer.transform; 
         if (stats == null)
         { 
             stats = new EntityStats();
+        }  
+         //health = new TrackedStat(TrackedStatTypes.HEALTH, 100, 100);
+        ConstructFSM();
+        // text = StateText.text;   
+        if (hurtbox == null)
+        {
+            hurtbox = GetComponentInChildren<Hurtbox>();
         }
 
-        //health = new TrackedStat(TrackedStatTypes.HEALTH, 100, 100);
-        ConstructFSM();
-       // text = StateText.text;
+        if (hurtbox != null)
+        {
+            hurtbox.onDamaged += DamageTaken;
+        }
     }
-
 
     protected override void FSMUpdate()
     {
@@ -119,7 +126,15 @@ public class EnemyController : AdvancedFSM
         AddFSMState(dead);
     }
 
-
+    // Event function so the health checks are not dependent on update loop
+    private void DamageTaken(float value)
+    {
+        if (stats.Health.Value <= 0)
+        {
+            PerformTransition(Transition.NoHealth);
+            Debug.Log("Died");
+        }
+    }
     private void OnDestroy()
     {
         // When this controller is destroyed, delete the states...

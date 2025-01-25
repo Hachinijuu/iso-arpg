@@ -58,14 +58,14 @@ public class ChaseState : FSMState
        //     destPos = enemyControl.playerSlotManager.GetSlotPosition(availableSlotIndex);
        // }
         //NPC DEATH
-        if (enemyControl.stats.Health.Value == 0)
-        {
-            // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.gameObject);
-            Debug.Log("[ChaseState]: Performing death transition");
-            enemyControl.PerformTransition(Transition.NoHealth);
-
-            return;
-        }
+        //if (enemyControl.stats.Health.Value == 0)
+        //{
+        //    // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.gameObject);
+        //    Debug.Log("[ChaseState]: Performing death transition");
+        //    enemyControl.PerformTransition(Transition.NoHealth);
+//
+        //    return;
+        //}
       //  // ORDER DOES MATTER
       //  //PLAYER IS IN MELEE RANGE
       //  if (IsInCurrentRange(npc, destPos, EnemyController.MELEEATTACK_DIST))

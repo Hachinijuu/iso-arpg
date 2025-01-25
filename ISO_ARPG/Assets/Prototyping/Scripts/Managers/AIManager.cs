@@ -68,6 +68,7 @@ public class AIManager : MonoBehaviour
         if (player == null)
             player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
+        InitDistanceGroups();
         LevelLoading();
     }
 
@@ -86,7 +87,7 @@ public class AIManager : MonoBehaviour
         // If it is not, do not adjust the pool
 
         //BalanceEnemyNumbers();
-        //StartCoroutine(SpawnInitialBatch());
+        //StartCoroutine(SpawnInitialBatch());\
         SpawnInitialEnemies();
     }
 
@@ -144,35 +145,37 @@ public class AIManager : MonoBehaviour
         spawnLocations = new List<Vector3>();
         foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
         {
-            GameObject enemy = group.entity;
-            Debug.Log("[AIManager]: Spawning " + enemy.name);
+            GameObject enemyToSpawn = group.entity;
+            Debug.Log("[AIManager]: Spawning " + enemyToSpawn.name);
             foreach (ObjectPool pool in enemyPools)
             {
                 // Cycle the number of enemies to spawn
-                if (pool.Prefab == enemy)
+                if (pool.Prefab == enemyToSpawn)
                 {
                     int numEnemies = Random.Range(group.minSpawn, group.maxSpawn);
                     for (int i = 0; i < numEnemies; i++)
                     {
                         int rotIndex = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
                         float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-
                         // Getting the rotation around the player
                         if (player != null)
                         {
                             Vector3 offsetPos = player.transform.position + (player.transform.forward * spawnDistance);
                             Vector3 spawnPos = player.transform.position;
-
                             spawnPos.x += (CircleUtility.CircleListInstance[rotIndex].x * spawnDistance);
                             spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z * spawnDistance);
                             spawnPos.y = LevelManager.Instance.FloorOffset;
                             spawnLocations.Add(spawnPos);
                             //Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
-                            GameObject enemyGroup = pool.GetPooledObject();
-                            if (enemyGroup != null)
+                            GameObject agent = pool.GetPooledObject();
+                            if (agent != null)
                             {
-                                enemyGroup.transform.position = spawnPos;
-                                enemyGroup.SetActive(true);
+                                agent.transform.position = spawnPos;
+                                // Place the unit into a group based on their position;
+                                float distance = (spawnPos - player.transform.position).sqrMagnitude;
+                                AssignGameObjectToGroup(agent, distance);
+                                //Debug.Log("Distance: " + distance + " vs Offset: " + offsetPos.sqrMagnitude);
+                                agent.SetActive(true);
                             }
                             yield return new WaitForSeconds(spawnInterval);
                         }
@@ -181,8 +184,10 @@ public class AIManager : MonoBehaviour
             }
         }
         yield return null;
-        // Once the batch has been spawned, initialize them into groups
-        InitDistanceGroups();
+        foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
+        {
+            Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
+        }
     }
 
     // Regular spawnning throughout the level as the enemies die
@@ -192,11 +197,35 @@ public class AIManager : MonoBehaviour
         distanceGroups.Add(nearInterval, new List<EnemyController>());
         distanceGroups.Add(regularInterval, new List<EnemyController>());
         distanceGroups.Add(farInterval, new List<EnemyController>());
-        StartCoroutine(AssignToGroups());
+        //StartCoroutine(AssignToGroups());
 
-        foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
+        //foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
+        //{
+        //    Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
+        //}
+    }
+
+    public void AssignGameObjectToGroup(GameObject go, float distance)
+    {
+        EnemyController controller  = go.GetComponent<EnemyController>();
+        
+        if (distance > farInterval.range * farInterval.range)       // if the agent is far from the player
         {
-            Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
+            controller.UpdateInterval = farInterval.range;
+            controller.PhysicsInterval = farInterval.range;
+            distanceGroups[farInterval].Add(controller);
+        }
+        else if (distance < nearInterval.range * nearInterval.range) // if the agent is close to the player
+        {
+            controller.UpdateInterval = nearInterval.time;
+            controller.PhysicsInterval = nearInterval.time;
+            distanceGroups[nearInterval].Add(controller);
+        }
+        else    // the agent is not too far, and not too close
+        {
+            controller.UpdateInterval = regularInterval.time;
+            controller.PhysicsInterval = regularInterval.time;  
+            distanceGroups[regularInterval].Add(controller);
         }
     }
 
