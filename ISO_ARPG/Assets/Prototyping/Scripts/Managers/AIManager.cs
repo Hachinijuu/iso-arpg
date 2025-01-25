@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public struct UpdateInterval
+{
+    public int range;
+    public float time;
+}
 public class AIManager : MonoBehaviour
 {
     private static AIManager instance = null;
@@ -21,21 +28,41 @@ public class AIManager : MonoBehaviour
     PlayerController player;
     //LevelManager levelManager;
 
+    [Header("Spawning Settings")]
+    [Tooltip("Should enemies spawn?")]
+    [SerializeField] bool spawnEnemies;
+    [Tooltip("How much overflow a pool can reserve")]
     [SerializeField] float overFlowThreshold = 2.0f;    // if there is this much more, it is considered overflow (multiply, 1 = 1)
+    [Tooltip("How much buffer the pools should provide")]
     [SerializeField] float bufferThreshold = 1.5f;      // buffer value (multipled, 1 = 1)
-
+    [Tooltip("Minimum distance from the player an Agent can spawn")]
     [SerializeField] float minSpawnDistance = 2.5f;
+    [Tooltip("Maximum distance from the player an Agent can spawn")]
     [SerializeField] float maxSpawnDistance = 5.0f;
-
-    [SerializeField] float updateInterval = 0.5f;
-
-    [Range(0, 3.0f)]
-    [SerializeField] float spawnInterval = 1.0f;
+    [Tooltip("The pools of enemies that can be spawned")]
     [SerializeField] ObjectPool[] enemyPools;
+    [Tooltip("Time between spawning")]
+    [Range(0, 3.0f)][SerializeField] float spawnInterval = 1.0f;
 
+    [Header("Update Intervals")]
+    public UpdateInterval nearInterval;
+    public UpdateInterval regularInterval;
+    public UpdateInterval farInterval;
+
+
+    // Instead of prefab updates, organize enemies into these distance groups which will dictate their frequency
+    // Whenever a player enters a check based on the groups the distances
+    Dictionary<UpdateInterval, List<EnemyController>> distanceGroups;
     private List<Vector3> spawnLocations;
 
+
+
     #region UNITY FUNCTIONS
+
+    void Awake()
+    {
+        distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
+    }
     void Start()
     {
         if (player == null)
@@ -59,7 +86,8 @@ public class AIManager : MonoBehaviour
         // If it is not, do not adjust the pool
 
         //BalanceEnemyNumbers();
-        StartCoroutine(SpawnEnemies());
+        //StartCoroutine(SpawnInitialBatch());
+        SpawnInitialEnemies();
     }
 
     private void BalanceEnemyNumbers()
@@ -100,7 +128,16 @@ public class AIManager : MonoBehaviour
 
     }
     #endregion
-    IEnumerator SpawnEnemies()
+
+    // Wrapper function
+    private void SpawnInitialEnemies()
+    {
+        if (spawnEnemies)
+        {
+            StartCoroutine(SpawnInitialBatch());
+        }
+    }
+    IEnumerator SpawnInitialBatch()
     {
         // Get the cell the player is in
         // Build a circle, spawn enemy bundles at those positions
@@ -144,7 +181,82 @@ public class AIManager : MonoBehaviour
             }
         }
         yield return null;
+        // Once the batch has been spawned, initialize them into groups
+        InitDistanceGroups();
     }
+
+    // Regular spawnning throughout the level as the enemies die
+    
+    public void InitDistanceGroups()
+    {
+        distanceGroups.Add(nearInterval, new List<EnemyController>());
+        distanceGroups.Add(regularInterval, new List<EnemyController>());
+        distanceGroups.Add(farInterval, new List<EnemyController>());
+        StartCoroutine(AssignToGroups());
+
+        foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
+        {
+            Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
+        }
+    }
+
+    // This is the inital assignments, for dynamic updates during runtime use UpdateDistanceGroups
+    IEnumerator AssignToGroups()
+    {
+        foreach (ObjectPool pool in enemyPools)
+        {
+            // For each enemy pool, all the enemies in the pool need to be sorted into groups.
+            if (pool.isActiveAndEnabled)
+            {
+                foreach (GameObject obj in pool.pooledObjects)
+                {
+                    // Check the distance from this obj to the player, the value will determine which group the enemy is assigned to
+                    float distance = (obj.transform.position - player.transform.position).sqrMagnitude;
+                    EnemyController controller = obj.GetComponent<EnemyController>();
+                    //Debug.Log("Distance: " + distance);
+
+                    // Ranges are squared since using square magnitude
+                    if (distance > farInterval.range * farInterval.range)       // if the agent is far from the player
+                    {
+                        controller.UpdateInterval = farInterval.range;
+                        controller.PhysicsInterval = farInterval.range;
+                        distanceGroups[farInterval].Add(controller);
+                    }
+                    else if (distance < nearInterval.range * nearInterval.range) // if the agent is close to the player
+                    {
+                        controller.UpdateInterval = nearInterval.time;
+                        controller.PhysicsInterval = nearInterval.time;
+                        distanceGroups[nearInterval].Add(controller);
+                    }
+                    else                                    // the agent is not too far, and not too close
+                    {
+                        controller.UpdateInterval = regularInterval.time;
+                        controller.PhysicsInterval = regularInterval.time;  
+                        distanceGroups[regularInterval].Add(controller);
+                    }
+                }
+            }
+            yield return null;
+        }
+    }
+
+    //IEnumerator UpdateDistanceGroups()
+    //{
+    //    // Do a staggered update of the distance groups, checking if the enemies should shift to a different one.
+    //    foreach (KeyValuePair<UpdateInterval, List<EnemyController>> group in distanceGroups)
+    //    {
+    //        // cycle through th List in the group, and check the distances
+    //        foreach (EnemyController enemy in group.Value)
+    //        {
+    //            if (enemy.transform.position.sqrMagnitude <= group.Key.range)
+    //            {
+    //                enemy
+    //            }
+    //        }
+    //    }
+//
+    //}
+
 
     // Commands will be sent on intervals based on the distance from the player
     // See Level Manager Cell/Grid System for spacing and boundaries
@@ -175,8 +287,12 @@ public class AIManager : MonoBehaviour
     private void UpdatePlayerValue(GameObject leader)
     {
         EnemyController enemyControl = null;
-        enemyControl.GetComponent<EnemyController>();
+        enemyControl = leader.GetComponent<EnemyController>();
 
+        if (enemyControl != null)
+        {
+            
+        }
         // Because the expense is at the SET DESTINATION
         // (Path Recalcuation)
         // Call the path updates and recalcuations here, sending the data to the enemy controller

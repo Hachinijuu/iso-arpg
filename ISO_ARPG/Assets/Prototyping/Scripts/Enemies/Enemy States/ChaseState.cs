@@ -79,7 +79,6 @@ public class ChaseState : FSMState
       //      moving = false; //close to the player so stop moving
       //      enemyControl.PerformTransition(Transition.ReachPlayer);
       //  }
-       
     }
     //Act
     public override void Act(Transform player, Transform npc)

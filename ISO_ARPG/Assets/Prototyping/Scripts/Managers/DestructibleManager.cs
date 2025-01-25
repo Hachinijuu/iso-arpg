@@ -23,7 +23,6 @@ public class DestructibleManager : MonoBehaviour
     // When a level (scene) is loading, call this function
     public void LevelLoading()
     {
-       
 
     }
 

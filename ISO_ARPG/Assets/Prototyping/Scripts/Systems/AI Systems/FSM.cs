@@ -15,10 +15,10 @@ public class FSM : MonoBehaviour
     protected float updateTime;
     protected float physicsTime;
 
-    public float UpdateInterval { get { return updateInterval; } }
+    public float UpdateInterval { get { return updateInterval; } set { updateInterval = value; } }
     protected float updateInterval;
 
-    public float PhysicsInterval { get { return physicsInterval; } }
+    public float PhysicsInterval { get { return physicsInterval; } set { physicsInterval = value; } }
     protected float physicsInterval;
 
     protected virtual void Initialize()

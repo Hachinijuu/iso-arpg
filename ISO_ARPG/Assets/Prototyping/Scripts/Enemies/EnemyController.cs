@@ -130,5 +130,4 @@ public class EnemyController : AdvancedFSM
         //DeleteState(FSMStateID.Chase);
         //DeleteState(FSMStateID.Dead);
     }
-
 }
