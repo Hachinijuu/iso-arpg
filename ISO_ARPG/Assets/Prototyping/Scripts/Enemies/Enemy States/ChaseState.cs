@@ -5,31 +5,41 @@ using UnityEngine;
 public class ChaseState : FSMState
 {
     
-    EnemyController enemyControl;
+    EnemyController controller;
     Animator anim;
     bool moving;
     int availableSlotIndex;
     float speed;
 
-  public ChaseState(EnemyController enemy)
-  {
+    float square_rangeDist;
+    float square_meleeDist;
+    float square_chaseDist;
+    public ChaseState(EnemyController enemy)
+    {
         stateID = FSMStateID.Chase;
         curSpeed = 3.0f;        
-        enemyControl = enemy;
+        controller = enemy;
         moving = true;
-        enemyControl.navMeshAgent.speed = curSpeed;
-        anim = enemyControl.GetComponent<Animator>();
+        controller.navMeshAgent.speed = curSpeed;
+        anim = controller.GetComponent<Animator>();
         availableSlotIndex = -1;
 
-  }
+        square_rangeDist = EnemyController.RANGEATTACK_DIST * EnemyController.RANGEATTACK_DIST;
+        square_meleeDist = EnemyController.MELEEATTACK_DIST * EnemyController.MELEEATTACK_DIST;
+        square_chaseDist = EnemyController.CHASE_DIST * EnemyController.CHASE_DIST;
+    }
     public override void EnterStateInit()
     {
         // Enter State
         moving = true;
         //Release slot position
        // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
-        enemyControl.navMeshAgent.speed = curSpeed;
+        controller.navMeshAgent.speed = curSpeed;
         availableSlotIndex = -1;
+
+        if (moving)
+            controller.navMeshAgent.isStopped = false;  // Allow the agent to move
+
 
         //  enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
         // availableSlotIndex = -1;
@@ -46,7 +56,7 @@ public class ChaseState : FSMState
     //Reason
     public override void Reason(Transform player, Transform npc)
     {
-        destPos = player.position;
+
 
         //Release slot position
        // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
@@ -79,6 +89,23 @@ public class ChaseState : FSMState
       //      moving = false; //close to the player so stop moving
       //      enemyControl.PerformTransition(Transition.ReachPlayer);
       //  }
+
+        // If the player has entered the ranged attack range, transition to the ranged state
+        float dist = GetSquareDistance(npc, destPos);
+        // Ranged attack range is greater than melee, less than or equal to ranged
+        if (dist > square_rangeDist && dist <= EnemyController.RANGEATTACK_DIST)
+        {
+            controller.PerformTransition(Transition.ReachPlayer);
+        }
+        // If the player has entered the melee attack range, transition to the melee attack state
+        else if (dist <= square_meleeDist)
+        {
+            controller.PerformTransition(Transition.PlayerReached);
+        }
+        else
+        {
+            destPos = player.position;
+        }
     }
     //Act
     public override void Act(Transform player, Transform npc)
@@ -89,14 +116,14 @@ public class ChaseState : FSMState
         //Snap
         //enemyControl.navMeshAgent.transform.rotation = targetRotation; 
         // Slower Rotation
-        enemyControl.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime );
+        controller.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime );
         if (moving)
         {
 
             destPos = player.position;
             //move to destination
-            enemyControl.navMeshAgent.destination = destPos;
-            speed = enemyControl.navMeshAgent.velocity.magnitude;
+            controller.navMeshAgent.destination = destPos;
+            speed = controller.navMeshAgent.velocity.magnitude;
             anim.SetFloat("Speed",speed);
             //Debug.Log("Chase");
         }

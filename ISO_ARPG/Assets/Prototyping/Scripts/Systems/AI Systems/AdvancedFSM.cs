@@ -11,9 +11,10 @@ using UnityEngine;
 public enum Transition
 {
     None = 0,
-    SeePlayer,
-    ReachPlayer,
-    NoHealth,
+    ChasePlayer,        // Agent to chase the player
+    PlayerReached,      // Player has reached the agent
+    ReachPlayer,        // Agent has reached the player
+    NoHealth,           // Agent has no health remaining
 }
 public enum FSMStateID
 {
@@ -84,7 +85,7 @@ public class AdvancedFSM : FSM
             return;
         }
 
-        // Search the List and delete the state if it´s inside it
+        // Search the List and delete the state if itï¿½s inside it
         foreach (FSMState state in fsmStates)
         {
             if (state.ID == fsmState)
@@ -98,7 +99,7 @@ public class AdvancedFSM : FSM
     // <summary>
     /// This method tries to change the state the FSM is in based on
     /// the current state and the transition passed. If current state
-    ///  doesn´t have a target state for the transition passed, 
+    ///  doesnï¿½t have a target state for the transition passed, 
     /// an ERROR message is printed.
     /// </summary>
     public void PerformTransition(Transition trans)
@@ -129,4 +130,20 @@ public class AdvancedFSM : FSM
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        switch(currentStateID)
+        {
+            case FSMStateID.Chase:
+                Gizmos.color = Color.yellow;
+            break;
+            case FSMStateID.MeleeAttack:
+                Gizmos.color = Color.red;
+            break;
+            case FSMStateID.RangedAttack:
+                Gizmos.color = Color.blue;
+            break;
+        }
+        Gizmos.DrawSphere(transform.position, 0.25f);
+    }
 }

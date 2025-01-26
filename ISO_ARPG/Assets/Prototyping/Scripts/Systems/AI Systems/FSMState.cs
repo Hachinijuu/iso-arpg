@@ -12,7 +12,7 @@ using UnityEngine;
 /// which state the FSM should be if a transition is fired while this state
 /// is the current state.
 /// Reason method is used to determine which transition should be fired .
-/// Act method has the code to perform the actions the NPC is supposed to do if it´s on this state.
+/// Act method has the code to perform the actions the NPC is supposed to do if itï¿½s on this state.
 /// </summary>
 
 public abstract class FSMState
@@ -36,8 +36,8 @@ public abstract class FSMState
 
     }
 
-    /// This method deletes a pair transition-state from this state´s map.
-    /// If the transition was not inside the state´s map, an ERROR message is printed.
+    /// This method deletes a pair transition-state from this stateï¿½s map.
+    /// If the transition was not inside the stateï¿½s map, an ERROR message is printed.
 
     public void DeleteTransition(Transition trans)
     {
@@ -54,7 +54,7 @@ public abstract class FSMState
             map.Remove(trans);
             return;
         }
-        Debug.LogError("FSMState ERROR: Transition passed was not on this State´s List");
+        Debug.LogError("FSMState ERROR: Transition passed was not on this Stateï¿½s List");
     }
 
     /// This method returns the new state the FSM should be if
@@ -105,12 +105,21 @@ public abstract class FSMState
     protected virtual bool IsInCurrentRange(Transform trans, Vector3 pos, int range)
     {
         bool inRange = false;
-        float dist = Vector3.Distance(trans.position, pos);
-        if (dist <= range)
+        //float dist = Vector3.Distance(trans.position, pos);
+        // Vector3.Distance is the same as (a-b).magnitude -- instead, use squared magnitudes so square root is not used
+    
+        float dist = (trans.position - pos).sqrMagnitude;
+
+        if (dist <= (range * range))
         {
             inRange = true;
         }
         return inRange;
+    }
+
+    protected virtual float GetSquareDistance(Transform pos, Vector3 goal)
+    {
+        return (pos.position - goal).sqrMagnitude;
     }
 
 }

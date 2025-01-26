@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DeadState : FSMState
 {
-    EnemyController enemyControl;
+    EnemyController controller;
 
-    public DeadState(EnemyController enemy)
+    public DeadState(EnemyController npc)
     { 
         stateID = FSMStateID.Dead;
-        enemyControl = enemy;
+        controller = npc;
     }
 
     public override void EnterStateInit()
@@ -18,10 +18,10 @@ public class DeadState : FSMState
 
         // Upon entering the state, check if I should be dead
 
-        Debug.Log("[DeathState]: Entity died.");
-        if (enemyControl.stats.Health.Value <= 0)
+        Debug.Log("[FSM_DeathState]: Entity died.");
+        if (controller.stats.Health.Value <= 0)
         { 
-            enemyControl.gameObject.SetActive(false);       // Set the GameObject to false (returned to pool)
+            controller.gameObject.SetActive(false);       // Set the GameObject to false (returned to pool)
 
             // Consideration, individual enemies are set inactive - units, causing them to be inactive
             // When the pooledObject is found, it sets the bundles to active, not the children within the bundles.

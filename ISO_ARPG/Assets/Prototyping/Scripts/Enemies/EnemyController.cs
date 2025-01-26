@@ -5,61 +5,21 @@ using UnityEngine.UI;
 
 public class EnemyController : AdvancedFSM
 {
-    public const int MELEEATTACK_DIST = 35;
-    public const int RANGEATTACK_DIST = 55;
-    public const int CHASE_DIST = 80;
+    public const int MELEEATTACK_DIST = 15;
+    public const int RANGEATTACK_DIST = 30;
+    public const int CHASE_DIST = 50;
 
     public bool debugDraw;
-    public Text StateText;
-    private string text;
-
-    //Set/Get/Decrement/Add to Health functions
-
     public EntityStats stats;
-    //public int health;
-    //public int GetHealth() { return health; }
-    //public void SetHealth(int inHealth) { health = inHealth; }
-    //public void DecHealth(int amount) { health = Mathf.Max(0, health - amount); }
-    //public void AddHealth(int amount) { health = Mathf.Min(100, health + amount); }
 
     [HideInInspector]
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
 
-    [SerializeField] Hurtbox hurtbox;
+    [SerializeField] protected Animator anim;
+    public Animator Anim { get { return anim; } }
+    [SerializeField] protected Hurtbox hurtbox;
 
     // public SlotManager playerSlotManager;
-
-    private string GetStateString()
-    {
-        string state = "NONE";
-        if (CurrentState.ID == FSMStateID.Dead)
-        {
-            state = "DEAD";
-        }
-        
-        else if (CurrentState.ID == FSMStateID.Chase)
-        {
-            state = "CHASING";
-        }
-
-        else if (CurrentState.ID == FSMStateID.RangedAttack)            
-        {
-            state = "RANGEDATTACK";
-        }
-        else if (CurrentState.ID == FSMStateID.MeleeAttack)
-        {
-            state = "MELEEATTACK";
-        }
-        
-        else if (CurrentState.ID == FSMStateID.Regenerating)
-        {
-            state = "REGENERATING";
-        }
-
-        //state = state + " H " + health;
-
-        return state;
-    }
     private void Awake()
     {
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -89,28 +49,41 @@ public class EnemyController : AdvancedFSM
 
     protected override void FSMUpdate()
     {
-        if (CurrentState == null) return;
-        arrowElapsedTime += Time.deltaTime;
-        CurrentState.Reason(playerTransform, transform);
-        CurrentState.Act(playerTransform, transform);
+        if (CurrentState == null) return;                   // If no state is active, do nothing in this function
+        CurrentState.Reason(playerTransform, transform);    // If a state exists, make the decision
+        CurrentState.Act(playerTransform, transform);       // Then act out the decision
         //StateText.text = text + GetStateString();
         if (debugDraw)
         {
             UsefullFunctions.DebugRay(transform.position, transform.forward * 5.0f, Color.red);
         }
     }
-    private void ConstructFSM()
-    {
 
+    // Construct FSM is virutal, so unique enemy controllers can derive and modify which states they use.
+    // This is a wrapper function to get the order correct
+    protected virtual void ConstructFSM()
+    {
         // TODO: Fill in the States
         //Create States
 
         // Dead State
         DeadState dead = new DeadState(this);
 
-        // Chase State
+        // TEMPORARY, MOVE ADDITIONAL STATES TO DERIVED CLASSES
         ChaseState chase = new ChaseState(this);
-        chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
+        chase.AddTransistion(Transition.PlayerReached, FSMStateID.RangedAttack);
+        chase.AddTransistion(Transition.ReachPlayer, FSMStateID.MeleeAttack);
+
+        MeleeAttackState melee = new MeleeAttackState(this);
+        melee.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
+
+        RangedAttackState ranged = new RangedAttackState(this);
+        ranged.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
+        ranged.AddTransistion(Transition.PlayerReached, FSMStateID.MeleeAttack);
+
+        // Chase State
+        //ChaseState chase = new ChaseState(this);
+        //chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
 
         // Melee Attack State
 
@@ -119,11 +92,14 @@ public class EnemyController : AdvancedFSM
         // Regenerate State
 
         // ADD all states here
-        AddFSMState(chase);        // Starting state
+        //AddFSMState(chase);        // Starting state
                                    // AddFSMState(rangedAttack);
                                    // AddFSMState(meleeAttack);   
                                    // AddFSMState(regen);
+        AddFSMState(chase);
         AddFSMState(dead);
+        AddFSMState(melee);
+        AddFSMState(ranged);
     }
 
     // Event function so the health checks are not dependent on update loop

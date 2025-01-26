@@ -7,11 +7,6 @@ public class FSM : MonoBehaviour
 
     // Destination Position
     protected Vector3 destPos;
-
-    //Arrow Firing Rate
-    protected float arrowShootRate;
-    protected float arrowElapsedTime;
-
     protected float updateTime;
     protected float physicsTime;
 
