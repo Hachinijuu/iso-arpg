@@ -259,6 +259,11 @@ public class AIManager : MonoBehaviour
         {
             // Check each enemy in the current distance group and evaluate if they should be moved
             // Use a for loop since the size is being modified
+
+            // This is inefficient when it comes to large sizes,
+            // Cut this value into batches to make it more manageable
+
+            // If I have a group of 600, I am possibly doing 600 reassignments
             for (int i = 0; i < group.Value.Count; i++)
             {
                 // Get the distance between the agent and the player
@@ -299,11 +304,14 @@ public class AIManager : MonoBehaviour
         while (!LevelManager.Instance.LevelComplete)
         {
             groupTimer += Time.deltaTime;
-            if (groupTimer > groupCheckInterval && distanceGroupUpdated)
+            if (groupTimer > groupCheckInterval)
             {
-                StartCoroutine(UpdateDistanceGroups());
-                Debug.Log("[AIManager]: Updated distance groups");
-                groupTimer = 0.0f;
+                if (distanceGroupUpdated)
+                {
+                    StartCoroutine(UpdateDistanceGroups());
+                    Debug.Log("[AIManager]: Updated distance groups");
+                    groupTimer = 0.0f;
+                }
             }
             // Start Coroutines to run the functions, don't start additional coroutines
             yield return null;
@@ -325,6 +333,19 @@ public class AIManager : MonoBehaviour
     // Every now and then update the interval values
     // Or whenever the player enters the player ranges, update their intervals
 
+
+    // Test to do
+    // Group the enemies into mini groups
+    // Update these mini groups if the they are active
+
+    // There is a reference to the object pool
+    // The pool should match the quantity of enemies expected in the level
+    // This pool will be batched into smaller groups
+    // In each of the smaller groups
+    // Call the FSM updates based on the intervals
+
+    // i.e, instead of each FSM having the overhead of calling their own update
+    // The AI manager will tell the FSM to update, given the interval and time passed
     private void UpdatePlayerValue(GameObject leader)
     {
         EnemyController enemyControl = null;

@@ -36,20 +36,26 @@ public class FSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // WITH UPDATE FREQUENCY
         updateTime += Time.deltaTime;
         if (updateTime >= updateInterval)
         {
             FSMUpdate();
             updateTime = 0;
         }
+        // WITHOUT
+        //FSMUpdate();
     }
     private void FixedUpdate()
     {
+        // WITH UPDATE FREQUENCY
         physicsTime += Time.fixedDeltaTime;
         if (physicsTime >= physicsInterval)
         {
             FSMFixedUpdate();
             physicsTime = 0;
         }
+        // WITHOUT
+        //FSMFixedUpdate();
     }
 }

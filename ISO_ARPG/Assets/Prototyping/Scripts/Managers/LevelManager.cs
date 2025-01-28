@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
+#region HELPER DATA STORAGE
 [System.Serializable]
 public struct EntityNumber
 {
@@ -16,9 +17,13 @@ public class LevelDetails
 {
 
     // Use of lists instead of dictionaries because dictionaries cannot be set in editor
-    public List<EntityNumber> enemiesToSpawn;
+    public List<EntityNumber> enemiesToSpawn;   
     public List<EntityNumber> destructiblesToSpawn;
+
+    public int enemiesToKill;
+    public int elitesToKill;
 }
+#endregion
 public class LevelManager : MonoBehaviour
 {
     // Level Managers WILL NOT be persistent
@@ -38,6 +43,8 @@ public class LevelManager : MonoBehaviour
         }
     }
     [Header("Level Settings")]
+    public LevelType type;
+    public enum LevelType { CLEAR, ELITE }
     [SerializeField] private LevelDetails details;
     public LevelDetails Details { get { return details; } }
 
@@ -73,6 +80,8 @@ public class LevelManager : MonoBehaviour
     //List<GameObject> levelEnemies;          // The enemies to spawn in this level
     //List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
     float timeSpent;                        // The time spent in the level
+    int numKilled;
+    int numEliteKilled;
 
     public bool LevelComplete { get { return levelComplete; } }
     bool levelComplete = false;
@@ -123,8 +132,40 @@ public class LevelManager : MonoBehaviour
             //GetIndexFromPosition(player.transform.position);
             UpdatePlayerCell();
             //Debug.Log(timeSpent);
+            CheckLevelComplete();
             yield return null;
         }
+        
+        // Once the level is complete, spawn the portal to exit the level
+        LevelCompleted();
+    }
+
+    bool CheckLevelComplete()
+    {
+        switch(type)
+        {
+            case LevelType.CLEAR:
+                if (numKilled >= details.enemiesToKill)
+                {
+                    levelComplete = true;
+                    return levelComplete;
+                }
+            break;
+            case LevelType.ELITE:
+                if (numEliteKilled >= details.enemiesToKill)
+                {
+                    levelComplete = true;
+                    return levelComplete;
+                }
+            break;
+        }
+        return false;
+    }
+
+    void LevelCompleted()
+    {
+        // Spawn the portal here
+
     }
 
     // GRID SYSTEM
