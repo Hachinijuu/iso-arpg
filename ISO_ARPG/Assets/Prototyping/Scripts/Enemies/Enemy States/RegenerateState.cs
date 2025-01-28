@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RegenerateState : FSMState
@@ -9,7 +7,7 @@ public class RegenerateState : FSMState
     //MonsterControllerAI npcControl;
     //bool moving;
     //int availableSlotIndex;
-//
+    //
     float healthTimer;
     float healthTimeInterval = 1.0f;
     int healthAdd = 10;
@@ -28,17 +26,17 @@ public class RegenerateState : FSMState
         //npcControl = npc;
         //moving = true;
         //healthTimer = 0.0f;
-//
+        //
         //npcControl.navMeshAgent.speed = curSpeed;
-//
+        //
         ////destPos = waypoints[HIDE_WAYPOINT_INDEX].position;
         //availableSlotIndex = -1;
         // Reserve the position
-       // availableSlotIndex = npcControl.hideSlotManager.ReserveSlotAroundObject(npcControl.gameObject);
-       // if (availableSlotIndex != -1)
-       // {
-       //     destPos = npcControl.hideSlotManager.GetSlotPosition(availableSlotIndex);
-       // }
+        // availableSlotIndex = npcControl.hideSlotManager.ReserveSlotAroundObject(npcControl.gameObject);
+        // if (availableSlotIndex != -1)
+        // {
+        //     destPos = npcControl.hideSlotManager.GetSlotPosition(availableSlotIndex);
+        // }
     }
     public override void EnterStateInit()
     {
@@ -64,11 +62,11 @@ public class RegenerateState : FSMState
         //{
         //    npcControl.hideSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         //    npcControl.PerformTransition(Transition.NoHealth);
-//
+        //
         //    return;
         //}
         // ORDER DOES MATTER
-        
+
         //if (IsInCurrentRange(npc, player.position, MonsterControllerAI.CHASE_DIST))
         //{
         //    // See the player...
@@ -85,7 +83,7 @@ public class RegenerateState : FSMState
         // - Enemy entered range
         // - Attack state conditions
         // If the player has entered the ranged attack range, transition to the ranged state
-        float dist = GetSquareDistance(npc, destPos);
+        float dist = GetSquareDistance(npc.position, destPos);
         // Ranged attack range is greater than melee, less than or equal to ranged
         if (dist > EnemyController.MELEEATTACK_DIST && dist <= EnemyController.RANGEATTACK_DIST)
         {
@@ -112,8 +110,8 @@ public class RegenerateState : FSMState
         //    //npcControl.navMeshAgent.transform.rotation = targetRotation; 
         //    // Slower Rotation
         //    npcControl.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime * curRotSpeed);
-//
-//
+        //
+        //
         //    //move to destination
         //    npcControl.navMeshAgent.destination = destPos;
         //}
@@ -130,7 +128,7 @@ public class RegenerateState : FSMState
         //            healthTimer = 0;
         //        }
         //    }
-//
+        //
         //}
 
         if (controller.stats.Health.Value < controller.stats.Health.MaxValue)

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public MouseTarget PlayerTarget { get { return playerTarget; } }
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
-    
+
     #region VARIABLES
     PlayerStats stats;
     PlayerInput input;
@@ -92,5 +92,12 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Debug.DrawRay(transform.position, transform.forward * 5.0f, Color.red);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, EnemyController.MELEEATTACK_DIST);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, EnemyController.RANGEATTACK_DIST);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, EnemyController.CHASE_DIST);
     }
 }

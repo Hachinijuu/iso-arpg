@@ -11,10 +11,10 @@ public class Hurtbox : MonoBehaviour
     //TrackedStat health;
 
     // Fire event whenever this hurtbox takes damage
-    public delegate void OnDamaged (float value);
+    public delegate void OnDamaged(float value);
     public OnDamaged onDamaged;
 
-    private void FireOnDamaged(float value) {if (onDamaged != null) {onDamaged(value);}}
+    private void FireOnDamaged(float value) { if (onDamaged != null) { onDamaged(value); } }
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,6 @@ public class Hurtbox : MonoBehaviour
     {
         FireOnDamaged(damage);
         stats.Health.Value -= damage;
-        Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");
+        //Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");
     }
 }

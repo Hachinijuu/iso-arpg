@@ -1668,7 +1668,6 @@ GameObject:
   - component: {fileID: 604482115}
   - component: {fileID: 604482114}
   - component: {fileID: 604482117}
-  - component: {fileID: 604482118}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Obstacle
@@ -1762,22 +1761,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &604482118
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604482112}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &624700828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,6 +2885,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010002006}
   m_CullTransparentMesh: 1
+--- !u!1 &1071101081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1071101082}
+  - component: {fileID: 1071101083}
+  m_Layer: 0
+  m_Name: DropSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1071101082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071101081}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1551351896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1071101083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071101081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dcf81f50abc664080e987c8b08e48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1080348278
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,17 +3219,17 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
-      minSpawn: 500
-      maxSpawn: 500
+      minSpawn: 250
+      maxSpawn: 250
     - entity: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
-      minSpawn: 500
-      maxSpawn: 500
+      minSpawn: 250
+      maxSpawn: 250
     destructiblesToSpawn:
     - entity: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
       minSpawn: 20
       maxSpawn: 30
-    enemiesToKill: 0
-    elitesToKill: 0
+    enemiesToKill: 999
+    elitesToKill: -1
   levelArea: {fileID: 1704307633}
   cellSize: 5
   cellTrim: 1
@@ -4243,6 +4270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1320547793}
+  aSource: {fileID: 0}
+  destroySound: {fileID: 0}
 --- !u!1 &1330581323
 GameObject:
   m_ObjectHideFlags: 0
@@ -4768,6 +4797,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1118122321}
+  - {fileID: 1071101082}
   - {fileID: 1876070149}
   - {fileID: 2068824507}
   m_Father: {fileID: 0}

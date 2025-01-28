@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeAttackState : FSMState
 {
     //const int HIDE_WAYPOINT_DIST = 2;
-//
+    //
     //EnemyController npcControl;
     //bool moving;
     //int availableSlotIndex;
-//
+    //
     //float healthTimer;
     //float healthTimeInterval = 1.0f;
     //int healthDeduction = 5;
@@ -39,7 +37,7 @@ public class MeleeAttackState : FSMState
         //npcControl = npc;
         //moving = false;
         //healthTimer = 0.0f;
-//
+        //
         //npcControl.navMeshAgent.speed = curSpeed;
         //availableSlotIndex = -1;
 
@@ -50,7 +48,7 @@ public class MeleeAttackState : FSMState
         // Enter State
         //Releasse slot position
         //npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.navMeshAgent.gameObject);
-//
+        //
         //availableSlotIndex = -1;
         //healthTimer = 0.0f;
 
@@ -63,7 +61,7 @@ public class MeleeAttackState : FSMState
         // LOGIC BREAKDOWN
 
         // If the enemy exits melee range, transition to the chase state
-        if (GetSquareDistance(npc, destPos) >= square_meleeDist)
+        if (GetSquareDistance(npc.position, destPos) >= square_meleeDist)
         {
             controller.PerformTransition(Transition.ChasePlayer);
         }
@@ -71,7 +69,7 @@ public class MeleeAttackState : FSMState
         {
             // Enemy is in the attack range, perform attacks
             destPos = player.position;
-            
+
             // Make sure can attack is set
             if (canAttack != true)
                 canAttack = true;
@@ -95,7 +93,7 @@ public class MeleeAttackState : FSMState
         //{
         //    npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         //    npcControl.PerformTransition(Transition.NoHealth);
-//
+        //
         //    return;
         //}
         // ORDER DOES MATTER
@@ -107,8 +105,8 @@ public class MeleeAttackState : FSMState
         //        // if our health is low perform low health transition
         //        npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         //        npcControl.PerformTransition(Transition.LowHealth);
-//
-//
+        //
+        //
         //    }
         //}
         //else if (IsInCurrentRange(npc, destPos, MonsterControllerAI.CHASE_DIST))
@@ -118,7 +116,7 @@ public class MeleeAttackState : FSMState
         //        // if our health is low perform low health transition
         //        npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         //        npcControl.PerformTransition(Transition.LowHealth);
-//
+        //
         //    }
         //    else
         //    {
@@ -135,7 +133,7 @@ public class MeleeAttackState : FSMState
     }
     //Act
     public override void Act(Transform player, Transform npc)
-    { 
+    {
         //Rotate towards Position
         if (canAttack)
         {
@@ -165,7 +163,7 @@ public class MeleeAttackState : FSMState
         //            healthTimer = 0;
         //        }
         //    }
-//
+        //
         //}
     }
 }

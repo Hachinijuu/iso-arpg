@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RangedAttackState : FSMState
 {
     //const int HIDE_WAYPOINT_DIST = 2;
-//
+    //
     //EnemyController npcControl;
     //bool moving;
     //int availableSlotIndex;
-//
+    //
     //float healthTimer;
     //float healthTimeInterval = 1.0f;
     //int healthDeduction = 5;
@@ -40,12 +38,12 @@ public class RangedAttackState : FSMState
         //npcControl = npc;
         //moving = false;
         //healthTimer = 0.0f;
-//
+        //
         //npcControl.navMeshAgent.speed = curSpeed;
         //availableSlotIndex = -1;
 
     }
-    
+
     public override void EnterStateInit()
     {
         canAttack = true;   // Agent is able to attack
@@ -75,11 +73,12 @@ public class RangedAttackState : FSMState
 
         // If the agent is in ranged attack range, continue
 
-        float dist = GetSquareDistance(npc, destPos);
-        if (dist > square_meleeDist && dist <= square_rangeDist)
+        float dist = GetSquareDistance(npc.position, destPos);
+        if (dist > square_rangeDist)
             return;
+
         // If the enemy is too far transtion to the chase state
-        if (dist >= square_chaseDist)
+        if (dist >= square_rangeDist)
         {
             controller.PerformTransition(Transition.ChasePlayer);
         }
@@ -96,8 +95,8 @@ public class RangedAttackState : FSMState
         //}
 
         //destPos = player.position;
-        
-//
+
+        //
         ////Releasse slot position
         ////npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.navMeshAgent.gameObject);
         //availableSlotIndex = -1;
@@ -107,12 +106,12 @@ public class RangedAttackState : FSMState
         //{
         //    //destPos = npcControl.playerSlotManager.GetSlotPosition(availableSlotIndex);
         //}
-//
+        //
         ////if (npcControl.GetHealth() == 0)
         ////{
         ////    npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         ////    npcControl.PerformTransition(Transition.NoHealth);
-////
+        ////
         ////    return;
         ////}
         //// ORDER DOES MATTER
@@ -124,8 +123,8 @@ public class RangedAttackState : FSMState
         //        // if our health is low perform low health transition
         //        //npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         //        npcControl.PerformTransition(Transition.LowHealth);
-//
-//
+        //
+        //
         //    }
         //}
         //else if (IsInCurrentRange(npc, destPos, MonsterControllerAI.CHASE_DIST))
@@ -135,7 +134,7 @@ public class RangedAttackState : FSMState
         //        // if our health is low perform low health transition
         //        npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
         //        npcControl.PerformTransition(Transition.LowHealth);
-//
+        //
         //    }
         //    else
         //    {
@@ -149,12 +148,12 @@ public class RangedAttackState : FSMState
         //    npcControl.PerformTransition(Transition.LostPlayer);
         //}
 
-        
+
 
     }
     //Act
     public override void Act(Transform player, Transform npc)
-    { 
+    {
         // Aim at the player
         if (canAttack)
         {
@@ -188,7 +187,7 @@ public class RangedAttackState : FSMState
         //            healthTimer = 0;
         //        }
         //    }
-//
+        //
         //}
     }
 }

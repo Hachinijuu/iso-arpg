@@ -1,0 +1,96 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DropSystem : MonoBehaviour
+{
+    private static DropSystem instance = null;
+    public static DropSystem Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<DropSystem>();
+            if (!instance)
+                Debug.LogWarning("[DropSystem]: No Drop System found");
+            return instance;
+        }
+    }
+
+    private List<EntityStats> enemies;
+    private List<EntityStats> destructibles;
+
+    public void InitDropLists()
+    {
+        enemies = new List<EntityStats>();
+        destructibles = new List<EntityStats>();
+    }
+
+    // When enemies set themselves to active, register them to the list
+    public void RegisterEnemyDrop(EntityStats enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    public void UnregisterEnemyDrop(EntityStats enemy)
+    {
+        enemies.Remove(enemy);
+    }
+
+    // When destructibles set themselves to inactive, unregister them from the list
+    public void RegisterDestructibleDrop(EntityStats destructible)
+    {
+        destructibles.Add(destructible);
+    }
+
+    public void UnregisterDestructibleDrop(EntityStats destructible)
+    {
+        destructibles.Remove(destructible);
+    }
+
+    public void AddListeners()
+    {
+        Debug.Log("[DropSystem]: Has " + enemies.Count + " enemies");
+        foreach (EntityStats enemy in enemies)
+        {
+            enemy.OnDied += CheckDrop;
+        }
+        Debug.Log("[DropSystem]: Added listeners");
+    }
+
+    private void CheckDrop() // check the thing and map it to what it is supposed to drop
+    {
+        Debug.Log("Will I drop something?");
+    }
+
+    // Create dropped object
+    public void CreatedDroppedObject(Vector3 pos, ItemObject item)
+    {
+        GameObject go = GameObject.Instantiate(item.prefab);
+        // This creates the object, but where does it create the object...
+        // Create it at the parent of whoever called this 
+
+        go.transform.position = pos;
+
+        // If it is not active
+        if (!go.activeInHierarchy)
+        {
+            go.SetActive(true);
+        }
+    }
+
+    // This drop system manages all drops in the game
+    // It will contain a dictionary to the possible drops and stuff
+
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        InitDropLists();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}

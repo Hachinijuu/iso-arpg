@@ -107,7 +107,7 @@ public abstract class FSMState
         bool inRange = false;
         //float dist = Vector3.Distance(trans.position, pos);
         // Vector3.Distance is the same as (a-b).magnitude -- instead, use squared magnitudes so square root is not used
-    
+
         float dist = (trans.position - pos).sqrMagnitude;
 
         if (dist <= (range * range))
@@ -117,9 +117,9 @@ public abstract class FSMState
         return inRange;
     }
 
-    protected virtual float GetSquareDistance(Transform pos, Vector3 goal)
+    protected virtual float GetSquareDistance(Vector3 start, Vector3 goal)
     {
-        return (pos.position - goal).sqrMagnitude;
+        return (start - goal).sqrMagnitude;
     }
 
 }

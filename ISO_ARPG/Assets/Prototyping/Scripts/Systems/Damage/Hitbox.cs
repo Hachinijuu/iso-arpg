@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hitbox : MonoBehaviour
@@ -37,7 +35,7 @@ public class Hitbox : MonoBehaviour
 
         if (other.CompareTag("Hurtbox"))
         {
-            Debug.Log("HURTBOX FOUND");
+            //Debug.Log("HURTBOX FOUND");
             Hurtbox hb = other.GetComponent<Hurtbox>();
             if (hb != null)
             {

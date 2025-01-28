@@ -33,6 +33,11 @@ public class FSM : MonoBehaviour
         Initialize();
     }
 
+    // NOTE:
+    // - Lab PC's, without frequency checks, 40M - stablizies to 60, then to 70
+    // - Lab PC's with frequency checks, 65-70 - stable 75, less meshes
+
+
     // Update is called once per frame
     void Update()
     {

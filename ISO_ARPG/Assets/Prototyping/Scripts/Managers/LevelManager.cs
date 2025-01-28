@@ -17,7 +17,7 @@ public class LevelDetails
 {
 
     // Use of lists instead of dictionaries because dictionaries cannot be set in editor
-    public List<EntityNumber> enemiesToSpawn;   
+    public List<EntityNumber> enemiesToSpawn;
     public List<EntityNumber> destructiblesToSpawn;
 
     public int enemiesToKill;
@@ -135,29 +135,29 @@ public class LevelManager : MonoBehaviour
             CheckLevelComplete();
             yield return null;
         }
-        
+
         // Once the level is complete, spawn the portal to exit the level
         LevelCompleted();
     }
 
     bool CheckLevelComplete()
     {
-        switch(type)
+        switch (type)
         {
             case LevelType.CLEAR:
-                if (numKilled >= details.enemiesToKill)
+                if (numKilled >= details.enemiesToKill && details.enemiesToKill != -1)
                 {
                     levelComplete = true;
                     return levelComplete;
                 }
-            break;
+                break;
             case LevelType.ELITE:
-                if (numEliteKilled >= details.enemiesToKill)
+                if (numEliteKilled >= details.elitesToKill && details.elitesToKill != -1)
                 {
                     levelComplete = true;
                     return levelComplete;
                 }
-            break;
+                break;
         }
         return false;
     }
@@ -165,7 +165,7 @@ public class LevelManager : MonoBehaviour
     void LevelCompleted()
     {
         // Spawn the portal here
-
+        Debug.Log("Level has been completed");
     }
 
     // GRID SYSTEM
@@ -320,15 +320,15 @@ public class LevelManager : MonoBehaviour
             count++;
             int row = Random.Range(0, gRows);
             int col = Random.Range(0, gColumns);
-            
+
             // If the cell is not an obstacle or occupied, use that cell
-            if (!(cells[row,col].isObstacle) || !cells[row,col].isOccupied)
+            if (!(cells[row, col].isObstacle) || !cells[row, col].isOccupied)
             {
                 return new CellIndex(row, col);
             }
         }
         while (count <= tryCycles);
-        return new CellIndex(-1,-1);
+        return new CellIndex(-1, -1);
     }
 
     // Get the cell given two int values
@@ -352,7 +352,7 @@ public class LevelManager : MonoBehaviour
     }
 
     #endregion
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (ShowCubes)
         {

@@ -134,7 +134,7 @@ public class AIManager : MonoBehaviour
     }
     #endregion
 
-#region HELPER FUNCTIONS
+    #region HELPER FUNCTIONS
     float GetSquareDistance(Vector3 start, Vector3 end)
     {
         return (start - end).sqrMagnitude;
@@ -144,9 +144,9 @@ public class AIManager : MonoBehaviour
     {
         return GetSquareDistance(pos, player.transform.position);
     }
-#endregion
+    #endregion
 
-#region ENEMY SPAWNING
+    #region ENEMY SPAWNING
     // Wrapper function
     private void SpawnInitialEnemies()
     {
@@ -205,10 +205,14 @@ public class AIManager : MonoBehaviour
         {
             Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
         }
+        if (DropSystem.Instance != null)
+        {
+            DropSystem.Instance.AddListeners();
+        }
     }
 
     // Regular spawnning throughout the level as the enemies die
-    
+
     public void InitDistanceGroups()
     {
         distanceGroups.Add(nearInterval, new List<EnemyController>());
@@ -224,8 +228,8 @@ public class AIManager : MonoBehaviour
 
     public void AssignGameObjectToGroup(GameObject go, float distance)
     {
-        EnemyController controller  = go.GetComponent<EnemyController>();
-        
+        EnemyController controller = go.GetComponent<EnemyController>();
+
         AssignControllerToGroup(controller, distance);
     }
 
@@ -246,7 +250,7 @@ public class AIManager : MonoBehaviour
         else    // the agent is not too far, and not too close
         {
             controller.UpdateInterval = regularInterval.time;
-            controller.PhysicsInterval = regularInterval.time;  
+            controller.PhysicsInterval = regularInterval.time;
             distanceGroups[regularInterval].Add(controller);
         }
     }
@@ -267,9 +271,9 @@ public class AIManager : MonoBehaviour
             for (int i = 0; i < group.Value.Count; i++)
             {
                 // Get the distance between the agent and the player
-                EnemyController enemy  = group.Value[i];
+                EnemyController enemy = group.Value[i];
                 float dist = GetSquarePlayerDistance(enemy.transform.position);
-                
+
                 // If the distance is outside of the specified range of the CURRENT GROUP the agent is a member of
                 if (dist < group.Key.range || dist > group.Key.range)
                 {
@@ -304,6 +308,7 @@ public class AIManager : MonoBehaviour
         while (!LevelManager.Instance.LevelComplete)
         {
             groupTimer += Time.deltaTime;
+            //Debug.Log(groupTimer);
             if (groupTimer > groupCheckInterval)
             {
                 if (distanceGroupUpdated)
@@ -353,7 +358,7 @@ public class AIManager : MonoBehaviour
 
         if (enemyControl != null)
         {
-            
+
         }
         // Because the expense is at the SET DESTINATION
         // (Path Recalcuation)
@@ -362,7 +367,7 @@ public class AIManager : MonoBehaviour
         // Or, reduce FSM update frequency of the enemy controllers.
         // Look at FSM base class, and tweak the update frequency based on the distance
     }
-#endregion
+    #endregion
 
     Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f);
     private void OnDrawGizmos()

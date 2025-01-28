@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyController : AdvancedFSM
 {
-    public const int MELEEATTACK_DIST = 15;
+    public const int MELEEATTACK_DIST = 5;
     public const int RANGEATTACK_DIST = 30;
     public const int CHASE_DIST = 50;
 
@@ -28,12 +25,12 @@ public class EnemyController : AdvancedFSM
     protected override void Initialize()
     {
         GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
-        playerTransform = objPlayer.transform; 
+        playerTransform = objPlayer.transform;
         if (stats == null)
-        { 
+        {
             stats = new EntityStats();
-        }  
-         //health = new TrackedStat(TrackedStatTypes.HEALTH, 100, 100);
+        }
+        //health = new TrackedStat(TrackedStatTypes.HEALTH, 100, 100);
         ConstructFSM();
         // text = StateText.text;   
         if (hurtbox == null)
@@ -44,6 +41,19 @@ public class EnemyController : AdvancedFSM
         if (hurtbox != null)
         {
             hurtbox.onDamaged += DamageTaken;
+        }
+
+        //if (stats != null)
+        //{
+        //    stats.OnDied += Died;
+        //}
+
+        // Register for drops
+
+        if (DropSystem.Instance != null)
+        {
+            DropSystem.Instance.RegisterEnemyDrop(stats);
+            Debug.Log("Registered to drops");
         }
     }
 
@@ -98,22 +108,28 @@ public class EnemyController : AdvancedFSM
 
         // ADD all states here
         //AddFSMState(chase);        // Starting state
-                                   // AddFSMState(rangedAttack);
-                                   // AddFSMState(meleeAttack);   
-                                   // AddFSMState(regen);
+        // AddFSMState(rangedAttack);
+        // AddFSMState(meleeAttack);   
+        // AddFSMState(regen);
         AddFSMState(chase);
         AddFSMState(dead);
         AddFSMState(melee);
         AddFSMState(ranged);
     }
 
+    //private void Died()
+    //{
+    //    PerformTransition(Transition.NoHealth);
+    //}
+
     // Event function so the health checks are not dependent on update loop
     private void DamageTaken(float value)
     {
+        Debug.Log("Took damage");
         if (stats.Health.Value <= 0)
         {
             PerformTransition(Transition.NoHealth);
-            Debug.Log("Died");
+            //Debug.Log("Died");
         }
     }
     private void OnDestroy()
