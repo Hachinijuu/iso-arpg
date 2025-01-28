@@ -115,6 +115,8 @@ public class PlayerAbilityHandler : MonoBehaviour
         if (ab != null)
         {
             // Check if the ability is not on cooldown
+
+            // Check if in range to use
             if (canUseAbility[ab])
             {
                 // Check if the player has enough mana to use the ability

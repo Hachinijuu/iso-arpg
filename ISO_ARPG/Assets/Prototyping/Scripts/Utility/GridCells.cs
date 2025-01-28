@@ -21,6 +21,7 @@ public class Cell
     public Vector3 position;    // this is the centre of the cell in gamespace
     public Bounds boundingBox;
     public bool isObstacle = false;
+    public bool isOccupied = false;
     public Cell()
     {
         x = 0;

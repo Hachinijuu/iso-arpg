@@ -140,7 +140,7 @@ public class MeleeAttackState : FSMState
         if (canAttack)
         {
             // Tell the animator to play the attack animation
-            Debug.Log("[FSM_MeleeAttack]: Attacking the player");
+            //Debug.Log("[FSM_MeleeAttack]: Attacking the player");
         }
         //Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
         ////Snap

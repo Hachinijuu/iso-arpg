@@ -73,13 +73,18 @@ public class EnemyController : AdvancedFSM
         ChaseState chase = new ChaseState(this);
         chase.AddTransistion(Transition.PlayerReached, FSMStateID.RangedAttack);
         chase.AddTransistion(Transition.ReachPlayer, FSMStateID.MeleeAttack);
+        chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
 
         MeleeAttackState melee = new MeleeAttackState(this);
         melee.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
+        melee.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
+
 
         RangedAttackState ranged = new RangedAttackState(this);
         ranged.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
         ranged.AddTransistion(Transition.PlayerReached, FSMStateID.MeleeAttack);
+        ranged.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
+
 
         // Chase State
         //ChaseState chase = new ChaseState(this);

@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &59212216
 Transform:
   m_ObjectHideFlags: 0
@@ -202,10 +202,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dc3ee4713c6224899f06d0869c7799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledPrefab: {fileID: 0}
+  pooledPrefab: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
   pooledObjects: []
   minPooledObjects: 2
-  numPooledObjects: 5
+  numPooledObjects: 50
   canGrow: 0
 --- !u!1 &82955569
 GameObject:
@@ -242,7 +242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0}
   m_AnchorMax: {x: 0.35, y: 1}
-  m_AnchoredPosition: {x: 31.399994, y: 0}
+  m_AnchoredPosition: {x: 31.400024, y: 0}
   m_SizeDelta: {x: 40, y: 42.7884}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &82955571
@@ -3191,12 +3191,15 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
-      maxSpawn: 100
       minSpawn: 100
+      maxSpawn: 100
     - entity: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
-      maxSpawn: 100
       minSpawn: 100
-    destructiblesToSpawn: []
+      maxSpawn: 100
+    destructiblesToSpawn:
+    - entity: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
+      minSpawn: 20
+      maxSpawn: 30
   levelArea: {fileID: 1704307633}
   cellSize: 5
   cellTrim: 1
@@ -3210,6 +3213,7 @@ MonoBehaviour:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
     isObstacle: 0
+    isOccupied: 0
   ShowCubes: 1
   DrawFullTile: 1
   origin: {x: 0, y: 0, z: 0}
@@ -4272,7 +4276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35, y: 0}
   m_AnchorMax: {x: 0.65, y: 1}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: -42.138, y: -22.836}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1330581325
@@ -5588,15 +5592,17 @@ MonoBehaviour:
   - {fileID: 1247245237}
   - {fileID: 1118024428}
   spawnInterval: 0.01
+  groupCheckInterval: 3
+  enemyCheckInterval: 0.1
   nearInterval:
     range: 15
-    time: 0.25
+    time: 0.05
   regularInterval:
     range: 50
-    time: 0.5
+    time: 0.25
   farInterval:
     range: 75
-    time: 1
+    time: 0.5
 --- !u!1 &1909425051
 GameObject:
   m_ObjectHideFlags: 0
@@ -5926,7 +5932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524ddccacce260c4aa84dca37aa1f65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Destructibles: []
+  destructibles:
+  - {fileID: 59212217}
 --- !u!1 &2113899694
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,8 +7,8 @@ using UnityEngine;
 public struct EntityNumber
 {
     public GameObject entity;
-    public int maxSpawn;
     public int minSpawn;
+    public int maxSpawn;
 }
 
 [System.Serializable]
@@ -265,6 +265,29 @@ public class LevelManager : MonoBehaviour
             return new CellIndex(row, col);
         }
         return new CellIndex(-1, -1); // return a vector with an INVALID location in the array
+    }
+
+    public CellIndex GetRandomIndex(int tryCycles)
+    {
+        // Only return valid indices to use, valid indicies are
+        // Unoccupied
+        // Not obstacles
+
+        int count = 0;
+        do
+        {
+            count++;
+            int row = Random.Range(0, gRows);
+            int col = Random.Range(0, gColumns);
+            
+            // If the cell is not an obstacle or occupied, use that cell
+            if (!(cells[row,col].isObstacle) || !cells[row,col].isOccupied)
+            {
+                return new CellIndex(row, col);
+            }
+        }
+        while (count <= tryCycles);
+        return new CellIndex(-1,-1);
     }
 
     // Get the cell given two int values

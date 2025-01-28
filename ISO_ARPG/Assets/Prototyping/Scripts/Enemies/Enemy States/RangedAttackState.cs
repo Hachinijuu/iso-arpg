@@ -158,8 +158,9 @@ public class RangedAttackState : FSMState
         // Aim at the player
         if (canAttack)
         {
+            anim.SetFloat("Speed", 0.0f);
             // Tell the animator to play the attack animation
-            Debug.Log("[FSM_RangedAttack]: Attacking the player");
+            //Debug.Log("[FSM_RangedAttack]: Attacking the player");
         }
 
 
