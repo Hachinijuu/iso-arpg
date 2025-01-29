@@ -119,7 +119,7 @@ public abstract class FSMState
 
     protected virtual float GetSquareDistance(Vector3 start, Vector3 goal)
     {
-        return (start - goal).sqrMagnitude;
+        return (goal - start).sqrMagnitude;
     }
 
 }

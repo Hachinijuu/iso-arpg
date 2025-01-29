@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class EnemyController : AdvancedFSM
 {
-    public const int MELEEATTACK_DIST = 5;
+    public const int DIST_BUFFER = 5;
+    public const int MELEEATTACK_DIST = 10;
     public const int RANGEATTACK_DIST = 30;
     public const int CHASE_DIST = 50;
 
@@ -81,8 +82,8 @@ public class EnemyController : AdvancedFSM
 
         // TEMPORARY, MOVE ADDITIONAL STATES TO DERIVED CLASSES
         ChaseState chase = new ChaseState(this);
-        chase.AddTransistion(Transition.PlayerReached, FSMStateID.RangedAttack);
-        chase.AddTransistion(Transition.ReachPlayer, FSMStateID.MeleeAttack);
+        chase.AddTransistion(Transition.ReachPlayer, FSMStateID.RangedAttack);
+        chase.AddTransistion(Transition.PlayerReached, FSMStateID.MeleeAttack);
         chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
 
         MeleeAttackState melee = new MeleeAttackState(this);
@@ -92,7 +93,7 @@ public class EnemyController : AdvancedFSM
 
         RangedAttackState ranged = new RangedAttackState(this);
         ranged.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
-        ranged.AddTransistion(Transition.PlayerReached, FSMStateID.MeleeAttack);
+        ranged.AddTransistion(Transition.ReachPlayer, FSMStateID.MeleeAttack);
         ranged.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
 
 

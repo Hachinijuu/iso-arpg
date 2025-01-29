@@ -380,13 +380,5 @@ public class AIManager : MonoBehaviour
                 Gizmos.DrawCube(pos, cubeSize);
             }
         }
-        if (CircleUtility.CircleListInstance != null && CircleUtility.CircleListInstance.Count > 0)
-        {
-            Gizmos.color = Color.green;
-            foreach (Vector3 dot in CircleUtility.CircleListInstance)
-            {
-                Gizmos.DrawCube(dot, cubeSize);
-            }
-        }
     }
 }

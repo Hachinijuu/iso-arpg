@@ -44,6 +44,7 @@ public class MeleeAttackState : FSMState
     }
     public override void EnterStateInit()
     {
+        Debug.Log("[FSM_Melee]: Entered state");
         controller.navMeshAgent.isStopped = false;
         // Enter State
         //Releasse slot position
@@ -61,21 +62,18 @@ public class MeleeAttackState : FSMState
         // LOGIC BREAKDOWN
 
         // If the enemy exits melee range, transition to the chase state
-        if (GetSquareDistance(npc.position, destPos) >= square_meleeDist)
+        if (!(IsInCurrentRange(player, npc.position, EnemyController.MELEEATTACK_DIST)))
         {
+            Debug.Log("[FSM_MeleeState]: Transitioned to Chase");
             controller.PerformTransition(Transition.ChasePlayer);
+            return;
         }
-        else
-        {
-            // Enemy is in the attack range, perform attacks
-            destPos = player.position;
 
-            // Make sure can attack is set
-            if (canAttack != true)
-                canAttack = true;
-            else
-                return;
-        }
+        // Enemy is in the attack range, perform attacks
+        destPos = player.position;      
+        // Make sure can attack is set
+        if (canAttack != true)
+            canAttack = true;
 
         //destPos = player.position;
 
@@ -134,6 +132,9 @@ public class MeleeAttackState : FSMState
     //Act
     public override void Act(Transform player, Transform npc)
     {
+        // Move towards the player if not close enough
+        controller.navMeshAgent.destination = destPos;
+
         //Rotate towards Position
         if (canAttack)
         {

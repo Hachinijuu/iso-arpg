@@ -27,6 +27,8 @@ public class ChaseState : FSMState
     }
     public override void EnterStateInit()
     {
+        Debug.Log("[FSM_Chase]: Entered state");
+
         // Enter State
         moving = true;
         //Release slot position
@@ -34,6 +36,7 @@ public class ChaseState : FSMState
         controller.navMeshAgent.speed = curSpeed;
         availableSlotIndex = -1;
 
+        controller.navMeshAgent.destination = destPos;
         if (moving)
             controller.navMeshAgent.isStopped = false;  // Allow the agent to move
 
@@ -86,17 +89,21 @@ public class ChaseState : FSMState
         //  }
 
         // If the player has entered the ranged attack range, transition to the ranged state
-        float dist = GetSquareDistance(npc.position, destPos);
+        float dist = GetSquareDistance(destPos, npc.position);
 
         // If the agent is inside the ranged area
-        if (dist <= EnemyController.RANGEATTACK_DIST && dist > EnemyController.MELEEATTACK_DIST)
+        if (IsInCurrentRange(npc, destPos, EnemyController.RANGEATTACK_DIST))
         {
+            Debug.Log("[FSM_ChaseState] Transitioned to Ranged");
             controller.PerformTransition(Transition.ReachPlayer);
+            return;
         }
         // If the player has entered the melee attack range, transition to the melee attack state
-        else if (dist < EnemyController.MELEEATTACK_DIST)
+        if (IsInCurrentRange(npc, destPos, EnemyController.MELEEATTACK_DIST))
         {
+            Debug.Log("[FSM_ChaseState] Transitioned to Melee");
             controller.PerformTransition(Transition.PlayerReached);
+            return;
         }
         else
         {
