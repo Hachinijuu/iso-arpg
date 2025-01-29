@@ -47,12 +47,14 @@ public class PlayerMovement : MonoBehaviour
 
         // map inputs
         MapMovementActions();
-        canMove = true;
     }
 
     private void Start()
     {
-        GameManager.Instance.onMoveChanged += UpdateMoveType;
+        //GameManager.Instance.onMoveChanged += UpdateMoveType;
+
+        canMove = false;
+        canRotate = false;
     }
 
     private void UpdateMoveType(MoveInput type)

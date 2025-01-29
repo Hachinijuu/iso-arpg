@@ -8,6 +8,6 @@ public class LoadingScreen : MonoBehaviour
 
     public void UpdateSlider(float value)
     {
-        progressBar.value = value;
+        //progressBar.value = value;
     }
 }

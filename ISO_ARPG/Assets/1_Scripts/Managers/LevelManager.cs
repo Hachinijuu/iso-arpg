@@ -43,6 +43,8 @@ public class LevelManager : MonoBehaviour
         }
     }
     [Header("Level Settings")]
+    [SerializeField] private Transform playerSpawn;
+    public Transform PlayerSpawnPoint { get { return playerSpawn; } }
     public LevelType type;
     public enum LevelType { CLEAR, ELITE }
     [SerializeField] private LevelDetails details;

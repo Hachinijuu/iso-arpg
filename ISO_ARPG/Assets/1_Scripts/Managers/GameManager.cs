@@ -24,24 +24,12 @@ public class GameManager : MonoBehaviour
     private PlayerController controller;
     public enum GameState { MENU, LOADING, PLAYING, PAUSE }
     public GameState currGameState;
-
-    public enum eLevel { HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
+    public enum eLevel { MENU, HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
+    [SerializeField] string[] levelNames; // Map this in order of the types
     public eLevel level;
+    private string currentLevelName;
 
-    // references to managers
-    //public DestructibleManager DestructManager {get { return destructManager; } }
-    //[SerializeField] DestructibleManager destructManager;    // THIS WILL EXIST PERSISTENTLY
-    //
-    //public AIManager AIManager { get { return aiManager; } }
-    //[SerializeField] AIManager aiManager;                    // THIS WILL EXIST PERSISTENTLY
-    //
-    //public LevelManager LevelManager { get { return levelManager; } }
-    //[SerializeField] LevelManager levelManager;              // THIS WILL EXIST IN THE SCENE
-
-    // Logic Sequence:
-    // When loading into a level, get the levelManager and it's information to use in the destructManager and aiManager
-    // GameManager acts as an inital bridge
-
+    // SCENES
     public enum ControlType {  MOUSE_KEYBOARD, CONTROLLER }
     public ControlType controls;
 
@@ -69,43 +57,123 @@ public class GameManager : MonoBehaviour
         { 
             moveType = controller.Movement.moveType;
         }
+
+        //LoadPrototype();
     }
 #endregion
+#region GAMEPLAY
+public void PlayerRespawn()
+{
+    GameObject player = controller.gameObject;
+    if (LevelManager.Instance.PlayerSpawnPoint != null)
+    {
+        player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
+        player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
+    }    
+    // Set the camera to follow
+
+    // Allow the player to move
+    controller.Movement.CanMove = true;
+    controller.Movement.CanRotate = true;
+    
+    // Reset the pools
+
+    // Fixing UI displays.
+}
+
+
+#endregion
+
 #region LEVEL LOADING
     private bool isLoading = false;
-    LoadingScreen loadingScreen;
+    [SerializeField] LoadingScreen loadingScreen;
 
     // THIS LEVEL LOAD NEEDS TO BE TESTED, IT MAKES USE OF SCENE REFERENCES RATHER THAN STRING NAMES
-    private IEnumerator LoadLevel(Scene toLoad)
+
+    // Wrapper function
+    public void LoadLevelFromString(string toLoad)
     {
+        Debug.Log("[GameManager]: Starting to load: " + toLoad);
+        StartCoroutine(LoadLevel(toLoad));
+    }
+    private IEnumerator LoadLevel(string levelName)
+    {
+        //Scene toLoad = SceneManager.GetSceneByBuildIndex(index);
+        //Debug.Log(toLoad.name);
+
         isLoading = true;
+        currGameState = GameState.LOADING;
         if (loadingScreen)
             loadingScreen.gameObject.SetActive(isLoading);
         if (pauseMenu)
             pauseMenu.CanPause = false; // Do not allow pauses to happen while loading
         
-        if (SceneManager.GetActiveScene().isLoaded)
+
+        // Only want to unload if the scene is not the persistent scene
+        if (!string.IsNullOrEmpty(currentLevelName))
         {
-            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(currentLevelName);
             while (!asyncUnload.isDone)
+            {
                 yield return null;
+            }
         }
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(toLoad.name, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
 
         while (!asyncLoad.isDone)
         {
-            loadingScreen.UpdateSlider(asyncLoad.progress);
+            if (loadingScreen)
+                loadingScreen.UpdateSlider(asyncLoad.progress);
             yield return null;
         }
 
-        SceneManager.SetActiveScene(toLoad);
+        if (LevelManager.Instance != null)
+        {
+            if (AIManager.Instance)
+            {
+                AIManager.Instance.LevelLoading();
+            }
+            if (DestructibleManager.Instance)
+            {
+                DestructibleManager.Instance.LevelLoading();
+            }
+        }
+
+
+        currentLevelName = levelName;
         isLoading = false;
 
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
+        
         if (pauseMenu)
             pauseMenu.CanPause = true;
         if (loadingScreen)
             loadingScreen.gameObject.SetActive(isLoading);
+
+        currGameState = GameState.PLAYING;
+
+        // If the level manager exits, do the stuff
+        if (LevelManager.Instance)
+        {
+            // Load the player
+            PlayerRespawn();
+        }
+    }
+
+    public void LoadMainMenu()
+    {
+        //StartCoroutine(LoadLevel(1);
+    }
+
+    public void LoadHub()
+    {
+        StartCoroutine(LoadLevel(levelNames[(int)level]));
+    }
+
+    public void LoadPrototype()
+    {
+        StartCoroutine(LoadLevel("Prototyping"));
     }
 #endregion
 

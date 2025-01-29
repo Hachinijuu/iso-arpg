@@ -14,7 +14,6 @@ public class MouseTarget : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] List<string> tagsToMatch;
     [SerializeField] DebugMenu dbMenu;
-    
     public GameObject Target { get { return target; } }
 
     //[SerializeField] TMPro.TextMeshPro displayText;
@@ -84,24 +83,29 @@ public class MouseTarget : MonoBehaviour
         else
         { 
             target = null;
-            dbMenu.UpdateTargetText(null);
+            if (dbMenu != null)
+                dbMenu.UpdateTargetText(null);
         }
 
     }
 
     void UpdateMouseHover()
     {
-        if (GetMouseHit() != null)  // If the mouse hit returns a value, display it in the DebugMenu
+        if (dbMenu != null)
+        {
+                    if (GetMouseHit() != null)  // If the mouse hit returns a value, display it in the DebugMenu
         {
             dbMenu.UpdateHoverText(mouseHit.name);
         }
         else
             dbMenu.UpdateHoverText(null);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateMouseHover();
+        if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)
+            UpdateMouseHover();
     }
 }

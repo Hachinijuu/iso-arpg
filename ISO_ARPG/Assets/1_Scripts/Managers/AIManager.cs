@@ -71,7 +71,7 @@ public class AIManager : MonoBehaviour
             player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
         InitDistanceGroups();
-        LevelLoading();
+        //LevelLoading();
     }
     #endregion
 
@@ -91,8 +91,18 @@ public class AIManager : MonoBehaviour
 
         //BalanceEnemyNumbers();
         //StartCoroutine(SpawnInitialBatch());\
-        SpawnInitialEnemies();
-        StartCoroutine(ManagerLoop());
+
+        // Only load enemies if enemies exist and are expected
+        if (LevelManager.Instance.Details.enemiesToSpawn != null && LevelManager.Instance.Details.enemiesToSpawn.Count >= 0)
+        {
+            if (enemyPools != null && enemyPools.Length > 0)
+            {
+                SpawnInitialEnemies();
+                StartCoroutine(ManagerLoop());
+            }
+            else
+                Debug.LogError("[AIManager]: Missing Enemy Pools");
+        }
     }
 
     private void BalanceEnemyNumbers()

@@ -18,13 +18,15 @@ public class DestructibleManager : MonoBehaviour
         }
     }
 
+    [Tooltip("Should destructible objects spawn?")]
+    [SerializeField] bool spawnDestructs;
     public bool SpawningComplete { get {return spawningComplete; } }
     bool spawningComplete;
 
 
     void Start()
     {
-        LevelLoading();
+        //LevelLoading();
     }
     [SerializeField] ObjectPool[] destructibles; 
 
@@ -32,13 +34,15 @@ public class DestructibleManager : MonoBehaviour
     // When a level (scene) is loading, call this function
     public void LevelLoading()
     {
-        if (destructibles != null && destructibles.Length > 0)
+        // Check if the level is EXPECTING any destructibles
+        if (LevelManager.Instance.Details.destructiblesToSpawn != null && LevelManager.Instance.Details.destructiblesToSpawn.Count > 0)
         {
-            StartCoroutine(SpawnDestructibles());
-        }
-        else
-        {
-            Debug.LogError("[DestructibleManager]: Missing Destructible Object Pools");
+            if (destructibles != null && destructibles.Length > 0)
+            {
+                StartCoroutine(SpawnDestructibles());
+            }
+            else
+                Debug.LogError("[DestructibleManager]: Missing Destructible Object Pools");
         }
     }
 
