@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemyController : AdvancedFSM
 {
     public const int DIST_BUFFER = 5;
-    public const int MELEEATTACK_DIST = 10;
-    public const int RANGEATTACK_DIST = 30;
+    public const int MELEEATTACK_DIST = 5;
+    public const int RANGEATTACK_DIST = 25;
     public const int CHASE_DIST = 50;
 
     public bool debugDraw;
@@ -12,6 +12,9 @@ public class EnemyController : AdvancedFSM
 
     [HideInInspector]
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+    [SerializeField] protected Hitbox damageSource;
+    public Hitbox DamageSource { get { return damageSource; } }
 
     [SerializeField] protected Animator anim;
     public Animator Anim { get { return anim; } }

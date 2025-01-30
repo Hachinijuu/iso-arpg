@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -42,11 +43,13 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
+    [SerializeField] CinemachineVirtualCamera vCam;
+
     [Header("Level Settings")]
     [SerializeField] private Transform playerSpawn;
     public Transform PlayerSpawnPoint { get { return playerSpawn; } }
     public LevelType type;
-    public enum LevelType { CLEAR, ELITE }
+    public enum LevelType { NONE, CLEAR, ELITE }
     [SerializeField] private LevelDetails details;
     public LevelDetails Details { get { return details; } }
 
@@ -114,15 +117,26 @@ public class LevelManager : MonoBehaviour
 
     public void Start()
     {
+    }
+
+    public void LevelLoaded()
+    {
+        InitLevel();
+
         if (player == null)
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            player = GameManager.Instance.Player;
+            //player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         if (player == null)
             Debug.Log("[LevelManager]: Failed to reference player");
 
-        playerCell = GetCellFromIndex(GetIndexFromPoint(player.transform.position));
-        StartCoroutine(HandlePlayLevel());
-    }
+        // Setup the camera
+        vCam.Follow = player.transform;
 
+        playerCell = GetCellFromIndex(GetIndexFromPoint(player.transform.position));
+
+        if (type != LevelType.NONE)
+            StartCoroutine(HandlePlayLevel());
+    }
     // Start this enumerator when the level begins to play
     IEnumerator HandlePlayLevel()
     {

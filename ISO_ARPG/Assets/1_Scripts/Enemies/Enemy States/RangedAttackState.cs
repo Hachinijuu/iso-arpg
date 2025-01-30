@@ -11,6 +11,8 @@ public class RangedAttackState : FSMState
     //float healthTimer;
     //float healthTimeInterval = 1.0f;
     //int healthDeduction = 5;
+    float attackTimer;
+    float attackInterval = 1.0f;
 
     private bool canAttack = false;
     private bool canMove = false;
@@ -51,7 +53,7 @@ public class RangedAttackState : FSMState
 
         // Stop the agent
 
-        Debug.Log("[FSM_Ranged]: Entered state");
+        //Debug.Log("[FSM_Ranged]: Entered state");
         controller.navMeshAgent.isStopped = true;
         // Enter State
         //Releasse slot position
@@ -82,14 +84,14 @@ public class RangedAttackState : FSMState
         // If the enemy has entered the melee threshold, enter the melee attack state
         if (IsInCurrentRange(player, npc.position, EnemyController.MELEEATTACK_DIST))
         {
-            Debug.Log("[FSM_Ranged]: Transitioned to Melee");
+            //Debug.Log("[FSM_Ranged]: Transitioned to Melee");
             controller.PerformTransition(Transition.ReachPlayer);
             return;
         }
         // If the target is not in ranged attack distance
         else if (!(IsInCurrentRange(player, npc.position, EnemyController.RANGEATTACK_DIST)))
         {
-            Debug.Log("[FSM_Ranged]: Transitioned to Chase");
+            //Debug.Log("[FSM_Ranged]: Transitioned to Chase");
             controller.PerformTransition(Transition.ChasePlayer);
             return;
         }
@@ -170,7 +172,13 @@ public class RangedAttackState : FSMState
         // Aim at the player
         if (canAttack)
         {
+            attackTimer += Time.deltaTime;
             anim.SetFloat("Speed", 0.0f);
+            if (attackTimer > attackInterval)
+            {
+                anim.SetTrigger("Ability1");
+                attackTimer = 0.0f;
+            }
             // Tell the animator to play the attack animation
             //Debug.Log("[FSM_RangedAttack]: Attacking the player");
         }

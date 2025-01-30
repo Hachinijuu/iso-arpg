@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public PlayerStats Stats { get { return stats; } }
     public PlayerInput Input { get { return input; } }
     public PlayerMovement Movement { get { return movement; } }
+    public NavMeshAgent Agent { get { return agent; } }
     public PlayerAbilityHandler AbilityHandler { get { return handler; } }
     public MouseTarget PlayerTarget { get { return playerTarget; } }
     public AudioSource AudioSource { get { return audioSource; } }
@@ -31,13 +33,11 @@ public class PlayerController : MonoBehaviour
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
+    NavMeshAgent agent;
     PlayerAbilityHandler handler;
     MouseTarget playerTarget;
     AudioSource audioSource;
     Animator animator;
-
-
-
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     #endregion
 

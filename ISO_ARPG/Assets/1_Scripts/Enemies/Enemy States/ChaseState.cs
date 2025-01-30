@@ -27,7 +27,7 @@ public class ChaseState : FSMState
     }
     public override void EnterStateInit()
     {
-        Debug.Log("[FSM_Chase]: Entered state");
+        //Debug.Log("[FSM_Chase]: Entered state");
 
         // Enter State
         moving = true;
@@ -39,69 +39,30 @@ public class ChaseState : FSMState
         controller.navMeshAgent.destination = destPos;
         if (moving)
             controller.navMeshAgent.isStopped = false;  // Allow the agent to move
-
-
-        //  enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
-        // availableSlotIndex = -1;
-        // // Reserve the Position
-        // availableSlotIndex = enemyControl.playerSlotManager.ReserveSlotAroundObject(enemyControl.gameObject);
-        // if (availableSlotIndex != -1)
-        // {
-        //     destPos = enemyControl.playerSlotManager.GetSlotPosition(availableSlotIndex);
-        // }
-
     }
 
 
     //Reason
     public override void Reason(Transform player, Transform npc)
     {
-        //Release slot position
-        // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
-        // availableSlotIndex = -1;
-        // Reserve the Position
-        // availableSlotIndex = enemyControl.playerSlotManager.ReserveSlotAroundObject(enemyControl.gameObject);
-        // if (availableSlotIndex != -1)
-        // {
-        //     destPos = enemyControl.playerSlotManager.GetSlotPosition(availableSlotIndex);
-        // }
-        //NPC DEATH
-        //if (enemyControl.stats.Health.Value == 0)
-        //{
-        //    // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.gameObject);
-        //    Debug.Log("[ChaseState]: Performing death transition");
-        //    enemyControl.PerformTransition(Transition.NoHealth);
-        //
-        //    return;
-        //}
-        //  // ORDER DOES MATTER
-        //  //PLAYER IS IN MELEE RANGE
-        //  if (IsInCurrentRange(npc, destPos, EnemyController.MELEEATTACK_DIST))
-        //  {
-        //      moving = false;
-        //      enemyControl.PerformTransition(Transition.ReachPlayer);
-        //  }
-        //  //PLAYER IS IN RANGED RANGE
-        //  else if (IsInCurrentRange(npc, destPos, EnemyController.RANGEATTACK_DIST))
-        //  {
-        //      moving = false; //close to the player so stop moving
-        //      enemyControl.PerformTransition(Transition.ReachPlayer);
-        //  }
-
         // If the player has entered the ranged attack range, transition to the ranged state
         float dist = GetSquareDistance(destPos, npc.position);
 
         // If the agent is inside the ranged area
-        if (IsInCurrentRange(npc, destPos, EnemyController.RANGEATTACK_DIST))
+        // Only check for this if the controller has a ranged state
+        if (controller as ImpController)
         {
-            Debug.Log("[FSM_ChaseState] Transitioned to Ranged");
-            controller.PerformTransition(Transition.ReachPlayer);
-            return;
+            if (IsInCurrentRange(npc, destPos, EnemyController.RANGEATTACK_DIST))
+            {
+                //Debug.Log("[FSM_ChaseState] Transitioned to Ranged");
+                controller.PerformTransition(Transition.ReachPlayer);
+                return;
+            }
         }
         // If the player has entered the melee attack range, transition to the melee attack state
         if (IsInCurrentRange(npc, destPos, EnemyController.MELEEATTACK_DIST))
         {
-            Debug.Log("[FSM_ChaseState] Transitioned to Melee");
+            //Debug.Log("[FSM_ChaseState] Transitioned to Melee");
             controller.PerformTransition(Transition.PlayerReached);
             return;
         }

@@ -12,6 +12,9 @@ public class MeleeAttackState : FSMState
     //float healthTimeInterval = 1.0f;
     //int healthDeduction = 5;
 
+    float attackTimer;
+    float attackInterval = 1.0f;
+
     private bool canAttack = false;
     private bool canMove = false;
     EnemyController controller;
@@ -44,7 +47,7 @@ public class MeleeAttackState : FSMState
     }
     public override void EnterStateInit()
     {
-        Debug.Log("[FSM_Melee]: Entered state");
+        //Debug.Log("[FSM_Melee]: Entered state");
         controller.navMeshAgent.isStopped = false;
         // Enter State
         //Releasse slot position
@@ -59,12 +62,10 @@ public class MeleeAttackState : FSMState
     //Reason
     public override void Reason(Transform player, Transform npc)
     {
-        // LOGIC BREAKDOWN
-
         // If the enemy exits melee range, transition to the chase state
         if (!(IsInCurrentRange(player, npc.position, EnemyController.MELEEATTACK_DIST)))
         {
-            Debug.Log("[FSM_MeleeState]: Transitioned to Chase");
+            //Debug.Log("[FSM_MeleeState]: Transitioned to Chase");
             controller.PerformTransition(Transition.ChasePlayer);
             return;
         }
@@ -74,60 +75,6 @@ public class MeleeAttackState : FSMState
         // Make sure can attack is set
         if (canAttack != true)
             canAttack = true;
-
-        //destPos = player.position;
-
-        ////Releasse slot position
-        //npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.navMeshAgent.gameObject);
-        //availableSlotIndex = -1;
-        //// Reserve the Position
-        //availableSlotIndex = npcControl.playerSlotManager.ReserveSlotAroundObject(npcControl.gameObject);
-        //if (availableSlotIndex != -1)
-        //{
-        //    destPos = npcControl.playerSlotManager.GetSlotPosition(availableSlotIndex);
-        //}
-
-        //if (npcControl.GetHealth() == 0)
-        //{
-        //    npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
-        //    npcControl.PerformTransition(Transition.NoHealth);
-        //
-        //    return;
-        //}
-        // ORDER DOES MATTER
-        //if (IsInCurrentRange(npc, destPos, MonsterControllerAI.ATTACK_DIST))
-        //{
-        //    moving = false; //close to the player so stop moving
-        //    if (npcControl.GetHealth() < 50)
-        //    {
-        //        // if our health is low perform low health transition
-        //        npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
-        //        npcControl.PerformTransition(Transition.LowHealth);
-        //
-        //
-        //    }
-        //}
-        //else if (IsInCurrentRange(npc, destPos, MonsterControllerAI.CHASE_DIST))
-        //{
-        //    if (npcControl.GetHealth() < 50)
-        //    {
-        //        // if our health is low perform low health transition
-        //        npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
-        //        npcControl.PerformTransition(Transition.LowHealth);
-        //
-        //    }
-        //    else
-        //    {
-        //        moving = true;
-        //    }
-        //}
-        //else if (!IsInCurrentRange(npc, destPos, MonsterControllerAI.LOST_DIST))
-        //{
-        //    //Player is far away so perform Lost Player
-        //    npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
-        //    npcControl.PerformTransition(Transition.LostPlayer);
-        //}
-
     }
     //Act
     public override void Act(Transform player, Transform npc)
@@ -135,9 +82,26 @@ public class MeleeAttackState : FSMState
         // Move towards the player if not close enough
         controller.navMeshAgent.destination = destPos;
 
+        float speed = controller.navMeshAgent.velocity.magnitude;
+        if (speed > 0)
+        {
+            anim.SetFloat("Speed", speed);
+        }
+
         //Rotate towards Position
         if (canAttack)
         {
+            attackTimer += Time.deltaTime;
+
+            if (attackTimer > attackInterval)
+            {
+                anim.SetTrigger("Ability1");
+                controller.DamageSource.AllowDamageForTime(0.5f);
+                attackTimer = 0.0f;
+                return;
+                // GIVE ATTACK REFERENCE TO THE HURTBOX, AND TELL HITBOX HOW LONG TO BE ACTIVE FOR
+                // PREVENT MULTI-FRAME COLLISIONS SO PLAYER DOES NOT GET ONESHOT
+            }
             // Tell the animator to play the attack animation
             //Debug.Log("[FSM_MeleeAttack]: Attacking the player");
         }

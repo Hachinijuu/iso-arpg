@@ -2211,8 +2211,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.052230876, y: 0.6670391, z: 0.33326167}
-  m_Center: {x: -0.000001911995, y: 0.0888021, z: 0.06395297}
+  m_Size: {x: 0.052230876, y: 0.6670391, z: 0.5}
+  m_Center: {x: -0.000001911995, y: 0.0888021, z: 0.2}
 --- !u!1 &4999209588689283318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,6 +2918,75 @@ Transform:
   - {fileID: 3738292646498984443}
   m_Father: {fileID: 621821779066673442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6508450997461587744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5177885983875926234}
+  - component: {fileID: 2125481865669069965}
+  - component: {fileID: 7693988061352539180}
+  m_Layer: 0
+  m_Name: Hurtbox
+  m_TagString: Hurtbox
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5177885983875926234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6508450997461587744}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6642859576978967797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2125481865669069965
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6508450997461587744}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7693988061352539180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6508450997461587744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39eaf8fa7dd59042aa7857bef90a6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 13068963008273066}
 --- !u!1 &6515413723124253464
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,8 +3418,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05223088, y: 0.66703916, z: 0.3332616}
-  m_Center: {x: 0.0000000071245743, y: 0.0888021, z: 0.063952126}
+  m_Size: {x: 0.05223088, y: 0.66703916, z: 0.5}
+  m_Center: {x: 0.0000000071245743, y: 0.0888021, z: 0.2}
 --- !u!1 &7055634626316530492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,7 +3660,6 @@ GameObject:
   - component: {fileID: 5146659525125202612}
   - component: {fileID: 2953967226847114571}
   - component: {fileID: 7047445683996340813}
-  - component: {fileID: 7248787693300042677}
   m_Layer: 0
   m_Name: F_Berserker
   m_TagString: Player
@@ -3619,6 +3687,7 @@ Transform:
   - {fileID: 849489635497474911}
   - {fileID: 7363202773141427990}
   - {fileID: 4520013728568104041}
+  - {fileID: 5177885983875926234}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &13068963008273066
@@ -3868,29 +3937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e862e6c2499b645a24b7544e972e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &7248787693300042677
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8029280876348220339}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8066461760753629558
 GameObject:
   m_ObjectHideFlags: 0

@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a04d674f64aa24d98b6a647741e866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vCam: {fileID: 713925787}
   playerSpawn: {fileID: 97354009}
   type: 0
   details:
@@ -158,10 +159,13 @@ MonoBehaviour:
     - entity: {fileID: 3409480252071865275, guid: 5cc9a6797970401459dc238acb54952e, type: 3}
       minSpawn: 5
       maxSpawn: 20
-    destructiblesToSpawn:
     - entity: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
       minSpawn: 5
       maxSpawn: 20
+    destructiblesToSpawn:
+    - entity: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
+      minSpawn: 5
+      maxSpawn: 10
     enemiesToKill: 10
     elitesToKill: 0
   levelArea: {fileID: 1704307633}
@@ -178,8 +182,8 @@ MonoBehaviour:
       m_Extent: {x: 0, y: 0, z: 0}
     isObstacle: 0
     isOccupied: 0
-  ShowCubes: 0
-  DrawFullTile: 0
+  ShowCubes: 1
+  DrawFullTile: 1
   origin: {x: 0, y: 0, z: 0}
   obstacles: []
 --- !u!4 &97354009

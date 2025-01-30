@@ -43,7 +43,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] ObjectPool[] enemyPools;
     [Tooltip("Time between spawning")]
     [Range(0, 3.0f)][SerializeField] float spawnInterval = 1.0f;
-    [Range(0, 3.0f)][SerializeField] float groupCheckInterval = 1.0f;
+    [Range(0, 10.0f)][SerializeField] float groupCheckInterval = 1.0f;
     [Range(0, 3.0f)][SerializeField] float enemyCheckInterval = 1.0f;
 
 
@@ -267,7 +267,7 @@ public class AIManager : MonoBehaviour
     IEnumerator UpdateDistanceGroups()
     {
         distanceGroupUpdated = false;
-        Debug.Log("[AIManager]: Started to update Distance Groups");
+        //Debug.Log("[AIManager]: Started to update Distance Groups");
         // Do a staggered update of the distance groups, checking if the enemies should shift to a different one.
         foreach (KeyValuePair<UpdateInterval, List<EnemyController>> group in distanceGroups)
         {
@@ -299,10 +299,10 @@ public class AIManager : MonoBehaviour
             yield return new WaitForSeconds(nearInterval.time); // When cycling through the intervals, wait for some time before checking the next set
         }
         distanceGroupUpdated = true;
-        foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
-        {
-            Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
-        }
+        //foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
+        //{
+        //    Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
+        //}
     }
 
 
@@ -324,7 +324,7 @@ public class AIManager : MonoBehaviour
                 if (distanceGroupUpdated)
                 {
                     StartCoroutine(UpdateDistanceGroups());
-                    Debug.Log("[AIManager]: Updated distance groups");
+                    //Debug.Log("[AIManager]: Updated distance groups");
                     groupTimer = 0.0f;
                 }
             }

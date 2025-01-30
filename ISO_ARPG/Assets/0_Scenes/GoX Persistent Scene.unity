@@ -292,8 +292,8 @@ MonoBehaviour:
   - {fileID: 714920339}
   - {fileID: 1245929811}
   spawnInterval: 0
-  groupCheckInterval: 2
-  enemyCheckInterval: 0
+  groupCheckInterval: 5
+  enemyCheckInterval: 0.2
   nearInterval:
     range: 15
     time: 0.001
@@ -3873,7 +3873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDestructs: 0
   destructibles:
-  - {fileID: 0}
+  - {fileID: 1593370423}
 --- !u!1 &2057246292
 GameObject:
   m_ObjectHideFlags: 0

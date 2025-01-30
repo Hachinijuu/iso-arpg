@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
     public delegate void moveChanged(PlayerMovement.MoveInput value);
     public event moveChanged onMoveChanged;
     void FireMoveChanged (PlayerMovement.MoveInput value) { if (onMoveChanged != null) onMoveChanged(value); }
+
+    public delegate void managerEnabled();
+    public event managerEnabled onManagerEnabled;
+
+    void FireEnabled() { if (onManagerEnabled != null) onManagerEnabled(); Debug.Log("[GameManager]: Enabled"); }
 #endregion
 
 #region UNITY FUNCTIONS
@@ -57,9 +63,17 @@ public class GameManager : MonoBehaviour
         { 
             moveType = controller.Movement.moveType;
         }
-        LoadHub();
+        //LoadHub();
 
+        //LevelLoad();
+        //LoadLevel();
+        //LoadHub();
         //LoadPrototype();
+    }
+
+    private void OnEnable() 
+    {
+        FireEnabled();
     }
 #endregion
 #region GAMEPLAY
@@ -70,8 +84,10 @@ public void PlayerRespawn()
     {
         player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
         player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
+        //controller.Agent.
     }    
     // Set the camera to follow
+    LevelManager.Instance.LevelLoaded();
 
     // Allow the player to move
     controller.Movement.Reset();
@@ -163,14 +179,20 @@ public void PlayerRespawn()
         }
     }
 
+    public void LevelLoad()
+    {
+        //StartCoroutine(LoadLevel(levelNames[(int)level]));
+        LoadLevelFromString((levelNames[(int)level]));
+    }
     public void LoadMainMenu()
     {
         //StartCoroutine(LoadLevel(1);
+        LoadLevelFromString((levelNames[(int)eLevel.MENU]));
     }
 
     public void LoadHub()
     {
-        StartCoroutine(LoadLevel(levelNames[(int)level]));
+        LoadLevelFromString((levelNames[(int)eLevel.HUB]));
     }
 
     public void LoadPrototype()

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Hitbox : MonoBehaviour
@@ -22,8 +23,22 @@ public class Hitbox : MonoBehaviour
             Physics.IgnoreCollision(sourceCollider, damageCollider);
         }
 
+        // Need to stop enemies from damaging each other once system is fleshed out
     }
 
+    public void AllowDamageForTime(float window)
+    {
+        //Debug.Log("I want to allow damage for: " + window);
+        StopAllCoroutines();
+        StartCoroutine(DamageWindow(window));
+    }
+
+    IEnumerator DamageWindow(float time)
+    {
+        applyDamage = true;
+        yield return new WaitForSeconds(time);
+        applyDamage = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -35,7 +50,7 @@ public class Hitbox : MonoBehaviour
 
         if (other.CompareTag("Hurtbox"))
         {
-            //Debug.Log("HURTBOX FOUND");
+            Debug.Log("HURTBOX FOUND");
             Hurtbox hb = other.GetComponent<Hurtbox>();
             if (hb != null)
             {

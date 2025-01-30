@@ -28,8 +28,8 @@ public enum FSMStateID
 
 public class AdvancedFSM : FSM
 {
-    private List<FSMState> fsmStates;
-
+    protected List<FSMState> fsmStates;
+    public List<FSMState> States { get { return fsmStates; } }
     // The fsmStates are not changing directly but updating using transitions
     private FSMStateID currentStateID;
     public FSMStateID CurrentStateID { get { return currentStateID; } }

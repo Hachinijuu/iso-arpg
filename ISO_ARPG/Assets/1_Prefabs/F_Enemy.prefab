@@ -574,6 +574,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1158212218958867111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2187255019461602609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7567228859536770471}
+  - component: {fileID: 4742774490467507755}
+  - component: {fileID: 1927899786217821030}
+  m_Layer: 7
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7567228859536770471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187255019461602609}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9184319219227586658}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4742774490467507755
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187255019461602609}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1927899786217821030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187255019461602609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7054311e8e97c4545b8c51eb4cafaa3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 8376291819686341336}
+  damage: 5
 --- !u!1 &2329330207106025935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,8 +2840,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184319219227586658}
+  - component: {fileID: 8455501812982166819}
   - component: {fileID: 5560961521482431665}
-  - component: {fileID: 1737764474064958535}
   - component: {fileID: 2790351670096975827}
   - component: {fileID: 7365255762437270817}
   - component: {fileID: 2539909278834290250}
@@ -2793,7 +2861,7 @@ Transform:
   m_GameObject: {fileID: 8376291819686341336}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2602329, y: 0, z: -0.12977028}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2801,8 +2869,27 @@ Transform:
   - {fileID: 6117253040588560959}
   - {fileID: 702799222740339829}
   - {fileID: 2243285484862653217}
+  - {fileID: 7567228859536770471}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8455501812982166819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8376291819686341336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb5eba18cbe3ca4dbd8337804609030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugDraw: 0
+  stats: {fileID: 7365255762437270817}
+  navMeshAgent: {fileID: 0}
+  damageSource: {fileID: 1927899786217821030}
+  anim: {fileID: 2790351670096975827}
+  hurtbox: {fileID: 2286790413496737105}
 --- !u!195 &5560961521482431665
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2825,23 +2912,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
---- !u!114 &1737764474064958535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8376291819686341336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898628ccaa8792944b9a97480ca03d92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugDraw: 0
-  stats: {fileID: 7365255762437270817}
-  navMeshAgent: {fileID: 0}
-  anim: {fileID: 2790351670096975827}
-  hurtbox: {fileID: 2286790413496737105}
 --- !u!95 &2790351670096975827
 Animator:
   serializedVersion: 5
