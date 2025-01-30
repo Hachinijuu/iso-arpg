@@ -21,7 +21,11 @@ public class DeadState : FSMState
         Debug.Log("[FSM_DeathState]: Entity died.");
         if (controller.stats.Health.Value <= 0)
         { 
-            controller.gameObject.SetActive(false);       // Set the GameObject to false (returned to pool)
+            if (AIManager.Instance)
+                AIManager.Instance.currAmount -= 1;             // Subtract from the amount of enemies
+            if (LevelManager.Instance)
+                LevelManager.Instance.numKilled += 1;           // Add to the number killed
+            controller.gameObject.SetActive(false);         // Set the GameObject to false (returned to pool)
 
             // Consideration, individual enemies are set inactive - units, causing them to be inactive
             // When the pooledObject is found, it sets the bundles to active, not the children within the bundles.

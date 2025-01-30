@@ -19,13 +19,13 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
 
     // Public Accessors
+    public Vector3 MoveTarget { get { return moveTarget; } }
     public bool CanMove { get { return canMove; } set { canMove = value; } }
     public bool CanRotate { get { return canRotate; } set { canRotate = value; } }
     public float Speed { get { return Speed; } set { speed = value; } }
 
     // Expose this property to allow movement to be driven externally (by mouse holding)
     public bool MoveHeld { get { return moveHeld; } set { moveHeld = value; } }
-
     public bool UseAnimations { get { return useAnimations; } set { useAnimations = value; } }
     // Variables
     Vector3 moveTarget;
@@ -164,8 +164,9 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Reset()
     {
+        //transform.position = transform.position;
         moveTarget = transform.position;
-
+        agent.destination = moveTarget;
     }
     // Update is called once per frame
     void Update()

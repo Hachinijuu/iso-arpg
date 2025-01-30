@@ -52,11 +52,16 @@ public class AIManager : MonoBehaviour
     public UpdateInterval regularInterval;
     public UpdateInterval farInterval;
 
+    public int currAmount = 0;
+
+    float spawnTimer = 0.0f;
+    [SerializeField] float respawnInterval = 5.0f;
 
     // Instead of prefab updates, organize enemies into these distance groups which will dictate their frequency
     // Whenever a player enters a check based on the groups the distances
     Dictionary<UpdateInterval, List<EnemyController>> distanceGroups;
     bool distanceGroupUpdated;
+    bool enemiesSpawned;
     private List<Vector3> spawnLocations;
 
     #region UNITY FUNCTIONS
@@ -140,7 +145,10 @@ public class AIManager : MonoBehaviour
     // When a level (scene) is unloading, call this function
     public void LevelUnloading()
     {
-
+        foreach (ObjectPool enemyPool in enemyPools)
+        {
+            enemyPool.Reset();
+        }
     }
     #endregion
 
@@ -164,6 +172,59 @@ public class AIManager : MonoBehaviour
         {
             StartCoroutine(SpawnInitialBatch());
         }
+    }
+
+    IEnumerator SpawnEnemies()
+    {
+        spawnEnemies = false;
+        int numExpected = 0;
+        int numTypes = 0;       // The types of enemies (orcs, imps)
+        foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
+        {
+            numTypes++;
+            numExpected += group.minSpawn;
+        }
+        // To know how much we should spawn, find the difference between the current enemies and the number expected
+        // Expecting 100, have 30, 100 - 30 = 70, need 70 enemies
+        int toSpawn = numExpected - currAmount;
+
+        // Spawn this amount divided by the number of types
+
+        if (toSpawn > 0)
+        {
+            Debug.Log("[AIManager]: Spawning " + toSpawn + ", Expected Number: " + numExpected + ", Current Count: " + currAmount);
+            foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
+            {
+                GameObject enemyToSpawn = group.entity;
+                foreach (ObjectPool pool in enemyPools)
+                {   
+                    if (pool.Prefab == enemyToSpawn)
+                    {
+                        int enemiesToSpawn = toSpawn / numTypes;
+                        for (int i = 0; i < enemiesToSpawn; i++)
+                        {
+                            CellIndex index = LevelManager.Instance.GetRandomIndex(5);
+
+                            if (index.x != -1 && index.y != -1)
+                            {
+                                Cell currCell = LevelManager.Instance.GetCellFromIndex(index);
+                                Vector3 spawnPos = currCell.position;
+                                spawnPos.y += LevelManager.Instance.FloorOffset;
+
+                                GameObject enemy = pool.GetPooledObject();
+                                if (enemy != null)
+                                {
+                                    enemy.transform.position = currCell.position;
+                                    enemy.SetActive(true);
+                                }
+                            }
+                            yield return new WaitForSeconds(spawnInterval);
+                        }
+                    }
+                }
+            }
+        }
+        spawnEnemies = true;
     }
     IEnumerator SpawnInitialBatch()
     {
@@ -197,6 +258,7 @@ public class AIManager : MonoBehaviour
                             GameObject agent = pool.GetPooledObject();
                             if (agent != null)
                             {
+                                currAmount++;
                                 agent.transform.position = spawnPos;
                                 // Place the unit into a group based on their position;
                                 float distance = GetSquarePlayerDistance(spawnPos);
@@ -314,10 +376,12 @@ public class AIManager : MonoBehaviour
         // Update Coroutine
         distanceGroupUpdated = true;
         float groupTimer = 0.0f;
+        spawnTimer = 0.0f;
 
         while (!LevelManager.Instance.LevelComplete)
         {
             groupTimer += Time.deltaTime;
+            spawnTimer += Time.deltaTime;
             //Debug.Log(groupTimer);
             if (groupTimer > groupCheckInterval)
             {
@@ -326,6 +390,14 @@ public class AIManager : MonoBehaviour
                     StartCoroutine(UpdateDistanceGroups());
                     //Debug.Log("[AIManager]: Updated distance groups");
                     groupTimer = 0.0f;
+                }
+            }
+            if (spawnTimer > respawnInterval)
+            {
+                if (spawnEnemies)
+                {
+                    StartCoroutine(SpawnEnemies());
+                    spawnTimer = 0.0f;
                 }
             }
             // Start Coroutines to run the functions, don't start additional coroutines

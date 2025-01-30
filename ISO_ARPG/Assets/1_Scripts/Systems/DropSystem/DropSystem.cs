@@ -19,6 +19,8 @@ public class DropSystem : MonoBehaviour
     private List<EntityStats> enemies;
     private List<EntityStats> destructibles;
 
+    [SerializeField] ItemObject expOrb;
+
     public void InitDropLists()
     {
         enemies = new List<EntityStats>();
@@ -57,9 +59,16 @@ public class DropSystem : MonoBehaviour
         Debug.Log("[DropSystem]: Added listeners");
     }
 
-    private void CheckDrop() // check the thing and map it to what it is supposed to drop
+    private void CheckDrop(GameObject whoDied) // check the thing and map it to what it is supposed to drop
     {
-        Debug.Log("Will I drop something?");
+
+        float dropValue = Random.Range(0, expOrb.dropChance * 2);
+
+        if (dropValue > expOrb.dropChance)
+            CreatedDroppedObject(whoDied.transform.position, expOrb);
+        else
+            Debug.Log("[DropSystem]: No drops");
+        //Debug.Log("Will I drop something?");
     }
 
     // Create dropped object

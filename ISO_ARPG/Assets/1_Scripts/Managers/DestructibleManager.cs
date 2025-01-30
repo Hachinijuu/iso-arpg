@@ -49,7 +49,10 @@ public class DestructibleManager : MonoBehaviour
     // When a level (scene) is unloading, call this function
     public void LevelUnloading()
     {
-
+        foreach (ObjectPool destructibles in destructibles)
+        {
+            destructibles.Reset();
+        }
     }
     #endregion  
 

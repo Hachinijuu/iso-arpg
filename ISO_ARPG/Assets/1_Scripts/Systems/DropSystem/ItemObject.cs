@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[CreateAssetMenu(fileName = "Item", menuName = "sykcorSystems/Items", order = 1)]
 public class ItemObject : ScriptableObject
 {
     #region VARIABLES

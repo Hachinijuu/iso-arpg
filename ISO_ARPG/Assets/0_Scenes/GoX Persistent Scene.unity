@@ -303,6 +303,7 @@ MonoBehaviour:
   farInterval:
     range: 75
     time: 0.05
+  currAmount: 0
 --- !u!1 &101971205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,6 +3182,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7189328578819066685, guid: de63f85f0320fe048a21f36af6b2c68b, type: 3}
+      propertyPath: tagsToMatch.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189328578819066685, guid: de63f85f0320fe048a21f36af6b2c68b, type: 3}
+      propertyPath: tagsToMatch.Array.data[2]
+      value: Destructible
+      objectReference: {fileID: 0}
     - target: {fileID: 8029280876348220339, guid: de63f85f0320fe048a21f36af6b2c68b, type: 3}
       propertyPath: m_Name
       value: F_Berserker
@@ -3497,6 +3506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16dcf81f50abc664080e987c8b08e48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expOrb: {fileID: 11400000, guid: cf6bfb7ac38613c45a5a0a0b8c30d437, type: 2}
 --- !u!1 &1720448748
 GameObject:
   m_ObjectHideFlags: 0

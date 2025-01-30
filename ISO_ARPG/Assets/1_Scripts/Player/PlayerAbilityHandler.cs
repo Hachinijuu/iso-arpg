@@ -9,9 +9,12 @@ public class PlayerAbilityHandler : MonoBehaviour
     PlayerStats stats;
     PlayerInput input;
     MouseTarget mouseTarget;
+    PlayerMovement movement;
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     bool held;
+
+    float squareRange;
 
     void MapPlayerActions()
     {
@@ -66,11 +69,13 @@ public class PlayerAbilityHandler : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         input = GetComponent<PlayerInput>();
         mouseTarget = GetComponent<MouseTarget>();
+        movement = GetComponent<PlayerMovement>();
 
         // Listen for passive ability activation
 
         if (stats != null)
         {
+            squareRange = stats.Range.Value * stats.Range.Value;
             if (stats.Abilities.Count > 0)
             {
                 InitAbilities();
@@ -81,6 +86,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         // ORDER MATTERS
         // Abilities must be initialized before mapping the inputs
         // This is because the functions that are mapped, respond to the types of abilities that are loaded.
+
 
         MapPlayerActions();
     }
@@ -110,13 +116,39 @@ public class PlayerAbilityHandler : MonoBehaviour
         canUseAbility.Add(stats.Identity, true);
     }
 
+    float GetSquareDistance(Vector3 start, Vector3 end)
+    {
+        return (start - end).sqrMagnitude;
+    }
     void AbilityBegan(Ability ab)
     {
         if (ab != null)
         {
-            // Check if the ability is not on cooldown
-
             // Check if in range to use
+            // Target distance
+            // get the distance between the target and the player
+
+            // Don't want the ability to be fired when I am not in range\
+
+            // TEMPORARY SOLUTION
+            Vector3 temp = transform.position;
+            if (mouseTarget.Target == null)
+            {
+                // If the target does not exist , send the range somewh
+                //temp = movement.MoveTarget;
+                return;
+            }
+            else
+                temp = mouseTarget.Target.transform.position;
+            float dist = GetSquareDistance(transform.position, temp);
+            //Debug.Log(dist + " from " + squareRange);
+            if (dist > squareRange && movement.CanMove)
+                return;
+
+
+            // But if I am not in range and not moving, I want the ability to be fired
+
+            // Check if the ability is not on cooldown
             if (canUseAbility[ab])
             {
                 // Check if the player has enough mana to use the ability

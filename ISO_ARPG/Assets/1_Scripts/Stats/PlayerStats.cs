@@ -36,6 +36,7 @@ public class PlayerStats : EntityStats
     public MainStat INT { get { return intelligence; } }
 
     // Gameplay Stats
+    public Stat Range { get { return attackRange; } }
     public Stat Projectiles { get { return numProjectiles; } }
     public Stat Chains { get { return numChains; } }
 
@@ -123,6 +124,7 @@ public class PlayerStats : EntityStats
         intelligence = new MainStat(playerClass.Intelligence);
 
         // gameplay stats
+        attackRange = new Stat(playerClass.Range);
         numProjectiles = new Stat(playerClass.Projectiles);
         numChains = new Stat(playerClass.Chains);
 

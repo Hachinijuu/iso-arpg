@@ -57,47 +57,49 @@ public class RegenerateState : FSMState
     //Reason
     public override void Reason(Transform player, Transform npc)
     {
-        //moving = true;
-        //if (npcControl.GetHealth() == 0)
-        //{
-        //    npcControl.hideSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
-        //    npcControl.PerformTransition(Transition.NoHealth);
-        //
-        //    return;
-        //}
-        // ORDER DOES MATTER
-
-        //if (IsInCurrentRange(npc, player.position, MonsterControllerAI.CHASE_DIST))
-        //{
-        //    // See the player...
-        //    npcControl.hideSlotManager.ReleaseSlot(availableSlotIndex, npcControl.gameObject);
-        //    npcControl.PerformTransition(Transition.SawPlayer);
-        //}
-        //else if (IsInCurrentRange(npc, destPos, HIDE_WAYPOINT_DIST))
-        //{
-        //    moving = false;
-        //}
-
         // Conditions to transition out of regenerate state
         // - Has been attacked
         // - Enemy entered range
         // - Attack state conditions
         // If the player has entered the ranged attack range, transition to the ranged state
-        float dist = GetSquareDistance(npc.position, destPos);
+        //float dist = GetSquareDistance(npc.position, destPos);
         // Ranged attack range is greater than melee, less than or equal to ranged
-        if (dist > EnemyController.MELEEATTACK_DIST && dist <= EnemyController.RANGEATTACK_DIST)
+
+        // THIS STATE IS ONLY ADDED TO THE ELITE ENEMIES
+        // WHEN THE ELITE ENEMIES ARE ADDED, THE TRANSITIONS NEED TO EXIST BASED ON THE CONTROLLER
+        if (controller)
         {
-            controller.PerformTransition(Transition.ReachPlayer);
+            if (IsInCurrentRange(npc, destPos, EnemyController.RANGEATTACK_DIST))
+            {
+                //Debug.Log("[FSM_ChaseState] Transitioned to Ranged");
+                controller.PerformTransition(Transition.ReachPlayer);
+                return;
+            }
         }
         // If the player has entered the melee attack range, transition to the melee attack state
-        else if (dist <= EnemyController.MELEEATTACK_DIST)
+        if (IsInCurrentRange(npc, destPos, EnemyController.MELEEATTACK_DIST))
         {
+            //Debug.Log("[FSM_ChaseState] Transitioned to Melee");
             controller.PerformTransition(Transition.PlayerReached);
+            return;
         }
         else
         {
             destPos = player.position;
         }
+        //if (dist > EnemyController.MELEEATTACK_DIST && dist <= EnemyController.RANGEATTACK_DIST)
+        //{
+        //    controller.PerformTransition(Transition.ReachPlayer);
+        //}
+        //// If the player has entered the melee attack range, transition to the melee attack state
+        //else if (dist <= EnemyController.MELEEATTACK_DIST)
+        //{
+        //    controller.PerformTransition(Transition.PlayerReached);
+        //}
+        //else
+        //{
+        //    destPos = player.position;
+        //}
     }
     //Act
     public override void Act(Transform player, Transform npc)

@@ -62,6 +62,8 @@ public class MouseTarget : MonoBehaviour
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
         {
             //Debug.Log(hit.transform.tag);
+
+            // Build a bounding box
             foreach (string tag in tagsToMatch)
             {
                 if (hit.transform.tag == tag)                   // Check if the hit object was in a valid tag match
@@ -78,12 +80,13 @@ public class MouseTarget : MonoBehaviour
         if (mouseHit != null)
         {
             target = mouseHit;
-            dbMenu.UpdateTargetText(target.name);
+            if (dbMenu)
+                dbMenu.UpdateTargetText(target.name);
         }
         else
         { 
             target = null;
-            if (dbMenu != null)
+            if (dbMenu)
                 dbMenu.UpdateTargetText(null);
         }
 
@@ -91,15 +94,27 @@ public class MouseTarget : MonoBehaviour
 
     void UpdateMouseHover()
     {
+        GetMouseHit();
         if (dbMenu != null)
         {
-                    if (GetMouseHit() != null)  // If the mouse hit returns a value, display it in the DebugMenu
-        {
-            dbMenu.UpdateHoverText(mouseHit.name);
+            if (mouseHit != null)
+            {
+                dbMenu.UpdateHoverText(mouseHit.name);
+            }
+            else
+            {
+                dbMenu.UpdateHoverText(null);
+            }
         }
-        else
-            dbMenu.UpdateHoverText(null);
-        }
+        //if (dbMenu != null)
+        //{
+        //if (GetMouseHit() != null)  // If the mouse hit returns a value, display it in the DebugMenu
+        //{
+        //    dbMenu.UpdateHoverText(mouseHit.name);
+        //}
+        //else
+        //    dbMenu.UpdateHoverText(null);
+        //}
     }
 
     // Update is called once per frame

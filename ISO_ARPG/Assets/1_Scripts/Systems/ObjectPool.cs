@@ -11,7 +11,6 @@ public class ObjectPool : MonoBehaviour
     public List<GameObject> pooledObjects;
     [SerializeField] int minPooledObjects = 2;
     [SerializeField] int numPooledObjects = 5;
-
     public bool CanGrow { get {return canGrow; } set { canGrow = value; } }
     [SerializeField] bool canGrow = false;
 

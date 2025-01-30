@@ -29,6 +29,7 @@ public class CharacterClass : ScriptableObject
     public MainStat Intelligence;
 
     [Header("Gameplay Stats")]
+    public Stat Range;
     public Stat Projectiles;
     public Stat Chains;
 

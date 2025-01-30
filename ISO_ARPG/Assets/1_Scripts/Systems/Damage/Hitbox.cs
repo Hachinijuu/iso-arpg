@@ -50,7 +50,7 @@ public class Hitbox : MonoBehaviour
 
         if (other.CompareTag("Hurtbox"))
         {
-            Debug.Log("HURTBOX FOUND");
+            //Debug.Log("HURTBOX FOUND");
             Hurtbox hb = other.GetComponent<Hurtbox>();
             if (hb != null)
             {
@@ -59,5 +59,12 @@ public class Hitbox : MonoBehaviour
             else
                 Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (applyDamage)
+            Gizmos.DrawCube(transform.position, new Vector3(1,1,1));
     }
 }

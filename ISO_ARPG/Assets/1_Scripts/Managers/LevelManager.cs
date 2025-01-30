@@ -85,9 +85,11 @@ public class LevelManager : MonoBehaviour
     //List<GameObject> levelEnemies;          // The enemies to spawn in this level
     //List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
     float timeSpent;                        // The time spent in the level
-    int numKilled;
-    int numEliteKilled;
+    public int numKilled;
+    public int numEliteKilled;
 
+    public Transform loaderLocation;
+    public LevelVolume levelLoader;
     public bool LevelComplete { get { return levelComplete; } }
     bool levelComplete = false;
 
@@ -181,7 +183,21 @@ public class LevelManager : MonoBehaviour
     void LevelCompleted()
     {
         // Spawn the portal here
-        Debug.Log("Level has been completed");
+        if (levelLoader != null)
+        {
+            if (!levelLoader.gameObject.activeInHierarchy)
+            {
+                if (loaderLocation != null)
+                {
+                    Vector3 pos = loaderLocation.position;
+                    pos.y += floorOffset;
+                    levelLoader.gameObject.transform.position = pos;
+                }
+                levelLoader.gameObject.SetActive(true);
+            }
+        }
+
+        Debug.LogWarning("Level has been completed");
     }
 
     // GRID SYSTEM

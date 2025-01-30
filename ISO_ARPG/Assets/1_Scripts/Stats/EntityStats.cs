@@ -11,9 +11,9 @@ public class EntityStats : MonoBehaviour
 
     #region EVENTS
     // Send an event out whenever the entity has died, drop system will listen to this.
-    public delegate void Died();
+    public delegate void Died(GameObject go);
     public event Died OnDied;
-    private void FireOnDied() { if (OnDied != null) { OnDied(); Debug.Log("Fired death event"); } }
+    private void FireOnDied(GameObject go) { if (OnDied != null) { OnDied(go); } }
     #endregion
 
     // Assume all entities are returned to an object pool - SetActive(false)
@@ -29,7 +29,7 @@ public class EntityStats : MonoBehaviour
         if (health.Value <= 0)
         {
             //Debug.Log("Died");
-            FireOnDied();
+            FireOnDied(gameObject);
         }
     }
 }

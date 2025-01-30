@@ -126,6 +126,10 @@ public void PlayerRespawn()
         if (pauseMenu)
             pauseMenu.CanPause = false; // Do not allow pauses to happen while loading
         
+        if (AIManager.Instance)
+            AIManager.Instance.LevelUnloading();
+        if (DestructibleManager.Instance)
+            DestructibleManager.Instance.LevelUnloading();
 
         // Only want to unload if the scene is not the persistent scene
         if (!string.IsNullOrEmpty(currentLevelName))
