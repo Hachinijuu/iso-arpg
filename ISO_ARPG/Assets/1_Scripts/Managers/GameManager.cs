@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
         //LoadHub();
 
-        //LevelLoad();
+        LevelLoad();
         //LoadLevel();
         //LoadHub();
         //LoadPrototype();
