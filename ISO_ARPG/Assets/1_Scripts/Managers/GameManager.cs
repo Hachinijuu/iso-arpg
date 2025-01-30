@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         { 
             moveType = controller.Movement.moveType;
         }
+        LoadHub();
 
         //LoadPrototype();
     }
@@ -73,6 +74,7 @@ public void PlayerRespawn()
     // Set the camera to follow
 
     // Allow the player to move
+    controller.Movement.Reset();
     controller.Movement.CanMove = true;
     controller.Movement.CanRotate = true;
     

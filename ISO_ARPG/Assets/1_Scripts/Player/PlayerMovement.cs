@@ -162,7 +162,11 @@ public class PlayerMovement : MonoBehaviour
         agent.isStopped = stop;             // stop the agent in place
         moveTarget = transform.position;    // reset target to current point
     }
+    public void Reset()
+    {
+        moveTarget = transform.position;
 
+    }
     // Update is called once per frame
     void Update()
     {
