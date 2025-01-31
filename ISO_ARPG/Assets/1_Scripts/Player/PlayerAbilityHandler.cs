@@ -131,20 +131,25 @@ public class PlayerAbilityHandler : MonoBehaviour
             // Don't want the ability to be fired when I am not in range\
 
             // TEMPORARY SOLUTION
-            Vector3 temp = transform.position;
-            if (mouseTarget.Target == null)
+            if (ab.CheckRange)
             {
-                // If the target does not exist , send the range somewh
-                //temp = movement.MoveTarget;
-                return;
+                if (movement.CanMove)
+                {
+                    Vector3 temp = transform.position;
+                    if (mouseTarget.Target == null)
+                    {
+                        // If the target does not exist , send the range somewh
+                        //temp = movement.MoveTarget;
+                        return;
+                    }
+                    else
+                        temp = mouseTarget.Target.transform.position;
+                    float dist = GetSquareDistance(transform.position, temp);
+                    //Debug.Log(dist + " from " + squareRange);
+                    if (dist > squareRange && movement.CanMove)
+                        return;
+                    }
             }
-            else
-                temp = mouseTarget.Target.transform.position;
-            float dist = GetSquareDistance(transform.position, temp);
-            //Debug.Log(dist + " from " + squareRange);
-            if (dist > squareRange && movement.CanMove)
-                return;
-
 
             // But if I am not in range and not moving, I want the ability to be fired
 

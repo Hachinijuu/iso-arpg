@@ -187,6 +187,10 @@ public class PlayerMovement : MonoBehaviour
             agent.destination = moveTarget;       // Move to the target
             speed = agent.velocity.normalized.magnitude;
         }
+        else
+        {
+            speed = 0.0f;
+        }
 
         // Regardless of movement handle the character's rotation
         if (canRotate)

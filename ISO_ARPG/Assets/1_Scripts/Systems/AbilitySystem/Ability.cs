@@ -36,6 +36,7 @@ public abstract class Ability : ScriptableObject
     public bool OnCooldown { get { return currCooldown > 0; } }
     public float Cost { get { return cost; } }
     public bool StopsMovement { get { return stopsMovement; } }
+    public bool CheckRange { get { return checkRange; } }
     #endregion
 
     #region Descriptions
@@ -58,6 +59,8 @@ public abstract class Ability : ScriptableObject
     [SerializeField] protected bool stopsMovement = false;  // if the ability stops player movement
     //[SerializeField] protected bool channelAbility = false; // if the ability can be held (channeled)
     //[SerializeField] protected float interval = -1f;        // the interval of when to consume (channeled)
+
+    [SerializeField] protected bool checkRange = false;
 
     [Header("Audio")]
     [SerializeField] protected AudioClip abilityActivated;
