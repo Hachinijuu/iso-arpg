@@ -210,7 +210,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0}
   m_AnchorMax: {x: 0.35, y: 1}
-  m_AnchoredPosition: {x: 31.400024, y: 0}
+  m_AnchoredPosition: {x: 31.399994, y: 0}
   m_SizeDelta: {x: 40, y: 42.7884}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &79551961
@@ -963,19 +963,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 521884845}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1565196386}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
-        m_MethodName: ToggleUIElementShift
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 647949619}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &521884845
 MonoBehaviour:
   m_ObjectHideFlags: 0
