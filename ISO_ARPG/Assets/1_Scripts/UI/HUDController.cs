@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,9 @@ public class HUDController : MonoBehaviour
     [SerializeField] PlayerController player;
 
     [SerializeField] Slider healthSlider;
+    [SerializeField] TMP_Text healthText;
     [SerializeField] Slider manaSlider;
+    [SerializeField] TMP_Text manaText;
 
     [SerializeField] UIAbility ab1;
     [SerializeField] UIAbility ab2;
@@ -45,6 +48,12 @@ public class HUDController : MonoBehaviour
         else
             Debug.LogWarning("[HUD]: Health slider missing reference");
 
+        if (healthText != null)
+            UpdateHealthText(health.Value);
+        
+        if (manaText != null)
+            UpdateManaText(mana.Value);
+
         LoadAbilities();
         AddEventListeners();
     }
@@ -62,8 +71,8 @@ public class HUDController : MonoBehaviour
     // EVENT MAPPING
     private void AddEventListeners()
     {
-        playerStats.Health.Changed += UpdateHealthSlider;
-        playerStats.Mana.Changed += UpdateManaSlider;
+        playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); }; 
+        playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
         AddCooldownListeners();
     }
 
@@ -105,6 +114,16 @@ public class HUDController : MonoBehaviour
         manaSlider.value = value;
     }
 
+    public void UpdateHealthText(float value)
+    {
+        healthText.text = value.ToString() + " / " +  health.MaxValue;
+    }
+
+    public void UpdateManaText(float value)
+    {
+        manaText.text = value.ToString() + " / " +  mana.MaxValue;
+    }
+
     public void ShowCooldownText(UIAbility ui, Ability ab)
     {
         ui.cooldown.gameObject.SetActive(ab.OnCooldown);
@@ -112,7 +131,7 @@ public class HUDController : MonoBehaviour
 
     public void UpdateCooldownSlider(UIAbility ui, float value)
     {
-        ui.cooldown.text = Mathf.RoundToInt(value).ToString();
+        ui.cooldown.text = value.ToString("F1");
     }
 
     public void UpdateCooldownText(UIAbility ui, float value)

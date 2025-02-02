@@ -54,7 +54,7 @@ public class AIManager : MonoBehaviour
 
     public int currAmount = 0;
 
-    float spawnTimer = 0.0f;
+    //float spawnTimer = 0.0f;
     [SerializeField] float respawnInterval = 5.0f;
 
     // Instead of prefab updates, organize enemies into these distance groups which will dictate their frequency
@@ -176,7 +176,7 @@ public class AIManager : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-        spawnEnemies = false;
+        enemiesSpawned = false;
         int numExpected = 0;
         int numTypes = 0;       // The types of enemies (orcs, imps)
         foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
@@ -224,7 +224,7 @@ public class AIManager : MonoBehaviour
                 }
             }
         }
-        spawnEnemies = true;
+        enemiesSpawned = true;
     }
     IEnumerator SpawnInitialBatch()
     {
@@ -375,8 +375,9 @@ public class AIManager : MonoBehaviour
         // While the level has not ended, run updates for the distance groups and spawn enemies
         // Update Coroutine
         distanceGroupUpdated = true;
+        enemiesSpawned = true;
         float groupTimer = 0.0f;
-        spawnTimer = 0.0f;
+        float spawnTimer = 0.0f;
 
         while (!LevelManager.Instance.LevelComplete)
         {
@@ -394,7 +395,7 @@ public class AIManager : MonoBehaviour
             }
             if (spawnTimer > respawnInterval)
             {
-                if (spawnEnemies)
+                if (enemiesSpawned)
                 {
                     StartCoroutine(SpawnEnemies());
                     spawnTimer = 0.0f;

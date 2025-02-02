@@ -96,34 +96,67 @@ public class Stat
 [System.Serializable]
 public class ClampedStat : Stat
 {
+    [SerializeField] protected float maxValue;
     // Public accessors
-    public override float Value { get { return value; } set { SetClampedValue(value, StatLimits.STAT_MAX); } }
+    //public override float Value { get { return value; } set { SetClampedValue(value); } }
+    public float MaxValue
+    {
+        get { return maxValue; }
+        set
+        {
+            if (value <= StatLimits.TRACKED_STAT_MAX)
+                maxValue = value;
+            else if (value <= 0)
+                maxValue = 0;
+            else
+                maxValue = StatLimits.TRACKED_STAT_MAX;
+        }
+    }
 
     // Constructors
     public ClampedStat() : base() { }
-    public ClampedStat(float value) : base(value) { }
-
+    public ClampedStat(float value) : base(value) { this.maxValue = StatLimits.STAT_MAX; }
+    public ClampedStat(float value, float maxValue) : base(value) { this.maxValue = maxValue; }
     public ClampedStat(ClampedStat copy)
     { 
         Copy(copy);
     }
 
     // Functionality
-    public virtual void SetClampedValue(float value, float maxValue)
+    public override void SetValue(float value)
     {
-        if (this.value + (value - this.value) <= maxValue)   // if the current value + the difference between the new value is less than the max
+        if (value > maxValue)
         {
-            this.value = value;                                         // use the requested value
+            this.value = maxValue;
         }
-        else if (this.value + (value - this.value) <= 0)                // if the current value + the difference between the new value is less than zero
+        else if (value < 0)
         {
-            this.value = 0;                                             // use the zero (NOTE: if we want negative stats, this check can be removed)
+            this.value = 0;
         }
-        else                                                            // otherwise, the stat exceeds the max value
+        else
         {
-            this.value = StatLimits.STAT_MAX;                           // clamp the stat to the max provided
+            this.value = value;
         }
-        FireChanged(value); // tell the listeners the new value
+        FireChanged(this.value); // tell the listeners the new value
+        
+        //this.value = value;
+        //if (this.value > maxValue)
+        //    this.value = maxValue;
+        //if (this.value + (value - this.value) < maxValue)   // if the current value + the difference between the new value is less than the max
+        //{
+        //    if (value - this.value < 0)
+        //        return;
+        //    else
+        //        this.value = value;     // use the requested value
+        //}
+        //else if (this.value + (value - this.value) < 0)                // if the current value + the difference between the new value is less than zero
+        //{
+        //    this.value = 0;                                             // use the zero (NOTE: if we want negative stats, this check can be removed)
+        //}
+        //else                                                            // otherwise, the stat exceeds the max value
+        //{
+        //    this.value = maxValue;                           // clamp the stat to the max provided
+        //}
     }
 }
 #endregion
@@ -139,7 +172,7 @@ public class MainStat : ClampedStat
 
     // Constructors
     public MainStat() : base() { type = MainStatTypes.NONE; }
-    public MainStat(MainStatTypes type, float value) : base(value) { this.type = type; }
+    public MainStat(MainStatTypes type, float value) : base() { this.type = type; }
 
     public virtual void Copy(MainStat other)
     {
@@ -181,24 +214,10 @@ public class TrackedStat : ClampedStat
     // Data
     public TrackedStatTypes type;
     protected float oldValue;
-    [SerializeField] protected float maxValue;
 
     // Public Data Accessors
+    //public override float Value { get { return base.value; } set { SetClampedValue(value); } }
     public float OldValue { get { return oldValue; } }
-
-    public float MaxValue
-    {
-        get { return maxValue; }
-        set
-        {
-            if (maxValue + value <= StatLimits.TRACKED_STAT_MAX)
-                maxValue = value;
-            else if (maxValue + value <= 0)
-                maxValue = 0;
-            else
-                maxValue = StatLimits.TRACKED_STAT_MAX;
-        }
-    }
 
     // Constructors
     public TrackedStat() : base() { }
@@ -207,7 +226,7 @@ public class TrackedStat : ClampedStat
     {
         type = TrackedStatTypes.NONE;
         MaxValue = maxValue;                    // This will set the classes' maxValue to the value passed in, and do bounds checking
-        SetClampedValue(value, this.maxValue);  // Clamp the passed in value to the max value
+        SetValue(value);                 // Clamp the passed in value to the max value
     }
     public TrackedStat(TrackedStat copy)
     { 
@@ -216,11 +235,11 @@ public class TrackedStat : ClampedStat
 
 
     // Functionality
-    public override void SetClampedValue(float value, float maxValue)
+    public override void SetValue(float value)
     {
         oldValue = this.value;                  // Store the old value
-        base.SetClampedValue(value, maxValue);  // Update the value to the new one
-        FireChanged(value);                     // Tell the listeners the new value
+        base.SetValue(value);  // Update the value to the new one
+        FireChanged(this.value);                     // Tell the listeners the new value
     }
 
     public virtual void Copy(TrackedStat other)

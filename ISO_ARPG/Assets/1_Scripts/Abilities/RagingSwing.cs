@@ -14,6 +14,8 @@ public class RagingSwing : StackAbility
         stats = actor.GetComponent<PlayerStats>();
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
 
+        // Listen the the hitboxes for their events, if something was hit, regain mana - if nothing is hit, don't
+
         if (anim != null)
         { 
             anim.SetTrigger("Ability1");
