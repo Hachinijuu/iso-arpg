@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 [CreateAssetMenu(fileName = "TigersRage", menuName = "sykcorSystems/Abilities/Berserker/TigersRage", order = 4)]
 public class TigersRage : PassiveAbility
 {
+    #region VARIABLES
     AudioSource source;
     private Vector3 defaultScale;
 
@@ -19,6 +19,8 @@ public class TigersRage : PassiveAbility
     public float critDamageIncrease = 1f;
 
     PlayerStats stats;
+    #endregion
+    #region FUNCTIONALITY
     protected override void Fire(Ability ab, GameObject actor)
     {
         // When this is fired, apply the effects / bonuses for the passive ability, call end once duration has passed.
@@ -59,4 +61,5 @@ public class TigersRage : PassiveAbility
         }
         //base.EndAbility(actor);
     }
+    #endregion
 }

@@ -11,13 +11,11 @@ using UnityEngine.InputSystem;
 
 public class MouseTarget : MonoBehaviour
 {
-    // Start is called before the first frame update
+    #region VARIABLES
     [SerializeField] List<string> tagsToMatch;
     [SerializeField] DebugMenu dbMenu;
     public GameObject Target { get { return target; } }
 
-    //[SerializeField] TMPro.TextMeshPro displayText;
-    
     // GameObjects
     GameObject target;
     GameObject mouseHit;
@@ -25,7 +23,8 @@ public class MouseTarget : MonoBehaviour
 
     // Player Variables
     PlayerInput input;
-
+    #endregion
+    #region UNITY FUNCTIONS
 
     private void Awake()
     {
@@ -43,6 +42,14 @@ public class MouseTarget : MonoBehaviour
     {
         UnmapActions();
     }
+    void Update()
+    {
+        if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)
+            UpdateMouseHover();
+    }
+
+    #endregion
+    #region ACTION MAPPING
     private void MapActions()
     {
         input.actions["TargetLocked"].performed += context => { SetTarget(); };
@@ -52,6 +59,8 @@ public class MouseTarget : MonoBehaviour
     { 
         input.actions["TargetLocked"].performed -= context => { SetTarget(); };
     }
+    #endregion
+    #region FUNCTIONALITY
     GameObject GetMouseHit()
     {
         // Raycast will be layer based, detecting only for
@@ -106,21 +115,6 @@ public class MouseTarget : MonoBehaviour
                 dbMenu.UpdateHoverText(null);
             }
         }
-        //if (dbMenu != null)
-        //{
-        //if (GetMouseHit() != null)  // If the mouse hit returns a value, display it in the DebugMenu
-        //{
-        //    dbMenu.UpdateHoverText(mouseHit.name);
-        //}
-        //else
-        //    dbMenu.UpdateHoverText(null);
-        //}
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)
-            UpdateMouseHover();
-    }
+    #endregion
 }

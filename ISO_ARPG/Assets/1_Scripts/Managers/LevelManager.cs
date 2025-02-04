@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
     // Level Managers WILL NOT be persistent
     // They are bound to a scene and provide the relevant information for the given scene
     // They will get references to other persistent managers in order to handle certain scenarios
+    #region VARIABLES
     private static LevelManager instance = null;
     public static LevelManager Instance
     {
@@ -93,17 +94,18 @@ public class LevelManager : MonoBehaviour
     public bool LevelComplete { get { return levelComplete; } }
     bool levelComplete = false;
 
-
+    #endregion
     // TODO:
     // add local difficulty scaling
 
-
+    #region UNITY FUNCTIONS
     // UNITY FUNCTIONS
     private void Awake()
     {
         InitLevel();
     }
-
+    #endregion
+    #region LEVEL MANAGER
     // LEVEL MANAGER FUNCTIONS
     public void InitLevel()
     {
@@ -199,9 +201,13 @@ public class LevelManager : MonoBehaviour
 
         Debug.LogWarning("Level has been completed");
     }
-
+    #endregion
     // GRID SYSTEM
     #region GRID SYSTEM FUNCTIONS
+
+    // TODO: THIS GRID SYSTEM MAY BE MOVED TO ANOTHER SCRIPT
+    // THIS SCRIPT WILL HAVE THE FUNCTIONALITY THAT WILL POPULATE THE GIVEN LEVEL'S CELLS
+    // THIS IS TO ORGANIZE THE SYSTEM AND MAKE IT EASIER TO BUILD GRID HELPER FUNCTIONS WHILE LEAVING THE LEVEL MANAGER CONTAINED
     public void BuildGrid(NavMeshSurface mesh)
     {
         Bounds playArea = mesh.navMeshData.sourceBounds;

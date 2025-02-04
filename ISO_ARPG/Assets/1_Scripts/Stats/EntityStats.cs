@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class EntityStats : MonoBehaviour
 {
+    #region VARIABLES
     // All entites have a health stat.
     public TrackedStat Health { get { return health; } }
 
     // Made serializefield for debug purposes
     // Final implementation, stats are loaded externally
     [SerializeField] protected TrackedStat health;
-
+    #endregion
     #region EVENTS
     // Send an event out whenever the entity has died, drop system will listen to this.
     public delegate void Died(GameObject go);
@@ -18,11 +19,14 @@ public class EntityStats : MonoBehaviour
 
     // Assume all entities are returned to an object pool - SetActive(false)
 
+    #region UNITY FUNCTIONS
     // Whenever the object disables, fire the OnDied
     public void Awake()
     {
         health.Changed += CheckDied;
     }
+    #endregion
+    #region FUNCTIONALITY
     private void CheckDied(float value)
     {
         //Debug.Log("Took damage");
@@ -32,4 +36,5 @@ public class EntityStats : MonoBehaviour
             FireOnDied(gameObject);
         }
     }
+    #endregion
 }

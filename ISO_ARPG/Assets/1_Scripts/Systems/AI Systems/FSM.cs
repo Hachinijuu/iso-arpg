@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FSM : MonoBehaviour
 {
+    #region VARIABLES
     //Player Transform
     protected Transform playerTransform;
 
@@ -15,7 +16,7 @@ public class FSM : MonoBehaviour
 
     public float PhysicsInterval { get { return physicsInterval; } set { physicsInterval = value; } }
     protected float physicsInterval;
-
+    #endregion
     protected virtual void Initialize()
     {
         updateInterval = 0.5f;
@@ -28,6 +29,7 @@ public class FSM : MonoBehaviour
 
 
     // Start is called before the first frame update
+    #region UNITY FUNCTIONS
     void Start()
     {
         Initialize();
@@ -63,4 +65,5 @@ public class FSM : MonoBehaviour
         // WITHOUT
         //FSMFixedUpdate();
     }
+    #endregion
 }

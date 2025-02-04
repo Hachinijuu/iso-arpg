@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DropSystem : MonoBehaviour
 {
+    #region VARIABLES
     private static DropSystem instance = null;
     public static DropSystem Instance
     {
@@ -20,7 +21,8 @@ public class DropSystem : MonoBehaviour
     private List<EntityStats> destructibles;
 
     [SerializeField] ItemObject expOrb;
-
+    #endregion
+    #region INITIALIZATION
     public void InitDropLists()
     {
         enemies = new List<EntityStats>();
@@ -58,6 +60,8 @@ public class DropSystem : MonoBehaviour
         }
         Debug.Log("[DropSystem]: Added listeners");
     }
+    #endregion
+    #region FUNCTIONALITY
 
     private void CheckDrop(GameObject whoDied) // check the thing and map it to what it is supposed to drop
     {
@@ -86,11 +90,11 @@ public class DropSystem : MonoBehaviour
             go.SetActive(true);
         }
     }
-
     // This drop system manages all drops in the game
     // It will contain a dictionary to the possible drops and stuff
+    #endregion
 
-
+    #region UNITY FUNCTIONS
     // Start is called before the first frame update
     void Awake()
     {
@@ -102,4 +106,5 @@ public class DropSystem : MonoBehaviour
     {
 
     }
+    #endregion
 }

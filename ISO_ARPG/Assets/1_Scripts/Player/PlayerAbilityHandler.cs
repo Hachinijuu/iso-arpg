@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAbilityHandler : MonoBehaviour
 {
+    #region VARIABLES
     [SerializeField] bool showDebug = false;
     PlayerStats stats;
     PlayerInput input;
@@ -13,9 +14,9 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
     bool held;
-
     float squareRange;
-
+    #endregion
+    #region ACTION MAPPING
     void MapPlayerActions()
     {
         //input.actions["Ab1"].started += context => { AbilityBegan(0);};
@@ -62,8 +63,8 @@ public class PlayerAbilityHandler : MonoBehaviour
         }
         input.actions["IDab"].performed -= context => { UseIdentityAbility(stats.Identity); };
     }
-
-
+    #endregion
+    #region UNITY FUNCTIONS
     private void Start()
     {
         stats = GetComponent<PlayerStats>();
@@ -95,6 +96,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     {
         UnmapPlayerActions();
     }
+    #endregion
 
     public void AddPassiveListeners()
     {
@@ -115,11 +117,13 @@ public class PlayerAbilityHandler : MonoBehaviour
         }
         canUseAbility.Add(stats.Identity, true);
     }
-
+    #region HELPER FUNCTIONS
     float GetSquareDistance(Vector3 start, Vector3 end)
     {
         return (start - end).sqrMagnitude;
     }
+    #endregion
+    #region FUNCTIONALITY - ABILITY HANDLING
     void AbilityBegan(Ability ab)
     {
         if (ab != null)
@@ -309,6 +313,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         //yield return new WaitForSeconds(used.Cooldown); // Wait for the cooldown time
         canUseAbility[used] = true;                     // Allow usage again (time has passed)
     }
+    #endregion
 }
 
 

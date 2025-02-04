@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class DeadState : FSMState
 {
+    #region VARIABLES
     EnemyController controller;
-
+    #endregion
     public DeadState(EnemyController npc)
     { 
         stateID = FSMStateID.Dead;
         controller = npc;
     }
 
+    #region FUNCTIONALITY
     public override void EnterStateInit()
     {
         // Final implementation, play animation then recycle back to manager.
@@ -48,5 +50,5 @@ public class DeadState : FSMState
     {
 
     }
-
+    #endregion
 }

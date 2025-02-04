@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
-{//
+{
+    #region VARIABLES
     //public static ObjectPool Instance { get { return instance; } }
     //private static ObjectPool instance;
     public GameObject Prefab { get { return pooledPrefab; } } 
@@ -13,6 +14,8 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] int numPooledObjects = 5;
     public bool CanGrow { get {return canGrow; } set { canGrow = value; } }
     [SerializeField] bool canGrow = false;
+    #endregion
+    #region UNITY FUNCTIONS
 
     private void Awake()
     {
@@ -23,6 +26,17 @@ public class ObjectPool : MonoBehaviour
     {
         FillPool();
     }
+
+    public void Reset()
+    {
+        // Deactivate all the objects in the pool
+        foreach(GameObject pObj in pooledObjects)
+        {
+            pObj.SetActive(false);
+        }
+    }
+    #endregion
+    #region FUNCTIONALITY
 
     public void FillPool()
     {
@@ -81,13 +95,5 @@ public class ObjectPool : MonoBehaviour
         }
         return obj;
     }
-
-    public void Reset()
-    {
-        // Deactivate all the objects in the pool
-        foreach(GameObject pObj in pooledObjects)
-        {
-            pObj.SetActive(false);
-        }
-    }
+    #endregion
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DebugMenu : MonoBehaviour
 {
+    // THIS CLASS IS DEPRECATED, GAME UI WILL NOW HAVE FUNCTIONAL DISPLAYS
     public PlayerStats stats;
     public PlayerController controller;
 

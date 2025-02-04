@@ -3,10 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RagingSwing", menuName = "sykcorSystems/Abilities/Berserker/RagingSwing", order = 4)]
 public class RagingSwing : StackAbility
 {
+    #region VARIABLES
     Animator anim;
     AudioSource source;
     Hitbox[] hitboxes;
     PlayerStats stats;
+    #endregion
+    #region FUNCTIONALITY
     protected override void Fire(Ability ab, GameObject actor)
     {
         anim = actor.GetComponent<Animator>();
@@ -60,6 +63,7 @@ public class RagingSwing : StackAbility
 
     }
 
+    #region HELPER FUNCTIONS
     void SetDamageDetection(bool on)
     {
         if (hitboxes != null && hitboxes.Length > 0)
@@ -70,4 +74,6 @@ public class RagingSwing : StackAbility
             }
         }
     }
+    #endregion
+    #endregion
 }

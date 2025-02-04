@@ -11,6 +11,7 @@ public struct UpdateInterval
 }
 public class AIManager : MonoBehaviour
 {
+    #region VARIABLES
     private static AIManager instance = null;
     public static AIManager Instance
     {
@@ -63,7 +64,7 @@ public class AIManager : MonoBehaviour
     bool distanceGroupUpdated;
     bool enemiesSpawned;
     private List<Vector3> spawnLocations;
-
+    #endregion
     #region UNITY FUNCTIONS
 
     void Awake()
@@ -203,7 +204,7 @@ public class AIManager : MonoBehaviour
                         int enemiesToSpawn = toSpawn / numTypes;
                         for (int i = 0; i < enemiesToSpawn; i++)
                         {
-                            CellIndex index = LevelManager.Instance.GetRandomIndex(5);
+                            CellIndex index = LevelManager.Instance.GetRandomIndex(1);
 
                             if (index.x != -1 && index.y != -1)
                             {
@@ -214,6 +215,10 @@ public class AIManager : MonoBehaviour
                                 GameObject enemy = pool.GetPooledObject();
                                 if (enemy != null)
                                 {
+                                    EnemyController controller = enemy.GetComponent<EnemyController>();
+                                    if (controller)
+                                        controller.Respawn();
+
                                     enemy.transform.position = currCell.position;
                                     enemy.SetActive(true);
                                 }
@@ -326,6 +331,7 @@ public class AIManager : MonoBehaviour
             distanceGroups[regularInterval].Add(controller);
         }
     }
+    #region RUNTIME FUNCTIONS
     IEnumerator UpdateDistanceGroups()
     {
         distanceGroupUpdated = false;
@@ -361,10 +367,6 @@ public class AIManager : MonoBehaviour
             yield return new WaitForSeconds(nearInterval.time); // When cycling through the intervals, wait for some time before checking the next set
         }
         distanceGroupUpdated = true;
-        //foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
-        //{
-        //    Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
-        //}
     }
 
 
@@ -383,13 +385,12 @@ public class AIManager : MonoBehaviour
         {
             groupTimer += Time.deltaTime;
             spawnTimer += Time.deltaTime;
-            //Debug.Log(groupTimer);
+
             if (groupTimer > groupCheckInterval)
             {
                 if (distanceGroupUpdated)
                 {
                     StartCoroutine(UpdateDistanceGroups());
-                    //Debug.Log("[AIManager]: Updated distance groups");
                     groupTimer = 0.0f;
                 }
             }
@@ -406,6 +407,7 @@ public class AIManager : MonoBehaviour
         }
         yield return null;
     }
+    #endregion
 
     // Modify FSM to include update frequency variable
     // This will determine how often the FSM updates
@@ -434,23 +436,10 @@ public class AIManager : MonoBehaviour
 
     // i.e, instead of each FSM having the overhead of calling their own update
     // The AI manager will tell the FSM to update, given the interval and time passed
-    private void UpdatePlayerValue(GameObject leader)
-    {
-        EnemyController enemyControl = null;
-        enemyControl = leader.GetComponent<EnemyController>();
 
-        if (enemyControl != null)
-        {
-
-        }
-        // Because the expense is at the SET DESTINATION
-        // (Path Recalcuation)
-        // Call the path updates and recalcuations here, sending the data to the enemy controller
-
-        // Or, reduce FSM update frequency of the enemy controllers.
-        // Look at FSM base class, and tweak the update frequency based on the distance
-    }
     #endregion
+
+    #region DEBUG
 
     Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f);
     private void OnDrawGizmos()
@@ -464,4 +453,5 @@ public class AIManager : MonoBehaviour
             }
         }
     }
+    #endregion
 }

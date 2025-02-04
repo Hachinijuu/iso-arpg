@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    // THIS CLASS IS DEPRECATED
     [SerializeField]
     private GameObject target = null;
 

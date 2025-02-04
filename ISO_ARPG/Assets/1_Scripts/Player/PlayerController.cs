@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // Public References
     // Any classes that need to access player values can find through GameManager's static reference
 
+    #region VARIABLES
     public PlayerStats Stats { get { return stats; } }
     public PlayerInput Input { get { return input; } }
     public PlayerMovement Movement { get { return movement; } }
@@ -29,7 +30,6 @@ public class PlayerController : MonoBehaviour
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
 
-    #region VARIABLES
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     // input handling
-    #region INITALIZATION
+    #region UNITY FUNCTIONS
     private void Awake()
     {
         // getting references to necessary components on this object
@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
         InitalizePlayer();
     }
 
+    #endregion
+    #region INITALIZATION
     public void InitalizePlayer()           // this can be used for reinit, so be cautious of what to place here.
     {
         if (stats != null)
@@ -62,11 +64,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Player has no stats to read from!");
     }
     #endregion
-
-    private void Update()
-    {
-
-    }
 
     #region PLAYER ACTIONS
     // Handle targetting
@@ -89,6 +86,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+    #region DEBUG
     private void OnDrawGizmosSelected()
     {
         Debug.DrawRay(transform.position, transform.forward * 5.0f, Color.red);
@@ -100,4 +98,5 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, EnemyController.CHASE_DIST);
     }
+    #endregion
 }

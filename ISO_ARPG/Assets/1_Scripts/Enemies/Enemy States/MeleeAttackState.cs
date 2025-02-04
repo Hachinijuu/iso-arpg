@@ -2,16 +2,7 @@ using UnityEngine;
 
 public class MeleeAttackState : FSMState
 {
-    //const int HIDE_WAYPOINT_DIST = 2;
-    //
-    //EnemyController npcControl;
-    //bool moving;
-    //int availableSlotIndex;
-    //
-    //float healthTimer;
-    //float healthTimeInterval = 1.0f;
-    //int healthDeduction = 5;
-
+    #region VARIABLES
     float attackTimer;
     float attackInterval = 1.0f;
 
@@ -23,6 +14,7 @@ public class MeleeAttackState : FSMState
     float square_rangeDist;
     float square_meleeDist;
     float square_chaseDist;
+    #endregion
     //Constructor
     public MeleeAttackState(EnemyController npc)
     {
@@ -33,29 +25,11 @@ public class MeleeAttackState : FSMState
         square_rangeDist = EnemyController.RANGEATTACK_DIST * EnemyController.RANGEATTACK_DIST;
         square_meleeDist = EnemyController.MELEEATTACK_DIST * EnemyController.MELEEATTACK_DIST;
         square_chaseDist = EnemyController.CHASE_DIST * EnemyController.CHASE_DIST;
-        //waypoints = wp;
-        //stateID = FSMStateID.MeleeAttacking;
-        //curSpeed = 5.0f;
-        //curRotSpeed = 2.0f;
-        //npcControl = npc;
-        //moving = false;
-        //healthTimer = 0.0f;
-        //
-        //npcControl.navMeshAgent.speed = curSpeed;
-        //availableSlotIndex = -1;
-
     }
+    #region FUNCTIONALITY
     public override void EnterStateInit()
     {
-        //Debug.Log("[FSM_Melee]: Entered state");
         controller.navMeshAgent.isStopped = false;
-        // Enter State
-        //Releasse slot position
-        //npcControl.playerSlotManager.ReleaseSlot(availableSlotIndex, npcControl.navMeshAgent.gameObject);
-        //
-        //availableSlotIndex = -1;
-        //healthTimer = 0.0f;
-
     }
 
 
@@ -65,7 +39,6 @@ public class MeleeAttackState : FSMState
         // If the enemy exits melee range, transition to the chase state
         if (!(IsInCurrentRange(player, npc.position, EnemyController.MELEEATTACK_DIST)))
         {
-            //Debug.Log("[FSM_MeleeState]: Transitioned to Chase");
             controller.PerformTransition(Transition.ChasePlayer);
             return;
         }
@@ -102,33 +75,7 @@ public class MeleeAttackState : FSMState
                 // GIVE ATTACK REFERENCE TO THE HURTBOX, AND TELL HITBOX HOW LONG TO BE ACTIVE FOR
                 // PREVENT MULTI-FRAME COLLISIONS SO PLAYER DOES NOT GET ONESHOT
             }
-            // Tell the animator to play the attack animation
-            //Debug.Log("[FSM_MeleeAttack]: Attacking the player");
         }
-        //Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
-        ////Snap
-        ////npcControl.navMeshAgent.transform.rotation = targetRotation; 
-        //// Slower Rotation
-        //npcControl.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime * curRotSpeed);
-        //if (moving)
-        //{
-        //    //move to destination
-        //    npcControl.navMeshAgent.destination = destPos;
-        //}
-        //else
-        //{
-        //    // Rest and increment Health
-        //    if (npcControl.GetHealth() > 0)
-        //    {
-        //        //Heal while hiding
-        //        healthTimer += Time.deltaTime;
-        //        if (healthTimer > healthTimeInterval)
-        //        {
-        //            npcControl.DecHealth(healthDeduction);
-        //            healthTimer = 0;
-        //        }
-        //    }
-        //
-        //}
     }
+    #endregion
 }

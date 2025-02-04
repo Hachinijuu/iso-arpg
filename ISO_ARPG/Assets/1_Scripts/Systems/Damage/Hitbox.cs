@@ -5,13 +5,14 @@ public class Hitbox : MonoBehaviour
 {
     // HITBOX exists on weapons
     // - Source of damage
+    #region VARIABLES
     [SerializeField] GameObject source; // The player / enemy owner of the hitbox, this is referenced so hits will not apply to their own hurtbox
     [SerializeField] int damage;
 
-
     public bool ApplyDamage { get { return applyDamage; } set { applyDamage = value; } }
     private bool applyDamage = false;
-
+    #endregion
+    #region UNITY FUNCTIONS
     private void Start()
     {
         Collider sourceCollider = source.GetComponent<Collider>();
@@ -25,21 +26,6 @@ public class Hitbox : MonoBehaviour
 
         // Need to stop enemies from damaging each other once system is fleshed out
     }
-
-    public void AllowDamageForTime(float window)
-    {
-        //Debug.Log("I want to allow damage for: " + window);
-        StopAllCoroutines();
-        StartCoroutine(DamageWindow(window));
-    }
-
-    IEnumerator DamageWindow(float time)
-    {
-        applyDamage = true;
-        yield return new WaitForSeconds(time);
-        applyDamage = false;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         // Only do detections if damage can be applied
@@ -60,11 +46,29 @@ public class Hitbox : MonoBehaviour
                 Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
         }
     }
+    #endregion
 
+    #region FUNCTIONALITY
+    public void AllowDamageForTime(float window)
+    {
+        //Debug.Log("I want to allow damage for: " + window);
+        StopAllCoroutines();
+        StartCoroutine(DamageWindow(window));
+    }
+
+    IEnumerator DamageWindow(float time)
+    {
+        applyDamage = true;
+        yield return new WaitForSeconds(time);
+        applyDamage = false;
+    }
+    #endregion
+    #region DEBUG
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         if (applyDamage)
             Gizmos.DrawCube(transform.position, new Vector3(1,1,1));
     }
+    #endregion
 }

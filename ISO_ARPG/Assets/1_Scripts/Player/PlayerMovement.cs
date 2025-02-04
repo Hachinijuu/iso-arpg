@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
+    #region VARIABLES
     // Read controls via external game manager script -- cache locally?
     public enum MoveInput { CLICK, DIRECTIONAL }
     public MoveInput moveType;
@@ -37,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] int rotationSpeed = 20;
     private float speed;
+    #endregion
+    #region UNITY FUNCTIONS
 
     private void Awake()
     {
@@ -57,111 +60,11 @@ public class PlayerMovement : MonoBehaviour
         canRotate = false;
     }
 
-    private void UpdateMoveType(MoveInput type)
-    {
-        moveType = type;
-    }
-
     private void OnDestroy()
     {
         UnmapMovementActions();
     }
-    private void MapMovementActions()
-    {
-        // map the actions based on input scheme, reuse this call when the options are switched (map to correct scheme)
 
-        // can do remapping based on schemes, but input detection is based on type flag (changes automatically)
-        // therefore in settings change the flag - would automatically change the input detection
-        input.actions["MoveConfirmed"].started += context =>
-        {
-            moveHeld = true;
-        };
-        input.actions["MoveConfirmed"].canceled += context =>
-        {
-            moveHeld = false;
-        };
-        input.actions["StopMove"].started += context =>
-        {
-            canMove = false;
-            HandleStops(!canMove);
-        };
-        input.actions["StopMove"].canceled += context =>
-        {
-            canMove = true;
-            HandleStops(!canMove);
-        };
-    }
-
-    private void UnmapMovementActions()
-    {
-        // unmap all regardless of which input is used
-
-        input.actions["MoveConfirmed"].started -= context => { };
-        input.actions["MoveConfirmed"].canceled -= context => { };
-        input.actions["StopMove"].started -= context => { };
-        input.actions["StopMove"].canceled -= context => { };
-    }
-
-    private void GetMoveTarget()
-    {
-        // Get the target differently depending on click to move vs directional input
-
-        switch (moveType)
-        {
-            case MoveInput.DIRECTIONAL:
-                HandleDirectionalMove();
-                break;
-            case MoveInput.CLICK:
-            default:
-                HandleClickToMove();
-                break;
-        }
-    }
-
-    void HandleClickToMove()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
-        {
-            moveTarget = hit.point;
-        }
-    }
-
-    void HandleDirectionalMove()
-    {
-        Vector3 currPoint = transform.position;
-        Vector2 moveAxis = input.actions["DirectionalMove"].ReadValue<Vector2>();
-        float h = moveAxis.x;   // horizontal movement
-        float v = moveAxis.y;   // vertical movement
-
-        // for directional move, need to read the input axis and output a destination position based on them.
-        // create a projection point based on the direction
-        moveTarget = new Vector3(currPoint.x + h, currPoint.y, currPoint.z + v);
-    }
-
-    void HandleRotation()
-    {
-        // For mouse keyboard controls, drive rotation by mouse
-
-        // Get look direction relative to the mouse position in the world
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
-        {
-            Vector3 mousePoint = hit.point;
-
-            lookDirection = mousePoint - transform.position;
-            lookDirection.Normalize(); // Normalize the look direction
-        }
-
-        // Apply the look
-        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
-    public void HandleStops(bool stop)
-    {
-        agent.isStopped = stop;             // stop the agent in place
-        moveTarget = transform.position;    // reset target to current point
-    }
     public void Reset()
     {
         //transform.position = transform.position;
@@ -203,4 +106,105 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    #endregion
+    #region ACTION MAPPING
+    private void MapMovementActions()
+    {
+        // map the actions based on input scheme, reuse this call when the options are switched (map to correct scheme)
+
+        // can do remapping based on schemes, but input detection is based on type flag (changes automatically)
+        // therefore in settings change the flag - would automatically change the input detection
+        input.actions["MoveConfirmed"].started += context =>
+        {
+            moveHeld = true;
+        };
+        input.actions["MoveConfirmed"].canceled += context =>
+        {
+            moveHeld = false;
+        };
+        input.actions["StopMove"].started += context =>
+        {
+            canMove = false;
+            HandleStops(!canMove);
+        };
+        input.actions["StopMove"].canceled += context =>
+        {
+            canMove = true;
+            HandleStops(!canMove);
+        };
+    }
+
+    private void UnmapMovementActions()
+    {
+        // unmap all regardless of which input is used
+
+        input.actions["MoveConfirmed"].started -= context => { };
+        input.actions["MoveConfirmed"].canceled -= context => { };
+        input.actions["StopMove"].started -= context => { };
+        input.actions["StopMove"].canceled -= context => { };
+    }
+    #endregion
+    #region FUNCTIONALITY
+    private void GetMoveTarget()
+    {
+        // Get the target differently depending on click to move vs directional input
+
+        switch (moveType)
+        {
+            case MoveInput.DIRECTIONAL:
+                HandleDirectionalMove();
+                break;
+            case MoveInput.CLICK:
+            default:
+                HandleClickToMove();
+                break;
+        }
+    }
+
+    void HandleClickToMove()
+    {
+        RaycastHit hit;
+        // TODO: LIMIT RAY DISTANCE SO MORE COST EFFECTIVE
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
+        {
+            moveTarget = hit.point;
+        }
+    }
+
+    void HandleDirectionalMove()
+    {
+        Vector3 currPoint = transform.position;
+        Vector2 moveAxis = input.actions["DirectionalMove"].ReadValue<Vector2>();
+        float h = moveAxis.x;   // horizontal movement
+        float v = moveAxis.y;   // vertical movement
+
+        // for directional move, need to read the input axis and output a destination position based on them.
+        // create a projection point based on the direction
+        moveTarget = new Vector3(currPoint.x + h, currPoint.y, currPoint.z + v);
+    }
+
+    void HandleRotation()
+    {
+        // For mouse keyboard controls, drive rotation by mouse
+
+        // Get look direction relative to the mouse position in the world
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
+        {
+            Vector3 mousePoint = hit.point;
+
+            lookDirection = mousePoint - transform.position;
+            lookDirection.Normalize(); // Normalize the look direction
+        }
+
+        // Apply the look
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+    public void HandleStops(bool stop)
+    {
+        agent.isStopped = stop;             // stop the agent in place
+        moveTarget = transform.position;    // reset target to current point
+    }
+    #endregion
 }

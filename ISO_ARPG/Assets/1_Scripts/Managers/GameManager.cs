@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region VARIABLES
     private static GameManager instance = null;
     public static GameManager Instance 
     { 
@@ -35,8 +36,9 @@ public class GameManager : MonoBehaviour
     public ControlType controls;
 
     public PlayerMovement.MoveInput moveType;
+    #endregion
 
-#region EVENTS
+    #region EVENTS
     public delegate void moveChanged(PlayerMovement.MoveInput value);
     public event moveChanged onMoveChanged;
     void FireMoveChanged (PlayerMovement.MoveInput value) { if (onMoveChanged != null) onMoveChanged(value); }
@@ -45,9 +47,9 @@ public class GameManager : MonoBehaviour
     public event managerEnabled onManagerEnabled;
 
     void FireEnabled() { if (onManagerEnabled != null) onManagerEnabled(); Debug.Log("[GameManager]: Enabled"); }
-#endregion
+    #endregion
 
-#region UNITY FUNCTIONS
+    #region UNITY FUNCTIONS
     private void Awake()
     {
         instance = this;
@@ -75,34 +77,32 @@ public class GameManager : MonoBehaviour
     {
         FireEnabled();
     }
-#endregion
-#region GAMEPLAY
-public void PlayerRespawn()
-{
-    GameObject player = controller.gameObject;
-    if (LevelManager.Instance.PlayerSpawnPoint != null)
+    #endregion
+    #region GAMEPLAY
+    public void PlayerRespawn()
     {
-        player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
-        player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
-        //controller.Agent.
-    }    
-    // Set the camera to follow
-    LevelManager.Instance.LevelLoaded();
+        GameObject player = controller.gameObject;
+        if (LevelManager.Instance.PlayerSpawnPoint != null)
+        {
+            player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
+            player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
+            //controller.Agent.
+        }    
+        // Set the camera to follow
+        LevelManager.Instance.LevelLoaded();
 
-    // Allow the player to move
-    controller.Movement.Reset();
-    controller.Movement.CanMove = true;
-    controller.Movement.CanRotate = true;
-    
-    // Reset the pools
+        // Allow the player to move
+        controller.Movement.Reset();
+        controller.Movement.CanMove = true;
+        controller.Movement.CanRotate = true;
 
-    // Fixing UI displays.
-}
+        // Reset the pools
 
+        // Fixing UI displays.
+    }
+    #endregion
 
-#endregion
-
-#region LEVEL LOADING
+    #region LEVEL LOADING
     private bool isLoading = false;
     [SerializeField] LoadingScreen loadingScreen;
 
@@ -203,9 +203,9 @@ public void PlayerRespawn()
     {
         StartCoroutine(LoadLevel("Prototyping"));
     }
-#endregion
+    #endregion
 
-#region GENERAL FUNCTIONALITY
+    #region GENERAL FUNCTIONALITY
     // Pause Controls
     PauseMenu pauseMenu;
 
@@ -218,5 +218,5 @@ public void PlayerRespawn()
         Application.Quit();
     #endif
     }
-#endregion
+    #endregion
 }

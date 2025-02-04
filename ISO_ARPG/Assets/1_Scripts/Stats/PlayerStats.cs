@@ -84,13 +84,17 @@ public class PlayerStats : EntityStats
     SubStat armour;
     SubStat dodge;
     #endregion
+    #endregion
 
+    #region UNITY FUNCTIONS
     public void Start()
     {
         //LoadDefaultClassStats();
         //LoadAbilities();
         //LoadStats();
     }
+    #endregion
+    #region INITALIZATION
 
     public void InitializePlayerStats()
     {

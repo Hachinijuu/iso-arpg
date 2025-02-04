@@ -26,8 +26,5 @@ public class UIAbility : MonoBehaviour
 
         cd_slider.maxValue = toLoad.Cooldown;
         cd_slider.value = 0;
-        //description.text = toLoad.Description;
-        //cost.text = toLoad.Cost;
-        //cooldown.text = toLoad.Cooldown;
     }
 }

@@ -17,12 +17,14 @@ using UnityEngine;
 
 public abstract class FSMState
 {
+    #region VARIABLES
     protected Dictionary<Transition, FSMStateID> map = new Dictionary<Transition, FSMStateID>();
     protected FSMStateID stateID;
     public FSMStateID ID { get { return stateID; } }
     protected Vector3 destPos;
     protected float curSpeed;
-
+    #endregion
+    #region FUNCTIONALITY
     public void AddTransistion(Transition transition, FSMStateID id)
     {
         //Chek if anyone of the args is invalid
@@ -97,7 +99,8 @@ public abstract class FSMState
     /// NPC is a reference to the npc tha is controlled by this class
     /// </summary>
     public abstract void Act(Transform player, Transform npc);
-
+    #endregion
+    #region HELPER FUNCTIONS
     /// <summary>
     /// Check whether the next random position is the same as current tank position
     /// </summary>
@@ -121,5 +124,5 @@ public abstract class FSMState
     {
         return (goal - start).sqrMagnitude;
     }
-
+    #endregion
 }

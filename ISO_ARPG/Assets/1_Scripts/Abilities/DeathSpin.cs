@@ -3,11 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DeathSpin", menuName = "sykcorSystems/Abilities/Berserker/DeathSpin", order = 4)]
 public class DeathSpin : ChannelAbility
 {
+    #region VARIABLES
     Animator anim;
     AudioSource source;
     PlayerMovement move;
     Hitbox[] hitboxes;
-
+    #endregion
+    #region FUNCTIONALITY
     protected override void Fire(Ability ab, GameObject actor)
     {
         anim = actor.GetComponent<Animator>();
@@ -63,6 +65,7 @@ public class DeathSpin : ChannelAbility
         move.CanRotate = true;
     }
 
+    #region HELPER FUNCTIONS
     void SetDamageDetection(bool on)
     {
         if (hitboxes != null && hitboxes.Length > 0)
@@ -73,4 +76,6 @@ public class DeathSpin : ChannelAbility
             }
         }
     }
+    #endregion
+    #endregion
 }

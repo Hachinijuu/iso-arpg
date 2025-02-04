@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyController : AdvancedFSM
 {
+    #region  VARIABLES
     public const int DIST_BUFFER = 5;
     public const int MELEEATTACK_DIST = 5;
     public const int RANGEATTACK_DIST = 25;
@@ -21,11 +22,15 @@ public class EnemyController : AdvancedFSM
     [SerializeField] protected Hurtbox hurtbox;
 
     // public SlotManager playerSlotManager;
+    #endregion
+    #region  UNITY FUNCTIONS
     private void Awake()
     {
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
     }
+    #endregion
+    #region FSM SETUP
     protected override void Initialize()
     {
         GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
@@ -77,54 +82,21 @@ public class EnemyController : AdvancedFSM
     // This is a wrapper function to get the order correct
     protected virtual void ConstructFSM()
     {
-        // TODO: Fill in the States
-        //Create States
-
         // Dead State
         DeadState dead = new DeadState(this);
-
-        // TEMPORARY, MOVE ADDITIONAL STATES TO DERIVED CLASSES
-        ChaseState chase = new ChaseState(this);
-        chase.AddTransistion(Transition.ReachPlayer, FSMStateID.RangedAttack);
-        chase.AddTransistion(Transition.PlayerReached, FSMStateID.MeleeAttack);
-        chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
-
-        MeleeAttackState melee = new MeleeAttackState(this);
-        melee.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
-        melee.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
-
-
-        RangedAttackState ranged = new RangedAttackState(this);
-        ranged.AddTransistion(Transition.ChasePlayer, FSMStateID.Chase);
-        ranged.AddTransistion(Transition.ReachPlayer, FSMStateID.MeleeAttack);
-        ranged.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
-
-
-        // Chase State
-        //ChaseState chase = new ChaseState(this);
-        //chase.AddTransistion(Transition.NoHealth, FSMStateID.Dead);
-
-        // Melee Attack State
-
-        // Ranged Attack State
-
-        // Regenerate State
-
-        // ADD all states here
-        //AddFSMState(chase);        // Starting state
-        // AddFSMState(rangedAttack);
-        // AddFSMState(meleeAttack);   
-        // AddFSMState(regen);
-        AddFSMState(chase);
         AddFSMState(dead);
-        AddFSMState(melee);
-        AddFSMState(ranged);
     }
+#endregion
 
-    //private void Died()
-    //{
-    //    PerformTransition(Transition.NoHealth);
-    //}
+#region  FUNCTIONALITY
+
+    public void Respawn()
+    {
+        if (stats.Health.Value <= 0)
+        {
+            stats.Health.Value = stats.Health.MaxValue; // Reset health to max
+        }
+    }
 
     // Event function so the health checks are not dependent on update loop
     private void DamageTaken(float value)
@@ -133,17 +105,7 @@ public class EnemyController : AdvancedFSM
         if (stats.Health.Value <= 0)
         {
             PerformTransition(Transition.NoHealth);
-            //Debug.Log("Died");
         }
     }
-    private void OnDestroy()
-    {
-        // When this controller is destroyed, delete the states...
-
-        // Go through all the states added, and delete them
-
-        // This will not be called since the list will be imploded on the destruction of the class.
-        //DeleteState(FSMStateID.Chase);
-        //DeleteState(FSMStateID.Dead);
-    }
+#endregion
 }

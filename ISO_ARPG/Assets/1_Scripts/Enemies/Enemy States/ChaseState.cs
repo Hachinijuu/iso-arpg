@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ChaseState : FSMState
 {
+    #region VARIABLES
     EnemyController controller;
     Animator anim;
     bool moving;
@@ -11,6 +12,7 @@ public class ChaseState : FSMState
     float square_rangeDist;
     float square_meleeDist;
     float square_chaseDist;
+    #endregion
     public ChaseState(EnemyController enemy)
     {
         stateID = FSMStateID.Chase;
@@ -25,6 +27,8 @@ public class ChaseState : FSMState
         square_meleeDist = EnemyController.MELEEATTACK_DIST * EnemyController.MELEEATTACK_DIST;
         square_chaseDist = EnemyController.CHASE_DIST * EnemyController.CHASE_DIST;
     }
+    
+    #region FUNCTIONALITY
     public override void EnterStateInit()
     {
         //Debug.Log("[FSM_Chase]: Entered state");
@@ -46,7 +50,7 @@ public class ChaseState : FSMState
     public override void Reason(Transform player, Transform npc)
     {
         // If the player has entered the ranged attack range, transition to the ranged state
-        float dist = GetSquareDistance(destPos, npc.position);
+        //float dist = GetSquareDistance(destPos, npc.position);
 
         // If the agent is inside the ranged area
         // Only check for this if the controller has a ranged state
@@ -66,33 +70,26 @@ public class ChaseState : FSMState
             controller.PerformTransition(Transition.PlayerReached);
             return;
         }
+        else if (IsInCurrentRange(npc, destPos, EnemyController.CHASE_DIST))
+        {
+            destPos = player.position;  // Only update the position if the player is in range
+        }
         else
         {
-            destPos = player.position;
+            destPos = npc.position;
         }
     }
     //Act
     public override void Act(Transform player, Transform npc)
     {
-        //Debug.Log("ACT!");
-        //Rotate towards Position
         Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
-        //Snap
-        //enemyControl.navMeshAgent.transform.rotation = targetRotation; 
-        // Slower Rotation
         controller.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime);
         if (moving)
         {
-
-            destPos = player.position;
-            //move to destination
             controller.navMeshAgent.destination = destPos;
             speed = controller.navMeshAgent.velocity.magnitude;
             anim.SetFloat("Speed", speed);
-            //Debug.Log("Chase");
         }
-
-
     }
-
+    #endregion
 }

@@ -28,6 +28,7 @@ public enum FSMStateID
 
 public class AdvancedFSM : FSM
 {
+    #region VARIABLES
     protected List<FSMState> fsmStates;
     public List<FSMState> States { get { return fsmStates; } }
     // The fsmStates are not changing directly but updating using transitions
@@ -36,12 +37,13 @@ public class AdvancedFSM : FSM
 
     private FSMState currentState;
     public FSMState CurrentState { get { return currentState; } }
-
+    #endregion
     public AdvancedFSM()
     {
         fsmStates = new List<FSMState>();
     }
 
+    #region FUNCTIONALITY
     //ADD NEW STATE INTO THE LIST
     public void AddFSMState(FSMState fsmState)
     {
@@ -129,7 +131,8 @@ public class AdvancedFSM : FSM
             }
         }
     }
-
+    #endregion
+    #region DEBUG
     private void OnDrawGizmos()
     {
         switch(currentStateID)
@@ -146,4 +149,5 @@ public class AdvancedFSM : FSM
         }
         Gizmos.DrawSphere(transform.position, 0.25f);
     }
+    #endregion
 }

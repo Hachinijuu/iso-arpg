@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DestructibleManager : MonoBehaviour 
 {
+    #region VARIABLES
     private static DestructibleManager instance = null;
     public static DestructibleManager Instance
     {
@@ -22,13 +23,15 @@ public class DestructibleManager : MonoBehaviour
     [SerializeField] bool spawnDestructs;
     public bool SpawningComplete { get {return spawningComplete; } }
     bool spawningComplete;
+    [SerializeField] ObjectPool[] destructibles; 
+    #endregion
 
-
+    #region UNITY FUNCTIONS
     void Start()
     {
         //LevelLoading();
     }
-    [SerializeField] ObjectPool[] destructibles; 
+    #endregion
 
     #region SCENE LOADS
     // When a level (scene) is loading, call this function

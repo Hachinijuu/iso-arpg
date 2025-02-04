@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
+    #region VARIABLES
     [SerializeField] Camera cam;
     [SerializeField] PlayerController player;
 
@@ -22,7 +23,8 @@ public class HUDController : MonoBehaviour
     // Get references to the relevant stats
     TrackedStat health;
     TrackedStat mana;
-
+    #endregion
+    #region UNITY FUNCTIONS
     private void Start()
     {
         if (player == null)
@@ -57,7 +59,8 @@ public class HUDController : MonoBehaviour
         LoadAbilities();
         AddEventListeners();
     }
-
+    #endregion
+    #region INTIALIZATION
     public void LoadAbilities()
     {
         if (playerStats != null)
@@ -98,6 +101,8 @@ public class HUDController : MonoBehaviour
         playerStats.Abilities[1].onCooldownChanged -= context => { UpdateCooldownSlider(ab2, context); UpdateCooldownText(ab2, context); };
         playerStats.Identity.onCooldownChanged -= context => { UpdateCooldownSlider(idAbility, context); UpdateCooldownText(idAbility, context); };
     }
+    #endregion
+    #region FUNCTIONALITY
 
     // UI FUNCTIONS
     public void UpdateHealthSlider(float value)
@@ -181,40 +186,5 @@ public class HUDController : MonoBehaviour
             cam.rect = newCam;
         }
     }
-
-    //IEnumerator ShiftCamera(Rect target)
-    //{
-    //    float buffer = 0.05f;
-    //
-    //    // do some math to get interpolation targets
-    //
-    //    float moveFactor = 0.025f;
-    //    int moveWidth = 1;
-    //    int moveHeight = 1;
-    //
-    //    // if the target is less, we want to decrease
-    //    if (target.width < cam.rect.width)
-    //    {
-    //        moveWidth = -1;
-    //    }
-    //
-    //    Rect newCam = cam.rect;
-    //    bool shifted = false;
-    //    do
-    //    {
-    //        // once it is close enough, lock the values
-    //        newCam.width += (moveFactor * moveWidth) * Time.deltaTime;
-    //        if (newCam.width + buffer > cam.rect.width || newCam.width + buffer < cam.rect.width)
-    //        {
-    //            shifted = true;
-    //            newCam = target;
-    //        }
-    //
-    //
-    //        cam.rect = newCam;
-    //        yield return new WaitForEndOfFrame();
-    //    }
-    //    while (!shifted);
-    //
-    //}
+    #endregion
 }
