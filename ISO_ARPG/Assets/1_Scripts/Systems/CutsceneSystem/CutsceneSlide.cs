@@ -23,9 +23,14 @@ public class CutsceneSlide : MonoBehaviour
     #region FUNCTIONALITY
     public void EnterSlide(CutscenePlayer player)
     {
-        player.Source.clip = slideVoiceover;
-        player.Source.Play();
-
+        if (slideVoiceover != null)
+        {
+            if (player.Source != null)
+            {
+                player.Source.clip = slideVoiceover;
+                player.Source.Play();
+            }
+        }
         StartCoroutine(HandleSubtitles(subtitleTime));
     }
 

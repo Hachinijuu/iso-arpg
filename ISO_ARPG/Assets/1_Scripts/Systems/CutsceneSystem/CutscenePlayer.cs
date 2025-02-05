@@ -8,7 +8,7 @@ public class CutscenePlayer : MonoBehaviour
     #region VARIABLES
     [SerializeField] PlayerInput input;
     public AudioSource Source { get { return source; } }
-    AudioSource source;
+    [SerializeField] AudioSource source;
 
     [Header("Slide Details")]
     public List<CutsceneSlide> slides;
@@ -21,6 +21,11 @@ public class CutscenePlayer : MonoBehaviour
     #region BUTTON MAPPING
 
     #endregion
+
+    public void Start()
+    {
+        StartCutscene();
+    }
 
     #region FUNCTIONALITY
     public void StartCutscene()

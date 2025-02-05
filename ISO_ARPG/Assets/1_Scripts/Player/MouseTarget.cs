@@ -15,6 +15,7 @@ public class MouseTarget : MonoBehaviour
     [SerializeField] List<string> tagsToMatch;
     [SerializeField] DebugMenu dbMenu;
     public GameObject Target { get { return target; } }
+    public LayerMask mask;
 
     // GameObjects
     GameObject target;
@@ -68,7 +69,7 @@ public class MouseTarget : MonoBehaviour
         // - Enemies
         mouseHit = null;
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, mask))
         {
             //Debug.Log(hit.transform.tag);
 

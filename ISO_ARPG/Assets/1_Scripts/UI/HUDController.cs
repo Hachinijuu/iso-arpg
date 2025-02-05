@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
     #region VARIABLES
+    public Camera Camera { get { return cam; } }
     [SerializeField] Camera cam;
     [SerializeField] PlayerController player;
 
@@ -104,6 +105,7 @@ public class HUDController : MonoBehaviour
     #endregion
     #region FUNCTIONALITY
 
+    #region Hud Updates
     // UI FUNCTIONS
     public void UpdateHealthSlider(float value)
     {
@@ -143,7 +145,9 @@ public class HUDController : MonoBehaviour
     {
         ui.cd_slider.value = value;
     }
+    #endregion
 
+    #region Toggle Setup
     // Multipurpose to be implemented in editor
     // When clicked it sets the specified component to active displaying the onscreen element
     public void ToggleUIElement(GameObject toToggle)
@@ -152,6 +156,12 @@ public class HUDController : MonoBehaviour
             toToggle.SetActive(true);
         else                                // If it is active, shut it off
             toToggle.SetActive(false);
+    }
+
+    #region Camera Toggling
+    public void SetCamera(Camera cam)
+    {
+        this.cam = cam;
     }
 
     public void ToggleUIElementShift(GameObject toToggle)
@@ -186,5 +196,7 @@ public class HUDController : MonoBehaviour
             cam.rect = newCam;
         }
     }
+    #endregion
+    #endregion
     #endregion
 }

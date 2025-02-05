@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
+    public Camera LevelCamera;
     [SerializeField] CinemachineVirtualCamera vCam;
 
     [Header("Level Settings")]

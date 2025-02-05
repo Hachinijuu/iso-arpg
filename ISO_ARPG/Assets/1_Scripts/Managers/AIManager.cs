@@ -171,7 +171,7 @@ public class AIManager : MonoBehaviour
     {
         if (spawnEnemies)
         {
-            StartCoroutine(SpawnInitialBatch());
+            //StartCoroutine(SpawnInitialBatch());
         }
     }
 
@@ -263,6 +263,10 @@ public class AIManager : MonoBehaviour
                             GameObject agent = pool.GetPooledObject();
                             if (agent != null)
                             {
+                                EnemyController controller = agent.GetComponent<EnemyController>();
+                                if (controller)
+                                    controller.Respawn();
+
                                 currAmount++;
                                 agent.transform.position = spawnPos;
                                 // Place the unit into a group based on their position;

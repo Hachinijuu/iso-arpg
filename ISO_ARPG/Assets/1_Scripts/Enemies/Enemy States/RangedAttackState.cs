@@ -7,14 +7,8 @@ public class RangedAttackState : FSMState
     float attackInterval = 1.0f;
 
     private bool canAttack = false;
-    private bool canMove = false;
-
     EnemyController controller;
     Animator anim;
-
-    float square_rangeDist;
-    float square_meleeDist;
-    float square_chaseDist;
     #endregion
 
     //Constructor
@@ -23,16 +17,11 @@ public class RangedAttackState : FSMState
         stateID = FSMStateID.RangedAttack;
         controller = npc;
         anim = controller.Anim;
-
-        square_rangeDist = EnemyController.RANGEATTACK_DIST * EnemyController.RANGEATTACK_DIST;
-        square_meleeDist = EnemyController.MELEEATTACK_DIST * EnemyController.MELEEATTACK_DIST;
-        square_chaseDist = EnemyController.CHASE_DIST * EnemyController.CHASE_DIST;
     }
     #region FUNCTIONALITY
     public override void EnterStateInit()
     {
         canAttack = true;   // Agent is able to attack
-        canMove = false;    // Agent should not move
 
         // Stop the agent
         controller.navMeshAgent.isStopped = true;

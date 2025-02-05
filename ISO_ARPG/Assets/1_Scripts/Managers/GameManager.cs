@@ -22,8 +22,12 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-    public PlayerController Player { get {return controller; } }
-    private PlayerController controller;
+    public PlayerController Player { get { return controller; } }
+    [SerializeField] private PlayerController controller;
+
+    // Get a reference to the hud
+    public HUDController HUD { get { return hud; } }
+    [SerializeField] private HUDController hud;
     public enum GameState { MENU, LOADING, PLAYING, PAUSE }
     public GameState currGameState;
     public enum eLevel { MENU, HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
@@ -34,19 +38,13 @@ public class GameManager : MonoBehaviour
     // SCENES
     public enum ControlType {  MOUSE_KEYBOARD, CONTROLLER }
     public ControlType controls;
-
     public PlayerMovement.MoveInput moveType;
     #endregion
 
     #region EVENTS
-    public delegate void moveChanged(PlayerMovement.MoveInput value);
-    public event moveChanged onMoveChanged;
-    void FireMoveChanged (PlayerMovement.MoveInput value) { if (onMoveChanged != null) onMoveChanged(value); }
 
-    public delegate void managerEnabled();
-    public event managerEnabled onManagerEnabled;
 
-    void FireEnabled() { if (onManagerEnabled != null) onManagerEnabled(); Debug.Log("[GameManager]: Enabled"); }
+
     #endregion
 
     #region UNITY FUNCTIONS
@@ -61,9 +59,9 @@ public class GameManager : MonoBehaviour
         { 
             controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
-        if (controller != null)
-        { 
-            moveType = controller.Movement.moveType;
+        if (hud == null)
+        {
+            hud = FindObjectOfType<HUDController>();
         }
         //LoadHub();
 
@@ -71,11 +69,6 @@ public class GameManager : MonoBehaviour
         //LoadLevel();
         //LoadHub();
         //LoadPrototype();
-    }
-
-    private void OnEnable() 
-    {
-        FireEnabled();
     }
     #endregion
     #region GAMEPLAY
@@ -90,6 +83,9 @@ public class GameManager : MonoBehaviour
         }    
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
+
+        // Load the camera into the hud for inventory sliding
+        hud.SetCamera(LevelManager.Instance.LevelCamera);
 
         // Allow the player to move
         controller.Movement.Reset();

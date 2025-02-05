@@ -6,12 +6,7 @@ public class ChaseState : FSMState
     EnemyController controller;
     Animator anim;
     bool moving;
-    int availableSlotIndex;
     float speed;
-
-    float square_rangeDist;
-    float square_meleeDist;
-    float square_chaseDist;
     #endregion
     public ChaseState(EnemyController enemy)
     {
@@ -21,11 +16,6 @@ public class ChaseState : FSMState
         moving = true;
         controller.navMeshAgent.speed = curSpeed;
         anim = controller.GetComponent<Animator>();
-        availableSlotIndex = -1;
-
-        square_rangeDist = EnemyController.RANGEATTACK_DIST * EnemyController.RANGEATTACK_DIST;
-        square_meleeDist = EnemyController.MELEEATTACK_DIST * EnemyController.MELEEATTACK_DIST;
-        square_chaseDist = EnemyController.CHASE_DIST * EnemyController.CHASE_DIST;
     }
     
     #region FUNCTIONALITY
@@ -38,7 +28,6 @@ public class ChaseState : FSMState
         //Release slot position
         // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
         controller.navMeshAgent.speed = curSpeed;
-        availableSlotIndex = -1;
 
         controller.navMeshAgent.destination = destPos;
         if (moving)
@@ -82,8 +71,8 @@ public class ChaseState : FSMState
     //Act
     public override void Act(Transform player, Transform npc)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
-        controller.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime);
+        //Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
+        //controller.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime);
         if (moving)
         {
             controller.navMeshAgent.destination = destPos;

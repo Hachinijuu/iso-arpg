@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     #region VARIABLES
     // Read controls via external game manager script -- cache locally?
     public enum MoveInput { CLICK, DIRECTIONAL }
-    public MoveInput moveType;
+    public MoveInput type;
+    //public MoveInput moveType;
     // CLICK is mouse click to move / hold to move
     // DIRECTIONAL is WASD / Joystick
 
@@ -58,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
         canMove = false;
         canRotate = false;
+
+        type = GameManager.Instance.moveType;
     }
 
     private void OnDestroy()
@@ -74,11 +77,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moveType == MoveInput.DIRECTIONAL)
+        if (type == MoveInput.DIRECTIONAL)
         {
             GetMoveTarget();
         }
-        else if (moveType == MoveInput.CLICK)
+        else if (type == MoveInput.CLICK)
         {
             if (moveHeld)                   // If the move key is pressed
             {
@@ -149,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get the target differently depending on click to move vs directional input
 
-        switch (moveType)
+        switch (type)
         {
             case MoveInput.DIRECTIONAL:
                 HandleDirectionalMove();
@@ -175,8 +178,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 currPoint = transform.position;
         Vector2 moveAxis = input.actions["DirectionalMove"].ReadValue<Vector2>();
-        float h = moveAxis.x;   // horizontal movement
-        float v = moveAxis.y;   // vertical movement
+        // Offset the value by the speed
+        float h = moveAxis.x * agent.speed;   // horizontal movement
+        float v = moveAxis.y * agent.speed;   // vertical movement
 
         // for directional move, need to read the input axis and output a destination position based on them.
         // create a projection point based on the direction

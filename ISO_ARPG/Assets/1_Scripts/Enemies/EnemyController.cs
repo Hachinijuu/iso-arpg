@@ -47,9 +47,9 @@ public class EnemyController : AdvancedFSM
             hurtbox = GetComponentInChildren<Hurtbox>();
         }
 
-        if (hurtbox != null)
+        if (stats != null)
         {
-            hurtbox.onDamaged += DamageTaken;
+            stats.OnDied += DeathTrigger;
         }
 
         //if (stats != null)
@@ -92,20 +92,29 @@ public class EnemyController : AdvancedFSM
 
     public void Respawn()
     {
+        navMeshAgent.enabled = true;
         if (stats.Health.Value <= 0)
         {
             stats.Health.Value = stats.Health.MaxValue; // Reset health to max
         }
     }
 
-    // Event function so the health checks are not dependent on update loop
-    private void DamageTaken(float value)
+    private void DeathTrigger(GameObject go)
     {
-        Debug.Log("Took damage");
         if (stats.Health.Value <= 0)
         {
             PerformTransition(Transition.NoHealth);
         }
     }
+
+    // Event function so the health checks are not dependent on update loop
+    //private void DamageTaken(float value)
+    //{
+    //    //Debug.Log("Took damage");
+    //    if (stats.Health.Value <= 0)
+    //    {
+    //        PerformTransition(Transition.NoHealth);
+    //    }
+    //}
 #endregion
 }

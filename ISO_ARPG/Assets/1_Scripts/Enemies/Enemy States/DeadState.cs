@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using UnityEngine;
 
 public class DeadState : FSMState
@@ -20,7 +21,15 @@ public class DeadState : FSMState
 
         // Upon entering the state, check if I should be dead
 
-        Debug.Log("[FSM_DeathState]: Entity died.");
+        //Debug.Log("[FSM_DeathState]: Entity died.");
+
+        // Instead have AI Manager LISTEN for the death, this can be assigned to entity stats, or an event released from the controller.
+        // DeadState will only handle animation logic.
+
+        // Shutoff navmesh
+        controller.navMeshAgent.enabled = false;
+
+        // This will remove the lookup to the AIManager
         if (controller.stats.Health.Value <= 0)
         { 
             if (AIManager.Instance)

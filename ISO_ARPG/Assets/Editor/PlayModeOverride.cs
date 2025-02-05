@@ -6,12 +6,15 @@ using System.Collections;
 using Unity.EditorCoroutines.Editor;
 
 [InitializeOnLoad]
-public class PlayModeOverride
+public class PlayModeOverride : EditorWindow
 {
+    #region Override Play
+    static bool shouldOverride = false;
     private const string DefaultScene = "Assets/0_Scenes/GoX Persistent Scene.unity";
     static PlayModeOverride()
     {
-        EditorApplication.playModeStateChanged += PlayChanged;
+        if (shouldOverride)
+            EditorApplication.playModeStateChanged += PlayChanged;
     } 
 
     static Scene toLoad;
@@ -40,5 +43,16 @@ public class PlayModeOverride
             yield return null;
         }
         GameManager.Instance.LoadLevelFromString(name);
+    }
+    #endregion
+
+    [MenuItem("Window/Debug")]
+    public static void ShowWindow()
+    {
+        EditorWindow.GetWindow(typeof(PlayModeOverride));
+    }
+    private void OnGUI() 
+    {
+        shouldOverride = EditorGUILayout.Toggle("Playmode Override", shouldOverride);
     }
 }
