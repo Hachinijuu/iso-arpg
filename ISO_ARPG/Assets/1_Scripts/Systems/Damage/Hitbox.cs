@@ -15,16 +15,20 @@ public class Hitbox : MonoBehaviour
     #region UNITY FUNCTIONS
     private void Start()
     {
-        Collider sourceCollider = source.GetComponent<Collider>();
-        Collider damageCollider = GetComponent<Collider>();
-
-        // Want to ignore the collisions between the source of the damage and the hitbox
-        if (sourceCollider != null && damageCollider != null)
+        if (source != null)
         {
-            Physics.IgnoreCollision(sourceCollider, damageCollider);
+            Collider sourceCollider = source.GetComponent<Collider>();
+            Collider damageCollider = GetComponent<Collider>();
+
+            // Want to ignore the collisions between the source of the damage and the hitbox
+            if (sourceCollider != null && damageCollider != null)
+            {
+                Physics.IgnoreCollision(sourceCollider, damageCollider);
+            }
+
+            // Need to stop enemies from damaging each other once system is fleshed out
         }
 
-        // Need to stop enemies from damaging each other once system is fleshed out
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -33,10 +37,15 @@ public class Hitbox : MonoBehaviour
         {
             return;
         }
+        HandleCollision(other);
+    }
+    #endregion
 
+    #region FUNCTIONALITY
+    protected virtual void HandleCollision(Collider other)
+    {
         if (other.CompareTag("Hurtbox"))
         {
-            //Debug.Log("HURTBOX FOUND");
             Hurtbox hb = other.GetComponent<Hurtbox>();
             if (hb != null)
             {
@@ -46,9 +55,6 @@ public class Hitbox : MonoBehaviour
                 Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
         }
     }
-    #endregion
-
-    #region FUNCTIONALITY
     public void AllowDamageForTime(float window)
     {
         //Debug.Log("I want to allow damage for: " + window);
@@ -56,11 +62,21 @@ public class Hitbox : MonoBehaviour
         StartCoroutine(DamageWindow(window));
     }
 
-    IEnumerator DamageWindow(float time)
+    protected virtual void StartDamageWindow()
     {
         applyDamage = true;
-        yield return new WaitForSeconds(time);
+    }
+
+    protected virtual void EndDamageWindow()
+    {
         applyDamage = false;
+    }
+
+    IEnumerator DamageWindow(float time)
+    {
+        StartDamageWindow();
+        yield return new WaitForSeconds(time);
+        EndDamageWindow();
     }
     #endregion
     #region DEBUG

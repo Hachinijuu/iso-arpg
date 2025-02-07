@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -63,12 +64,15 @@ public class GameManager : MonoBehaviour
         {
             hud = FindObjectOfType<HUDController>();
         }
-        //LoadHub();
-
-        LevelLoad();
-        //LoadLevel();
-        //LoadHub();
-        //LoadPrototype();
+        #if UNITY_EDITOR
+            // Check for playmode override
+            bool playOverride = EditorPrefs.GetBool("shouldOverride");
+            Debug.Log(playOverride);
+            if (!playOverride)
+            {
+                LevelLoad();
+            }
+        #endif
     }
     #endregion
     #region GAMEPLAY

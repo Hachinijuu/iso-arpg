@@ -65,6 +65,7 @@ public class AIManager : MonoBehaviour
     bool enemiesSpawned;
     private List<Vector3> spawnLocations;
     #endregion
+    
     #region UNITY FUNCTIONS
 
     void Awake()
@@ -80,10 +81,7 @@ public class AIManager : MonoBehaviour
         //LevelLoading();
     }
     #endregion
-
-    // level manager will send out data to all the enemies within the level
-    // get rid of the object pool manager and have this level manager builds the pools accordingly
-
+    
     #region SCENE LOADS
     // When a level (scene) is loading, call this function
     public void LevelLoading()
@@ -103,7 +101,7 @@ public class AIManager : MonoBehaviour
         {
             if (enemyPools != null && enemyPools.Length > 0)
             {
-                SpawnInitialEnemies();
+                //SpawnInitialEnemies();
                 StartCoroutine(ManagerLoop());
             }
             else
@@ -152,7 +150,7 @@ public class AIManager : MonoBehaviour
         }
     }
     #endregion
-
+    
     #region HELPER FUNCTIONS
     float GetSquareDistance(Vector3 start, Vector3 end)
     {
@@ -166,15 +164,8 @@ public class AIManager : MonoBehaviour
     #endregion
 
     #region ENEMY SPAWNING
-    // Wrapper function
-    private void SpawnInitialEnemies()
-    {
-        if (spawnEnemies)
-        {
-            //StartCoroutine(SpawnInitialBatch());
-        }
-    }
 
+    // THIS FUNCTION WILL HANDLE ENEMY SPAWNING THROUGHOUT THE DURATION OF THE LEVEL
     IEnumerator SpawnEnemies()
     {
         enemiesSpawned = false;
@@ -183,14 +174,11 @@ public class AIManager : MonoBehaviour
         foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
         {
             numTypes++;
-            numExpected += group.minSpawn;
+            numExpected += Random.Range(group.minSpawn, group.maxSpawn);
         }
         // To know how much we should spawn, find the difference between the current enemies and the number expected
         // Expecting 100, have 30, 100 - 30 = 70, need 70 enemies
         int toSpawn = numExpected - currAmount;
-
-        // Spawn this amount divided by the number of types
-
         if (toSpawn > 0)
         {
             Debug.Log("[AIManager]: Spawning " + toSpawn + ", Expected Number: " + numExpected + ", Current Count: " + currAmount);
@@ -202,7 +190,7 @@ public class AIManager : MonoBehaviour
                     if (pool.Prefab == enemyToSpawn)
                     {
                         int enemiesToSpawn = toSpawn / numTypes;
-                        for (int i = 0; i < enemiesToSpawn; i++)
+                        for (int i = 0; i <= enemiesToSpawn; i++)
                         {
                             CellIndex index = LevelManager.Instance.GetRandomIndex(1);
 
@@ -216,11 +204,15 @@ public class AIManager : MonoBehaviour
                                 if (enemy != null)
                                 {
                                     EnemyController controller = enemy.GetComponent<EnemyController>();
-                                    if (controller)
-                                        controller.Respawn();
+
+                                    // Order matters: Unsubscribe from the event first, then resubscribe
+                                    controller.stats.OnDied -= context => { currAmount--; LevelManager.Instance.numKilled++; };
+                                    controller.stats.OnDied += context => { currAmount--; LevelManager.Instance.numKilled++; };
+                                    currAmount++;
 
                                     enemy.transform.position = currCell.position;
                                     enemy.SetActive(true);
+                                    controller.Respawn();
                                 }
                             }
                             yield return new WaitForSeconds(spawnInterval);
@@ -229,66 +221,64 @@ public class AIManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            Debug.Log("[AIManager: No enemies should spawn");
+        }
         enemiesSpawned = true;
     }
-    IEnumerator SpawnInitialBatch()
+    
+    // MOBS WILL BE TRIGGERED WHEN THERE ARE X NUMBER OF ENEMIES KILLED, OR TIME IN THE LEVEL HAS PASSED A CERTAIN THRESHOLD
+    // OTHER ENEMIES WILL NOT SPAWN UNTIL THE MOB HAS BEEN DEFEATED(?)
+    IEnumerator SpawnMob()
     {
-        // Get the cell the player is in
-        // Build a circle, spawn enemy bundles at those positions
-        spawnLocations = new List<Vector3>();
-        foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
-        {
-            GameObject enemyToSpawn = group.entity;
-            Debug.Log("[AIManager]: Spawning " + enemyToSpawn.name);
-            foreach (ObjectPool pool in enemyPools)
-            {
-                // Cycle the number of enemies to spawn
-                if (pool.Prefab == enemyToSpawn)
-                {
-                    int numEnemies = Random.Range(group.minSpawn, group.maxSpawn);
-                    for (int i = 0; i < numEnemies; i++)
-                    {
-                        int rotIndex = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
-                        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-                        // Getting the rotation around the player
-                        if (player != null)
-                        {
-                            Vector3 offsetPos = player.transform.position + (player.transform.forward * spawnDistance);
-                            Vector3 spawnPos = player.transform.position;
-                            spawnPos.x += (CircleUtility.CircleListInstance[rotIndex].x * spawnDistance);
-                            spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z * spawnDistance);
-                            spawnPos.y = LevelManager.Instance.FloorOffset;
-                            spawnLocations.Add(spawnPos);
-                            //Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
-                            GameObject agent = pool.GetPooledObject();
-                            if (agent != null)
-                            {
-                                EnemyController controller = agent.GetComponent<EnemyController>();
-                                if (controller)
-                                    controller.Respawn();
+        // if (player != null)
+        // {
+        //     Vector3 offsetPos = player.transform.position + (player.transform.forward * spawnDistance);
+        //     Vector3 spawnPos = player.transform.position;
+        //     spawnPos.x += (CircleUtility.CircleListInstance[rotIndex].x * spawnDistance);
+        //     spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z * spawnDistance);
+        //     spawnPos.y = LevelManager.Instance.FloorOffset;
+        //     // Get a cell position to place the agent at
+        //     CellIndex index = LevelManager.Instance.GetIndexFromPoint(spawnPos);
+        //     if (index.x != -1 && index.y != -1)
+        //     {
+        //         // If it is a valid cell
+        //         Cell currCell = LevelManager.Instance.GetCellFromIndex(index);
+        //         spawnPos = currCell.position;
+        //     }
+        //     spawnLocations.Add(spawnPos);
+        //     // Get the grid spawn pos before doing this
+        //     //Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
+        //     GameObject agent = pool.GetPooledObject();
+        //     SpawnEnemy(pool, spawnPos);
+        // }
+        yield return new WaitForSeconds(spawnInterval);
+    }
 
-                                currAmount++;
-                                agent.transform.position = spawnPos;
-                                // Place the unit into a group based on their position;
-                                float distance = GetSquarePlayerDistance(spawnPos);
-                                AssignGameObjectToGroup(agent, distance);
-                                //Debug.Log("Distance: " + distance + " vs Offset: " + offsetPos.sqrMagnitude);
-                                agent.SetActive(true);
-                            }
-                            yield return new WaitForSeconds(spawnInterval);
-                        }
-                    }
-                }
+    public void SpawnEnemy(ObjectPool fromPool, Vector3 pos)
+    {
+        GameObject agent = fromPool.GetPooledObject();
+        if (agent != null)
+        {
+            EnemyController controller = agent.GetComponent<EnemyController>();
+            if (controller)
+            {
+                controller.Respawn();
             }
-        }
-        yield return null;
-        foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
-        {
-            Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
-        }
-        if (DropSystem.Instance != null)
-        {
-            DropSystem.Instance.AddListeners();
+
+            // Add a listener to the enemies
+            // This will work because the number of enemies spawned in the initial batch SHOULD NEVER exceed subsequent spawns.
+            // This needs to be tested
+            controller.stats.OnDied += context => { currAmount--; LevelManager.Instance.numKilled++; };
+            currAmount++;
+
+            agent.transform.position = pos;
+
+            // Place the unit into a group based on their position;
+            float distance = GetSquarePlayerDistance(pos);
+            AssignGameObjectToGroup(agent, distance);
+            agent.SetActive(true);
         }
     }
 

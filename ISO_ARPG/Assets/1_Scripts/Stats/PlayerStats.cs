@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public class PlayerStats : EntityStats
 {
@@ -179,5 +180,13 @@ public class PlayerStats : EntityStats
     //    //moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
     //}
 
+    #endregion
+
+    #region SET
+
+    public void SetFusion(Ability fusion)
+    {
+        ID_Fusion = fusion;
+    }
     #endregion
 }

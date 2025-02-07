@@ -239,7 +239,7 @@ public class TrackedStat : ClampedStat
     {
         oldValue = this.value;                  // Store the old value
         base.SetValue(value);  // Update the value to the new one
-        FireChanged(this.value);                     // Tell the listeners the new value
+        //FireChanged(this.value);                     // Tell the listeners the new value
     }
 
     public virtual void Copy(TrackedStat other)

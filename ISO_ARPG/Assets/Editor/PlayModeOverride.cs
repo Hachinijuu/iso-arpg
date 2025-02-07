@@ -9,13 +9,16 @@ using Unity.EditorCoroutines.Editor;
 public class PlayModeOverride : EditorWindow
 {
     #region Override Play
-    static bool shouldOverride = false;
+    static bool shouldOverride;
     private const string DefaultScene = "Assets/0_Scenes/GoX Persistent Scene.unity";
     static PlayModeOverride()
     {
-        if (shouldOverride)
-            EditorApplication.playModeStateChanged += PlayChanged;
+        EditorApplication.playModeStateChanged += PlayChanged;
     } 
+
+    private void OnEnable() {
+        shouldOverride = EditorPrefs.GetBool("shouldOverride");
+    }
 
     static Scene toLoad;
     private static void PlayChanged(PlayModeStateChange state)
@@ -28,9 +31,11 @@ public class PlayModeOverride : EditorWindow
             Debug.Log(toLoad.name);
             if (toLoad.path != DefaultScene)
             {
-                Debug.Log("Auto-loading default");
-
-                EditorCoroutineUtility.StartCoroutineOwnerless(LoadScene(toLoad.name));
+                if (shouldOverride)
+                {
+                    Debug.Log("Auto-loading default");
+                    EditorCoroutineUtility.StartCoroutineOwnerless(LoadScene(toLoad.name));
+                }
             }
         }
     }
@@ -51,8 +56,20 @@ public class PlayModeOverride : EditorWindow
     {
         EditorWindow.GetWindow(typeof(PlayModeOverride));
     }
+
+    public static void SavePrefs()
+    {
+        EditorPrefs.SetBool("shouldOverride", shouldOverride);
+        //Debug.Log(EditorPrefs.GetBool("shouldOverride"));
+    }
     private void OnGUI() 
     {
         shouldOverride = EditorGUILayout.Toggle("Playmode Override", shouldOverride);
+        SavePrefs();
+
+        //if (shouldOverride = EditorGUILayout.Toggle("Playmode Override", shouldOverride))
+        //{
+        //    EditorPrefs.SetBool("shouldOverride", shouldOverride);
+        //}
     }
 }

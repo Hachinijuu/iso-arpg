@@ -27,7 +27,7 @@ public class EnemyController : AdvancedFSM
     private void Awake()
     {
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-
+        navMeshAgent.enabled = false;   // DO NOT WANT TO ACTIVATE THE AGENT UNTIL NEEDED
     }
     #endregion
     #region FSM SETUP
@@ -52,17 +52,12 @@ public class EnemyController : AdvancedFSM
             stats.OnDied += DeathTrigger;
         }
 
-        //if (stats != null)
-        //{
-        //    stats.OnDied += Died;
-        //}
-
         // Register for drops
 
         if (DropSystem.Instance != null)
         {
             DropSystem.Instance.RegisterEnemyDrop(stats);
-            Debug.Log("Registered to drops");
+            //Debug.Log("Registered to drops");
         }
     }
 
@@ -90,13 +85,17 @@ public class EnemyController : AdvancedFSM
 
 #region  FUNCTIONALITY
 
-    public void Respawn()
+    public virtual void Respawn()
     {
         navMeshAgent.enabled = true;
         if (stats.Health.Value <= 0)
         {
             stats.Health.Value = stats.Health.MaxValue; // Reset health to max
         }
+
+        // Override back to default transition
+        //if (CurrentState != null)
+        //    PerformTransition(Transition.ChasePlayer);
     }
 
     private void DeathTrigger(GameObject go)

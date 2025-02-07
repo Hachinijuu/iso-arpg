@@ -1,3 +1,4 @@
+using System.IO.Pipes;
 using UnityEngine;
 
 public class ChaseState : FSMState
@@ -27,11 +28,19 @@ public class ChaseState : FSMState
         moving = true;
         //Release slot position
         // enemyControl.playerSlotManager.ReleaseSlot(availableSlotIndex, enemyControl.navMeshAgent.gameObject);
-        controller.navMeshAgent.speed = curSpeed;
 
-        controller.navMeshAgent.destination = destPos;
-        if (moving)
-            controller.navMeshAgent.isStopped = false;  // Allow the agent to move
+        
+        //destPos = controller.transform.position;    // Set the position to where they are, this gets changed when within chase range
+
+        if (controller.navMeshAgent != null)
+        {
+            controller.navMeshAgent.speed = curSpeed;
+
+            controller.navMeshAgent.destination = destPos;
+            if (moving)
+                controller.navMeshAgent.isStopped = false;  // Allow the agent to move
+        }
+
     }
 
 
@@ -59,13 +68,14 @@ public class ChaseState : FSMState
             controller.PerformTransition(Transition.PlayerReached);
             return;
         }
-        else if (IsInCurrentRange(npc, destPos, EnemyController.CHASE_DIST))
+        // If the AGENT is in the player's CHASE RANGE
+        else if (IsInCurrentRange(player, npc.transform.position, EnemyController.CHASE_DIST))
         {
             destPos = player.position;  // Only update the position if the player is in range
         }
         else
         {
-            destPos = npc.position;
+            destPos = player.position;  // Only update the position if the player is in range
         }
     }
     //Act

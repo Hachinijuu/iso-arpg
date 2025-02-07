@@ -17,4 +17,9 @@ public class OrcController : EnemyController
         AddFSMState(melee);
         AddFSMState(dead);
     }
+    public override void Respawn()
+    {
+        base.Respawn();
+        OverrideState(FSMStateID.Chase);
+    }
 }

@@ -33,33 +33,37 @@ public class DropSystem : MonoBehaviour
     public void RegisterEnemyDrop(EntityStats enemy)
     {
         enemies.Add(enemy);
+        enemy.OnDied += CheckDrop;
     }
 
     public void UnregisterEnemyDrop(EntityStats enemy)
     {
         enemies.Remove(enemy);
+        enemy.OnDied -= CheckDrop;
     }
 
     // When destructibles set themselves to inactive, unregister them from the list
     public void RegisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Add(destructible);
+        destructible.OnDied += CheckDrop;
     }
 
     public void UnregisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Remove(destructible);
+        destructible.OnDied -= CheckDrop;
     }
 
-    public void AddListeners()
-    {
-        Debug.Log("[DropSystem]: Has " + enemies.Count + " enemies");
-        foreach (EntityStats enemy in enemies)
-        {
-            enemy.OnDied += CheckDrop;
-        }
-        Debug.Log("[DropSystem]: Added listeners");
-    }
+    //public void AddListeners()
+    //{
+    //    //Debug.Log("[DropSystem]: Has " + enemies.Count + " enemies");
+    //    //foreach (EntityStats enemy in enemies)
+    //    //{
+    //    //    enemy.OnDied += CheckDrop;
+    //    //}
+    //    //Debug.Log("[DropSystem]: Added listeners");
+    //}
     #endregion
     #region FUNCTIONALITY
 

@@ -131,6 +131,19 @@ public class AdvancedFSM : FSM
             }
         }
     }
+
+    public void OverrideState(FSMStateID id)
+    {
+        foreach (FSMState state in fsmStates)
+        {
+            if (state.ID == id)
+            {
+                currentState = state;
+                currentState.EnterStateInit();
+                break;
+            }
+        }
+    }
     #endregion
     #region DEBUG
     private void OnDrawGizmos()

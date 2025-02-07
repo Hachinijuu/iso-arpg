@@ -20,9 +20,30 @@ public class LevelDetails
     // Use of lists instead of dictionaries because dictionaries cannot be set in editor
     public List<EntityNumber> enemiesToSpawn;
     public List<EntityNumber> destructiblesToSpawn;
-
     public int enemiesToKill;
     public int elitesToKill;
+    public List<Horde> hordes;
+}
+
+[System.Serializable]
+public class Horde
+{
+    // None, no condition
+    // Time - Set the time the horde should spawn
+    // Kills - Set the number of kills to spawn the horde
+    public enum SpawnCondition { NONE, TIME, KILLS }
+    public SpawnCondition hordeCondition;
+    public List<EntityNumber> enemiesToSpawn;
+    public int TriggerAmount;
+    public bool CheckShouldSpawn(float num)
+    {
+        if (num > TriggerAmount)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
 #endregion
 public class LevelManager : MonoBehaviour
@@ -149,18 +170,16 @@ public class LevelManager : MonoBehaviour
         while (!levelComplete)
         {
             timeSpent += Time.deltaTime;
-            //GetIndexFromPoint(player.transform.position);
-            //GetIndexFromPosition(player.transform.position);
             UpdatePlayerCell();
-            //Debug.Log(timeSpent);
             CheckLevelComplete();
+
+            // Level Manager will have Mob / Crowd lists and activation conditions, this will handle the activation of said instances
             yield return null;
         }
 
         // Once the level is complete, spawn the portal to exit the level
         LevelCompleted();
     }
-
     bool CheckLevelComplete()
     {
         switch (type)
@@ -212,6 +231,7 @@ public class LevelManager : MonoBehaviour
     public void BuildGrid(NavMeshSurface mesh)
     {
         Bounds playArea = mesh.navMeshData.sourceBounds;
+
         Vector3 playableArea = playArea.size;
         // setting up the values
 
@@ -232,7 +252,10 @@ public class LevelManager : MonoBehaviour
         columnOffset -= (cellTrim * (cellSize / 2));
 
         // origin point
-        origin = new Vector3(-rowOffset, 0, columnOffset);
+        // Grid build also needs to be offset by the position of where the NavMesh surface is
+        Vector3 pos = mesh.gameObject.transform.position;
+
+        origin = pos + new Vector3(-rowOffset, 0, columnOffset);
 
         // initialize the cells array
         cells = new Cell[gRows, gColumns];

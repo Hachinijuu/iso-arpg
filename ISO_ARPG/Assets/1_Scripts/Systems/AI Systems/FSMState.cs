@@ -111,6 +111,7 @@ public abstract class FSMState
         //float dist = Vector3.Distance(trans.position, pos);
         // Vector3.Distance is the same as (a-b).magnitude -- instead, use squared magnitudes so square root is not used
 
+        // Transform is the goal, pos is the start
         float dist = (trans.position - pos).sqrMagnitude;
 
         if (dist <= (range * range))

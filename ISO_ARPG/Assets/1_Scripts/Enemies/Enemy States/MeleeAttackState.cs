@@ -34,12 +34,15 @@ public class MeleeAttackState : FSMState
             controller.PerformTransition(Transition.ChasePlayer);
             return;
         }
+        else
+        {
+            // Enemy is in the attack range, perform attacks
+            destPos = player.position;      
+            // Make sure can attack is set
+            if (canAttack != true)
+                canAttack = true;
+        }
 
-        // Enemy is in the attack range, perform attacks
-        destPos = player.position;      
-        // Make sure can attack is set
-        if (canAttack != true)
-            canAttack = true;
     }
     //Act
     public override void Act(Transform player, Transform npc)
