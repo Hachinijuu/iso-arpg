@@ -181,7 +181,7 @@ public class AIManager : MonoBehaviour
         int toSpawn = numExpected - currAmount;
         if (toSpawn > 0)
         {
-            Debug.Log("[AIManager]: Spawning " + toSpawn + ", Expected Number: " + numExpected + ", Current Count: " + currAmount);
+            Debug.LogWarning("[AIManager]: Spawning " + toSpawn + ", Expected Number: " + numExpected + ", Current Count: " + currAmount);
             foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
             {
                 GameObject enemyToSpawn = group.entity;
@@ -190,7 +190,7 @@ public class AIManager : MonoBehaviour
                     if (pool.Prefab == enemyToSpawn)
                     {
                         int enemiesToSpawn = toSpawn / numTypes;
-                        for (int i = 0; i <= enemiesToSpawn; i++)
+                        for (int i = 0; i < enemiesToSpawn; i++)
                         {
                             CellIndex index = LevelManager.Instance.GetRandomIndex(1);
 
@@ -199,21 +199,8 @@ public class AIManager : MonoBehaviour
                                 Cell currCell = LevelManager.Instance.GetCellFromIndex(index);
                                 Vector3 spawnPos = currCell.position;
                                 spawnPos.y += LevelManager.Instance.FloorOffset;
-
-                                GameObject enemy = pool.GetPooledObject();
-                                if (enemy != null)
-                                {
-                                    EnemyController controller = enemy.GetComponent<EnemyController>();
-
-                                    // Order matters: Unsubscribe from the event first, then resubscribe
-                                    controller.stats.OnDied -= context => { currAmount--; LevelManager.Instance.numKilled++; };
-                                    controller.stats.OnDied += context => { currAmount--; LevelManager.Instance.numKilled++; };
-                                    currAmount++;
-
-                                    enemy.transform.position = currCell.position;
-                                    enemy.SetActive(true);
-                                    controller.Respawn();
-                                }
+                                //GameObject enemy = pool.GetPooledObject();
+                                SpawnEnemy(pool, spawnPos);
                             }
                             yield return new WaitForSeconds(spawnInterval);
                         }
@@ -225,6 +212,7 @@ public class AIManager : MonoBehaviour
         {
             Debug.Log("[AIManager: No enemies should spawn");
         }
+        Debug.LogWarning("[AIManager]: Completed spawn cycle");
         enemiesSpawned = true;
     }
     
@@ -270,8 +258,13 @@ public class AIManager : MonoBehaviour
             // Add a listener to the enemies
             // This will work because the number of enemies spawned in the initial batch SHOULD NEVER exceed subsequent spawns.
             // This needs to be tested
-            controller.stats.OnDied += context => { currAmount--; LevelManager.Instance.numKilled++; };
+
+
+            // Negative current amount still exists (more enemies than accounted for that die)
             currAmount++;
+            //controller.stats.OnDied -= context => { };
+            controller.stats.OnDied -= context => { currAmount--; LevelManager.Instance.numKilled++; };
+            controller.stats.OnDied += context => { currAmount--; LevelManager.Instance.numKilled++; };
 
             agent.transform.position = pos;
 
@@ -392,6 +385,7 @@ public class AIManager : MonoBehaviour
             {
                 if (enemiesSpawned)
                 {
+                    Debug.LogWarning("[AIManager]: Spawning start");
                     StartCoroutine(SpawnEnemies());
                     spawnTimer = 0.0f;
                 }

@@ -74,8 +74,8 @@ public class DropSystem : MonoBehaviour
 
         if (dropValue > expOrb.dropChance)
             CreatedDroppedObject(whoDied.transform.position, expOrb);
-        else
-            Debug.Log("[DropSystem]: No drops");
+        //else
+        //    Debug.Log("[DropSystem]: No drops");
         //Debug.Log("Will I drop something?");
     }
 
@@ -88,11 +88,43 @@ public class DropSystem : MonoBehaviour
 
         go.transform.position = pos;
 
-        // If it is not active
+        // Call specific functions based on the type it is, pickup vs interactable
+        // Let the created object know what kind of item it is
+        Item temp = go.GetComponent<Item>();
+        if (temp)
+        {
+            temp.LoadItemData(item);
+            // Add a listener to the drop if it should provide information when it is picked up.
+            if (item.showPopup)
+            {
+                item.OnItemAcquired += ItemPopup; // Once the item has popped up, need to stop listening to the event
+            }
+        }
+        else
+        {
+            Debug.Log("[DropSystem]: Created " + item.itemName + " but object does not have Item Component");
+        }
         if (!go.activeInHierarchy)
         {
             go.SetActive(true);
         }
+    }
+
+    // Get a dropped object from an object pool
+    public Item GetItem(ObjectPool pool)
+    {
+        // Will the dropSystem contain object pools for items, perhaps.
+        GameObject go = pool.GetPooledObject();
+        Item item = go.GetComponent<Item>();
+        return item;    // Should return null if GetComponent<>(); was unsucessful, test.
+    }
+
+    public void ItemPopup(ItemEventArgs e)
+    {
+        // Build the UI popup to display on screen.
+        ItemObject item = e.data;
+        Debug.Log("[DropSystem]: Show popup for: " + item.itemName);
+        item.OnItemAcquired -= ItemPopup;
     }
     // This drop system manages all drops in the game
     // It will contain a dictionary to the possible drops and stuff
