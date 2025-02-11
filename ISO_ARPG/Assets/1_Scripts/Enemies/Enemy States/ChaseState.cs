@@ -8,6 +8,8 @@ public class ChaseState : FSMState
     Animator anim;
     bool moving;
     float speed;
+
+    private int moveAnimID = Animator.StringToHash("Speed");
     #endregion
     public ChaseState(EnemyController enemy)
     {
@@ -83,11 +85,18 @@ public class ChaseState : FSMState
     {
         //Quaternion targetRotation = Quaternion.LookRotation(destPos - npc.position);
         //controller.navMeshAgent.transform.rotation = Quaternion.Slerp(npc.rotation, targetRotation, Time.deltaTime);
+        
+        // NEED TO REDUCE THIS LOAD, IT IS BEING CALLED EVERY FRAME -- DON'T KNOW IF UPDATE FREQUENCY IS BROKEN
+        // IT MIGHT BE BROKEN, THEREFORE ASSUME THIS IS HAPPENING EVERY FRAME
+
+        // WILL IMPLEMENT ANIMATOR LODS TO REDUCE STEP TIME
+        // FIND OUT A WAY TO REDUCE NAVMESH CALLS / OFFLOAD WEIGHT
+
         if (moving)
         {
             controller.navMeshAgent.destination = destPos;
             speed = controller.navMeshAgent.velocity.magnitude;
-            anim.SetFloat("Speed", speed);
+            anim.SetFloat(EnemyController.moveAnimID, speed);
         }
     }
     #endregion

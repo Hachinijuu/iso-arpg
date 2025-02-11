@@ -10,6 +10,8 @@ public class MeleeAttackState : FSMState
     EnemyController controller;
     Animator anim;
 
+    // private int moveAnimID = Animator.StringToHash("Speed");
+    // private int attackAnimID = Animator.StringToHash("Ability1"); // This will be changed with custom controller
     #endregion
     //Constructor
     public MeleeAttackState(EnemyController npc)
@@ -53,17 +55,18 @@ public class MeleeAttackState : FSMState
         float speed = controller.navMeshAgent.velocity.magnitude;
         if (speed > 0)
         {
-            anim.SetFloat("Speed", speed);
+            anim.SetFloat(EnemyController.moveAnimID, speed);
         }
 
         //Rotate towards Position
+        // Check possibility of a coroutine here as the timestep instead of counter
         if (canAttack)
         {
             attackTimer += Time.deltaTime;
 
             if (attackTimer > attackInterval)
             {
-                anim.SetTrigger("Ability1");
+                anim.SetTrigger(EnemyController.attackAnimID);
                 controller.DamageSource.AllowDamageForTime(0.5f);
                 attackTimer = 0.0f;
                 return;

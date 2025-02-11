@@ -71,6 +71,11 @@ public abstract class Ability : ScriptableObject
     #endregion
 
     #region FUNCTIONALITY
+
+    public virtual void InitAbility(Ability ab, GameObject actor)
+    {
+        // Initialize the ability here, this is where GetComponents from derived abilites should be setup (called on character load)
+    }
     protected abstract void Fire(Ability ab, GameObject actor); // This function must be overriden by base classes, it should contain the actions / effects of the ability.
 
     // call this function in the input handler, if the user can use their ability it will be used, otherwise - output can't
@@ -85,7 +90,7 @@ public abstract class Ability : ScriptableObject
     { 
         FireAbilityEnded(new AbilityEventArgs(this, actor));
     }
-
+    // NO ARGS ENDING
     public virtual void EndAbility()
     {
         FireAbilityEnded(new AbilityEventArgs());

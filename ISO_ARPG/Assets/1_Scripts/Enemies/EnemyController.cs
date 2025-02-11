@@ -21,6 +21,10 @@ public class EnemyController : AdvancedFSM
     public Animator Anim { get { return anim; } }
     [SerializeField] protected Hurtbox hurtbox;
 
+    public static int attackAnimID = Animator.StringToHash("Ability1");
+    public static int moveAnimID = Animator.StringToHash("Speed");
+    // Do the same for attacks so that each state does not need to cache
+
     // public SlotManager playerSlotManager;
     #endregion
     #region  UNITY FUNCTIONS

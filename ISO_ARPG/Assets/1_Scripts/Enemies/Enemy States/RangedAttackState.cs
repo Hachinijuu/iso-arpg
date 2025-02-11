@@ -25,6 +25,8 @@ public class RangedAttackState : FSMState
 
         // Stop the agent
         controller.navMeshAgent.isStopped = true;
+
+        anim.SetFloat(EnemyController.moveAnimID, 0.0f);    // visually show that the agent has stopped by stopping the animator
     }
 
 
@@ -53,10 +55,9 @@ public class RangedAttackState : FSMState
         if (canAttack)
         {
             attackTimer += Time.deltaTime;
-            anim.SetFloat("Speed", 0.0f);
             if (attackTimer > attackInterval)
             {
-                anim.SetTrigger("Ability1");
+                anim.SetTrigger(EnemyController.attackAnimID);
                 attackTimer = 0.0f;
             }
         }

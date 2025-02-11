@@ -21,12 +21,14 @@ public class TigersRage : PassiveAbility
     PlayerStats stats;
     #endregion
     #region FUNCTIONALITY
+    public override void InitAbility(Ability ab, GameObject actor)
+    {
+        stats = actor.GetComponent<PlayerStats>();
+        source = actor.GetComponent<AudioSource>();
+    }
     protected override void Fire(Ability ab, GameObject actor)
     {
         // When this is fired, apply the effects / bonuses for the passive ability, call end once duration has passed.
-
-        stats = actor.GetComponent<PlayerStats>();
-        source = actor.GetComponent<AudioSource>();
 
         if (stats != null)
         {
@@ -59,7 +61,9 @@ public class TigersRage : PassiveAbility
             stats.CritChance.Value /= critChanceIncrease;
             stats.CritDamage.Value /= critDamageIncrease;
         }
-        //base.EndAbility(actor);
+        
+        // Don't forget to call end ability to send event out
+        base.EndAbility(actor);
     }
     #endregion
 }

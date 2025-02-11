@@ -73,6 +73,9 @@ public class GameManager : MonoBehaviour
                 LevelLoad();
             }
         #endif
+        #if UNITY_STANDALONE && !UNITY_EDITOR
+        LevelLoad();
+        #endif
     }
     #endregion
     #region GAMEPLAY

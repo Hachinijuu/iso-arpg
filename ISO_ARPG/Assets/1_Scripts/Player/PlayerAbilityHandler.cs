@@ -114,8 +114,10 @@ public class PlayerAbilityHandler : MonoBehaviour
         foreach (Ability ab in stats.Abilities)
         {
             canUseAbility.Add(ab, true);
+            ab.InitAbility(ab, gameObject);
         }
         canUseAbility.Add(stats.Identity, true);
+        stats.Identity.InitAbility(stats.Identity, gameObject);
     }
     #region HELPER FUNCTIONS
     float GetSquareDistance(Vector3 start, Vector3 end)
