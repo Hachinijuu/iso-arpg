@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : Hitbox
@@ -42,9 +40,9 @@ public class Projectile : Hitbox
         Debug.Log("Uptime ended");
     }
     #endregion
-    private void OnGUI() 
+    private void OnGUI()
     {
-        if (GUI.Button(new Rect (20, 120, 100, 20), "Shoot"))
+        if (GUI.Button(new Rect(20, 120, 100, 20), "Shoot"))
         {
             Debug.Log("Shot a projectile");
             FireProjectile();

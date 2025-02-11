@@ -29,10 +29,23 @@ public class Hurtbox : MonoBehaviour
     }
     #endregion
     #region FUNCTIONALITY
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
-        FireOnDamaged(damage);
-        stats.Health.Value -= damage;
+        // DODGE -- potential to miss, no damage taken
+        float dodge = Random.Range(0.0f, 100.0f); // float inclusive 0-100
+        if (dodge <= stats.Dodge.Value)
+            return;
+
+        // ARMOUR -- damage reduction
+        // 50 incoming
+
+        // armour value
+        // 400 * 0.005 = 20
+        // conversion is 
+
+        float recalc = (damage * (1 - (stats.Armour.Value * GameManager.Instance.ArmourConvert)));
+        stats.Health.Value -= recalc;
+        FireOnDamaged(stats.Health.Value);
         //Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");
     }
     #endregion

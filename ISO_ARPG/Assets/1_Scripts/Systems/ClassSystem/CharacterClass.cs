@@ -33,8 +33,9 @@ public class CharacterClass : ScriptableObject
     public Stat Projectiles;
     public Stat Chains;
 
-    [Header("Movement Stats")]
+    [Header("Utility Stats")]
     public SubStat moveSpeed;
+    public Stat ID_Gain;
     [Range(0, StatLimits.MOVE_MAX)] public float rotationSpeed = -1f;
 
     [Header("Offensive Stats")]
@@ -42,12 +43,10 @@ public class CharacterClass : ScriptableObject
     public SubStat AttackSpeed;
     public SubStat CritDamage;
     public SubStat CritChance;
-    
+
     [Header("Defensive Stats")]
     public SubStat Armour;
     public SubStat Dodge;
-
-
     #endregion
 
     #region Abilities

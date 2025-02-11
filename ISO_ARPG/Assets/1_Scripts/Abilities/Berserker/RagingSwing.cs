@@ -9,6 +9,8 @@ public class RagingSwing : StackAbility
     Hitbox[] hitboxes;
     PlayerStats stats;
 
+    public float damageMultipler = 1.0f;
+
     private int animId = Animator.StringToHash("Ability1");
     #endregion
     #region FUNCTIONALITY
@@ -21,6 +23,9 @@ public class RagingSwing : StackAbility
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
+        // Call calculator on the relevant hitboxes ... kind of messy in terms of how projectiles run and apply damage
+        // Generate damage values and then pass to init?
+
 
 
         // Listen the the hitboxes for their events, if something was hit, regain mana - if nothing is hit, don't
@@ -74,11 +79,15 @@ public class RagingSwing : StackAbility
     #region HELPER FUNCTIONS
     void SetDamageDetection(bool on)
     {
+        // Damage Calculation
+        float damageToDeal = stats.Damage.Value * damageMultipler * stats.STR.Value;
+
         if (hitboxes != null && hitboxes.Length > 0)
         {
             for (int i = 0; i < hitboxes.Length; i++)
             {
                 hitboxes[i].AllowDamageForTime(0.75f);
+                hitboxes[i].SetDamage(damageToDeal);
             }
         }
     }

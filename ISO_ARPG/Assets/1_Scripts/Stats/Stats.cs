@@ -1,7 +1,6 @@
 // This stat class is to organize data in a more effective manner
 // With customized types, comparing and referencing stat combinations should be easier
 // i.e Gear with x stats gives bonus
-using System;
 using UnityEngine;
 
 #region STAT LIMITS
@@ -19,6 +18,11 @@ public static class StatLimits
 }
 #endregion
 
+// Stat - just a flat number, no extension
+// MainStat - number w/ extension of stat type ( str, dex, int)
+// SubStat - number w/ extension of substat type (damage, atk_speed, move_speed)
+// TrackedStat - number w/ old and maxValue (clamped)
+
 #region STAT TYPES
 // Main Stat types are stats that every class will have by default, they are STANDALONE stats that INFLUENCE other stats
 public enum MainStatTypes
@@ -26,7 +30,7 @@ public enum MainStatTypes
     NONE,
     STRENGTH,       // modifier to berserker damage, health and armour
     DEXTERITY,      // modifier to hunter damage, speed and dodge
-    INTELLIGENCE,   // modifier to elementalist damage, mana and health
+    INTELLIGENCE,   // modifier to elementalist damage, mana and mana regen
     HASTE,          // modifies attack speed and movement speed
 }
 
@@ -43,14 +47,18 @@ public enum TrackedStatTypes
 public enum SubStatTypes
 {
     NONE,
-    DAMAGE,         // damage
-    MOVE_SPEED,     // movement speed
-    ATTACK_SPEED,   // attack speed
-    ARMOUR,         // damage reduction
-    DODGE,          // chance to dodge
-    CRIT_CHANCE,    // chance to crit
-    CRIT_DAMAGE,    // damage of critical strikes
+    DAMAGE,         // damage           -- displayed as #, use flat
+    MOVE_SPEED,     // movement speed   -- displayed as %, use flat mutl no conversion
+    ATTACK_SPEED,   // attack speed     -- displayed as %, use multiplier
+    ARMOUR,         // damage reduction -- displayed as #, use conversion --> armour value * conversion = % reduction
+    DODGE,          // chance to dodge  -- displayed as %, mult
+    CRIT_CHANCE,    // chance to crit   -- displayed as %
+    CRIT_DAMAGE,    // damage of critical strikes   -- displayed as %
+    // CRIT DAMAGE IS ADDITIVE
 }
+
+// gear bonuses
+// if i have 3 - armour, stuff, i can get an armour bonus
 #endregion
 
 #region STAT CLASSES
@@ -87,7 +95,7 @@ public class Stat
     }
 
     public virtual void Copy(Stat other)
-    { 
+    {
         this.value = other.value;
     }
 }
@@ -110,6 +118,9 @@ public class ClampedStat : Stat
                 maxValue = 0;
             else
                 maxValue = StatLimits.TRACKED_STAT_MAX;
+
+            // When setting the max value, fire out the event to notify the data has been changed
+            FireChanged(this.value);
         }
     }
 
@@ -118,7 +129,7 @@ public class ClampedStat : Stat
     public ClampedStat(float value) : base(value) { this.maxValue = StatLimits.STAT_MAX; }
     public ClampedStat(float value, float maxValue) : base(value) { this.maxValue = maxValue; }
     public ClampedStat(ClampedStat copy)
-    { 
+    {
         Copy(copy);
     }
 
@@ -138,7 +149,7 @@ public class ClampedStat : Stat
             this.value = value;
         }
         FireChanged(this.value); // tell the listeners the new value
-        
+
         //this.value = value;
         //if (this.value > maxValue)
         //    this.value = maxValue;
@@ -197,7 +208,7 @@ public class SubStat : ClampedStat
     public SubStat(SubStatTypes type, float value) : base(value) { this.type = type; }
 
     public SubStat(SubStat copy)
-    { 
+    {
         Copy(copy);
     }
 
@@ -229,7 +240,7 @@ public class TrackedStat : ClampedStat
         SetValue(value);                 // Clamp the passed in value to the max value
     }
     public TrackedStat(TrackedStat copy)
-    { 
+    {
         Copy(copy);
     }
 

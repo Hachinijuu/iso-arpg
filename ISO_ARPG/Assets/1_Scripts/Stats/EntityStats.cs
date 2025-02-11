@@ -9,6 +9,14 @@ public class EntityStats : MonoBehaviour
     // Made serializefield for debug purposes
     // Final implementation, stats are loaded externally
     [SerializeField] protected TrackedStat health;
+
+    // Defensive
+    public SubStat Armour { get { return armour; } }
+    public SubStat Dodge { get { return dodge; } }
+
+    // Defensive
+    [SerializeField] protected SubStat armour;
+    [SerializeField] protected SubStat dodge;
     #endregion
     #region EVENTS
     // Send an event out whenever the entity has died, drop system will listen to this.

@@ -8,6 +8,11 @@ public class DeathSpin : ChannelAbility
     AudioSource source;
     PlayerMovement move;
     Hitbox[] hitboxes;
+    PlayerStats stats;
+
+    public float damageMultipler = 1.0f;
+
+    // EACH ABILITY IS UNIQUE, BUT IS IT A GOOD PRACTICE TO GET THESE VALUES UNIQUELY -- SO ASSET SO IT MIGHT BE FINE EXISTING AS UNIQUE VALUES
 
     private int moveAnimID = Animator.StringToHash("Speed");
     private int abilAnimID = Animator.StringToHash("Ability2");     // perhaps expose the slot, and then pass string to slot
@@ -28,7 +33,6 @@ public class DeathSpin : ChannelAbility
         // Instead of getting the component every time the action is fired
         // Get the component on abilityLoad, where the actor will be given.
         // Once the component's exist, it reduces the checks in the fire function
-
 
         anim.SetBool(abilAnimID, true);
 
@@ -81,13 +85,14 @@ public class DeathSpin : ChannelAbility
         }
         move.UseAnimations = true;
         move.CanRotate = true;
-        
+
         base.EndAbility(actor);
     }
 
     #region HELPER FUNCTIONS
     void SetDamageDetection(bool on)
     {
+        float damageToDeal = stats.Damage.Value * damageMultipler * stats.STR.Value;
         if (hitboxes != null && hitboxes.Length > 0)
         {
             for (int i = 0; i < hitboxes.Length; i++)

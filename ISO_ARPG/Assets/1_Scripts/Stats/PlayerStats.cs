@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public class PlayerStats : EntityStats
 {
@@ -17,16 +15,16 @@ public class PlayerStats : EntityStats
 
     //public List<Ability> Abilities { get { return abilities; } }
     public List<Ability> Abilities;
-    
+
     //private List<Ability> abilities;
     public Ability Identity { get { return identity; } }
     Ability identity;
-    
-    
+
+
     #region Public Accessors
     public CharacterClass Class { get { return playerClass; } }
     public Ability Fusion { get { return ID_Fusion; } }
-    
+
     // Tracked Stats
     public TrackedStat Mana { get { return mana; } }
     public TrackedStat ID_Bar { get { return idBar; } }
@@ -49,12 +47,6 @@ public class PlayerStats : EntityStats
     public SubStat AttackSpeed { get { return attackSpeed; } }
     public SubStat CritDamage { get { return critDamage; } }
     public SubStat CritChance { get { return critChance; } }
-
-    // Defensive
-    public SubStat Armour {  get { return armour; } }
-    public SubStat Dodge { get { return dodge; } }  
-
-
     #endregion
 
     #region Stats
@@ -67,6 +59,7 @@ public class PlayerStats : EntityStats
 
 
     // Gameplay
+    Stat idGain;
     Stat attackRange;
     Stat numProjectiles;
     Stat numChains;
@@ -80,10 +73,6 @@ public class PlayerStats : EntityStats
     SubStat attackSpeed;
     SubStat critDamage;
     SubStat critChance;
-
-    // Defensive
-    SubStat armour;
-    SubStat dodge;
     #endregion
     #endregion
 
@@ -121,7 +110,7 @@ public class PlayerStats : EntityStats
 
         health = new TrackedStat(playerClass.Health);
         mana = new TrackedStat(playerClass.Mana);
-        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.IdentityAbility.Cost);
+        idBar = new TrackedStat(TrackedStatTypes.ID_BAR, playerClass.IdentityAbility.Cost, playerClass.IdentityAbility.Cost);
 
         // main stats
         strength = new MainStat(playerClass.Strength);
@@ -135,10 +124,21 @@ public class PlayerStats : EntityStats
 
         // utility stats
         moveSpeed = new SubStat(playerClass.moveSpeed);
+        idGain = new Stat(playerClass.ID_Gain);
         //rotationSpeed.Value += playerClass.rotationSpeed;
 
         // offensive stats
         damage = new SubStat(playerClass.Damage);
+        // weapon damage
+
+        // ability
+
+        // damage 1
+        // damage 2
+
+        // ability calculating damage to deal
+        // player's damage (base damage) + ability damage
+
         attackSpeed = new SubStat(playerClass.AttackSpeed);
         critDamage = new SubStat(playerClass.CritDamage);
         critChance = new SubStat(playerClass.CritChance);
@@ -146,9 +146,34 @@ public class PlayerStats : EntityStats
         // defensive stats
         armour = new SubStat(playerClass.Armour);
         dodge = new SubStat(playerClass.Dodge);
-        
+    }
 
-
+    public PlayerStats CopyFromStats(PlayerStats stats)
+    {
+        PlayerStats temp = new PlayerStats();
+        temp = stats;
+        return temp;
+        //health = new TrackedStat(stats.health);
+        //mana = new TrackedStat(stats.mana);
+        //
+        //strength = new MainStat(stats.strength);
+        //dexterity = new MainStat(stats.dexterity);
+        //intelligence = new MainStat(stats.intelligence);
+        //
+        //attackRange = new Stat(stats.attackRange);
+        //numProjectiles = new Stat(stats.numProjectiles);
+        //numChains = new Stat(stats.numChains);
+        //
+        //moveSpeed = new SubStat(stats.moveSpeed);
+        //idGain = new Stat(stats.idGain);
+        //
+        //damage = new SubStat(stats.damage);
+        //attackSpeed = new SubStat(stats.attackSpeed);
+        //critDamage = new SubStat(stats.critDamage);
+        //critChance = new SubStat(stats.critChance);
+        //
+        //armour = new SubStat(stats.armour);
+        //dodge = new SubStat(stats.dodge);
     }
 
     public void LoadAbilities()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TigersRage", menuName = "sykcorSystems/Abilities/Berserker/TigersRage", order = 4)]
@@ -19,23 +17,29 @@ public class TigersRage : PassiveAbility
     public float critDamageIncrease = 1f;
 
     PlayerStats stats;
+    PlayerStats defaultCopy;
     #endregion
     #region FUNCTIONALITY
     public override void InitAbility(Ability ab, GameObject actor)
     {
         stats = actor.GetComponent<PlayerStats>();
         source = actor.GetComponent<AudioSource>();
+
+        defaultCopy = new PlayerStats();
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
         // When this is fired, apply the effects / bonuses for the passive ability, call end once duration has passed.
-
+        //Debug.Log("fired");
         if (stats != null)
         {
             defaultScale = actor.transform.localScale;      // cache the scale
             actor.transform.localScale *= scaleFactor;      // resize the character
 
-            source.PlayOneShot(abilityActivated);
+            defaultCopy.CopyFromStats(stats);
+
+            if (abilityActivated)
+                source.PlayOneShot(abilityActivated);
 
             // add increased stats
             stats.Health.MaxValue *= maxHealthIncrease;
@@ -54,14 +58,17 @@ public class TigersRage : PassiveAbility
         {
             Debug.Log("Reset Values");
             actor.transform.localScale = defaultScale;              // Return the character to normal size
-    
-            // add increased stats
-            stats.Health.MaxValue /= maxHealthIncrease;
-            stats.Armour.Value /= defenceIncrease;
-            stats.CritChance.Value /= critChanceIncrease;
-            stats.CritDamage.Value /= critDamageIncrease;
+
+            stats.CopyFromStats(defaultCopy);
+            //Debug.Log("What is the health:" + stats.Health.MaxValue);
+
+            //// add increased stats
+            //stats.Health.MaxValue /= maxHealthIncrease;
+            //stats.Armour.Value /= defenceIncrease;
+            //stats.CritChance.Value /= critChanceIncrease;
+            //stats.CritDamage.Value /= critDamageIncrease;
         }
-        
+
         // Don't forget to call end ability to send event out
         base.EndAbility(actor);
     }

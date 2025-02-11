@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,7 +52,7 @@ public class HUDController : MonoBehaviour
 
         if (healthText != null)
             UpdateHealthText(health.Value);
-        
+
         if (manaText != null)
             UpdateManaText(mana.Value);
 
@@ -75,7 +74,7 @@ public class HUDController : MonoBehaviour
     // EVENT MAPPING
     private void AddEventListeners()
     {
-        playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); }; 
+        playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); };
         playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
         AddCooldownListeners();
     }
@@ -88,11 +87,11 @@ public class HUDController : MonoBehaviour
 
     public void AddCooldownListeners()
     {
-        playerStats.Abilities[0].onCooldownChanged += context => 
+        playerStats.Abilities[0].onCooldownChanged += context =>
         { UpdateCooldownSlider(ab1, context); ShowCooldownText(ab1, playerStats.Abilities[0]); UpdateCooldownText(ab1, context); };
-        playerStats.Abilities[1].onCooldownChanged += context => 
+        playerStats.Abilities[1].onCooldownChanged += context =>
         { UpdateCooldownSlider(ab2, context); ShowCooldownText(ab2, playerStats.Abilities[1]); UpdateCooldownText(ab2, context); };
-        playerStats.Identity.onCooldownChanged += context => 
+        playerStats.Identity.onCooldownChanged += context =>
         { UpdateCooldownSlider(idAbility, context); ShowCooldownText(idAbility, playerStats.Identity); UpdateCooldownText(idAbility, context); };
     }
 
@@ -123,12 +122,12 @@ public class HUDController : MonoBehaviour
 
     public void UpdateHealthText(float value)
     {
-        healthText.text = value.ToString() + " / " +  health.MaxValue;
+        healthText.text = value.ToString() + " / " + health.MaxValue;
     }
 
     public void UpdateManaText(float value)
     {
-        manaText.text = value.ToString() + " / " +  mana.MaxValue;
+        manaText.text = value.ToString() + " / " + mana.MaxValue;
     }
 
     public void ShowCooldownText(UIAbility ui, Ability ab)
@@ -170,14 +169,14 @@ public class HUDController : MonoBehaviour
 
         if (rt != null)
         {
-            Rect newCam = new Rect (0,0,1,1);
+            Rect newCam = new Rect(0, 0, 1, 1);
             if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
             {
                 toToggle.SetActive(true);
                 newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
             }
             else                                // If it is active, shut it off
-            { 
+            {
                 toToggle.SetActive(false);
             }
             cam.rect = newCam;
@@ -185,7 +184,7 @@ public class HUDController : MonoBehaviour
     }
 
     public void ShiftCamera(GameObject offset)
-    { 
+    {
         RectTransform rt = offset.GetComponent<RectTransform>();
 
         if (rt != null)

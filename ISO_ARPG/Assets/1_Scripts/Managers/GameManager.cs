@@ -1,27 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     #region VARIABLES
     private static GameManager instance = null;
-    public static GameManager Instance 
-    { 
-        get 
-        { 
+    public static GameManager Instance
+    {
+        get
+        {
             if (instance == null)
                 instance = FindObjectOfType<GameManager>();
 
             if (!instance)
                 Debug.LogError("[GameManager]: No Game Manager exists!");
 
-            return instance; 
-        } 
+            return instance;
+        }
     }
+
+
+    // Multiplicative, keep default of 1
+    [Header("Balancing Values")]
+    [Range(1, 2)] public float MainConvert = 1.012f;
+    [Range(1, 2)] public float ArmourConvert = 0.05f;
 
     public PlayerController Player { get { return controller; } }
     [SerializeField] private PlayerController controller;
@@ -37,7 +41,7 @@ public class GameManager : MonoBehaviour
     private string currentLevelName;
 
     // SCENES
-    public enum ControlType {  MOUSE_KEYBOARD, CONTROLLER }
+    public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
     public ControlType controls;
     public PlayerMovement.MoveInput moveType;
     #endregion
@@ -57,25 +61,25 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (controller == null)
-        { 
+        {
             controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         }
         if (hud == null)
         {
             hud = FindObjectOfType<HUDController>();
         }
-        #if UNITY_EDITOR
-            // Check for playmode override
-            bool playOverride = EditorPrefs.GetBool("shouldOverride");
-            Debug.Log(playOverride);
-            if (!playOverride)
-            {
-                LevelLoad();
-            }
-        #endif
-        #if UNITY_STANDALONE && !UNITY_EDITOR
+#if UNITY_EDITOR
+        // Check for playmode override
+        bool playOverride = EditorPrefs.GetBool("shouldOverride");
+        Debug.Log(playOverride);
+        if (!playOverride)
+        {
+            LevelLoad();
+        }
+#endif
+#if UNITY_STANDALONE && !UNITY_EDITOR
         LevelLoad();
-        #endif
+#endif
     }
     #endregion
     #region GAMEPLAY
@@ -87,7 +91,7 @@ public class GameManager : MonoBehaviour
             player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
             player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
             //controller.Agent.
-        }    
+        }
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
 
@@ -128,7 +132,7 @@ public class GameManager : MonoBehaviour
             loadingScreen.gameObject.SetActive(isLoading);
         if (pauseMenu)
             pauseMenu.CanPause = false; // Do not allow pauses to happen while loading
-        
+
         if (AIManager.Instance)
             AIManager.Instance.LevelUnloading();
         if (DestructibleManager.Instance)
@@ -170,7 +174,7 @@ public class GameManager : MonoBehaviour
         isLoading = false;
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
-        
+
         if (pauseMenu)
             pauseMenu.CanPause = true;
         if (loadingScreen)
@@ -215,11 +219,11 @@ public class GameManager : MonoBehaviour
     // Exit Game
     public void QuitGame()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.ExitPlaymode();
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
     }
     #endregion
 }

@@ -7,12 +7,20 @@ public class Hitbox : MonoBehaviour
     // - Source of damage
     #region VARIABLES
     [SerializeField] GameObject source; // The player / enemy owner of the hitbox, this is referenced so hits will not apply to their own hurtbox
-    [SerializeField] int damage;
+    [SerializeField] float damage;    // THIS DAMAGE WILL BE CALCULATED AND APPLIED TO PEOPLE
 
     public bool ApplyDamage { get { return applyDamage; } set { applyDamage = value; } }
     private bool applyDamage = false;
     #endregion
     #region UNITY FUNCTIONS
+
+
+    // Shoudl the hitbox get a reference to the player, or be passed a reference to the relevant values when loaded --> pass a reference and then it set's it's own information
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
+    }
+
     private void Start()
     {
         if (source != null)
@@ -84,7 +92,7 @@ public class Hitbox : MonoBehaviour
     {
         Gizmos.color = Color.red;
         if (applyDamage)
-            Gizmos.DrawCube(transform.position, new Vector3(1,1,1));
+            Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
     }
     #endregion
 }
