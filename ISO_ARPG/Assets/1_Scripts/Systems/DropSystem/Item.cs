@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     // Pickup handling for other types will be handled in playerController
     // All items should be tagged interactable
     #region VARIABLES
-    [SerializeField] ItemObject itemData;
+    [SerializeField] ItemData itemData;
 
     #endregion
     #region UNITY FUNCTIONS
@@ -21,6 +21,7 @@ public class Item : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
                 // Set the object to false, return it to the supposed object pool it was pulled from.
+                Inventory.Instance.AddItem(itemData);
                 itemData.FireAcquired(new ItemEventArgs(itemData));
                 Destroy(gameObject);
                 //gameObject.SetActive(false);
@@ -31,7 +32,7 @@ public class Item : MonoBehaviour
     #endregion
 
     #region FUNCTIONALITY
-    public void LoadItemData(ItemObject data)
+    public void LoadItemData(ItemData data)
     {
         itemData = data;
     }

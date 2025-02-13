@@ -45,23 +45,23 @@ public class Hitbox : MonoBehaviour
         {
             return;
         }
-        HandleCollision(other);
-    }
-    #endregion
-
-    #region FUNCTIONALITY
-    protected virtual void HandleCollision(Collider other)
-    {
         if (other.CompareTag("Hurtbox"))
         {
             Hurtbox hb = other.GetComponent<Hurtbox>();
-            if (hb != null)
+            if (hb)
             {
-                hb.TakeDamage(damage);
+                HandleCollision(hb);
             }
             else
                 Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
         }
+    }
+    #endregion
+
+    #region FUNCTIONALITY
+    protected virtual void HandleCollision(Hurtbox hb)
+    {
+        hb.TakeDamage(damage);
     }
     public void AllowDamageForTime(float window)
     {

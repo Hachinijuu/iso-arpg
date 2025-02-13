@@ -161,6 +161,8 @@ public class HUDController : MonoBehaviour
     public void SetCamera(Camera cam)
     {
         this.cam = cam;
+        if (this.cam == null)
+            this.cam = Camera.main;
     }
 
     public void ToggleUIElementShift(GameObject toToggle)
@@ -179,6 +181,7 @@ public class HUDController : MonoBehaviour
             {
                 toToggle.SetActive(false);
             }
+
             cam.rect = newCam;
         }
     }

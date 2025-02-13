@@ -5,22 +5,22 @@ public enum ItemTypes { RESOURCE, GEAR, CONSUMMABLE };
 
 public struct ItemEventArgs
 {
-    public ItemObject data;
-    public ItemEventArgs(ItemObject itemData)
+    public ItemData data;
+    public ItemEventArgs(ItemData itemData)
     {
         data = itemData;
     }
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "sykcorSystems/Items", order = 1)]
-public class ItemObject : ScriptableObject
+public class ItemData : ScriptableObject
 {
     #region VARIABLES
     #region Item Details
     [Header("Descriptions")]
     public string itemName;
     public string itemDescription;
-    public Image itemIcon;
+    public Sprite itemIcon;
     public ItemTypes type;
     #endregion
     public GameObject prefab;
@@ -32,4 +32,9 @@ public class ItemObject : ScriptableObject
     public event ItemAcquired OnItemAcquired;
     public void FireAcquired(ItemEventArgs e) { if (OnItemAcquired != null) { OnItemAcquired(e); } }
     #endregion
+
+    public void LoadSpriteToImage(Image loadTo)
+    {
+        loadTo.sprite = itemIcon;
+    }
 }

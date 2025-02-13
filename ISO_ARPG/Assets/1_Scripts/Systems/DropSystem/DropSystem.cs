@@ -20,7 +20,7 @@ public class DropSystem : MonoBehaviour
     private List<EntityStats> enemies;
     private List<EntityStats> destructibles;
 
-    [SerializeField] ItemObject expOrb;
+    [SerializeField] ItemData expOrb;
     #endregion
     #region INITIALIZATION
     public void InitDropLists()
@@ -80,7 +80,7 @@ public class DropSystem : MonoBehaviour
     }
 
     // Create dropped object
-    public void CreatedDroppedObject(Vector3 pos, ItemObject item)
+    public void CreatedDroppedObject(Vector3 pos, ItemData item)
     {
         GameObject go = GameObject.Instantiate(item.prefab);
         // This creates the object, but where does it create the object...
@@ -122,7 +122,7 @@ public class DropSystem : MonoBehaviour
     public void ItemPopup(ItemEventArgs e)
     {
         // Build the UI popup to display on screen.
-        ItemObject item = e.data;
+        ItemData item = e.data;
         Debug.Log("[DropSystem]: Show popup for: " + item.itemName);
         item.OnItemAcquired -= ItemPopup;
     }

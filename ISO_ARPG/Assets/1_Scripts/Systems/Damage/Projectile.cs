@@ -16,15 +16,12 @@ public class Projectile : Hitbox
 
     #endregion
     #region FUNCTIONALITY
-    protected override void HandleCollision(Collider other)
+    protected override void HandleCollision(Hurtbox hb)
     {
-        Debug.Log("Hit something");
-        base.HandleCollision(other);
-        if (other.CompareTag("Hurtbox"))
-        {
-            if (!pierces)
-                gameObject.SetActive(false);
-        }
+
+        base.HandleCollision(hb);   // apply damage
+        if (!pierces)               // if it does not pierece
+            gameObject.SetActive(false);    // deactivate
     }
     public void FireProjectile()
     {

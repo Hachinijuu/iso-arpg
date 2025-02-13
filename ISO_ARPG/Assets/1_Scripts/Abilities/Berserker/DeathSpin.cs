@@ -25,6 +25,7 @@ public class DeathSpin : ChannelAbility
         anim = actor.GetComponent<Animator>();
         source = actor.GetComponent<AudioSource>();
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
+        stats = actor.GetComponent<PlayerStats>();
         move = actor.GetComponent<PlayerMovement>();
     }
     protected override void Fire(Ability ab, GameObject actor)
