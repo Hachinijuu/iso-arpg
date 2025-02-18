@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Projectile : Hitbox
@@ -28,7 +29,18 @@ public class Projectile : Hitbox
         // Apply force to this object in the forward direction
         AllowDamageForTime(uptime);
         // Move the object
-        rb.AddForce(Vector3.forward * speed, ForceMode.VelocityChange);
+        //rb.AddForce(transform.forward * speed, ForceMode.Impulse);
+        //StopAllCoroutines();
+        StartCoroutine(ProjectileMotion());
+    }
+
+    IEnumerator ProjectileMotion()
+    {
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+            transform.position += (transform.forward * speed * Time.deltaTime);
+        }
     }
     protected override void EndDamageWindow()
     {
@@ -37,12 +49,12 @@ public class Projectile : Hitbox
         Debug.Log("Uptime ended");
     }
     #endregion
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(20, 120, 100, 20), "Shoot"))
-        {
-            Debug.Log("Shot a projectile");
-            FireProjectile();
-        }
-    }
+    //private void OnGUI()
+    //{
+    //    if (GUI.Button(new Rect(20, 120, 100, 20), "Shoot"))
+    //    {
+    //        Debug.Log("Shot a projectile");
+    //        FireProjectile();
+    //    }
+    //}
 }

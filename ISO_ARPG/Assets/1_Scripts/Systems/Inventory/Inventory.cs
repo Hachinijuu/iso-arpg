@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+public class InventoryEventArgs
+{
+    public ItemData data;
+}
 
 public class Inventory : MonoBehaviour
 {
@@ -42,6 +47,12 @@ public class Inventory : MonoBehaviour
 
     private InputActionMap UI_Input;
 
+
+    // Event System
+    public delegate void InventoryEvent(InventoryEventArgs e);
+    public event InventoryEvent OnItemReleased;
+    public void FireReleasedItem(InventoryEventArgs e) { if (OnItemReleased != null) OnItemReleased(e); }
+
     public void Start()
     {
         InitUISlots();
@@ -67,11 +78,11 @@ public class Inventory : MonoBehaviour
             // does the index of the slot even matter?
             // at this point no.. for faster lookup, maybe, but that requires external list of indices, rather than the slot itself holding the index (redundant)
         }
-        
+
         int row = 0;
         int col = 0;
 
-        foreach(ItemSlot slot in slots)
+        foreach (ItemSlot slot in slots)
         {
             CellIndex index = new CellIndex(row, col);
             slot.index = index;
@@ -101,18 +112,18 @@ public class Inventory : MonoBehaviour
         // based on the action map, we want to map inventory open to I
         // want to map UI click to handling inventory movement
         input.actions["OpenInventory"].performed += context => { ShowInventory(); };
-        input.actions["Click"].performed += context => 
-        { 
+        input.actions["Click"].performed += context =>
+        {
             if (inventoryScreen.activeInHierarchy)
             {
-                HandleItemMovement(); 
+                HandleItemMovement();
             }
         };    // Inside here, do the click state transitions, this will handle the dragging, where the position is only relative to the update
-        input.actions["Click"].canceled += context => 
-        { 
+        input.actions["Click"].canceled += context =>
+        {
             if (inventoryScreen.activeInHierarchy)
             {
-                ReleaseItem(); 
+                ReleaseItem();
             }
         };
     }
@@ -151,7 +162,7 @@ public class Inventory : MonoBehaviour
         foreach (ItemSlot slot in slots)
         {
             if (!slot.HasItem)
-            {   
+            {
                 return slot;
             }
         }
@@ -212,7 +223,7 @@ public class Inventory : MonoBehaviour
         ItemSlot slot = GetSlotFromPos(mousePos);
 
         if (slot != null)
-        {   
+        {
             if (slot.HasItem)
             {
                 sourceSlot = slot;
@@ -220,7 +231,7 @@ public class Inventory : MonoBehaviour
                 Debug.Log("[Inventory]: Source Slot: " + "(" + sourceSlot.index.x + " : " + sourceSlot.index.y + ")");
 
                 // release the image when clicked, and use the image as a ghost
-                
+
                 // 'pickup the item' --> set the values to null, and have the init slot that follows the mouse be the item.
                 StartCoroutine(HandleGhostItem());
                 slot.img.sprite = null;
@@ -256,13 +267,14 @@ public class Inventory : MonoBehaviour
         RectTransform rt = ghost.GetComponent<RectTransform>();
         rt.sizeDelta = sourceSlot.GetComponent<RectTransform>().sizeDelta;
         //rt.localScale = new Vector3(100,100);
-        while (held)
+        do
         {
             if (rt != null)
                 rt.position = mousePos;
             yield return new WaitForEndOfFrame();
         }
-        Destroy(ghost);        
+        while (held);
+        Destroy(ghost);
     }
 
     void ReleaseItem()
@@ -287,6 +299,22 @@ public class Inventory : MonoBehaviour
                     Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
                     slot.item = ghostItem;
                     ghostItem.LoadSpriteToImage(slot.img);
+                    // in this, check if the slot IS A rune slot, if it is a rune slot, if it is a rune slot, we can only place runes in said slots
+                    //if (slot is RuneSlot rs && ghostItem.type == ItemTypes.RUNE)
+                    //{
+                    //    if (ghostItem.type == ItemTypes.RUNE)
+                    //    {
+                    //        Debug.Log("[Inventory]: Embedding rune");
+                    //        slot.item = ghostItem;
+                    //        ghostItem.LoadSpriteToImage(slot.img);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
+                    //    slot.item = ghostItem;
+                    //    ghostItem.LoadSpriteToImage(slot.img);
+                    //}
                 }
 
                 //Debug.Log("[Inventory]: Mouse released at: (" + slot.index.x + " : " + slot.index.y + ")" );
@@ -316,8 +344,14 @@ public class Inventory : MonoBehaviour
                 sourceSlot.item = ghostItem;
                 ghostItem.LoadSpriteToImage(sourceSlot.img);
             }
+
+            InventoryEventArgs args = new InventoryEventArgs();
+            args.data = slot.item;
+            FireReleasedItem(args);
         }
 
+
+        // NOTE: ISSUE WITH GHOST PLACEMENTS, STUCK IN CURSOR ON INVALID POSITIONS
         if (ghost)
         {
             Destroy(ghost);
@@ -331,10 +365,10 @@ public class Inventory : MonoBehaviour
         // if (held == false && ghostItem != null)
         // {
         //     ItemSlot slot = GetSlotFromPos(pos);
-            
+
         //     // Destroy the ghost even if it has not been placed in the valid slot (removal)
         //     //Destroy(ghost); 
-            
+
         //     if (slot)
         //     {
         //         Debug.Log("Is there an item?: " + slot.HasItem);

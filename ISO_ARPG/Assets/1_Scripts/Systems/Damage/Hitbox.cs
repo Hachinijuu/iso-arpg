@@ -7,6 +7,7 @@ public class Hitbox : MonoBehaviour
     // - Source of damage
     #region VARIABLES
     [SerializeField] GameObject source; // The player / enemy owner of the hitbox, this is referenced so hits will not apply to their own hurtbox
+    public GameObject Source { get { return source; } set { source = value; } }
     [SerializeField] float damage;    // THIS DAMAGE WILL BE CALCULATED AND APPLIED TO PEOPLE
 
     public bool ApplyDamage { get { return applyDamage; } set { applyDamage = value; } }
@@ -26,19 +27,12 @@ public class Hitbox : MonoBehaviour
 
     private void Start()
     {
-        if (source != null)
-        {
-            Collider sourceCollider = source.GetComponent<Collider>();
-            Collider damageCollider = GetComponent<Collider>();
+        InitHitbox();
+    }
 
-            // Want to ignore the collisions between the source of the damage and the hitbox
-            if (sourceCollider != null && damageCollider != null)
-            {
-                Physics.IgnoreCollision(sourceCollider, damageCollider);
-            }
-
-            // Need to stop enemies from damaging each other once system is fleshed out
-        }
+    private void OnEnable()
+    {
+        InitHitbox();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -61,8 +55,26 @@ public class Hitbox : MonoBehaviour
     #endregion
 
     #region FUNCTIONALITY
-    protected virtual void InitHitbox()
+    public virtual void InitHitbox()
     {
+        // Stops the hitbox from damaging the source of the damage
+        if (source != null)
+        {
+            Collider sourceCollider = source.GetComponentInChildren<Collider>();
+            Collider damageCollider = GetComponent<Collider>();
+
+            // Want to ignore the collisions between the source of the damage and the hitbox
+            if (sourceCollider != null && damageCollider != null)
+            {
+                Debug.Log("Ignoring collisions between: " + sourceCollider.name + " and " + damageCollider.name);
+                Physics.IgnoreCollision(sourceCollider, damageCollider);
+
+                // THIS DOES NOT WORK ON PROJECTILES EVEN THOUGH REFERENCES ARE ASSIGNED PROPERLY, REPORT AS BUG BUT LEAVE FIXING UNTIL LATER
+            }
+
+            // Need to stop enemies from damaging each other once system is fleshed out
+        }
+
         // get the abilities from the stats
 
         // -> hit, regen for # of time w/o stack

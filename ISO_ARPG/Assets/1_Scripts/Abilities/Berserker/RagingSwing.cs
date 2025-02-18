@@ -5,9 +5,10 @@ public class RagingSwing : StackAbility
 {
     #region VARIABLES
     Animator anim;
-    AudioSource source;
+    AudioSource audioSource;
     Hitbox[] hitboxes;
     PlayerStats stats;
+    ProjectileSource shootSource;
 
     public float damageMultipler = 1.0f;
 
@@ -17,25 +18,42 @@ public class RagingSwing : StackAbility
     public override void InitAbility(Ability ab, GameObject actor)
     {
         anim = actor.GetComponent<Animator>();
-        source = actor.GetComponent<AudioSource>();
+        audioSource = actor.GetComponent<AudioSource>();
         stats = actor.GetComponent<PlayerStats>();
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
+        shootSource = actor.GetComponent<ProjectileSource>();
+
+        if (stats.Projectiles.Value > 0)
+        {
+            //shootSource.
+        }
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
         // Call calculator on the relevant hitboxes ... kind of messy in terms of how projectiles run and apply damage
         // Generate damage values and then pass to init?
 
-
-
         // Listen the the hitboxes for their events, if something was hit, regain mana - if nothing is hit, don't
+
+        if (stats.Projectiles.Value > 0)
+        {
+            // If there are projectiles to shoot
+            for (int i = 0; i < stats.Projectiles.Value; i++)
+            {
+                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
+                if (projectile != null)
+                {
+                    projectile.FireProjectile();
+                }
+            }
+        }
 
         anim.SetTrigger(animId);
         //if (anim != null)
         //{ 
         //}
 
-        source.PlayOneShot(abilityActivated);
+        audioSource.PlayOneShot(abilityActivated);
         //if (source != null)
         //{ 
         //}

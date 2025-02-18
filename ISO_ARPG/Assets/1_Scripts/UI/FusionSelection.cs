@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FusionSelection : MonoBehaviour
@@ -32,6 +30,8 @@ public class FusionSelection : MonoBehaviour
     {
         // Load it to the player
         GameManager.Instance.Player.Stats.SetFusion(fusion);
+        // Fire the fusion
+        GameManager.Instance.Player.Stats.Fusion.UseAbility(GameManager.Instance.Player.gameObject); // this is pending
         // Load the level
 
     }

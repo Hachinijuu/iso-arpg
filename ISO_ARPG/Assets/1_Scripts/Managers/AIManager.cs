@@ -36,8 +36,8 @@ public class AIManager : MonoBehaviour
     [SerializeField] float minSpawnDistance = 2.5f;
     [Tooltip("Maximum distance from the player an Agent can spawn")]
     [SerializeField] float maxSpawnDistance = 5.0f;
-    [Tooltip("The pools of enemies that can be spawned")] [SerializeField] ObjectPool[] enemyPools;
-    [Tooltip("Time between spawning")] [Range(0, 3.0f)][SerializeField] float spawnInterval = 1.0f;
+    [Tooltip("The pools of enemies that can be spawned")][SerializeField] ObjectPool[] enemyPools;
+    [Tooltip("Time between spawning")][Range(0, 3.0f)][SerializeField] float spawnInterval = 1.0f;
     [Range(0, 10.0f)][SerializeField] float groupCheckInterval = 1.0f;
     [Range(0, 3.0f)][SerializeField] float enemyCheckInterval = 1.0f;
 
@@ -69,7 +69,7 @@ public class AIManager : MonoBehaviour
 
     public GridData grid;
     #endregion
-    
+
     #region UNITY FUNCTIONS
 
     void Awake()
@@ -85,7 +85,7 @@ public class AIManager : MonoBehaviour
         InitDistanceGroups();
     }
     #endregion
-    
+
     #region SCENE LOADS
     // When a level (scene) is loading, call this function
     public void LevelLoading()
@@ -106,7 +106,7 @@ public class AIManager : MonoBehaviour
             if (details != null)    // If level details exist
             {
                 LoadSpawnPoints();  // Load the spawns
-                
+
                 // Only load enemies if enemies exist and are expected
                 if (details.enemiesToSpawn != null && details.enemiesToSpawn.Count > 0)
                 {
@@ -149,7 +149,7 @@ public class AIManager : MonoBehaviour
         spawnPoints.Clear();
     }
     #endregion
-    
+
     #region HELPER FUNCTIONS
     float GetSquareDistance(Vector3 start, Vector3 end)
     {
@@ -187,6 +187,7 @@ public class AIManager : MonoBehaviour
     IEnumerator HandlePointsSpawns()
     {
         // Once the coroutine has begun spawning, set can spawn flag to false
+        enemiesSpawned = false;
         canSpawn = false;
         foreach (EntityNumber group in details.enemiesToSpawn)
         {
@@ -196,7 +197,7 @@ public class AIManager : MonoBehaviour
                 if (pool.Prefab == enemy)   // If the enemy matches the pool (key), we want to spawn the number of enemies designated in the group
                 {
                     int numSpawns = Random.Range(group.minSpawn, group.maxSpawn);
-                    Debug.Log("[AIManager]: Spawning " + numSpawns + " " + enemy.name );
+                    Debug.Log("[AIManager]: Spawning " + numSpawns + " " + enemy.name);
                     // To know how much enemies to spawn at each spawnpoint, take the total number of spawns / number of locations
                     int perPoint = numSpawns / spawnPoints.Count;
                     for (int pointIndex = 0; pointIndex < spawnPoints.Count; pointIndex++)
@@ -208,6 +209,7 @@ public class AIManager : MonoBehaviour
             }
         }
         enemiesSpawned = true;  // Once all of the enemies have been spawned, flag as true
+        canSpawn = true;
     }
 
     IEnumerator HandleHordeSpawns(Horde horde)
@@ -286,7 +288,7 @@ public class AIManager : MonoBehaviour
                                 continue;   // Skip this spawn (won't spawn the enemy, but continue the loop)
                             }
                         }
-                        SpawnEnemy(agent, spawnPos); 
+                        SpawnEnemy(agent, spawnPos);
                     }
                 }
             }
@@ -333,7 +335,7 @@ public class AIManager : MonoBehaviour
     private void UpdateDeathNumbers()
     {
         currAmount--;
-        LevelManager.Instance.numKilled ++;
+        LevelManager.Instance.numKilled++;
     }
     #endregion
     #region Horde Spawning
@@ -354,7 +356,7 @@ public class AIManager : MonoBehaviour
                             horde.Triggered = true;
                         }
                         // check the time
-                    break;
+                        break;
                     case Horde.SpawnCondition.KILLS: // Check number of kills
                         if (horde.CheckShouldSpawn(LevelManager.Instance.numKilled))
                         {
@@ -362,7 +364,7 @@ public class AIManager : MonoBehaviour
                             StartCoroutine(HandleHordeSpawns(horde));
                             horde.Triggered = true;
                         }
-                    break;
+                        break;
                 }
             }
             // don't want to check every single frame

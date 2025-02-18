@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ItemTypes { RESOURCE, GEAR, CONSUMMABLE };
+public enum ItemTypes { RESOURCE, GEAR, RUNE, CONSUMMABLE };
 
 public struct ItemEventArgs
 {
@@ -38,3 +38,7 @@ public class ItemData : ScriptableObject
         loadTo.sprite = itemIcon;
     }
 }
+
+// What are the possible types of runes that can be derived
+// Stat increase rune --> these will get a reference to the player data and apply the stat bonuses themselves?
+// Other rune types tbd

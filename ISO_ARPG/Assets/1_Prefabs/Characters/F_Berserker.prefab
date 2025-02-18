@@ -4154,6 +4154,7 @@ GameObject:
   - component: {fileID: 2953967226847114571}
   - component: {fileID: 7047445683996340813}
   - component: {fileID: 1917934946734195934}
+  - component: {fileID: 4168271398523067755}
   m_Layer: 0
   m_Name: F_Berserker
   m_TagString: Player
@@ -4198,6 +4199,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health:
+    value: -1
+    maxValue: 0
+    type: 0
+  armour:
+    value: -1
+    maxValue: 0
+    type: 0
+  dodge:
     value: -1
     maxValue: 0
     type: 0
@@ -4251,7 +4260,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -4458,6 +4467,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4168271398523067755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029280876348220339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a3e1fd0f6b688449a9245d1c515d88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePositions: []
+  offset: 2
+  angleStep: 180
 --- !u!1 &8092925618963594796
 GameObject:
   m_ObjectHideFlags: 0

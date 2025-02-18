@@ -5,6 +5,7 @@ public class PhoenixSwiftness : PassiveAbility
 {
     #region VARIABLES
     public float movespeedIncrease = 1f;
+    public int dodgeIncrease = 1;
     public int projectileIncrease = 1;
 
     AudioSource source;
@@ -33,6 +34,7 @@ public class PhoenixSwiftness : PassiveAbility
 
             // add the increased stats
             stats.MoveSpeed.Value *= movespeedIncrease;
+            stats.Dodge.Value += dodgeIncrease;
             stats.Projectiles.Value += projectileIncrease;
         }
     }
