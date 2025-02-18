@@ -25,7 +25,7 @@ public class TigersRage : PassiveAbility
         stats = actor.GetComponent<PlayerStats>();
         source = actor.GetComponent<AudioSource>();
 
-        defaultCopy = new PlayerStats();
+        defaultCopy = stats;
     }
     protected override void Fire(Ability ab, GameObject actor)
     {

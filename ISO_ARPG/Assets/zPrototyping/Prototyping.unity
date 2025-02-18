@@ -154,6 +154,8 @@ MonoBehaviour:
   LevelCamera: {fileID: 543946938}
   vCam: {fileID: 713925787}
   playerSpawn: {fileID: 97354009}
+  enemySpawnPoints:
+  - {fileID: 1309868839}
   type: 1
   details:
     enemiesToSpawn:
@@ -173,27 +175,12 @@ MonoBehaviour:
     - hordeCondition: 2
       enemiesToSpawn: []
       TriggerAmount: 0
+      Triggered: 0
     - hordeCondition: 1
       enemiesToSpawn: []
       TriggerAmount: 0
-  levelArea: {fileID: 1704307633}
-  cellSize: 10
-  cellTrim: 0
-  gridBlockTags:
-  - Obstacle
-  playerCell:
-    x: 0
-    y: 0
-    position: {x: 0, y: 0, z: 0}
-    boundingBox:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-    isObstacle: 0
-    isOccupied: 0
-  ShowCubes: 1
-  DrawFullTile: 1
-  origin: {x: 0, y: 0, z: 0}
-  obstacles: []
+      Triggered: 0
+  grid: {fileID: 11400000, guid: 38a5e24333ec7a04cb473898164ea247, type: 2}
   numKilled: 0
   numEliteKilled: 0
   loaderLocation: {fileID: 0}
@@ -836,6 +823,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1309868838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1309868839}
+  m_Layer: 0
+  m_Name: spawnpos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1309868839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309868838}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1318848681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1058,6 +1076,7 @@ GameObject:
   - component: {fileID: 1704307630}
   - component: {fileID: 1704307629}
   - component: {fileID: 1704307633}
+  - component: {fileID: 1704307634}
   m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
@@ -1183,63 +1202,27 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: cd05c946020eee24690a514aa706fa98, type: 2}
   m_BuildHeightMesh: 0
---- !u!1001 &1833337381
-PrefabInstance:
+--- !u!114 &1704307634
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8339188839789172028, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_Name
-      value: GoX Enemy Orc2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8714765160091832198, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704307628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf550c8a69820b4b81fad8296dd241f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: {x: -89, y: 0, z: 89}
+  obstacles: []
+  levelArea: {fileID: 1704307633}
+  cellSize: 10
+  cellTrim: 1
+  gridBlockTags: []
+  ShowCubes: 0
+  DrawFullTile: 0
+  grid: {fileID: 11400000, guid: 38a5e24333ec7a04cb473898164ea247, type: 2}
 --- !u!1 &1918048533
 GameObject:
   m_ObjectHideFlags: 3
@@ -1342,5 +1325,5 @@ SceneRoots:
   - {fileID: 610258545}
   - {fileID: 1326923532}
   - {fileID: 679483367}
-  - {fileID: 1833337381}
   - {fileID: 1318848681}
+  - {fileID: 1309868839}

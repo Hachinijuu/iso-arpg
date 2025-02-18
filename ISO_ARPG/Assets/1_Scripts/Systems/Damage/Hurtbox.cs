@@ -36,14 +36,15 @@ public class Hurtbox : MonoBehaviour
         if (dodge <= stats.Dodge.Value)
             return;
 
-        // ARMOUR -- damage reduction
-        // 50 incoming
+        float recalc = damage * Mathf.Clamp01(1.0f - ((stats.Armour.Value * GameManager.Instance.ArmourConvert) / 100));
+        // 100 damage incoming - 400 armour stat, conversion is 0.05
+        // 100 * # between 0-1 -> 1 would be no resistance, 0 would full resistance
+        // 100 * (1 - ((400 * 0.05) / 100))
+        // 100 * (1 - (20 / 100))
+        // 100 * (1 - 0.2)
+        // 100 * (0.8)
+        // 80 damage taken --> 20% armour reduction
 
-        // armour value
-        // 400 * 0.005 = 20
-        // conversion is 
-
-        float recalc = (damage * (1 - (stats.Armour.Value * GameManager.Instance.ArmourConvert)));
         stats.Health.Value -= recalc;
         FireOnDamaged(stats.Health.Value);
         //Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");

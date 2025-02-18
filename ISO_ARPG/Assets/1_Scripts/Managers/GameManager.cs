@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.LevelLoaded();
 
         // Load the camera into the hud for inventory sliding
-        hud.SetCamera(LevelManager.Instance.LevelCamera);
+        //hud.SetCamera(LevelManager.Instance.LevelCamera);
 
         // Allow the player to move
         controller.Movement.Reset();
@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
 
         if (LevelManager.Instance != null)
         {
+            LevelManager.Instance.LevelLoading();
             if (AIManager.Instance)
             {
                 AIManager.Instance.LevelLoading();

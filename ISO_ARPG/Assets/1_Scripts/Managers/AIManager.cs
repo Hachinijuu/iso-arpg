@@ -33,17 +33,11 @@ public class AIManager : MonoBehaviour
     [Tooltip("Should enemies spawn?")]
     [SerializeField] bool spawnEnemies;
     [Tooltip("How much overflow a pool can reserve")]
-    [SerializeField] float overFlowThreshold = 2.0f;    // if there is this much more, it is considered overflow (multiply, 1 = 1)
-    [Tooltip("How much buffer the pools should provide")]
-    [SerializeField] float bufferThreshold = 1.5f;      // buffer value (multipled, 1 = 1)
-    [Tooltip("Minimum distance from the player an Agent can spawn")]
     [SerializeField] float minSpawnDistance = 2.5f;
     [Tooltip("Maximum distance from the player an Agent can spawn")]
     [SerializeField] float maxSpawnDistance = 5.0f;
-    [Tooltip("The pools of enemies that can be spawned")]
-    [SerializeField] ObjectPool[] enemyPools;
-    [Tooltip("Time between spawning")]
-    [Range(0, 3.0f)][SerializeField] float spawnInterval = 1.0f;
+    [Tooltip("The pools of enemies that can be spawned")] [SerializeField] ObjectPool[] enemyPools;
+    [Tooltip("Time between spawning")] [Range(0, 3.0f)][SerializeField] float spawnInterval = 1.0f;
     [Range(0, 10.0f)][SerializeField] float groupCheckInterval = 1.0f;
     [Range(0, 3.0f)][SerializeField] float enemyCheckInterval = 1.0f;
 
@@ -52,18 +46,28 @@ public class AIManager : MonoBehaviour
     public UpdateInterval nearInterval;
     public UpdateInterval regularInterval;
     public UpdateInterval farInterval;
-
     public int currAmount = 0;
 
     //float spawnTimer = 0.0f;
     [SerializeField] float respawnInterval = 5.0f;
+    [SerializeField] float hordeCheckInterval = 1.25f;
 
     // Instead of prefab updates, organize enemies into these distance groups which will dictate their frequency
     // Whenever a player enters a check based on the groups the distances
     Dictionary<UpdateInterval, List<EnemyController>> distanceGroups;
     bool distanceGroupUpdated;
     bool enemiesSpawned;
-    private List<Vector3> spawnLocations;
+    bool canSpawn;
+
+    // CLEANUP VARIABLES SECTION ASAP
+    //List<Horde> hordes;
+
+    // To handle, get a reference to the level details to make everything much more streamlined
+    LevelDetails details;
+
+    List<Transform> spawnPoints;    // This will get the points from the level ON LOAD, and cleanup for different levels ON UNLOAD
+
+    public GridData grid;
     #endregion
     
     #region UNITY FUNCTIONS
@@ -71,6 +75,7 @@ public class AIManager : MonoBehaviour
     void Awake()
     {
         distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
+        spawnPoints = new List<Transform>();
     }
     void Start()
     {
@@ -78,7 +83,6 @@ public class AIManager : MonoBehaviour
             player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
         InitDistanceGroups();
-        //LevelLoading();
     }
     #endregion
     
@@ -86,68 +90,63 @@ public class AIManager : MonoBehaviour
     // When a level (scene) is loading, call this function
     public void LevelLoading()
     {
-        // Get the current level
-        //levelManager = GameManager.Instance.LevelManager;
-        // When a level is loading, get the quantity to spawn correct.
-        // Get the number of enemies in the pool * overflowThreshold
-        // If it is over the threshold, remove some enemies
-        // If it is not, do not adjust the pool
-
-        //BalanceEnemyNumbers();
-        //StartCoroutine(SpawnInitialBatch());\
-
-        // Only load enemies if enemies exist and are expected
-        if (LevelManager.Instance.Details.enemiesToSpawn != null && LevelManager.Instance.Details.enemiesToSpawn.Count >= 0)
+        // When loading the level, if the level type is none, don't need to set anything up
+        if (LevelManager.Instance.type != LevelManager.LevelType.NONE)
         {
-            if (enemyPools != null && enemyPools.Length > 0)
+            if (LevelManager.Instance.grid != null)
             {
-                //SpawnInitialEnemies();
-                StartCoroutine(ManagerLoop());
-            }
-            else
-                Debug.LogError("[AIManager]: Missing Enemy Pools");
-        }
-    }
-
-    private void BalanceEnemyNumbers()
-    {
-        // Cycle through the enemies the level requests.
-        foreach (EntityNumber enemyGroup in LevelManager.Instance.Details.enemiesToSpawn)
-        {
-            GameObject enemy = enemyGroup.entity;
-
-            foreach (ObjectPool pool in enemyPools)
-            {
-                // Check it the pool prefab matches the enemy to spawn
-                if (pool.Prefab == enemy)
+                grid = LevelManager.Instance.grid;
+                if (grid.cells == null)
                 {
-                    // Turn the pool on, and use it
-                    pool.gameObject.SetActive(true);
-                    // Check the number of enemies in the pool, if the amount of enemies in the pool is more than needed for the level, shrink the pool
-                    if ((pool.pooledObjects.Count * overFlowThreshold) > (enemyGroup.maxSpawn * bufferThreshold))
+                    grid.LoadFromList();
+                }
+            }
+
+            details = LevelManager.Instance.Details;    // Get a reference to the level details
+            if (details != null)    // If level details exist
+            {
+                LoadSpawnPoints();  // Load the spawns
+                
+                // Only load enemies if enemies exist and are expected
+                if (details.enemiesToSpawn != null && details.enemiesToSpawn.Count > 0)
+                {
+                    if (enemyPools != null && enemyPools.Length > 0)
                     {
-                        int toRemove = Mathf.RoundToInt((pool.pooledObjects.Count * overFlowThreshold) - enemyGroup.maxSpawn);
-                        pool.ShrinkPool(toRemove);
+                        //SpawnInitialEnemies();
+
+                        if (spawnEnemies)
+                        {
+                            canSpawn = true;
+                        }
+                        SpawnEnemies();                 // Spawn enemies while loading the level
+                        StartCoroutine(ManagerLoop());  // Setup the loop to handle the enemies within the level
                     }
-                    // If there are not enough enemies, add to the pool
-                    else if (pool.pooledObjects.Count < enemyGroup.maxSpawn)
-                    {
-                        int toAdd = Mathf.RoundToInt((enemyGroup.maxSpawn - pool.pooledObjects.Count) * bufferThreshold);
-                        pool.GrowPool(toAdd);
-                    }
-                    // Otherwise, amount of enemies is sufficient for gameplay
+                    else
+                        Debug.LogError("[AIManager]: Missing Enemy Pools");
                 }
             }
         }
+
     }
 
     // When a level (scene) is unloading, call this function
     public void LevelUnloading()
     {
+        UnloadSpawnPoints();
         foreach (ObjectPool enemyPool in enemyPools)
         {
             enemyPool.Reset();
         }
+    }
+
+    public void LoadSpawnPoints()
+    {
+        spawnPoints = LevelManager.Instance.EnemySpawnPoints;
+    }
+
+    public void UnloadSpawnPoints()
+    {
+        spawnPoints.Clear();
     }
     #endregion
     
@@ -164,89 +163,137 @@ public class AIManager : MonoBehaviour
     #endregion
 
     #region ENEMY SPAWNING
-
-    // THIS FUNCTION WILL HANDLE ENEMY SPAWNING THROUGHOUT THE DURATION OF THE LEVEL
-    IEnumerator SpawnEnemies()
+    #region Standard Spawning
+    // This function will spawn enemies at the desired locations setup in the LEVEL'S spawn list
+    public void SpawnEnemies()
     {
-        enemiesSpawned = false;
-        int numExpected = 0;
-        int numTypes = 0;       // The types of enemies (orcs, imps)
-        foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
+        // First step is to check if enemies should be spawned
+        Debug.Log("[AIManager]: Should spawn enemies? " + spawnEnemies);
+        if (!spawnEnemies)
+            return;
+        // Next step is to check if enemies CAN spawn
+        if (canSpawn)
         {
-            numTypes++;
-            numExpected += Random.Range(group.minSpawn, group.maxSpawn);
-        }
-        // To know how much we should spawn, find the difference between the current enemies and the number expected
-        // Expecting 100, have 30, 100 - 30 = 70, need 70 enemies
-        int toSpawn = numExpected - currAmount;
-        if (toSpawn > 0)
-        {
-            Debug.LogWarning("[AIManager]: Spawning " + toSpawn + ", Expected Number: " + numExpected + ", Current Count: " + currAmount);
-            foreach (EntityNumber group in LevelManager.Instance.Details.enemiesToSpawn)
+            if (spawnPoints != null && spawnPoints.Count > 0)
             {
-                GameObject enemyToSpawn = group.entity;
-                foreach (ObjectPool pool in enemyPools)
-                {   
-                    if (pool.Prefab == enemyToSpawn)
+                StartCoroutine(HandlePointsSpawns());
+            }
+            else
+            {
+                Debug.LogError("[AIManager]: No enemy spawn point(s) set");
+            }
+        }
+    }
+    IEnumerator HandlePointsSpawns()
+    {
+        // Once the coroutine has begun spawning, set can spawn flag to false
+        canSpawn = false;
+        foreach (EntityNumber group in details.enemiesToSpawn)
+        {
+            GameObject enemy = group.entity;
+            foreach (ObjectPool pool in enemyPools)
+            {
+                if (pool.Prefab == enemy)   // If the enemy matches the pool (key), we want to spawn the number of enemies designated in the group
+                {
+                    int numSpawns = Random.Range(group.minSpawn, group.maxSpawn);
+                    Debug.Log("[AIManager]: Spawning " + numSpawns + " " + enemy.name );
+                    // To know how much enemies to spawn at each spawnpoint, take the total number of spawns / number of locations
+                    int perPoint = numSpawns / spawnPoints.Count;
+                    for (int pointIndex = 0; pointIndex < spawnPoints.Count; pointIndex++)
                     {
-                        int enemiesToSpawn = toSpawn / numTypes;
-                        for (int i = 0; i < enemiesToSpawn; i++)
-                        {
-                            CellIndex index = LevelManager.Instance.GetRandomIndex(1);
+                        SpawnEnemyBatch(spawnPoints[pointIndex], perPoint, pool);
+                        yield return new WaitForSeconds(spawnInterval);
+                    }
+                }
+            }
+        }
+        enemiesSpawned = true;  // Once all of the enemies have been spawned, flag as true
+    }
 
-                            if (index.x != -1 && index.y != -1)
-                            {
-                                Cell currCell = LevelManager.Instance.GetCellFromIndex(index);
-                                Vector3 spawnPos = currCell.position;
-                                spawnPos.y += LevelManager.Instance.FloorOffset;
-                                //GameObject enemy = pool.GetPooledObject();
-                                SpawnEnemy(pool, spawnPos);
-                            }
+    IEnumerator HandleHordeSpawns(Horde horde)
+    {
+        foreach (EntityNumber group in horde.enemiesToSpawn)
+        {
+            Debug.Log("[AIManager]: Horde spawning: " + group.entity + " with " + group.minSpawn);
+            GameObject enemy = group.entity;
+            foreach (ObjectPool pool in enemyPools)
+            {
+                if (pool.Prefab == enemy)
+                {
+                    for (int i = 0; i < group.minSpawn; i++)
+                    {
+                        GameObject agent = pool.GetPooledObject();
+                        if (agent != null)
+                        {
+                            int randPoint = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
+                            float spawnDist = Random.Range(minSpawnDistance, maxSpawnDistance);
+                            Vector3 spawnPos = player.transform.position;
+
+                            // Build a circle around the spawn point
+                            spawnPos.x += (CircleUtility.CircleListInstance[randPoint].x * spawnDist);
+                            spawnPos.z += (CircleUtility.CircleListInstance[randPoint].z * spawnDist);
+                            spawnPos.y = LevelManager.Instance.FloorOffset;
+
+                            SpawnEnemy(agent, spawnPos);
                             yield return new WaitForSeconds(spawnInterval);
                         }
                     }
                 }
             }
         }
-        else
-        {
-            Debug.Log("[AIManager: No enemies should spawn");
-        }
-        Debug.LogWarning("[AIManager]: Completed spawn cycle");
-        enemiesSpawned = true;
-    }
-    
-    // MOBS WILL BE TRIGGERED WHEN THERE ARE X NUMBER OF ENEMIES KILLED, OR TIME IN THE LEVEL HAS PASSED A CERTAIN THRESHOLD
-    // OTHER ENEMIES WILL NOT SPAWN UNTIL THE MOB HAS BEEN DEFEATED(?)
-    IEnumerator SpawnMob()
-    {
-        // if (player != null)
-        // {
-        //     Vector3 offsetPos = player.transform.position + (player.transform.forward * spawnDistance);
-        //     Vector3 spawnPos = player.transform.position;
-        //     spawnPos.x += (CircleUtility.CircleListInstance[rotIndex].x * spawnDistance);
-        //     spawnPos.z += (CircleUtility.CircleListInstance[rotIndex].z * spawnDistance);
-        //     spawnPos.y = LevelManager.Instance.FloorOffset;
-        //     // Get a cell position to place the agent at
-        //     CellIndex index = LevelManager.Instance.GetIndexFromPoint(spawnPos);
-        //     if (index.x != -1 && index.y != -1)
-        //     {
-        //         // If it is a valid cell
-        //         Cell currCell = LevelManager.Instance.GetCellFromIndex(index);
-        //         spawnPos = currCell.position;
-        //     }
-        //     spawnLocations.Add(spawnPos);
-        //     // Get the grid spawn pos before doing this
-        //     //Debug.Log("rotIndex: " + rotIndex + ", Position: " + spawnPos);
-        //     GameObject agent = pool.GetPooledObject();
-        //     SpawnEnemy(pool, spawnPos);
-        // }
-        yield return new WaitForSeconds(spawnInterval);
     }
 
-    public void SpawnEnemy(ObjectPool fromPool, Vector3 pos)
+    public void SpawnEnemyBatch(Transform origin, int numToSpawn, ObjectPool source)
     {
-        GameObject agent = fromPool.GetPooledObject();
+        // around the origin, where are the eligble spots to spawn?
+
+        for (int i = 0; i < numToSpawn; i++)
+        {
+            GameObject agent = source.GetPooledObject();
+            if (agent != null)
+            {
+                // Randomize the spawn position
+                int randPoint = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
+                float spawnDist = Random.Range(minSpawnDistance, maxSpawnDistance);
+                Vector3 spawnPos = origin.position;
+
+                // Build a circle around the spawn point
+                spawnPos.x += (CircleUtility.CircleListInstance[randPoint].x * spawnDist);
+                spawnPos.z += (CircleUtility.CircleListInstance[randPoint].z * spawnDist);
+                spawnPos.y = LevelManager.Instance.FloorOffset;
+
+                // Cleanup the position passed to the agent (valid grid position)
+                CellIndex index = GridUtility.GetIndexFromPoint(grid, spawnPos);
+                if (index.x != -1 && index.y != -1) // if the index is valid
+                {
+                    Cell c = GridUtility.GetCellFromIndex(grid, index);
+                    if (c != null)
+                    {
+                        if (!c.isObstacle && !c.isOccupied) // if the cell is not an obstacle and not occupied. (NOTE: FIGURE OUT WHAT FLAGS AS OCCUPIED --> OBSTACLE SPAWN?)
+                        {
+                            spawnPos = c.position;  // Spawn the agent at that cell position
+                        }
+                        else // If it is occupied or an obstacle, spawn the agent as a straggler instead (random position)
+                        {
+                            index = GridUtility.GetRandomIndex(grid, 3);
+                            if (index.x != -1 && index.y != -1) // if the index is valid
+                            {
+                                c = GridUtility.GetCellFromIndex(grid, index);
+                                spawnPos = c.position;
+                            }
+                            else    // If the index is not valid, just skip the spawn
+                            {
+                                continue;   // Skip this spawn (won't spawn the enemy, but continue the loop)
+                            }
+                        }
+                        SpawnEnemy(agent, spawnPos); 
+                    }
+                }
+            }
+        }
+    }
+    public void SpawnEnemy(GameObject agent, Vector3 pos)
+    {
         if (agent != null)
         {
             EnemyController controller = agent.GetComponent<EnemyController>();
@@ -259,12 +306,13 @@ public class AIManager : MonoBehaviour
             // This will work because the number of enemies spawned in the initial batch SHOULD NEVER exceed subsequent spawns.
             // This needs to be tested
 
-
             // Negative current amount still exists (more enemies than accounted for that die)
             currAmount++;
             //controller.stats.OnDied -= context => { };
-            controller.stats.OnDied -= context => { currAmount--; LevelManager.Instance.numKilled++; };
-            controller.stats.OnDied += context => { currAmount--; LevelManager.Instance.numKilled++; };
+            controller.stats.OnDied -= context => { UpdateDeathNumbers(); };
+            controller.stats.OnDied += context => { UpdateDeathNumbers(); };
+
+            // This position should be verified based on level's grid.
 
             agent.transform.position = pos;
 
@@ -274,20 +322,61 @@ public class AIManager : MonoBehaviour
             agent.SetActive(true);
         }
     }
+    public void SpawnEnemy(ObjectPool fromPool, Vector3 pos)
+    {
+        // THIS FUNCTION MAY BE DEPRECATE, DO NOT USE SINCE NO AGENT VALID CHECK
+        GameObject agent = fromPool.GetPooledObject();
+        SpawnEnemy(agent, pos);
+    }
 
-    // Regular spawnning throughout the level as the enemies die
-
+    // Because events with number changing is not very reliable, rely on a function to handle the increase and decrease
+    private void UpdateDeathNumbers()
+    {
+        currAmount--;
+        LevelManager.Instance.numKilled ++;
+    }
+    #endregion
+    #region Horde Spawning
+    public IEnumerator HordeHandler()
+    {
+        foreach (Horde horde in details.hordes)
+        {
+            // Check the spawn conditions
+            if (!horde.Triggered)
+            {
+                switch (horde.hordeCondition)
+                {
+                    case Horde.SpawnCondition.TIME: //  Check time spent in the level
+                        if (horde.CheckShouldSpawn(LevelManager.Instance.TimeSpent))
+                        {
+                            // once the horde has been spawned, we do not want to check for that horde anymore.
+                            StartCoroutine(HandleHordeSpawns(horde));
+                            horde.Triggered = true;
+                        }
+                        // check the time
+                    break;
+                    case Horde.SpawnCondition.KILLS: // Check number of kills
+                        if (horde.CheckShouldSpawn(LevelManager.Instance.numKilled))
+                        {
+                            // once the horde has been spawned, we do not want to check for that horde anymore.
+                            StartCoroutine(HandleHordeSpawns(horde));
+                            horde.Triggered = true;
+                        }
+                    break;
+                }
+            }
+            // don't want to check every single frame
+            yield return new WaitForSeconds(hordeCheckInterval);
+        }
+        yield return null;
+    }
+    #endregion
+    #region Distance Groups
     public void InitDistanceGroups()
     {
         distanceGroups.Add(nearInterval, new List<EnemyController>());
         distanceGroups.Add(regularInterval, new List<EnemyController>());
         distanceGroups.Add(farInterval, new List<EnemyController>());
-        //StartCoroutine(AssignToGroups());
-
-        //foreach (KeyValuePair<UpdateInterval, List<EnemyController>> pair in distanceGroups)
-        //{
-        //    Debug.Log("[AIManager]: " + pair.Value.Count + " Enemies update at an interval of: " + pair.Key.time);
-        //}
     }
 
     public void AssignGameObjectToGroup(GameObject go, float distance)
@@ -318,6 +407,8 @@ public class AIManager : MonoBehaviour
             distanceGroups[regularInterval].Add(controller);
         }
     }
+    #endregion
+    #endregion
     #region RUNTIME FUNCTIONS
     IEnumerator UpdateDistanceGroups()
     {
@@ -381,19 +472,17 @@ public class AIManager : MonoBehaviour
                     groupTimer = 0.0f;
                 }
             }
-            if (spawnTimer > respawnInterval)
+            // Only spawn more enemies once the count has reached 0.
+            if (canSpawn)
             {
-                if (enemiesSpawned)
+                if (currAmount <= 0)
                 {
-                    Debug.LogWarning("[AIManager]: Spawning start");
-                    StartCoroutine(SpawnEnemies());
-                    spawnTimer = 0.0f;
+                    SpawnEnemies();
                 }
             }
             // Start Coroutines to run the functions, don't start additional coroutines
             yield return null;
         }
-        yield return null;
     }
     #endregion
 
@@ -424,22 +513,4 @@ public class AIManager : MonoBehaviour
 
     // i.e, instead of each FSM having the overhead of calling their own update
     // The AI manager will tell the FSM to update, given the interval and time passed
-
-    #endregion
-
-    #region DEBUG
-
-    Vector3 cubeSize = new Vector3(0.25f, 0.25f, 0.25f);
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        if (spawnLocations != null && spawnLocations.Count > 0)
-        {
-            foreach (Vector3 pos in spawnLocations)
-            {
-                Gizmos.DrawCube(pos, cubeSize);
-            }
-        }
-    }
-    #endregion
 }

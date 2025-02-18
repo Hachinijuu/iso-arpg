@@ -24,6 +24,10 @@ public class DestructibleManager : MonoBehaviour
     public bool SpawningComplete { get {return spawningComplete; } }
     bool spawningComplete;
     [SerializeField] ObjectPool[] destructibles; 
+
+
+    // get a point to the grid data
+    public GridData grid;
     #endregion
 
     #region UNITY FUNCTIONS
@@ -40,12 +44,20 @@ public class DestructibleManager : MonoBehaviour
         // Check if the level is EXPECTING any destructibles
         if (LevelManager.Instance.Details.destructiblesToSpawn != null && LevelManager.Instance.Details.destructiblesToSpawn.Count > 0)
         {
-            if (destructibles != null && destructibles.Length > 0)
+            if (LevelManager.Instance.grid != null)
             {
-                StartCoroutine(SpawnDestructibles());
+                grid = LevelManager.Instance.grid;
+                if (grid.cells == null)
+                {
+                    grid.LoadFromList();
+                }
+                if (destructibles != null && destructibles.Length > 0)
+                {
+                    StartCoroutine(SpawnDestructibles());
+                }
+                else
+                    Debug.LogError("[DestructibleManager]: Missing Destructible Object Pools");
             }
-            else
-                Debug.LogError("[DestructibleManager]: Missing Destructible Object Pools");
         }
     }
 
@@ -75,12 +87,12 @@ public class DestructibleManager : MonoBehaviour
                 for (int i = 0; i < numSpawns; i++)
                 {
                     // Get a random cell from the grid
-                    CellIndex cellIndex = LevelManager.Instance.GetRandomIndex(10);
+                    CellIndex cellIndex = GridUtility.GetRandomIndex(grid, 10);
                     // If a valid cell was found
                     if (cellIndex.x != -1 && cellIndex.y != -1)
                     {
                         // Spawn the object at the cell\
-                        Cell currCell = LevelManager.Instance.GetCellFromIndex(cellIndex);
+                        Cell currCell = GridUtility.GetCellFromIndex(grid, cellIndex);
                         Vector3 spawnPos = currCell.position;
                         spawnPos.y = LevelManager.Instance.FloorOffset;
 

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
     #region VARIABLES
-    public Camera Camera { get { return cam; } }
-    [SerializeField] Camera cam;
     [SerializeField] PlayerController player;
 
     [SerializeField] Slider healthSlider;
@@ -144,61 +142,6 @@ public class HUDController : MonoBehaviour
     {
         ui.cd_slider.value = value;
     }
-    #endregion
-
-    #region Toggle Setup
-    // Multipurpose to be implemented in editor
-    // When clicked it sets the specified component to active displaying the onscreen element
-    public void ToggleUIElement(GameObject toToggle)
-    {
-        if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
-            toToggle.SetActive(true);
-        else                                // If it is active, shut it off
-            toToggle.SetActive(false);
-    }
-
-    #region Camera Toggling
-    public void SetCamera(Camera cam)
-    {
-        this.cam = cam;
-        if (this.cam == null)
-            this.cam = Camera.main;
-    }
-
-    public void ToggleUIElementShift(GameObject toToggle)
-    {
-        RectTransform rt = toToggle.GetComponent<RectTransform>();
-
-        if (rt != null)
-        {
-            Rect newCam = new Rect(0, 0, 1, 1);
-            if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
-            {
-                toToggle.SetActive(true);
-                newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
-            }
-            else                                // If it is active, shut it off
-            {
-                toToggle.SetActive(false);
-            }
-
-            cam.rect = newCam;
-        }
-    }
-
-    public void ShiftCamera(GameObject offset)
-    {
-        RectTransform rt = offset.GetComponent<RectTransform>();
-
-        if (rt != null)
-        {
-            // do some math to setup camera
-            Rect newCam = new Rect(0, 0, 1, 1);
-            newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
-            cam.rect = newCam;
-        }
-    }
-    #endregion
     #endregion
     #endregion
 }
