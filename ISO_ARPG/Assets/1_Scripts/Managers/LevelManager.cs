@@ -1,7 +1,6 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
-using Unity.AI.Navigation;
 using UnityEngine;
 
 #region HELPER DATA STORAGE
@@ -90,7 +89,7 @@ public class LevelManager : MonoBehaviour
     //List<GameObject> levelEnemies;          // The enemies to spawn in this level
     //List<GameObject> levelDestructibles;    // The destructibles to spawn in this level
     float timeSpent;                        // The time spent in the level
-    public float TimeSpent { get {return timeSpent; } }
+    public float TimeSpent { get { return timeSpent; } }
     public int numKilled;
     public int numEliteKilled;
 
@@ -106,16 +105,19 @@ public class LevelManager : MonoBehaviour
     public void LevelLoading()
     {
         // Check if the cell array is empty, if it is, load in from the data
-        if (grid.cells == null || grid.cells.Length <= 0)
+        if (grid)
         {
-            grid.LoadFromList();
+            if (grid.cells == null || grid.cells.Length <= 0)
+            {
+                grid.LoadFromList();
+            }
         }
     }
     public void LevelLoaded()
     {
         if (player == null)
             player = GameManager.Instance.Player;
-            //player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        //player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         if (player == null)
             Debug.Log("[LevelManager]: Failed to reference player");
 

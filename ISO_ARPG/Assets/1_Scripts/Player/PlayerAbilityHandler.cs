@@ -101,13 +101,14 @@ public class PlayerAbilityHandler : MonoBehaviour
     public void AddPassiveListeners()
     {
         foreach (PassiveAbility pAb in stats.passives)
-        { 
+        {
             // Add listeners
+            StartCoroutine(HandlePassive(pAb));
         }
     }
     public void RemovePassiveListeners()
-    { 
-    
+    {
+
     }
     public void InitAbilities()
     {
@@ -154,7 +155,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                     //Debug.Log(dist + " from " + squareRange);
                     if (dist > squareRange && movement.CanMove)
                         return;
-                    }
+                }
             }
 
             // But if I am not in range and not moving, I want the ability to be fired
@@ -183,7 +184,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                     StartCoroutine(HandleHeld(channelAb));  // Handle the consumption of the hold
                 }
                 else if (ab is PassiveAbility passiveAb)
-                { 
+                {
                     StartCoroutine(HandlePassive(passiveAb));
                 }
                 else // Single press ability
@@ -234,7 +235,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                     ab.UseAbility(gameObject);          // Use the ability
                     canUseAbility[ab] = false;          // Flag usage
                     stats.ID_Bar.Value -= ab.Cost;      // Consume gauge
-                    StartCoroutine(HandlePassive(ab as  PassiveAbility)); 
+                    StartCoroutine(HandlePassive(ab as PassiveAbility));
                     StartCoroutine(HandleCooldown(ab));                 // Start handling the cooldown for this ability  
                     if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used
                 }
@@ -268,29 +269,33 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     IEnumerator HandlePassive(PassiveAbility used)
     {
-        float intervalTime = 0;
-        float activeTime = 0;
-        do
+        // when the selection happens, if the coroutine is NOT running, start the coroutine upon selecting
+        if (used != null)
         {
-            yield return new WaitForEndOfFrame();
-            intervalTime += Time.deltaTime;
-            activeTime += Time.deltaTime;
+            float intervalTime = 0;
+            float activeTime = 0;
+            do
+            {
+                yield return new WaitForEndOfFrame();
+                intervalTime += Time.deltaTime;
+                activeTime += Time.deltaTime;
 
-            if (activeTime > used.ActiveTime)
-            {
-                canUseAbility[used] = true; // Time has elapsed
-                used.EndAbility(gameObject);
-                if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " ended");
-                break;                      // Exit the loop - coroutine finished
+                if (activeTime > used.ActiveTime)
+                {
+                    canUseAbility[used] = true; // Time has elapsed
+                    used.EndAbility(gameObject);
+                    if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " ended");
+                    break;                      // Exit the loop - coroutine finished
+                }
+                if (intervalTime > used.IntervalTime)
+                {
+                    used.OnTick();      // Call the tick action
+                    if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " tick");
+                    intervalTime = 0;   // Reset the count
+                }
             }
-            if (intervalTime > used.IntervalTime)
-            {
-                used.OnTick();      // Call the tick action
-                if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " tick");
-                intervalTime = 0;   // Reset the count
-            }
+            while (!canUseAbility[used]); // While this ability cannot be used (because it has been used)
         }
-        while (!canUseAbility[used]); // While this ability cannot be used (because it has been used)
     }
 
     IEnumerator HandleCooldown(Ability used)

@@ -11,6 +11,9 @@ public class Hitbox : MonoBehaviour
 
     public bool ApplyDamage { get { return applyDamage; } set { applyDamage = value; } }
     private bool applyDamage = false;
+
+    EntityStats stats; // -> hitbox, stats has abiliites -> apply these effects when I successfully hit
+    // entity stats --> regen state, regen passive -> healthregen
     #endregion
     #region UNITY FUNCTIONS
 
@@ -36,7 +39,6 @@ public class Hitbox : MonoBehaviour
 
             // Need to stop enemies from damaging each other once system is fleshed out
         }
-
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -59,6 +61,13 @@ public class Hitbox : MonoBehaviour
     #endregion
 
     #region FUNCTIONALITY
+    protected virtual void InitHitbox()
+    {
+        // get the abilities from the stats
+
+        // -> hit, regen for # of time w/o stack
+        // empty time -> make complicated mana regen stacking
+    }
     protected virtual void HandleCollision(Hurtbox hb)
     {
         hb.TakeDamage(damage);
