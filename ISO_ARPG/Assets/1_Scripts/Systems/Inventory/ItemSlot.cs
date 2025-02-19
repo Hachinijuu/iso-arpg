@@ -8,7 +8,13 @@ public class ItemSlot : MonoBehaviour
 {
     public CellIndex index;
     public Image img;
-    public TMP_Text temp;
+    public GameObject selectedIndicator;
+    //public TMP_Text temp;
     public ItemData item;
     public bool HasItem { get { return item != null; } }
+
+    public void SlotSelected(bool show)
+    {
+        selectedIndicator.SetActive(show);
+    }
 }

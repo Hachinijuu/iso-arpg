@@ -30,10 +30,13 @@ public class GameManager : MonoBehaviour
     public PlayerController Player { get { return controller; } }
     [SerializeField] private PlayerController controller;
 
+    public AudioSource GlobalAudio { get { return audioSource; } }
+    [SerializeField] private AudioSource audioSource;
+
     // Get a reference to the hud
     public HUDController HUD { get { return hud; } }
     [SerializeField] private HUDController hud;
-    public enum GameState { MENU, LOADING, PLAYING, PAUSE }
+    public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
     public GameState currGameState;
     public enum eLevel { MENU, HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
     [SerializeField] string[] levelNames; // Map this in order of the types
@@ -90,7 +93,7 @@ public class GameManager : MonoBehaviour
         {
             player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
             player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
-            //controller.Agent.
+            controller.Movement.Respawn();
         }
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
@@ -99,9 +102,6 @@ public class GameManager : MonoBehaviour
         //hud.SetCamera(LevelManager.Instance.LevelCamera);
 
         // Allow the player to move
-        controller.Movement.Reset();
-        controller.Movement.CanMove = true;
-        controller.Movement.CanRotate = true;
 
         // Reset the pools
 

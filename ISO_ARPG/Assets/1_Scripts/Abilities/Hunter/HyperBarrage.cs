@@ -13,12 +13,10 @@ public class HyperBarrage : ChannelAbility
     AudioSource audioSource;
     PlayerStats stats;
     ProjectileSource shootSource;
-    int shotCounter = 0;
-    //[SerializeField] GameObject projectilePrefab;
-    //[SerializeField] int baseProjectiles;   // This is the base amount of projectiles that exists with this ability
-    //int numProjectiles; // This is the actual amount of projectiles shot with this ability
-    
+    int shotCounter = 0;    
     public float damageMultipler = 1.0f;
+    private int animID = Animator.StringToHash("Ability2");
+
     float damage;
     #endregion
     public override void InitAbility(Ability ab, GameObject actor)
@@ -35,8 +33,10 @@ public class HyperBarrage : ChannelAbility
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        // Fire # projectiles, but how does this differentiate from hyper barrage
-        // Hyper barrage could potentially launch a sequenece of the given numbers in the cone?
+        if (abilityActivated)
+            audioSource.PlayOneShot(abilityActivated);
+
+        anim.SetBool(animID, true);
 
         // Calculate damage
         damage = stats.Damage.Value * damageMultipler * stats.DEX.Value;
@@ -61,7 +61,13 @@ public class HyperBarrage : ChannelAbility
                 // once num num shots is reached, consume mana.
                 shotCounter = 0;
                 stats.Mana.Value -= cost;
+                // If more mana exists, possible to play shot continue sound here to indicate continous barrage
             }
         }
+    }
+
+    public override void EndAbility()
+    {
+        anim.SetBool(animID, false);
     }
 }

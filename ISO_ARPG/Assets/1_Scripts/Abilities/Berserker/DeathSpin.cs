@@ -29,17 +29,14 @@ public class DeathSpin : ChannelAbility
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        // Optimization:
-        // Instead of getting the component every time the action is fired
-        // Get the component on abilityLoad, where the actor will be given.
-        // Once the component's exist, it reduces the checks in the fire function
-
         anim.SetBool(abilAnimID, true);
 
-        source.clip = abilityActivated;
-        source.loop = true;
-        source.Play();
-
+        if (abilityActivated)
+        {
+            source.clip = abilityActivated;
+            source.loop = true;
+            source.Play();
+        }
         SetDamageDetection(true);
 
         anim.SetFloat(moveAnimID, 0.0f);   // Set speed to none to return to idle
@@ -51,24 +48,6 @@ public class DeathSpin : ChannelAbility
         }
         move.UseAnimations = false;     // Stop the move animations from being used (override with spin)
         move.CanRotate = false;         // Stop player rotation
-
-        //Debug.Log(hitboxes.Length);
-        // if (anim != null)
-        // {
-        // }
-        // if (source != null)
-        // {
-
-        // }
-
-        // if (hitboxes != null)
-        // {
-        // }
-
-        // if (move != null)
-        // {
-
-        // }
     }
 
     public override void EndAbility(GameObject actor)

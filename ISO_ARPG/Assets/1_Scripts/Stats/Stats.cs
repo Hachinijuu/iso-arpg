@@ -57,8 +57,19 @@ public enum SubStatTypes
     // CRIT DAMAGE IS ADDITIVE
 }
 
-// gear bonuses
-// if i have 3 - armour, stuff, i can get an armour bonus
+// Crit damage is additive
+// 100 Damage to deal, 200% crit damage 
+// 100 + (100 * 2)
+// 100 + (200) = 300
+// 300 Damage dealt
+// I deal the expected damage, PLUS the amount I crit for.
+
+// Crit damage is multiplicative
+// 100 Damage to deal, 200% crit damage
+// 100 * 2 = 200
+// 200 Damage dealt
+// My expected damage is MULTIPLIED by the amount that I crit for. 
+
 #endregion
 
 #region STAT CLASSES

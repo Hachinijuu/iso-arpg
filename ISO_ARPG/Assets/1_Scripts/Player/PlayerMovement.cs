@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     // DIRECTIONAL is WASD / Joystick
 
     [SerializeField] LayerMask moveMask;
+    [SerializeField] int raycastLength = 50;
 
     // Classes
     NavMeshAgent agent;
@@ -68,11 +69,16 @@ public class PlayerMovement : MonoBehaviour
         UnmapMovementActions();
     }
 
-    public void Reset()
+    public void Respawn()
     {
         //transform.position = transform.position;
         moveTarget = transform.position;
         agent.destination = moveTarget;
+
+        if (!canMove)
+            canMove = true;
+        if (!canRotate)
+            canRotate = true;
     }
     // Update is called once per frame
     void Update()
@@ -168,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
         // TODO: LIMIT RAY DISTANCE SO MORE COST EFFECTIVE
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, raycastLength, moveMask))
         {
             moveTarget = hit.point;
         }
@@ -193,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Get look direction relative to the mouse position in the world
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, moveMask))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, raycastLength, moveMask))
         {
             Vector3 mousePoint = hit.point;
 

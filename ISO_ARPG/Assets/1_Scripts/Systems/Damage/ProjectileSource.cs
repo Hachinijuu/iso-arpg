@@ -65,7 +65,7 @@ public class ProjectileSource : MonoBehaviour
 
                 //Quaternion.Eul
                 transform.rotation = rot;
-                Debug.Log(obj.name + " with " + obj.transform.rotation + " angle: " + angle);
+                //Debug.Log(obj.name + " with " + obj.transform.rotation + " angle: " + angle);
 
                 firePositions[i].position += (obj.transform.forward * offset);
                 // take 180 frontal cone, divide it by the number of projectiles that should exist to get the angles between each source

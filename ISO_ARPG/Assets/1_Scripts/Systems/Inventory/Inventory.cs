@@ -45,9 +45,6 @@ public class Inventory : MonoBehaviour
     private ItemData ghostItem;
     Vector2 mousePos;
 
-    private InputActionMap UI_Input;
-
-
     // Event System
     public delegate void InventoryEvent(InventoryEventArgs e);
     public event InventoryEvent OnItemReleased;
@@ -97,7 +94,7 @@ public class Inventory : MonoBehaviour
                 row++;
             }
 
-            slot.temp.text = slot.index.x + " : " + slot.index.y;
+            //slot.temp.text = slot.index.x + " : " + slot.index.y;
         }
     }
 
@@ -261,8 +258,13 @@ public class Inventory : MonoBehaviour
     IEnumerator HandleGhostItem()
     {
         ghost = GameObject.Instantiate(sourceSlot.gameObject, canvas.transform); // probably don't instantiate, just active existing ghost set to mouse position
-        Image gImage = ghost.GetComponent<Image>();
-        gImage.sprite = sourceSlot.img.sprite;
+
+        ItemSlot ghostSlot = ghost.GetComponent<ItemSlot>();
+        ghostSlot.img.sprite = sourceSlot.img.sprite;
+        ghostSlot.SlotSelected(true);
+
+        //Image gImage = ghost.GetComponent<Image>();
+        //gImage.sprite = sourceSlot.img.sprite;
 
         RectTransform rt = ghost.GetComponent<RectTransform>();
         rt.sizeDelta = sourceSlot.GetComponent<RectTransform>().sizeDelta;
@@ -316,22 +318,6 @@ public class Inventory : MonoBehaviour
                     //    ghostItem.LoadSpriteToImage(slot.img);
                     //}
                 }
-
-                //Debug.Log("[Inventory]: Mouse released at: (" + slot.index.x + " : " + slot.index.y + ")" );
-                // if (!slot.HasItem)
-                // {
-                //     Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
-                //     slot.item = ghostItem;
-                //     ghostItem.LoadSpriteToImage(slot.img);
-                // }
-                // else
-                // {
-                //     Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is occupied, do not place item here");
-                //     // Revert item back to source slot
-                //     sourceSlot.item = ghostItem;
-                //     ghostItem.LoadSpriteToImage(sourceSlot.img);
-                // }
-                // Regardless, set the ghost to null
                 ghostItem = null;
             }
             else

@@ -12,8 +12,9 @@ using UnityEngine.InputSystem;
 public class MouseTarget : MonoBehaviour
 {
     #region VARIABLES
+    [SerializeField] int raycastLength = 50;
     [SerializeField] List<string> tagsToMatch;
-    [SerializeField] DebugMenu dbMenu;
+    //[SerializeField] DebugMenu dbMenu;
     public GameObject Target { get { return target; } }
     public LayerMask mask;
 
@@ -69,9 +70,9 @@ public class MouseTarget : MonoBehaviour
         // - Enemies
         mouseHit = null;
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, mask))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, raycastLength, mask))
         {
-            //Debug.Log(hit.transform.tag);
+            //Collider hitCollider = hit.transform.gameObject.GetComponent<Collider>();
 
             // Build a bounding box
             foreach (string tag in tagsToMatch)
@@ -90,14 +91,14 @@ public class MouseTarget : MonoBehaviour
         if (mouseHit != null)
         {
             target = mouseHit;
-            if (dbMenu)
-                dbMenu.UpdateTargetText(target.name);
+            //if (dbMenu)
+            //    dbMenu.UpdateTargetText(target.name);
         }
         else
         { 
             target = null;
-            if (dbMenu)
-                dbMenu.UpdateTargetText(null);
+            //if (dbMenu)
+            //    dbMenu.UpdateTargetText(null);
         }
 
     }
@@ -105,17 +106,6 @@ public class MouseTarget : MonoBehaviour
     void UpdateMouseHover()
     {
         GetMouseHit();
-        if (dbMenu != null)
-        {
-            if (mouseHit != null)
-            {
-                dbMenu.UpdateHoverText(mouseHit.name);
-            }
-            else
-            {
-                dbMenu.UpdateHoverText(null);
-            }
-        }
     }
     #endregion
 }

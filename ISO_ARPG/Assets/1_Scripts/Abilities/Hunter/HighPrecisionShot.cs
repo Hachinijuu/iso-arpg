@@ -10,6 +10,7 @@ public class HighPrecisionShot : Ability
     ProjectileSource shootSource;
     public float damageMultipler = 1.0f;
     float damage;
+    private int animID = Animator.StringToHash("Ability1");
 
     #endregion
 
@@ -22,19 +23,20 @@ public class HighPrecisionShot : Ability
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        if (stats.Projectiles.Value > 0)
+        if (abilityActivated)
+            audioSource.PlayOneShot(abilityActivated);
+
+        anim.SetTrigger(animID);
+
+        // Calculate damage
+        damage = stats.Damage.Value * damageMultipler * stats.DEX.Value;
+        for (int i = 0; i < stats.Projectiles.Value; i++)
         {
-            // If there are projectiles to shoot
-            // Calculate damage
-            damage = stats.Damage.Value * damageMultipler * stats.DEX.Value;
-            for (int i = 0; i < stats.Projectiles.Value; i++)
+            Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
+            if (projectile != null)
             {
-                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
-                if (projectile != null)
-                {
-                    projectile.SetDamage(damage);
-                    projectile.FireProjectile();
-                }
+                projectile.SetDamage(damage);
+                projectile.FireProjectile();
             }
         }
     }

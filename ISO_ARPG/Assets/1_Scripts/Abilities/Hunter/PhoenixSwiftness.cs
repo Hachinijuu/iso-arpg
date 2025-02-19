@@ -33,9 +33,9 @@ public class PhoenixSwiftness : PassiveAbility
             defaultCopy.CopyFromStats(stats);
 
             // add the increased stats
-            stats.MoveSpeed.Value *= movespeedIncrease;
-            stats.Dodge.Value += dodgeIncrease;
-            stats.Projectiles.Value += projectileIncrease;
+            stats.MoveSpeed.Value *= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
+            stats.Dodge.Value += dodgeIncrease;                 // Add 25% more dodge -- flat number
+            stats.Projectiles.Value += projectileIncrease;      // Add # of projectiles
         }
     }
 

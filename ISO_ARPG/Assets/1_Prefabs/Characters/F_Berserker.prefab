@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 2530929530224189347}
   - component: {fileID: 2937272583744406549}
   - component: {fileID: 2054299947151925470}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2683,7 +2683,7 @@ GameObject:
   - component: {fileID: 5360877982711530078}
   - component: {fileID: 4864388912800227443}
   - component: {fileID: 7718068772051386536}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3309,7 +3309,7 @@ GameObject:
   - component: {fileID: 5177885983875926234}
   - component: {fileID: 2125481865669069965}
   - component: {fileID: 7693988061352539180}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hurtbox
   m_TagString: Hurtbox
   m_Icon: {fileID: 0}
@@ -4282,6 +4282,7 @@ MonoBehaviour:
   moveMask:
     serializedVersion: 2
     m_Bits: 64
+  raycastLength: 50
   rotationSpeed: 20
 --- !u!114 &7884400222273950595
 MonoBehaviour:
@@ -4314,7 +4315,7 @@ MonoBehaviour:
   dbMenu: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 896
+    m_Bits: 1536
 --- !u!82 &5146659525125202612
 AudioSource:
   m_ObjectHideFlags: 0

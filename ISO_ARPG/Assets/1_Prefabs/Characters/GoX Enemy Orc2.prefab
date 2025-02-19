@@ -2303,7 +2303,7 @@ GameObject:
   - component: {fileID: 6934980184703408765}
   - component: {fileID: 6666653413374980729}
   - component: {fileID: 5698080204493919020}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Hurtbox
   m_TagString: Hurtbox
   m_Icon: {fileID: 0}
@@ -2435,7 +2435,7 @@ GameObject:
   - component: {fileID: 1322588551909352659}
   - component: {fileID: 8848955106300504330}
   - component: {fileID: 6111161216217004617}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2983,6 +2983,14 @@ MonoBehaviour:
     value: 100
     maxValue: 100
     type: 1
+  armour:
+    value: -1
+    maxValue: 0
+    type: 0
+  dodge:
+    value: -1
+    maxValue: 0
+    type: 0
 --- !u!195 &4620611001483524893
 NavMeshAgent:
   m_ObjectHideFlags: 0

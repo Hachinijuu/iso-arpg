@@ -50,7 +50,8 @@ public class RagingSwing : StackAbility
         //{ 
         //}
 
-        audioSource.PlayOneShot(abilityActivated);
+        if (abilityActivated)
+            audioSource.PlayOneShot(abilityActivated);
         //if (source != null)
         //{ 
         //}
@@ -88,7 +89,6 @@ public class RagingSwing : StackAbility
     public override void EndAbility(GameObject actor)
     {
         SetDamageDetection(false);
-
     }
 
     #region HELPER FUNCTIONS

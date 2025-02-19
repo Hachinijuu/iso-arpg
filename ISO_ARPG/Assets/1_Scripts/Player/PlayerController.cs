@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public MouseTarget PlayerTarget { get { return playerTarget; } }
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
-
+    public ProjectileSource ShootSource { get { return shootSource; } }
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     MouseTarget playerTarget;
     AudioSource audioSource;
     Animator animator;
-    Dictionary<Ability, bool> canUseAbility = new Dictionary<Ability, bool>();
+    ProjectileSource shootSource;
     #endregion
 
     // input handling
@@ -46,12 +46,40 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         // getting references to necessary components on this object
-        stats = GetComponent<PlayerStats>();
-        input = GetComponent<PlayerInput>();
-        movement = GetComponent<PlayerMovement>();
+        if (stats == null)
+            stats = GetComponent<PlayerStats>();
+        if (input == null)
+            input = GetComponent<PlayerInput>();
+        if (movement == null)
+            movement = GetComponent<PlayerMovement>();
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
+        if (handler == null)
+            handler = GetComponent<PlayerAbilityHandler>();
+        if (playerTarget == null)
+            playerTarget = GetComponent<MouseTarget>();
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+        if (animator == null)
+            animator = GetComponent<Animator>();
+        if (shootSource == null)
+            shootSource = GetComponent<ProjectileSource>();
 
         //MapPlayerActions();
         InitalizePlayer();
+    }
+
+    public void EnablePlayer(bool shouldEnable)
+    {
+        stats.enabled = shouldEnable;
+        input.enabled = shouldEnable;
+        movement.enabled = shouldEnable;
+        agent.enabled = shouldEnable;
+        handler.enabled = shouldEnable;
+        playerTarget.enabled = shouldEnable;
+        audioSource.enabled = shouldEnable;
+        animator.enabled = shouldEnable;
+        shootSource.enabled = shouldEnable;
     }
 
     #endregion
@@ -62,27 +90,18 @@ public class PlayerController : MonoBehaviour
             stats.InitializePlayerStats();
         else
             Debug.LogError("Player has no stats to read from!");
+
+        //EnablePlayer(false);
     }
     #endregion
 
     #region PLAYER ACTIONS
     // Handle targetting
-
     public IEnumerator HandleStop(int duration)
     {
         movement.HandleStops(true);
         yield return new WaitForSeconds(duration);
         movement.HandleStops(false);
-    }
-
-    // DEBUG FUNCTIONS
-    public void ResetAbilityUsage() // will reset used flags for all abilities
-    {
-        foreach (Ability ab in stats.Class.Abilities)
-        {
-            canUseAbility[ab] = true;
-        }
-        canUseAbility[stats.Class.IdentityAbility] = true;
     }
 
     #endregion
