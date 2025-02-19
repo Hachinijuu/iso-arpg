@@ -9,7 +9,6 @@ public class DeathSpin : ChannelAbility
     PlayerMovement move;
     Hitbox[] hitboxes;
     PlayerStats stats;
-
     public float damageMultipler = 1.0f;
 
     // EACH ABILITY IS UNIQUE, BUT IS IT A GOOD PRACTICE TO GET THESE VALUES UNIQUELY -- SO ASSET SO IT MIGHT BE FINE EXISTING AS UNIQUE VALUES

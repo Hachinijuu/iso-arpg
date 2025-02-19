@@ -6,14 +6,36 @@ public class HighPrecisionShot : Ability
     #region VARIABLES
     Animator anim;
     AudioSource audioSource;
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] int baseProjectiles;   // This is the base amount of projectiles that exists with this ability
-    [SerializeField] ProjectileSource shootSource;
+    PlayerStats stats;
+    ProjectileSource shootSource;
+    public float damageMultipler = 1.0f;
+    float damage;
 
-    int numProjectiles; // This is the actual amount of projectiles shot with this ability
     #endregion
+
+    public override void InitAbility(Ability ab, GameObject actor)
+    {
+        anim = actor.GetComponent<Animator>();
+        audioSource = actor.GetComponent<AudioSource>();
+        stats = actor.GetComponent<PlayerStats>();
+        shootSource = actor.GetComponent<ProjectileSource>();
+    }
     protected override void Fire(Ability ab, GameObject actor)
     {
-
+        if (stats.Projectiles.Value > 0)
+        {
+            // If there are projectiles to shoot
+            // Calculate damage
+            damage = stats.Damage.Value * damageMultipler * stats.DEX.Value;
+            for (int i = 0; i < stats.Projectiles.Value; i++)
+            {
+                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
+                if (projectile != null)
+                {
+                    projectile.SetDamage(damage);
+                    projectile.FireProjectile();
+                }
+            }
+        }
     }
 }

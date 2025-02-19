@@ -8,9 +8,11 @@ public class ChannelAbility : Ability
 
     //public bool Channelable {get {return canChannel;}}
     public float Interval { get { return interval; } }
+    public bool ManaPerTick { get { return manaPerTick; } }
     //private bool canChannel = true; // Because it is a channel-able ablility, this is always true.
     [Header("Channel Settings")]
     [SerializeField] protected float interval = -1f;
+    [SerializeField] bool manaPerTick = false;
 
     // Overrides abstract Fire method, but does not do anything
     // This acts as a base class to Channelable abilities (easier ability sorting)

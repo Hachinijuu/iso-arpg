@@ -9,8 +9,8 @@ public class RagingSwing : StackAbility
     Hitbox[] hitboxes;
     PlayerStats stats;
     ProjectileSource shootSource;
-
     public float damageMultipler = 1.0f;
+    float damage;
 
     private int animId = Animator.StringToHash("Ability1");
     #endregion
@@ -22,17 +22,13 @@ public class RagingSwing : StackAbility
         stats = actor.GetComponent<PlayerStats>();
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
         shootSource = actor.GetComponent<ProjectileSource>();
-
-        if (stats.Projectiles.Value > 0)
-        {
-            //shootSource.
-        }
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
         // Call calculator on the relevant hitboxes ... kind of messy in terms of how projectiles run and apply damage
         // Generate damage values and then pass to init?
 
+        damage = stats.Damage.Value * damageMultipler * stats.STR.Value;
         // Listen the the hitboxes for their events, if something was hit, regain mana - if nothing is hit, don't
 
         if (stats.Projectiles.Value > 0)
@@ -43,6 +39,7 @@ public class RagingSwing : StackAbility
                 Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
                 if (projectile != null)
                 {
+                    projectile.SetDamage(damage);
                     projectile.FireProjectile();
                 }
             }
@@ -98,14 +95,12 @@ public class RagingSwing : StackAbility
     void SetDamageDetection(bool on)
     {
         // Damage Calculation
-        float damageToDeal = stats.Damage.Value * damageMultipler * stats.STR.Value;
-
         if (hitboxes != null && hitboxes.Length > 0)
         {
             for (int i = 0; i < hitboxes.Length; i++)
             {
                 hitboxes[i].AllowDamageForTime(0.75f);
-                hitboxes[i].SetDamage(damageToDeal);
+                hitboxes[i].SetDamage(damage);
             }
         }
     }

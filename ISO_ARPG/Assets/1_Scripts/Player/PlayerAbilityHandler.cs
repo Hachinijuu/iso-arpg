@@ -261,7 +261,10 @@ public class PlayerAbilityHandler : MonoBehaviour
             }
             else    // Remaining mana, consume it.
             {
-                stats.Mana.Value -= used.Cost;          // Consume the cost of mana
+                if (used.ManaPerTick)
+                {
+                    stats.Mana.Value -= used.Cost;          // Consume the cost of mana
+                }
                 used.OnTick();  // Call the tick action
             }
         } while (held);
