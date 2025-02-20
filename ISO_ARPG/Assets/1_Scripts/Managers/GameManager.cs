@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
         {
             player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
             player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
+            Debug.Log(player.transform.position);
             controller.Movement.Respawn();
         }
         // Set the camera to follow

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 178970201749714123}
   - component: {fileID: 7014549343879027396}
   - component: {fileID: 8169348650012111900}
+  - component: {fileID: 4902831536390283942}
   m_Layer: 0
   m_Name: dead_tree
   m_TagString: Untagged
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1759674330777327466, guid: 40c99489a4c80f34983e10a7c947831f, type: 3}
+--- !u!208 &4902831536390283942
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250681993122594369}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 104.4, y: 237.42502, z: 104.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
