@@ -36,7 +36,7 @@ public class Horde
     public bool Triggered = false;
     public bool CheckShouldSpawn(float num)
     {
-        if (num > TriggerAmount)
+        if (num >= TriggerAmount)
         {
             return true;
         }

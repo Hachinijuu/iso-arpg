@@ -29,16 +29,18 @@ public class GameManager : MonoBehaviour
 
     public PlayerController Player { get { return controller; } }
     [SerializeField] private PlayerController controller;
-
     public AudioSource GlobalAudio { get { return audioSource; } }
     [SerializeField] private AudioSource audioSource;
 
     // Get a reference to the hud
-    public HUDController HUD { get { return hud; } }
-    [SerializeField] private HUDController hud;
+    // public HUDController HUD { get { return hud; } }
+    // [SerializeField] private HUDController hud;
     public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
     public GameState currGameState;
     public enum eLevel { MENU, HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
+
+    public enum eClass { NONE, BERSERKER, HUNTER, ELEMENTALIST }
+    public eClass playerClass;
     [SerializeField] string[] levelNames; // Map this in order of the types
     public eLevel level;
     private string currentLevelName;
@@ -63,13 +65,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // CONTROLLER WILL NOT BE FOUND ON START, IT WILL BE ASSIGNED AFTER THE PLAYER HAS BEEN SELECTED
+
         if (controller == null)
         {
             controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        }
-        if (hud == null)
-        {
-            hud = FindObjectOfType<HUDController>();
         }
 #if UNITY_EDITOR
         // Check for playmode override
@@ -88,6 +88,11 @@ public class GameManager : MonoBehaviour
     #region GAMEPLAY
     public void PlayerRespawn()
     {
+        //if (controller == null)
+        //    controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        controller.EnablePlayer(true);  // Reactivate player components
+
         GameObject player = controller.gameObject;
         if (LevelManager.Instance.PlayerSpawnPoint != null)
         {
@@ -98,6 +103,8 @@ public class GameManager : MonoBehaviour
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
 
+        //if (controller.Stats.Health)
+
         // Load the camera into the hud for inventory sliding
         //hud.SetCamera(LevelManager.Instance.LevelCamera);
 
@@ -106,6 +113,12 @@ public class GameManager : MonoBehaviour
         // Reset the pools
 
         // Fixing UI displays.
+    }
+
+    public void PlayerDied()
+    {
+        // Display death / defeat screen and play death music
+        // Upon pressing return to hub, go back to the hub
     }
     #endregion
 
@@ -127,11 +140,14 @@ public class GameManager : MonoBehaviour
         //Debug.Log(toLoad.name);
 
         isLoading = true;
-        currGameState = GameState.LOADING;
+        currGameState = GameState.LOADING; // block player input while in loading state
         if (loadingScreen)
             loadingScreen.gameObject.SetActive(isLoading);
         if (pauseMenu)
             pauseMenu.CanPause = false; // Do not allow pauses to happen while loading
+
+        // In the loading state, disable player components
+        controller.EnablePlayer(false);
 
         if (AIManager.Instance)
             AIManager.Instance.LevelUnloading();
@@ -187,7 +203,8 @@ public class GameManager : MonoBehaviour
         if (LevelManager.Instance)
         {
             // Load the player
-            PlayerRespawn();
+            if (controller)         // If the player exists, load the player -- there should be no player by default
+                PlayerRespawn();
         }
     }
 
@@ -205,6 +222,12 @@ public class GameManager : MonoBehaviour
     public void LoadHub()
     {
         LoadLevelFromString((levelNames[(int)eLevel.HUB]));
+
+        // Special conditions to check when loading to the hub
+        if (playerClass == eClass.NONE)
+        {
+            // If there is no class selected, then handle the class selection.
+        }
     }
 
     public void LoadPrototype()

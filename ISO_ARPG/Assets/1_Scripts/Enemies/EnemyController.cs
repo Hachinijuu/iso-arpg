@@ -63,6 +63,10 @@ public class EnemyController : AdvancedFSM
             DropSystem.Instance.RegisterEnemyDrop(stats);
             //Debug.Log("Registered to drops");
         }
+        if (AIManager.Instance != null)
+        {
+            stats.OnDied += context => { AIManager.Instance.UpdateDeathNumbers(); };
+        }
     }
 
     protected override void FSMUpdate()

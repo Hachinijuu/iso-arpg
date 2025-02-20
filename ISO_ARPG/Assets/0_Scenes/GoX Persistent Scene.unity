@@ -437,10 +437,10 @@ MonoBehaviour:
   ArmourConvert: 1
   controller: {fileID: 0}
   audioSource: {fileID: 0}
-  hud: {fileID: 0}
   currGameState: 0
+  playerClass: 0
   levelNames:
-  - GoX Menu
+  - GoX Main Menu
   - GoX Scene Hub
   - GoX Scene Level 1
   level: 1
@@ -1106,8 +1106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEnemies: 1
-  minSpawnDistance: 25
-  maxSpawnDistance: 100
+  minSpawnDistance: 15
+  maxSpawnDistance: 20
   enemyPools:
   - {fileID: 714920339}
   - {fileID: 1245929811}

@@ -160,11 +160,8 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 8339188839789172028, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      minSpawn: 5
-      maxSpawn: 20
-    - entity: {fileID: 8376291819686341336, guid: a4f22451e0394bf459134bddf5847dbb, type: 3}
-      minSpawn: 5
-      maxSpawn: 20
+      minSpawn: 10
+      maxSpawn: 10
     destructiblesToSpawn:
     - entity: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
       minSpawn: 5
@@ -173,12 +170,11 @@ MonoBehaviour:
     elitesToKill: 0
     hordes:
     - hordeCondition: 2
-      enemiesToSpawn: []
-      TriggerAmount: 0
-      Triggered: 0
-    - hordeCondition: 1
-      enemiesToSpawn: []
-      TriggerAmount: 0
+      enemiesToSpawn:
+      - entity: {fileID: 8339188839789172028, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
+        minSpawn: 50
+        maxSpawn: 50
+      TriggerAmount: 20
       Triggered: 0
   grid: {fileID: 11400000, guid: 38a5e24333ec7a04cb473898164ea247, type: 2}
   numKilled: 0
@@ -292,7 +288,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 80
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -579,7 +575,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 80
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000

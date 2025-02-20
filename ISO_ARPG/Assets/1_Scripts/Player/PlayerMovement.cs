@@ -83,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.currGameState != GameManager.GameState.PLAYING)    // is a state check efficient
+            return;
+
         if (type == MoveInput.DIRECTIONAL)
         {
             GetMoveTarget();

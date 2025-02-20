@@ -309,10 +309,10 @@ public class AIManager : MonoBehaviour
             // This needs to be tested
 
             // Negative current amount still exists (more enemies than accounted for that die)
-            currAmount++;
+            currAmount += 1;
             //controller.stats.OnDied -= context => { };
-            controller.stats.OnDied -= context => { UpdateDeathNumbers(); };
-            controller.stats.OnDied += context => { UpdateDeathNumbers(); };
+            //controller.stats.OnDied -= context => { UpdateDeathNumbers(); };
+            //controller.stats.OnDied += context => { UpdateDeathNumbers(ref controller); };
 
             // This position should be verified based on level's grid.
 
@@ -332,45 +332,49 @@ public class AIManager : MonoBehaviour
     }
 
     // Because events with number changing is not very reliable, rely on a function to handle the increase and decrease
-    private void UpdateDeathNumbers()
+    public void UpdateDeathNumbers()
     {
         currAmount--;
         LevelManager.Instance.numKilled++;
+        //controller.stats.OnDied -= context => { } ;  // stop listening to the function
     }
     #endregion
     #region Horde Spawning
     public IEnumerator HordeHandler()
     {
-        foreach (Horde horde in details.hordes)
+        do
         {
-            // Check the spawn conditions
-            if (!horde.Triggered)
+            foreach (Horde horde in details.hordes)
             {
-                switch (horde.hordeCondition)
+                // Check the spawn conditions
+                if (!horde.Triggered)
                 {
-                    case Horde.SpawnCondition.TIME: //  Check time spent in the level
-                        if (horde.CheckShouldSpawn(LevelManager.Instance.TimeSpent))
-                        {
-                            // once the horde has been spawned, we do not want to check for that horde anymore.
-                            StartCoroutine(HandleHordeSpawns(horde));
-                            horde.Triggered = true;
-                        }
-                        // check the time
-                        break;
-                    case Horde.SpawnCondition.KILLS: // Check number of kills
-                        if (horde.CheckShouldSpawn(LevelManager.Instance.numKilled))
-                        {
-                            // once the horde has been spawned, we do not want to check for that horde anymore.
-                            StartCoroutine(HandleHordeSpawns(horde));
-                            horde.Triggered = true;
-                        }
-                        break;
+                    Debug.Log("Checking horde");
+                    switch (horde.hordeCondition)
+                    {
+                        case Horde.SpawnCondition.TIME: //  Check time spent in the level
+                            if (horde.CheckShouldSpawn(LevelManager.Instance.TimeSpent))
+                            {
+                                // once the horde has been spawned, we do not want to check for that horde anymore.
+                                StartCoroutine(HandleHordeSpawns(horde));
+                                horde.Triggered = true;
+                            }
+                            // check the time
+                            break;
+                        case Horde.SpawnCondition.KILLS: // Check number of kills
+                            if (horde.CheckShouldSpawn(LevelManager.Instance.numKilled))
+                            {
+                                // once the horde has been spawned, we do not want to check for that horde anymore.
+                                StartCoroutine(HandleHordeSpawns(horde));
+                                horde.Triggered = true;
+                            }
+                            break;
+                    }
                 }
+                // don't want to check every single frame
             }
-            // don't want to check every single frame
             yield return new WaitForSeconds(hordeCheckInterval);
-        }
-        yield return null;
+        } while (!LevelManager.Instance.LevelComplete);
     }
     #endregion
     #region Distance Groups
@@ -460,6 +464,8 @@ public class AIManager : MonoBehaviour
         enemiesSpawned = true;
         float groupTimer = 0.0f;
         float spawnTimer = 0.0f;
+
+        StartCoroutine(HordeHandler());
 
         while (!LevelManager.Instance.LevelComplete)
         {

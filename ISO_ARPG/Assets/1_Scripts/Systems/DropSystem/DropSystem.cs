@@ -123,7 +123,7 @@ public class DropSystem : MonoBehaviour
     {
         // Build the UI popup to display on screen.
         ItemData item = e.data;
-        Debug.Log("[DropSystem]: Show popup for: " + item.itemName);
+        //Debug.Log("[DropSystem]: Show popup for: " + item.itemName);
         item.OnItemAcquired -= ItemPopup;
     }
     // This drop system manages all drops in the game

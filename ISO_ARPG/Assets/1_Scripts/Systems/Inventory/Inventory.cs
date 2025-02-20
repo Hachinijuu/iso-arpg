@@ -36,6 +36,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] PlayerInput input;
 
     private ItemSlot[] slots;       // UI slots to interface with
+    private RuneSlot[] runeSlots;
     private List<ItemData> items;   // The actual items the player has
 
     // input handling
@@ -96,6 +97,10 @@ public class Inventory : MonoBehaviour
 
             //slot.temp.text = slot.index.x + " : " + slot.index.y;
         }
+
+        // Get a reference to the rune slots if they do not exist.
+        if (runeSlots == null)
+            runeSlots = inventoryScreen.GetComponentsInChildren<RuneSlot>();
     }
 
     void InitItemList()
@@ -210,6 +215,19 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+        foreach (ItemSlot slot in runeSlots)
+        {
+            RectTransform rt = slot.GetComponent<RectTransform>();
+            //Debug.Log(rt);
+            if (rt)
+            {
+                if (RectTransformUtility.RectangleContainsScreenPoint(rt, pos))
+                {
+                    found = slot;
+                    break;
+                }
+            }
+        }
         return found;
     }
 
@@ -298,42 +316,37 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
+                    // When looking at valid slots, check if the item can be used for that slot
+                    // if (slot is RuneSlot)
+                    // {
+                    //     if (ghostItem.type == ItemTypes.RUNE)   // If dropped into a rune slot, we want selected to show rune slot occupied
+                    //     {
+                    //         slot.item = ghostItem;
+                    //         slot.SlotSelected(true);
+                    //         ghostItem.LoadSpriteToImage(slot.img);
+                    //     }
+                    // }
+                    // else
+                    // {
+                    // }
                     Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
                     slot.item = ghostItem;
                     ghostItem.LoadSpriteToImage(slot.img);
-                    // in this, check if the slot IS A rune slot, if it is a rune slot, if it is a rune slot, we can only place runes in said slots
-                    //if (slot is RuneSlot rs && ghostItem.type == ItemTypes.RUNE)
-                    //{
-                    //    if (ghostItem.type == ItemTypes.RUNE)
-                    //    {
-                    //        Debug.Log("[Inventory]: Embedding rune");
-                    //        slot.item = ghostItem;
-                    //        ghostItem.LoadSpriteToImage(slot.img);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
-                    //    slot.item = ghostItem;
-                    //    ghostItem.LoadSpriteToImage(slot.img);
-                    //}
                 }
                 ghostItem = null;
+
+                InventoryEventArgs args = new InventoryEventArgs();
+                args.data = slot.item;
+                FireReleasedItem(args);
             }
             else
             {
-                Debug.Log("[Inventory]: Did not release mouse on a valid position");
-                Debug.Log("[Inventory]: Failed placement, reverting");
-                // Revert item back to slot
+                Debug.Log("[Inventory]: Did not release mouse on a valid position, reverting");
 
                 // If release position is outside of the canvas --> we can detect to drop the item / discard
                 sourceSlot.item = ghostItem;
                 ghostItem.LoadSpriteToImage(sourceSlot.img);
             }
-
-            InventoryEventArgs args = new InventoryEventArgs();
-            args.data = slot.item;
-            FireReleasedItem(args);
         }
 
 
