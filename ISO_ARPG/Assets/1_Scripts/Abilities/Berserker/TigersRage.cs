@@ -59,14 +59,14 @@ public class TigersRage : PassiveAbility
             Debug.Log("Reset Values");
             actor.transform.localScale = defaultScale;              // Return the character to normal size
 
-            stats.CopyFromStats(defaultCopy);
+            //stats.CopyFromStats(defaultCopy);
             //Debug.Log("What is the health:" + stats.Health.MaxValue);
 
-            //// add increased stats
-            //stats.Health.MaxValue /= maxHealthIncrease;
-            //stats.Armour.Value /= defenceIncrease;
-            //stats.CritChance.Value /= critChanceIncrease;
-            //stats.CritDamage.Value /= critDamageIncrease;
+            //// remove stats
+            stats.Health.MaxValue /= maxHealthIncrease;
+            stats.Armour.Value /= defenceIncrease;
+            stats.CritChance.Value /= critChanceIncrease;
+            stats.CritDamage.Value /= critDamageIncrease;
         }
 
         // Don't forget to call end ability to send event out

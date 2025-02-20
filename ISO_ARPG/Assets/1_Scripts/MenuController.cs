@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
     public void StartClicked()
     {
         // Load the hub, character selection
+        GameManager.Instance.LoadHub();
     }
 
     public void ContinueClicked()

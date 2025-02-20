@@ -61,6 +61,11 @@ public class RagingSwing : StackAbility
         //{
         //}
 
+        // Only want to return valid infomration on successful hits --> listen to the hitbox onhit, and apply effects on successful hits
+
+
+        // For now, to stop things from breaking, simply give id gains and such
+        stats.ID_Bar.Value += stats.IDGain.Value;
         if (stacks < maxStacks)
         {
             stacks++;

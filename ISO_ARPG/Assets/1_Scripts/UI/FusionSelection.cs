@@ -1,10 +1,36 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FusionSelection : MonoBehaviour
 {
     public bool shouldConfirm;
     public GameObject selectPopup;
     private Ability fusion;
+    public Button RageButton;
+    public Button SwiftButton;
+    public Button GiftButton;
+
+    public void Start()
+    {
+        CheckForClass();
+    }
+
+    public void CheckForClass()
+    {
+        // Disable same class buttons
+        switch(GameManager.Instance.playerClass)
+        {
+            case GameManager.eClass.BERSERKER:
+                RageButton.interactable = false;
+            break;
+            case GameManager.eClass.HUNTER:
+                SwiftButton.interactable = false;
+            break;
+            case GameManager.eClass.ELEMENTALIST:
+                GiftButton.interactable = false;
+            break;
+        }
+    }
     public void SelectionClicked(Ability selectedFusion)
     {
         fusion = selectedFusion;
@@ -33,6 +59,6 @@ public class FusionSelection : MonoBehaviour
         // Fire the fusion
         GameManager.Instance.Player.Stats.Fusion.UseAbility(GameManager.Instance.Player.gameObject); // this is pending
         // Load the level
-
+        GameManager.Instance.LoadLevelByID(GameManager.eLevel.LEVEL_2);
     }
 }

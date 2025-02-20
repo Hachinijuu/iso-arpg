@@ -331,74 +331,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104910843}
   m_CullTransparentMesh: 1
---- !u!1 &159745206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 159745209}
-  - component: {fileID: 159745208}
-  - component: {fileID: 159745207}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &159745207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159745206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &159745208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159745206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &159745209
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159745206}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &408169498
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,8 +459,8 @@ MonoBehaviour:
   slideGraphic: {fileID: 408169500}
   slideText: {fileID: 2113599036}
   slideVoiceover: {fileID: 8300000, guid: 887f5c2bf2c910e4a99c39b7ae69fae2, type: 3}
-  slideDuration: 20
-  subtitleTime: 5
+  slideDuration: 2
+  subtitleTime: 0.6
   subtitleText:
   - Something happened
   - Then something else happened
@@ -1162,8 +1094,8 @@ MonoBehaviour:
   slideGraphic: {fileID: 104910845}
   slideText: {fileID: 1031472659}
   slideVoiceover: {fileID: 0}
-  slideDuration: 3
-  subtitleTime: 1
+  slideDuration: 2
+  subtitleTime: 0.6
   subtitleText:
   - Something happened
   - Then something else happened
@@ -1221,8 +1153,8 @@ MonoBehaviour:
   slideGraphic: {fileID: 1841732476}
   slideText: {fileID: 357533}
   slideVoiceover: {fileID: 0}
-  slideDuration: 3
-  subtitleTime: 1
+  slideDuration: 2
+  subtitleTime: 0.6
   subtitleText:
   - Something happened
   - Then something else happened
@@ -1280,8 +1212,8 @@ MonoBehaviour:
   slideGraphic: {fileID: 884901964}
   slideText: {fileID: 531928717}
   slideVoiceover: {fileID: 8300000, guid: 9c503de0d0d3c484aa30bc06b1754b8a, type: 3}
-  slideDuration: 10
-  subtitleTime: 1
+  slideDuration: 2
+  subtitleTime: 0.6
   subtitleText:
   - Something happened
   - Then something else happened
@@ -1500,4 +1432,3 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 701484547}
-  - {fileID: 159745209}

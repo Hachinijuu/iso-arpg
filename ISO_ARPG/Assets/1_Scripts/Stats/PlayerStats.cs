@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public class PlayerStats : EntityStats
 {
@@ -37,6 +36,7 @@ public class PlayerStats : EntityStats
     public MainStat INT { get { return intelligence; } }
 
     // Gameplay Stats
+    public Stat IDGain { get { return idGain; } }
     public Stat Range { get { return attackRange; } }
     public Stat Projectiles { get { return numProjectiles; } }
     public Stat Chains { get { return numChains; } }
@@ -96,6 +96,13 @@ public class PlayerStats : EntityStats
         LoadDefaultClassStats();
         LoadAbilities();
         FillStatList();
+
+        health.Changed += context => { CheckDied(); };
+    }
+
+    public void OnDisable()
+    {
+        health.Changed -= context => { CheckDied(); };
     }
 
     public void FillStatList()
@@ -231,6 +238,19 @@ public class PlayerStats : EntityStats
     //    //moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
     //}
 
+    public void CheckDied()
+    {
+        if (health.Value <= 0)
+        {
+            GameManager.Instance.PlayerDied();  // Tell the game manager the player has died, this will handle the bulk of it?
+        }
+    }
+    public void Respawn()
+    {
+        health.Value = health.MaxValue;
+        mana.Value = mana.MaxValue;
+        idBar.Value = 0;
+    }
     #endregion
 
     #region SET

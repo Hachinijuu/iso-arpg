@@ -50,6 +50,7 @@ public class CutscenePlayer : MonoBehaviour
             slide.ExitSlide(this);
             slide.gameObject.SetActive(false);
         }
+        GameManager.Instance.LoadLevelByID(GameManager.eLevel.LEVEL_1);
     }
     #endregion
 }

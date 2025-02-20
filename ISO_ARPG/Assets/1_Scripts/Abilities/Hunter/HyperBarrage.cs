@@ -58,6 +58,7 @@ public class HyperBarrage : ChannelAbility
             shotCounter++;
             if (shotCounter > numShots)
             {
+                stats.ID_Bar.Value += stats.IDGain.Value;
                 // once num num shots is reached, consume mana.
                 shotCounter = 0;
                 stats.Mana.Value -= cost;

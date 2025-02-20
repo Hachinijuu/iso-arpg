@@ -38,13 +38,16 @@ public class GameManager : MonoBehaviour
     // [SerializeField] private HUDController hud;
     public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
     public GameState currGameState;
-    public enum eLevel { MENU, HUB, LEVEL_1, LEVEL_2, LEVEL_3 }
+    public enum eLevel { MENU, HUB, CUTSCENE, LEVEL_1, TRANSITION, LEVEL_2, LEVEL_3 }
 
     public enum eClass { NONE, BERSERKER, HUNTER, ELEMENTALIST }
     public eClass playerClass;
     [SerializeField] string[] levelNames; // Map this in order of the types
     public eLevel level;
     private string currentLevelName;
+    public GameObject GameUI;
+    [SerializeField] public DefeatScreen loseScreen;
+    public bool CutscenePlayed = false;
 
     // SCENES
     public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
@@ -53,9 +56,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region EVENTS
-
-
-
     #endregion
 
     #region UNITY FUNCTIONS
@@ -78,11 +78,11 @@ public class GameManager : MonoBehaviour
         Debug.Log(playOverride);
         if (!playOverride)
         {
-            LevelLoad();
+            LoadMainMenu();
         }
 #endif
 #if UNITY_STANDALONE && !UNITY_EDITOR
-        LevelLoad();
+    LoadMainMenu();
 #endif
     }
     #endregion
@@ -120,6 +120,10 @@ public class GameManager : MonoBehaviour
     {
         controller.EnablePlayer(true);
         controller.Movement.Respawn();
+        controller.Stats.Respawn();
+
+        // Need to reset health and such
+
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
     }
@@ -127,6 +131,12 @@ public class GameManager : MonoBehaviour
     public void PlayerDied()
     {
         // Display death / defeat screen and play death music
+        if (!loseScreen.gameObject.activeInHierarchy)
+        {
+            // Play dead sounds and death animation, could keep game unpaused
+            loseScreen.gameObject.SetActive(true);
+            PauseGame();
+        }
         // Upon pressing return to hub, go back to the hub
     }
     #endregion
@@ -150,6 +160,7 @@ public class GameManager : MonoBehaviour
 
         isLoading = true;
         currGameState = GameState.LOADING; // block player input while in loading state
+        GameUI.SetActive(false);
         if (loadingScreen)
             loadingScreen.gameObject.SetActive(isLoading);
         if (pauseMenu)
@@ -198,6 +209,7 @@ public class GameManager : MonoBehaviour
 
 
         currentLevelName = levelName;
+        level = GetLevelFromName(levelName);
         isLoading = false;
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
@@ -206,16 +218,28 @@ public class GameManager : MonoBehaviour
             pauseMenu.CanPause = true;
         if (loadingScreen)
             loadingScreen.gameObject.SetActive(isLoading);
+        
 
-        currGameState = GameState.PLAYING;
 
         // If the level manager exits, do the stuff
         if (LevelManager.Instance)
         {
+            currGameState = GameState.PLAYING;
+            GameUI.SetActive(true);
             // Load the player
             if (controller)         // If the player exists, load the player -- there should be no player by default
                 PlayerRespawn();
         }
+    }
+
+    public eLevel GetLevelFromName(string levelName)
+    {
+        for (int i = 0; i < levelNames.Length; i++)
+        {
+            if (levelNames[i] == levelName)
+                return (eLevel)i;
+        }
+        return eLevel.MENU; // Default is menu
     }
 
     public void LevelLoad()
@@ -223,10 +247,16 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(LoadLevel(levelNames[(int)level]));
         LoadLevelFromString((levelNames[(int)level]));
     }
+
+    public void LoadLevelByID(eLevel level)
+    {
+        LoadLevelFromString((levelNames[(int)level]));
+    }
     public void LoadMainMenu()
     {
         //StartCoroutine(LoadLevel(1);
         LoadLevelFromString((levelNames[(int)eLevel.MENU]));
+        currGameState = GameState.MENU;
     }
 
     public void LoadHub()
@@ -248,7 +278,19 @@ public class GameManager : MonoBehaviour
 
     #region GENERAL FUNCTIONALITY
     // Pause Controls
-    PauseMenu pauseMenu;
+    [SerializeField] PauseMenu pauseMenu;
+
+    public void PauseGame()
+    {
+        currGameState = GameState.PAUSE;
+        Time.timeScale = 0.0f;
+    }
+
+    public void UnpauseGame()
+    {
+        currGameState = GameState.PLAYING;
+        Time.timeScale = 1.0f;
+    }
 
     // Exit Game
     public void QuitGame()

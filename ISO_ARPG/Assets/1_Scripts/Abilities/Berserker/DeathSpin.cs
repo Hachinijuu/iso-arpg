@@ -49,7 +49,6 @@ public class DeathSpin : ChannelAbility
         move.UseAnimations = false;     // Stop the move animations from being used (override with spin)
         move.CanRotate = false;         // Stop player rotation
     }
-
     public override void EndAbility(GameObject actor)
     {
         anim.SetBool(abilAnimID, false);
@@ -66,6 +65,11 @@ public class DeathSpin : ChannelAbility
         move.CanRotate = true;
 
         base.EndAbility(actor);
+    }
+
+    public override void OnTick()
+    {
+        stats.ID_Bar.Value += stats.IDGain.Value;
     }
 
     #region HELPER FUNCTIONS

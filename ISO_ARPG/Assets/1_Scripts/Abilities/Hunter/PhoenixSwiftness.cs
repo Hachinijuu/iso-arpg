@@ -41,7 +41,12 @@ public class PhoenixSwiftness : PassiveAbility
 
     public override void EndAbility()
     {
-        stats.CopyFromStats(defaultCopy);
+        // Remove stats
+        stats.MoveSpeed.Value /= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
+        stats.Dodge.Value -= dodgeIncrease;                 // Add 25% more dodge -- flat number
+        stats.Projectiles.Value -= projectileIncrease;      // Add # of projectiles
+
+        //stats.CopyFromStats(defaultCopy);
     }
     #endregion
 }

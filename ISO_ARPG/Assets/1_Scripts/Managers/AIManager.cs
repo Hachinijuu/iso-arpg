@@ -349,7 +349,7 @@ public class AIManager : MonoBehaviour
                 // Check the spawn conditions
                 if (!horde.Triggered)
                 {
-                    Debug.Log("Checking horde");
+                    //Debug.Log("Checking horde");
                     switch (horde.hordeCondition)
                     {
                         case Horde.SpawnCondition.TIME: //  Check time spent in the level
