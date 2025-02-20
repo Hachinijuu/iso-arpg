@@ -91,6 +91,18 @@ public class MouseTarget : MonoBehaviour
         if (mouseHit != null)
         {
             target = mouseHit;
+            if (target.CompareTag("Interactable"))
+            {
+                InteractableObject interact = target.GetComponent<InteractableObject>();
+                if (interact != null)
+                {
+                    if (interact.interactDistance > 0)
+                        interact.OnInteract(gameObject.transform);
+                    else
+                        interact.OnInteract();
+                }
+            }
+
             //if (dbMenu)
             //    dbMenu.UpdateTargetText(target.name);
         }
