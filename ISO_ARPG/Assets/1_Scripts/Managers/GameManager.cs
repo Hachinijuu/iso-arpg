@@ -86,20 +86,17 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     #region GAMEPLAY
-    public void PlayerRespawn()
+    public void PlayerLoading()
     {
         //if (controller == null)
         //    controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-        controller.EnablePlayer(true);  // Reactivate player components
 
         GameObject player = controller.gameObject;
         if (LevelManager.Instance.PlayerSpawnPoint != null)
         {
             player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
             player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
-            Debug.Log(player.transform.position);
-            controller.Movement.Respawn();
         }
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
@@ -114,6 +111,14 @@ public class GameManager : MonoBehaviour
         // Reset the pools
 
         // Fixing UI displays.
+    }
+
+    public void PlayerRespawn()
+    {
+        controller.EnablePlayer(true);
+        controller.Movement.Respawn();
+        // Set the camera to follow
+        LevelManager.Instance.LevelLoaded();
     }
 
     public void PlayerDied()
@@ -185,6 +190,7 @@ public class GameManager : MonoBehaviour
             {
                 DestructibleManager.Instance.LevelLoading();
             }
+            PlayerLoading();
         }
 
 

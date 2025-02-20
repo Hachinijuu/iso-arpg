@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public class PlayerStats : EntityStats
 {
@@ -10,6 +11,7 @@ public class PlayerStats : EntityStats
 
     // Any additional abilities the player can get through gameplay
     public List<PassiveAbility> passives;
+    public List<Stat> statList;
 
     // Instead of casting abilities through the playerClass, load the abilities into this class
 
@@ -90,8 +92,31 @@ public class PlayerStats : EntityStats
     {
         // this will load stats externally keeping player progress, for now just LoadStats wrapper
         //LoadStats();
+        statList = new List<Stat>();
         LoadDefaultClassStats();
         LoadAbilities();
+        FillStatList();
+    }
+
+    public void FillStatList()
+    {
+        statList.Add(health);
+        statList.Add(mana);
+        statList.Add(idBar);
+        statList.Add(strength);
+        statList.Add(dexterity);
+        statList.Add(intelligence);
+        statList.Add(attackRange);
+        statList.Add(numProjectiles);
+        statList.Add(numChains);
+        statList.Add(moveSpeed);
+        statList.Add(idGain);
+        statList.Add(damage);
+        statList.Add(attackSpeed);
+        statList.Add(critDamage);
+        statList.Add(critChance);
+        statList.Add(armour);
+        statList.Add(dodge);
     }
 
     public void LoadStats()
@@ -185,6 +210,7 @@ public class PlayerStats : EntityStats
         }
         identity = Instantiate(playerClass.IdentityAbility);    // Create a 'new' identity based on what the class has for game use
     }
+
     //public void LoadDefaultMainStats()
     //{
     //    strength = 

@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         //transform.position = transform.position;
         moveTarget = transform.position;
         agent.destination = moveTarget;
+        Debug.Log(transform.position);
 
         if (!canMove)
             canMove = true;
