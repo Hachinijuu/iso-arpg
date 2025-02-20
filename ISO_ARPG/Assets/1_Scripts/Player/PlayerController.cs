@@ -15,6 +15,8 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(AudioSource))]             // Audio
 [RequireComponent(typeof(Animator))]                // Animations
+[RequireComponent(typeof(ProjectileSource))]        // Projectiles
+[RequireComponent(typeof(FootStepHandler))]
 public class PlayerController : MonoBehaviour
 {
     // Public References
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
     public ProjectileSource ShootSource { get { return shootSource; } }
+    public FootStepHandler FootSteps { get { return footSteps; } }
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
@@ -39,6 +42,7 @@ public class PlayerController : MonoBehaviour
     AudioSource audioSource;
     Animator animator;
     ProjectileSource shootSource;
+    FootStepHandler footSteps;
     #endregion
 
     // input handling
@@ -64,6 +68,8 @@ public class PlayerController : MonoBehaviour
             animator = GetComponent<Animator>();
         if (shootSource == null)
             shootSource = GetComponent<ProjectileSource>();
+        if (footSteps == null)
+            footSteps = GetComponent<FootStepHandler>();
 
         //MapPlayerActions();
         InitalizePlayer();
@@ -80,6 +86,7 @@ public class PlayerController : MonoBehaviour
         audioSource.enabled = shouldEnable;
         animator.enabled = shouldEnable;
         shootSource.enabled = shouldEnable;
+        footSteps.enabled = shouldEnable;
     }
 
     #endregion

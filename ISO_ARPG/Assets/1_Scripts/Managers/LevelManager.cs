@@ -79,6 +79,8 @@ public class LevelManager : MonoBehaviour
     public float FloorOffset { get { return floorOffset; } }
     private float floorOffset = 0.25f;
 
+    public FloorMaterials material;
+
     // This level manager will handle the loading between scenes
 
     // Level manager builds a grid for other systems in the level to utilize

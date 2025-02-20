@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -98,6 +99,8 @@ public class GameManager : MonoBehaviour
             player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
             player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
         }
+        controller.FootSteps.SetMaterial(LevelManager.Instance.material);
+
         // Set the camera to follow
         LevelManager.Instance.LevelLoaded();
 
