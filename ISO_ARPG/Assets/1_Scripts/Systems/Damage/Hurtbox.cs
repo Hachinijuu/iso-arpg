@@ -26,6 +26,11 @@ public class Hurtbox : MonoBehaviour
         {
             Debug.LogError("[DamageSystem]: Missing stat reference");
         }
+        if (transform.CompareTag("Destructible"))
+        {
+            DropSystem.Instance.RegisterDestructibleDrop(stats);
+            //Debug.Log("Registered to drop system");
+        }
     }
     #endregion
     #region FUNCTIONALITY

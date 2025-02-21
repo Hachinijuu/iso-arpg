@@ -29,6 +29,8 @@ public class DropSystem : MonoBehaviour
         destructibles = new List<EntityStats>();
     }
 
+    public GameObject[] destructionParticles;
+
     // When enemies set themselves to active, register them to the list
     public void RegisterEnemyDrop(EntityStats enemy)
     {
@@ -46,13 +48,31 @@ public class DropSystem : MonoBehaviour
     public void RegisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Add(destructible);
-        destructible.OnDied += CheckDrop;
+        destructible.OnDied += context => { CheckDrop(context); SpawnParticle(context); HandleDestruction(context); } ;
     }
 
     public void UnregisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Remove(destructible);
-        destructible.OnDied -= CheckDrop;
+        destructible.OnDied -= context => { CheckDrop(context); SpawnParticle(context); HandleDestruction(context); } ;
+    }
+
+    public void HandleDestruction(GameObject source)
+    {
+        source.SetActive(false);    // cleanup
+        // play a destruction sound
+    }
+    public void SpawnParticle(GameObject source)
+    {
+        if (destructionParticles != null && destructionParticles.Length > 0)
+        {
+            source.SetActive(false);
+            GameObject particle = Instantiate<GameObject>(destructionParticles[Random.Range(0, destructionParticles.Length)]);
+            particle.transform.position = source.transform.position;
+
+            particle.SetActive(true);
+            Destroy(particle, 2);
+        }
     }
 
     //public void AddListeners()

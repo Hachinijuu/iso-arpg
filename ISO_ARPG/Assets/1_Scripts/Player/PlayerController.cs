@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     ProjectileSource shootSource;
     FootStepHandler footSteps;
+
+    [SerializeField] GameObject auraSource;
     #endregion
 
     // input handling
@@ -109,6 +111,14 @@ public class PlayerController : MonoBehaviour
         movement.HandleStops(true);
         yield return new WaitForSeconds(duration);
         movement.HandleStops(false);
+    }
+
+    public void SetAura(bool value)
+    {
+        if (auraSource)
+        {
+            auraSource.SetActive(value);
+        }
     }
 
     #endregion

@@ -10,6 +10,7 @@ public class DeathSpin : ChannelAbility
     Hitbox[] hitboxes;
     PlayerStats stats;
     public float damageMultipler = 1.0f;
+    float damage;
 
     // EACH ABILITY IS UNIQUE, BUT IS IT A GOOD PRACTICE TO GET THESE VALUES UNIQUELY -- SO ASSET SO IT MIGHT BE FINE EXISTING AS UNIQUE VALUES
 
@@ -29,6 +30,7 @@ public class DeathSpin : ChannelAbility
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
+        damage = stats.Damage.Value * damageMultipler * stats.STR.Value;
         anim.SetBool(abilAnimID, true);
 
         if (abilityActivated)
@@ -75,12 +77,13 @@ public class DeathSpin : ChannelAbility
     #region HELPER FUNCTIONS
     void SetDamageDetection(bool on)
     {
-        float damageToDeal = stats.Damage.Value * damageMultipler * stats.STR.Value;
+        //float damageToDeal = stats.Damage.Value * damageMultipler * stats.STR.Value;
         if (hitboxes != null && hitboxes.Length > 0)
         {
             for (int i = 0; i < hitboxes.Length; i++)
             {
                 hitboxes[i].ApplyDamage = on;
+                hitboxes[i].SetDamage(damage);
             }
         }
     }

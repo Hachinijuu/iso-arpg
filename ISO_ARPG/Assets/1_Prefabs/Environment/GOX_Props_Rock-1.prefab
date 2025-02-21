@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GOX_Props_Rock-1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c87f069803a993b4595bd87e532eb0e9, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -75,6 +79,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c87f069803a993b4595bd87e532eb0e9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4863468343022898501}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c87f069803a993b4595bd87e532eb0e9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6892810972772331613}
   m_SourcePrefab: {fileID: 100100000, guid: c87f069803a993b4595bd87e532eb0e9, type: 3}
 --- !u!1 &8352578831798213524 stripped
 GameObject:
@@ -97,3 +104,26 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.004, y: -0.008, z: 0.16600001}
   m_TimeToStationary: 0.5
+--- !u!136 &-6892810972772331613
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352578831798213524}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25933763
+  m_Height: 0.49973837
+  m_Direction: 1
+  m_Center: {x: 0.0039003799, y: -0.007637286, z: 0.1659053}

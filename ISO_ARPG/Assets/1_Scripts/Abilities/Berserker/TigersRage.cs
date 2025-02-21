@@ -18,12 +18,15 @@ public class TigersRage : PassiveAbility
 
     PlayerStats stats;
     PlayerStats defaultCopy;
+    PlayerController controller;
+
     #endregion
     #region FUNCTIONALITY
     public override void InitAbility(Ability ab, GameObject actor)
     {
         stats = actor.GetComponent<PlayerStats>();
         source = actor.GetComponent<AudioSource>();
+        controller = actor.GetComponent<PlayerController>();
 
         defaultCopy = stats;
     }
@@ -40,6 +43,8 @@ public class TigersRage : PassiveAbility
 
             if (abilityActivated)
                 source.PlayOneShot(abilityActivated);
+
+            controller.SetAura(true);
 
             // add increased stats
             stats.Health.MaxValue *= maxHealthIncrease;
@@ -58,6 +63,8 @@ public class TigersRage : PassiveAbility
         {
             Debug.Log("Reset Values");
             actor.transform.localScale = defaultScale;              // Return the character to normal size
+
+            controller.SetAura(false);
 
             //stats.CopyFromStats(defaultCopy);
             //Debug.Log("What is the health:" + stats.Health.MaxValue);

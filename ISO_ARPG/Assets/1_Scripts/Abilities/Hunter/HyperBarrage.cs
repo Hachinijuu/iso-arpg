@@ -39,7 +39,7 @@ public class HyperBarrage : ChannelAbility
         anim.SetBool(animID, true);
 
         // Calculate damage
-        damage = stats.Damage.Value * damageMultipler * stats.DEX.Value;
+        damage = stats.Damage.Value * damageMultipler * (stats.DEX.Value * GameManager.Instance.MainConvert);
     }
 
     // want ot use an enumerator, but cannot because it is a scriptable object...

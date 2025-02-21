@@ -50,7 +50,7 @@ public class GridUtility : MonoBehaviour
     // Grid info
     [SerializeField] private Vector3 origin;
     public Cell[,] cells; // 2D array of grid cells  
-    public GameObject[] obstacles;
+    public List<GameObject> obstacles;
     private List<Collider> obstacleColliders;
     int gRows;
     int gColumns;
@@ -128,18 +128,29 @@ public class GridUtility : MonoBehaviour
 
     public void GetObstacles()
     {
-        if (obstacles == null)
+        obstacles = new List<GameObject>();
+        //GameObject[] arr;
+        foreach (string tag in gridBlockTags)
         {
-            foreach (string tag in gridBlockTags)
+            GameObject[] array = GameObject.FindGameObjectsWithTag(tag);
+            if (array != null)
             {
-                obstacles = GameObject.FindGameObjectsWithTag(tag);
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Debug.Log("Added: " + array[i].name + " to the list of obstacles");
+                    obstacles.Add(array[i]);
+                }
+            }
+            else
+            {
+                Debug.Log("Empty Array of Obstacles");
             }
         }
     }
     public void MarkGridObstacles()
     {
         obstacleColliders = new List<Collider>();
-        if (obstacles != null && obstacles.Length > 0)
+        if (obstacles != null && obstacles.Count > 0)
         {
             foreach (GameObject obstacle in obstacles)
             {
