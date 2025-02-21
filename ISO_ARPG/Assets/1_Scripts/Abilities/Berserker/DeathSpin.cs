@@ -9,6 +9,7 @@ public class DeathSpin : ChannelAbility
     PlayerMovement move;
     Hitbox[] hitboxes;
     PlayerStats stats;
+    ProjectileSource shootSource;
     public float damageMultipler = 1.0f;
     float damage;
 
@@ -27,10 +28,11 @@ public class DeathSpin : ChannelAbility
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
         stats = actor.GetComponent<PlayerStats>();
         move = actor.GetComponent<PlayerMovement>();
+        shootSource = actor.GetComponent<ProjectileSource>();
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        damage = stats.Damage.Value * damageMultipler * stats.STR.Value;
+        damage = stats.Damage.Value * damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert) ;
         anim.SetBool(abilAnimID, true);
 
         if (abilityActivated)
@@ -72,6 +74,20 @@ public class DeathSpin : ChannelAbility
     public override void OnTick()
     {
         stats.ID_Bar.Value += stats.IDGain.Value;
+
+        if (stats.Projectiles.Value > 0)
+        {
+            // If there are projectiles to shoot
+            for (int i = 0; i < stats.Projectiles.Value; i++)
+            {
+                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
+                if (projectile != null)
+                {
+                    projectile.SetDamage(damage);
+                    projectile.FireProjectile();
+                }
+            }
+        }
     }
 
     #region HELPER FUNCTIONS

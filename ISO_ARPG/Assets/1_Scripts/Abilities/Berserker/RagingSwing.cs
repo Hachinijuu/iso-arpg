@@ -22,6 +22,8 @@ public class RagingSwing : StackAbility
         stats = actor.GetComponent<PlayerStats>();
         hitboxes = actor.GetComponentsInChildren<Hitbox>();
         shootSource = actor.GetComponent<ProjectileSource>();
+
+        shootSource.InitFirePositions();
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
