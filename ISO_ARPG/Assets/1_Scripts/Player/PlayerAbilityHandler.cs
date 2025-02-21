@@ -217,6 +217,7 @@ public class PlayerAbilityHandler : MonoBehaviour
             ab.EndAbility(gameObject);          // Call the abilities' end
             StopCoroutine("HandleHeld");        // Stop the handle held coroutine
             // ONLY start the cooldown if the ability CAN BE USED
+            Debug.Log("Ended");
 
             if (!ab.OnCooldown) // Only put it on cooldown if it's not already on cooldown
                 StartCoroutine(HandleCooldown(ab)); // Start the cooldown for the ability
@@ -268,6 +269,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                 used.OnTick();  // Call the tick action
             }
         } while (held);
+        AbilityEnded(used);
     }
 
     IEnumerator HandlePassive(PassiveAbility used)

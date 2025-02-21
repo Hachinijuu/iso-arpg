@@ -30,7 +30,7 @@ public class PhoenixSwiftness : PassiveAbility
                 source.PlayOneShot(abilityActivated);
 
             // create a copy of the stats, to revert back to
-            defaultCopy.CopyFromStats(stats);
+            //defaultCopy.CopyFromStats(stats);
 
             // add the increased stats
             stats.MoveSpeed.Value *= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase

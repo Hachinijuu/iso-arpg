@@ -16,27 +16,47 @@ public class CharacterSelection : MonoBehaviour
     [SerializeField] PlayerController berserker;
     [SerializeField] PlayerController hunter;
     [SerializeField] PlayerController elementalist;
-    public void SwitchTo(CharacterClass _class)
+
+    public void BerserkerButton()
     {
-        if (_class == berserker.Stats.Class)
-        {
-            berserker.gameObject.SetActive(true);
-            hunter.gameObject.SetActive(false);
-            elementalist.gameObject.SetActive(false);
-        }
-        else if (_class == hunter.Stats.Class)
-        {
-            berserker.gameObject.SetActive(false);
-            hunter.gameObject.SetActive(true);
-            elementalist.gameObject.SetActive(false);
-        }
-        else if (_class == elementalist.Stats.Class)
-        {
-            berserker.gameObject.SetActive(false);
-            hunter.gameObject.SetActive(false);
-            elementalist.gameObject.SetActive(true);
-        }
+        berserker.gameObject.SetActive(true);
+        hunter.gameObject.SetActive(false);
+        elementalist.gameObject.SetActive(false);
+        GameManager.Instance.GetPlayerReferences();
     }
+    public void HunterButton()
+    {
+        berserker.gameObject.SetActive(false);
+        hunter.gameObject.SetActive(true);
+        elementalist.gameObject.SetActive(false);
+        GameManager.Instance.GetPlayerReferences();
+    }
+    public void ElementalistButton()
+    {
+        berserker.gameObject.SetActive(false);
+        hunter.gameObject.SetActive(false);
+        elementalist.gameObject.SetActive(true);
+        GameManager.Instance.GetPlayerReferences();
+    }
+    // public void SwitchTo(CharacterClass _class)
+    // {
+    //     if (_class == berserker.Stats.Class)
+    //     {
+
+    //     }
+    //     else if (_class == hunter.Stats.Class)
+    //     {
+    //         berserker.gameObject.SetActive(false);
+    //         hunter.gameObject.SetActive(true);
+    //         elementalist.gameObject.SetActive(false);
+    //     }
+    //     else if (_class == elementalist.Stats.Class)
+    //     {
+    //         berserker.gameObject.SetActive(false);
+    //         hunter.gameObject.SetActive(false);
+    //         elementalist.gameObject.SetActive(true);
+    //     }
+    // }
 
     public void Update()
     {

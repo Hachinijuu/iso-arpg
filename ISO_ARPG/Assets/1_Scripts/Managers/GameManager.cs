@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour
 
         // Fixing UI displays.
     }
-
     public void PlayerRespawn()
     {
         controller.EnablePlayer(true);
@@ -290,6 +289,13 @@ public class GameManager : MonoBehaviour
     {
         currGameState = GameState.PLAYING;
         Time.timeScale = 1.0f;
+    }
+
+    public void GetPlayerReferences()
+    {
+        controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        PlayerLoading();
+        PlayerRespawn();
     }
 
     // Exit Game

@@ -338,6 +338,11 @@ public class AIManager : MonoBehaviour
         LevelManager.Instance.numKilled++;
         //controller.stats.OnDied -= context => { } ;  // stop listening to the function
     }
+
+    public void GetPlayerReferences()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
     #endregion
     #region Horde Spawning
     public IEnumerator HordeHandler()

@@ -25,6 +25,11 @@ public class HUDController : MonoBehaviour
     #region UNITY FUNCTIONS
     private void Start()
     {
+        InitHud();
+    }
+
+    public void InitHud()
+    {
         if (player == null)
         {
             // If the player controller is not assigned in editor, find the component through the player

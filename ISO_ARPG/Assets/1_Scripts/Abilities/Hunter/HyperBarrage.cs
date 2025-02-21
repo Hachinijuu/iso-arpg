@@ -36,7 +36,7 @@ public class HyperBarrage : ChannelAbility
         if (abilityActivated)
             audioSource.PlayOneShot(abilityActivated);
 
-        anim.SetBool(animID, true);
+        anim.SetTrigger(animID);
 
         // Calculate damage
         damage = stats.Damage.Value * damageMultipler * (stats.DEX.Value * GameManager.Instance.MainConvert);
@@ -69,6 +69,6 @@ public class HyperBarrage : ChannelAbility
 
     public override void EndAbility()
     {
-        anim.SetBool(animID, false);
+        //anim.SetBool(animID, false);
     }
 }
