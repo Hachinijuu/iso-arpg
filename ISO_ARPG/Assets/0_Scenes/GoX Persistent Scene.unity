@@ -1462,8 +1462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEnemies: 1
-  minSpawnDistance: 15
-  maxSpawnDistance: 20
+  minSpawnDistance: 2
+  maxSpawnDistance: 4
   enemyPools:
   - {fileID: 714920339}
   - {fileID: 1245929811}
@@ -3526,13 +3526,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226466301}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.2607293, a: 0.043137256}
+  m_Color: {r: 0, g: 1, b: 0.2607293, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7974,6 +7974,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1768913348812191298, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
+      propertyPath: m_Volume
+      value: 0.021
+      objectReference: {fileID: 0}
     - target: {fileID: 2208453717086178366, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10431,7 +10435,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.021
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -20851,7 +20855,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7057737631166150019, guid: 15a0a60ff6aedf94598ed18acf79dfd9, type: 3}
       propertyPath: m_Volume
-      value: 1
+      value: 0.021
       objectReference: {fileID: 0}
     - target: {fileID: 8366322350053213544, guid: 15a0a60ff6aedf94598ed18acf79dfd9, type: 3}
       propertyPath: m_Name

@@ -223,8 +223,8 @@ public class GridUtility : MonoBehaviour
         do
         {
             count++;
-            int row = Random.Range(0, grid.rows);
-            int col = Random.Range(0, grid.columns);
+            int row = Random.Range(0, grid.columns);
+            int col = Random.Range(0, grid.rows);
 
             // If the cell is not an obstacle or occupied, use that cell
             if (!(grid.cells[row, col].isObstacle) || !grid.cells[row, col].isOccupied)
