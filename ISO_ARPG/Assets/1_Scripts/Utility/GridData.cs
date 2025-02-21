@@ -58,7 +58,7 @@ public class GridData : ScriptableObject
 
     public Cell[,] ArrayFromList(List<Cell> list)
     {
-        Cell[,] array = new Cell[rows,columns];
+        Cell[,] array = new Cell[columns,rows];
 
         foreach(Cell c in list)
         {
