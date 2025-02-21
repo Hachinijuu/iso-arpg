@@ -44,7 +44,7 @@ public class Hitbox : MonoBehaviour
         if (other.CompareTag("Hurtbox") || other.CompareTag("Destructible"))
         {
             Hurtbox hb = other.GetComponent<Hurtbox>();
-            Debug.Log(other.name);
+            //Debug.Log(other.name);
             if (hb)
             {
                 HandleCollision(hb);
