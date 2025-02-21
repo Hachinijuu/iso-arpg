@@ -11832,7 +11832,12 @@ MonoBehaviour:
   LevelCamera: {fileID: 0}
   vCam: {fileID: 1258230913}
   playerSpawn: {fileID: 1970939358}
-  enemySpawnPoints: []
+  enemySpawnPoints:
+  - {fileID: 1117274372}
+  - {fileID: 1397114361}
+  - {fileID: 948348340}
+  - {fileID: 553020702}
+  - {fileID: 351350384}
   type: 1
   details:
     enemiesToSpawn:
@@ -11844,7 +11849,7 @@ MonoBehaviour:
     elitesToKill: 0
     hordes: []
   material: 0
-  grid: {fileID: 0}
+  grid: {fileID: 11400000, guid: d0099bef28d38f64b96009125df26899, type: 2}
   numKilled: 0
   numEliteKilled: 0
   loaderLocation: {fileID: 0}
@@ -25421,6 +25426,7 @@ GameObject:
   - component: {fileID: 1666634816}
   - component: {fileID: 1666634815}
   - component: {fileID: 1666634819}
+  - component: {fileID: 1666634820}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -25546,6 +25552,27 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 424f661cdab790e4ea85136d66a73399, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1666634820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666634814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf550c8a69820b4b81fad8296dd241f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: {x: -71.84, y: 0, z: 102.602005}
+  obstacles: []
+  levelArea: {fileID: 1666634819}
+  cellSize: 2
+  cellTrim: 1
+  gridBlockTags: []
+  ShowCubes: 1
+  DrawFullTile: 1
+  grid: {fileID: 11400000, guid: d0099bef28d38f64b96009125df26899, type: 2}
 --- !u!1001 &1670147341
 PrefabInstance:
   m_ObjectHideFlags: 0
