@@ -7,6 +7,8 @@ public class ProjectileSource : MonoBehaviour
     [SerializeField] float offset = 2.0f;
     [SerializeField] float angleStep = 180.0f;
 
+    [SerializeField] Transform altPos;
+
     // this should listen to stats, and init fire positions whenever the value of the projectiles changes
     // this will maintain updated projectile counts throughout the game, via gear and such
 
@@ -48,7 +50,15 @@ public class ProjectileSource : MonoBehaviour
             {
                 GameObject obj = new GameObject();
                 obj.name = "firePosition" + (i + 1);
-                obj.transform.parent = transform;
+
+                if (altPos != null)
+                {
+                    obj.transform.parent = altPos;
+                }
+                else
+                {
+                    obj.transform.parent = transform;
+                }
                 firePositions[i] = obj.transform;
 
                 //Quaternion rot = firePositions[i].rotation;

@@ -19,7 +19,7 @@ public class PhoenixSwiftness : PassiveAbility
         stats = actor.GetComponent<PlayerStats>();
         source = actor.GetComponent<AudioSource>();
 
-        defaultCopy = new PlayerStats();
+        //defaultCopy = new PlayerStats();
     }
 
     protected override void Fire(Ability ab, GameObject actor)

@@ -28,7 +28,8 @@ public class Hurtbox : MonoBehaviour
         }
         if (transform.CompareTag("Destructible"))
         {
-            DropSystem.Instance.RegisterDestructibleDrop(stats);
+            if (DropSystem.Instance)
+                DropSystem.Instance.RegisterDestructibleDrop(stats);
             //Debug.Log("Registered to drop system");
         }
     }
