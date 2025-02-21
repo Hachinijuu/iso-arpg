@@ -117,6 +117,8 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRespawn()
     {
+        PlayerLoading();
+
         controller.EnablePlayer(true);
         controller.Movement.Respawn();
         controller.Stats.Respawn();
