@@ -255,11 +255,39 @@ public class PlayerStats : EntityStats
 
     #region SET
 
+
+    // This function exists because value assignments ContextCallbacks is not very reliable (Only exists within the frame of the callback)
+    // IEnumerator HandleFusion()
+    // {
+    //     do
+    //     {
+    //         yield return new WaitForSeconds(2);
+    //     } while (stats.Fusion == null);
+    //     if (stats.Fusion != null)
+    //     {
+    //         stats.Fusion.UseAbility(gameObject);
+    //         Debug.Log("[PlayerAbilityHandler]: Fired: " + stats.Fusion.Name);
+    //         foreach(Ability ab in stats.Abilities)
+    //         {
+    //             ab.InitAbility(ab, gameObject); // Reinit the ability (gain projectile sources if any)
+    //         }
+    //         Debug.Log("PlayerAbilityHandler]: Completed Initialization: " + stats.Fusion.Name);
+    //     }
+    // }
+
     public void SetFusion(IdentityAbility fusion)
     {
         // Instead of setting it like this, make a LOCAL copy so that it is persistent like the rest of the abilities
-         
+        Debug.Log("[PlayerStats]: " + fusion.Name + " assigned to player, apply effects");
         ID_Fusion = Instantiate(fusion);    // Create a 'new' identity based on what the class has for game use
+        ID_Fusion.asFusion = true;
+        ID_Fusion.InitAbility(ID_Fusion, gameObject);
+        ID_Fusion.UseAbility(gameObject);
+        foreach (Ability ab in Abilities)
+        {
+            ab.InitAbility(ab, gameObject);
+        }
+        Debug.Log("[PlayerStats]: Finished setting up " + fusion.Name);
         //ID_Fusion.asFusion = true;
         //ID_Fusion.UseAbility(gameObject);
     }

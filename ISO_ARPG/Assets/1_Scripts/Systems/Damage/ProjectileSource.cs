@@ -70,7 +70,7 @@ public class ProjectileSource : MonoBehaviour
         // If they already exist, get rid of them
         if (firePositions.Length <= 0 || firePositions == null)
         {
-            Debug.Log("[ProjectileSource]: Builing cone based on: " + numPositions + " projectile sources");
+            Debug.Log("[ProjectileSource]: Building cone based on: " + numPositions + " projectile sources");
             // build the shoot positions based off of forward vector
             firePositions = new Transform[numPositions];    // Get a new array amounting to the number of projectiles that should be fired
             CreateProjectilePositions(numPositions);
@@ -79,28 +79,27 @@ public class ProjectileSource : MonoBehaviour
 
     public void CreateProjectilePositions(int numPositions)
     {
-        float angleBetween = angleStep / numPositions;
+        float angleBetween = angleStep / (numPositions - 1);
 
         // Create new transforms and position them to the 
         for (int i = 0; i < numPositions; i++)
         {
             GameObject obj = new GameObject();
-            obj.name = "firePosition" + (i + 1);        
-            float angle = angleBetween * i;     
-            if (i % 2 == 0)
-            {
-                // for any even projectile numbers, need to offset the source angle such that the cone lines up to sides instead of source maintaining direct forward vector
-                // any odd, we can maintain the direct forward vector       
-                angle *= -1;
-            }
+            obj.name = "firePosition" + (i + 1);
+            float angle = (i - (numPositions - 1) / 2f) * angleBetween;
+
+            // Get the proper offset based on the number of projectiles that exist
+            // Split the sides in half, and position accordingly
 
             obj.transform.parent = fireLocation;
+            obj.transform.position = fireLocation.position;
             firePositions[i] = obj.transform;       
 
             // apply movement and offsets to the created object
-            Quaternion rot = Quaternion.Euler(new Vector3(0, angle, 0));        
+            Quaternion rot = fireLocation.rotation * Quaternion.Euler(new Vector3(0, angle, 0));        
+            //firePositions[i].position = fireLocation.transform.forward;
             firePositions[i].rotation = rot;
-            firePositions[i].position = fireLocation.position + (fireLocation.transform.forward * offset);
+            //firePositions[i].position += obj.transform.forward * offset;
         }
     }
     public GameObject GetPooledObject(ObjectPoolManager.PoolTypes type, int posIndex)
@@ -142,6 +141,7 @@ public class ProjectileSource : MonoBehaviour
 
     public void OnDrawGizmosSelected()
     {
+        Debug.DrawRay(fireLocation.position, fireLocation.forward * 1.0f, Color.green);
         if (firePositions != null && firePositions.Length > 0)
         {
             foreach (Transform t in firePositions)

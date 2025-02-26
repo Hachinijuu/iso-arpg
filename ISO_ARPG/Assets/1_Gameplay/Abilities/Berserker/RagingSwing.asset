@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityIcon: {fileID: 0}
   abilityName: Raging Swing
   abilityDescription: invalid
-  cooldown: 2.5
+  cooldown: 0.5
   cost: -25
   stopsMovement: 1
   checkRange: 1
@@ -24,6 +24,9 @@ MonoBehaviour:
   maxStacks: 5
   StackStats:
   - value: 1
+    maxValue: 0
     type: 2
   - value: 1
+    maxValue: 0
     type: 3
+  damageMultipler: 1

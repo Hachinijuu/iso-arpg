@@ -80,7 +80,7 @@ public class PlayerAbilityHandler : MonoBehaviour
             if (stats.Abilities.Count > 0)
             {
                 InitAbilities();
-                StartCoroutine(HandleFusion());
+                //StartCoroutine(HandleFusion());
             }
             else
                 Debug.LogWarning("[AbilityHandler]: No abilities to read from");
@@ -246,22 +246,23 @@ public class PlayerAbilityHandler : MonoBehaviour
     }
 
     // This function exists because value assignments ContextCallbacks is not very reliable (Only exists within the frame of the callback)
-    IEnumerator HandleFusion()
-    {
-        do
-        {
-            yield return new WaitForSeconds(2);
-        } while (stats.Fusion == null);
-        if (stats.Fusion != null)
-        {
-            stats.Fusion.UseAbility(gameObject);
-            foreach(Ability ab in stats.Abilities)
-            {
-                ab.InitAbility(ab, gameObject); // Reinit the ability (gain projectile sources if any)
-            }
-            Debug.Log("Fusion Activated");
-        }
-    }
+    // IEnumerator HandleFusion()
+    // {
+    //     do
+    //     {
+    //         yield return new WaitForSeconds(2);
+    //     } while (stats.Fusion == null);
+    //     if (stats.Fusion != null)
+    //     {
+    //         stats.Fusion.UseAbility(gameObject);
+    //         Debug.Log("[PlayerAbilityHandler]: Fired: " + stats.Fusion.Name);
+    //         foreach(Ability ab in stats.Abilities)
+    //         {
+    //             ab.InitAbility(ab, gameObject); // Reinit the ability (gain projectile sources if any)
+    //         }
+    //         Debug.Log("PlayerAbilityHandler]: Completed Initialization: " + stats.Fusion.Name);
+    //     }
+    // }
 
     IEnumerator HandleHeld(ChannelAbility used)
     {

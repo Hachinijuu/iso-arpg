@@ -39,11 +39,11 @@ public class HyperBarrage : ChannelAbility
         anim.SetTrigger(animID);
 
         // Calculate damage
-        damage = stats.Damage.Value * damageMultipler * (stats.DEX.Value * GameManager.Instance.MainConvert);
+        damage = stats.Damage.Value + damageMultipler * (stats.DEX.Value * GameManager.Instance.MainConvert);
     }
 
     // want ot use an enumerator, but cannot because it is a scriptable object...
-
+    
     public override void OnTick()
     {
         // every tick, want to fire out a projectile until num projectiles reached.

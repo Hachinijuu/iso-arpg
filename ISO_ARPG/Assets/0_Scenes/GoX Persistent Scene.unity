@@ -7965,13 +7965,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 931343158769966103, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 1580148124802897540, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
       propertyPath: m_Name
       value: GoX Character Huntress base Model
       objectReference: {fileID: 0}
     - target: {fileID: 1580148124802897540, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1768913348812191298, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
       propertyPath: m_Volume
@@ -8017,6 +8021,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2745357018274728477, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8110876348070612512, guid: c87253bf82edf8d45846cba639cbdce2, type: 3}
       propertyPath: stats
       value: 
@@ -10400,7 +10408,7 @@ MonoBehaviour:
   firePositions: []
   offset: 2
   angleStep: 45
-  altPos: {fileID: 0}
+  fireLocation: {fileID: 0}
 --- !u!95 &847397553
 Animator:
   serializedVersion: 5
@@ -20852,6 +20860,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4277472491899391564, guid: 15a0a60ff6aedf94598ed18acf79dfd9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 7057737631166150019, guid: 15a0a60ff6aedf94598ed18acf79dfd9, type: 3}
       propertyPath: m_Volume
       value: 0.021
@@ -20862,7 +20874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8366322350053213544, guid: 15a0a60ff6aedf94598ed18acf79dfd9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9174102325388976082, guid: 15a0a60ff6aedf94598ed18acf79dfd9, type: 3}
       propertyPath: m_LocalPosition.x

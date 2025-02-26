@@ -21,7 +21,7 @@ public class PhoenixSwiftness : IdentityAbility
         //defaultCopy = new PlayerStats();
         if (asFusion)
         {
-            // stop the ability from being timed out, reduce the stat buff values to be expected amounts
+            // stop the ability from being timed out, reduce the stat buff values to be expected
         }
     
     }
@@ -40,6 +40,7 @@ public class PhoenixSwiftness : IdentityAbility
             stats.MoveSpeed.Value *= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
             stats.Dodge.Value += dodgeIncrease;                 // Add 25% more dodge -- flat number
             stats.Projectiles.Value += projectileIncrease;      // Add # of projectiles
+            Debug.Log("Added Stats to: " + stats);
         }
     }
 

@@ -32,7 +32,7 @@ public class DeathSpin : ChannelAbility
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        damage = stats.Damage.Value * damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert) ;
+        damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert) ;
         anim.SetBool(abilAnimID, true);
 
         if (abilityActivated)
@@ -42,6 +42,10 @@ public class DeathSpin : ChannelAbility
             source.Play();
         }
         SetDamageDetection(true);
+
+        // Using the shootSource, rotate the fire location and use this to handle the positional shots
+        // Rotate towards a targetted enemy (Target selection is via click)
+        // Can continue the movemennt, but shots will be directed towards the target
 
         anim.SetFloat(moveAnimID, 0.0f);   // Set speed to none to return to idle
 
