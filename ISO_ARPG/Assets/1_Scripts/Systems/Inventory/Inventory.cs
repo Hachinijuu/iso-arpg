@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
 
         foreach (ItemSlot slot in slots)
         {
-            CellIndex index = new CellIndex(row, col);
+            Vector2Int index = new Vector2Int(row, col);
             slot.index = index;
 
             if (col < perRow - 1)

@@ -1,9 +1,10 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class GameManager : MonoBehaviour
 {
     #region VARIABLES
@@ -92,7 +93,6 @@ public class GameManager : MonoBehaviour
         //if (controller == null)
         //    controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-
         GameObject player = controller.gameObject;
         if (LevelManager.Instance.PlayerSpawnPoint != null)
         {
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         controller.FootSteps.SetMaterial(LevelManager.Instance.material);
 
         // Set the camera to follow
-        LevelManager.Instance.LevelLoaded();
+        //LevelManager.Instance.LevelLoaded();
 
         //if (controller.Stats.Health)
 
@@ -117,16 +117,11 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRespawn()
     {
-        PlayerLoading();
-
-        controller.EnablePlayer(true);
         controller.Movement.Respawn();
-        controller.Stats.Respawn();
+        controller.EnablePlayer(true);
 
         // Need to reset health and such
-
-        // Set the camera to follow
-        LevelManager.Instance.LevelLoaded();
+        controller.Stats.Respawn();
     }
 
     public void PlayerDied()
@@ -226,10 +221,14 @@ public class GameManager : MonoBehaviour
         if (LevelManager.Instance)
         {
             currGameState = GameState.PLAYING;
-            GameUI.SetActive(true);
             // Load the player
             if (controller)         // If the player exists, load the player -- there should be no player by default
+            {
+                GameUI.SetActive(true);
                 PlayerRespawn();
+                // Set the camera to follow
+                LevelManager.Instance.LevelLoaded();
+            }
         }
     }
 

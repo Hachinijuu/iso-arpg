@@ -255,11 +255,11 @@ public class PlayerAbilityHandler : MonoBehaviour
         if (stats.Fusion != null)
         {
             stats.Fusion.UseAbility(gameObject);
-            Debug.Log("Fusion Activated");
             foreach(Ability ab in stats.Abilities)
             {
-                ab.InitAbility(ab, gameObject); // Reinit the ability
+                ab.InitAbility(ab, gameObject); // Reinit the ability (gain projectile sources if any)
             }
+            Debug.Log("Fusion Activated");
         }
     }
 

@@ -65,9 +65,15 @@ public class AIManager : MonoBehaviour
     // To handle, get a reference to the level details to make everything much more streamlined
     LevelDetails details;
 
-    List<Transform> spawnPoints;    // This will get the points from the level ON LOAD, and cleanup for different levels ON UNLOAD
+    List<EnemySpawnPoint> spawnPoints;    // This will get the points from the level ON LOAD, and cleanup for different levels ON UNLOAD
 
-    public GridData grid;
+    List<Vector3> spawnDots;
+
+
+    List<EnemyController> aliveEnemies;
+
+    //[SerializeField] GridData gData;
+    public Grid grid;
     #endregion
 
     #region UNITY FUNCTIONS
@@ -75,7 +81,8 @@ public class AIManager : MonoBehaviour
     void Awake()
     {
         distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
-        spawnPoints = new List<Transform>();
+        spawnPoints = new List<EnemySpawnPoint>();
+        spawnDots = new List<Vector3>();
     }
     void Start()
     {
@@ -96,10 +103,10 @@ public class AIManager : MonoBehaviour
             if (LevelManager.Instance.grid != null)
             {
                 grid = LevelManager.Instance.grid;
-                if (grid.cells == null)
-                {
-                    grid.LoadFromList();
-                }
+                // if (grid.cells == null)
+                // {
+                //     grid.LoadFromList();
+                // }
             }
 
             details = LevelManager.Instance.Details;    // Get a reference to the level details
@@ -126,7 +133,6 @@ public class AIManager : MonoBehaviour
                 }
             }
         }
-
     }
 
     // When a level (scene) is unloading, call this function
@@ -163,6 +169,24 @@ public class AIManager : MonoBehaviour
     #endregion
 
     #region ENEMY SPAWNING
+    public void RegisterToList(EnemyController agent)
+    {
+        if (aliveEnemies == null)
+            aliveEnemies = new List<EnemyController>();
+        
+        if (aliveEnemies != null && aliveEnemies.Count > 0)
+            aliveEnemies.Add(agent);
+    }
+
+    public void UnregisterFromList(EnemyController agent)
+    {
+        if (aliveEnemies == null)
+            aliveEnemies = new List<EnemyController>();
+        
+        if (aliveEnemies != null && aliveEnemies.Count > 0)
+            aliveEnemies.Remove(agent);
+    }
+
     #region Standard Spawning
     // This function will spawn enemies at the desired locations setup in the LEVEL'S spawn list
     public void SpawnEnemies()
@@ -245,7 +269,7 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    public void SpawnEnemyBatch(Transform origin, int numToSpawn, ObjectPool source)
+    public void SpawnEnemyBatch(EnemySpawnPoint origin, int numToSpawn, ObjectPool source)
     {
         // around the origin, where are the eligble spots to spawn?
 
@@ -256,8 +280,8 @@ public class AIManager : MonoBehaviour
             {
                 // Randomize the spawn position
                 int randPoint = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
-                float spawnDist = Random.Range(minSpawnDistance, maxSpawnDistance);
-                Vector3 spawnPos = origin.position;
+                float spawnDist = Random.Range(origin.minSpawnDistance, origin.maxSpawnDistance);
+                Vector3 spawnPos = origin.transform.position;
 
                 // Build a circle around the spawn point
                 spawnPos.x += (CircleUtility.CircleListInstance[randPoint].x * spawnDist);
@@ -265,32 +289,59 @@ public class AIManager : MonoBehaviour
                 spawnPos.y = LevelManager.Instance.FloorOffset;
 
                 // Cleanup the position passed to the agent (valid grid position)
-                CellIndex index = GridUtility.GetIndexFromPoint(grid, spawnPos);
-                if (index.x != -1 && index.y != -1) // if the index is valid
+                Cell c = GridUtility.GetCellFromPoint(grid, spawnPos);
+                if (c != null)
                 {
-                    Cell c = GridUtility.GetCellFromIndex(grid, index);
-                    if (c != null)
+                    // If a cell was found at that position
+                    // Spawn at the cell
+                    if (!c.isObstacle && !c.isOccupied)
                     {
-                        if (!c.isObstacle && !c.isOccupied) // if the cell is not an obstacle and not occupied. (NOTE: FIGURE OUT WHAT FLAGS AS OCCUPIED --> OBSTACLE SPAWN?)
-                        {
-                            spawnPos = c.position;  // Spawn the agent at that cell position
-                        }
-                        else // If it is occupied or an obstacle, spawn the agent as a straggler instead (random position)
-                        {
-                            index = GridUtility.GetRandomIndex(grid, 3);
-                            if (index.x != -1 && index.y != -1) // if the index is valid
-                            {
-                                c = GridUtility.GetCellFromIndex(grid, index);
-                                spawnPos = c.position;
-                            }
-                            else    // If the index is not valid, just skip the spawn
-                            {
-                                continue;   // Skip this spawn (won't spawn the enemy, but continue the loop)
-                            }
-                        }
-                        SpawnEnemy(agent, spawnPos);
+                        spawnPos = c.position;
                     }
+                    else
+                    {
+                        c = GridUtility.GetRandomCell(grid, 3);
+                        if (c != null)
+                        {
+                            spawnPos = c.position;
+                        }
+                        else
+                        {
+                            continue;   // Skip the spawn and continue the loop
+                        }
+                    }
+                    spawnDots.Add(spawnPos);
+                    SpawnEnemy(agent, spawnPos);
+                    // Otherwise spawn at a random point
                 }
+                // Vector2Int index = GridUtility.GetIndexFromPoint(grid, spawnPos);
+                // Debug.Log(index);
+                // if (index.x > 0 && index.y > 0) // if the index is valid
+                // {
+                //     Cell c = GridUtility.GetCellFromIndex(grid, index);
+                //     if (c != null)
+                //     {
+                //         if (!c.isObstacle && !c.isOccupied) // if the cell is not an obstacle and not occupied. (NOTE: FIGURE OUT WHAT FLAGS AS OCCUPIED --> OBSTACLE SPAWN?)
+                //         {
+                //             spawnPos = c.position;  // Spawn the agent at that cell position
+                //         }
+                //         else // If it is occupied or an obstacle, spawn the agent as a straggler instead (random position)
+                //         {
+                //             index = GridUtility.GetRandomIndex(grid, 3);
+                //             if (index.x > 0 && index.y > 0) // if the index is valid
+                //             {
+                //                 c = GridUtility.GetCellFromIndex(grid, index);
+                //                 spawnPos = c.position;
+                //             }
+                //             else    // If the index is not valid, just skip the spawn
+                //             {
+                //                 continue;   // Skip this spawn (won't spawn the enemy, but continue the loop)
+                //             }
+                //         }
+                //         spawnDots.Add(spawnPos);
+                //         SpawnEnemy(agent, spawnPos);
+                //     }
+                // }
             }
         }
     }
@@ -526,4 +577,15 @@ public class AIManager : MonoBehaviour
 
     // i.e, instead of each FSM having the overhead of calling their own update
     // The AI manager will tell the FSM to update, given the interval and time passed
+    void OnDrawGizmos()
+    {
+        if (spawnDots != null && spawnDots.Count > 0)
+        {
+            Gizmos.color = Color.magenta;
+            foreach (Vector3 dot in spawnDots)
+            {
+                Gizmos.DrawSphere(dot, 0.5f);
+            }
+        }
+    }
 }

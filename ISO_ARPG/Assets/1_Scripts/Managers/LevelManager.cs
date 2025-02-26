@@ -70,8 +70,8 @@ public class LevelManager : MonoBehaviour
     [Header("Level Settings")]
     [SerializeField] private Transform playerSpawn;
     public Transform PlayerSpawnPoint { get { return playerSpawn; } }
-    [SerializeField] private List<Transform> enemySpawnPoints;
-    public List<Transform> EnemySpawnPoints { get { return enemySpawnPoints; } }
+    [SerializeField] private List<EnemySpawnPoint> enemySpawnPoints;
+    public List<EnemySpawnPoint> EnemySpawnPoints { get { return enemySpawnPoints; } }
     public LevelType type;
     public enum LevelType { NONE, CLEAR, ELITE }
     [SerializeField] private LevelDetails details;
@@ -85,7 +85,8 @@ public class LevelManager : MonoBehaviour
 
     // Level manager builds a grid for other systems in the level to utilize
     // This would allow the AI manager and destructibles to be spawned randomly throughout the level
-    public GridData grid;
+    [SerializeField] GridData gData;
+    public Grid grid;
     // Gameplay info
     PlayerController player;                // Reference to the player
     //List<GameObject> levelEnemies;          // The enemies to spawn in this level
@@ -107,12 +108,13 @@ public class LevelManager : MonoBehaviour
     public void LevelLoading()
     {
         // Check if the cell array is empty, if it is, load in from the data
-        if (grid)
+        if (grid == null && type != LevelType.NONE)
         {
-            if (grid.cells == null || grid.cells.Length <= 0)
-            {
-                grid.LoadFromList();
-            }
+            grid = new Grid(gData);
+            // if (grid.cells == null || grid.cells.Length <= 0)
+            // {
+            //     grid.LoadFromList();
+            // }
         }
     }
     public void LevelLoaded()
@@ -187,6 +189,36 @@ public class LevelManager : MonoBehaviour
         }
 
         Debug.LogWarning("Level has been completed");
+    }
+    #endregion
+
+    public bool showGrid = false;
+    #region DEBUG
+    void OnDrawGizmos()
+    {
+        if (!showGrid)
+        {
+            return;
+        }
+        if (gData != null)
+        {
+            if (grid == null)
+                grid = new Grid(gData);
+            else
+            {
+                Gizmos.color = Color.blue;
+                Gizmos.DrawSphere(grid.origin, 0.5f);
+                Vector3 cell = new Vector3(grid.cellSize, 0, grid.cellSize);
+                foreach (KeyValuePair<Vector2Int, Cell> c in grid.gridCells)
+                {
+                    if (c.Value.isObstacle)
+                        Gizmos.color = Color.magenta;
+                    else
+                        Gizmos.color = Color.white;
+                    Gizmos.DrawWireCube(c.Value.position, cell);
+                }
+            }
+        }
     }
     #endregion
 

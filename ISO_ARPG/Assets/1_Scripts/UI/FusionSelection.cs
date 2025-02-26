@@ -5,12 +5,12 @@ public class FusionSelection : MonoBehaviour
 {
     public bool shouldConfirm;
     public GameObject selectPopup;
-    private Ability fusion;
+    private IdentityAbility fusion;
     public Button RageButton;
     public Button SwiftButton;
     public Button GiftButton;
 
-    public void Start()
+    public void OEnable()
     {
         CheckForClass();
     }
@@ -31,7 +31,7 @@ public class FusionSelection : MonoBehaviour
             break;
         }
     }
-    public void SelectionClicked(Ability selectedFusion)
+    public void SelectionClicked(IdentityAbility selectedFusion)
     {
         fusion = selectedFusion;
         if (selectPopup != null && shouldConfirm)
@@ -57,7 +57,7 @@ public class FusionSelection : MonoBehaviour
         // Load it to the player
         GameManager.Instance.Player.Stats.SetFusion(fusion);
         // Fire the fusion
-        GameManager.Instance.Player.Stats.Fusion.UseAbility(GameManager.Instance.Player.gameObject); // this is pending
+        //GameManager.Instance.Player.Stats.Fusion.UseAbility(GameManager.Instance.Player.gameObject); // this is pending
         // Load the level
         GameManager.Instance.LoadLevelByID(GameManager.eLevel.LEVEL_2);
     }

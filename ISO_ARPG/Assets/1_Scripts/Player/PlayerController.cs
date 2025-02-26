@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public MouseTarget PlayerTarget { get { return playerTarget; } }
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
-    public ProjectileSource ShootSource { get { return shootSource; } }
+    // public ProjectileSource ShootSource { get { return shootSource; } }
     public FootStepHandler FootSteps { get { return footSteps; } }
     PlayerStats stats;
     PlayerInput input;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     MouseTarget playerTarget;
     AudioSource audioSource;
     Animator animator;
-    ProjectileSource shootSource;
+    // ProjectileSource shootSource;
     FootStepHandler footSteps;
 
     [SerializeField] GameObject auraSource;
@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         if (animator == null)
             animator = GetComponent<Animator>();
-        if (shootSource == null)
-            shootSource = GetComponent<ProjectileSource>();
+        // if (shootSource == null)
+        //     shootSource = GetComponent<ProjectileSource>();
         if (footSteps == null)
             footSteps = GetComponent<FootStepHandler>();
 
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         playerTarget.enabled = shouldEnable;
         audioSource.enabled = shouldEnable;
         animator.enabled = shouldEnable;
-        shootSource.enabled = shouldEnable;
+        // shootSource.enabled = shouldEnable;
         footSteps.enabled = shouldEnable;
     }
 

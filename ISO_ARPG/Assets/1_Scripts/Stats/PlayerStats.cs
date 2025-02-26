@@ -6,7 +6,7 @@ public class PlayerStats : EntityStats
     #region VARIABLES
     [SerializeField] CharacterClass playerClass;    // the class the player has selected
 
-    [SerializeField] Ability ID_Fusion;             // the selected fusion to add passively
+    [SerializeField] IdentityAbility ID_Fusion;             // the selected fusion to add passively
 
     // Any additional abilities the player can get through gameplay
     public List<PassiveAbility> passives;
@@ -18,8 +18,8 @@ public class PlayerStats : EntityStats
     public List<Ability> Abilities;
 
     //private List<Ability> abilities;
-    public Ability Identity { get { return identity; } }
-    Ability identity;
+    public IdentityAbility Identity { get { return identity; } }
+    IdentityAbility identity;
 
 
     #region Public Accessors
@@ -255,9 +255,13 @@ public class PlayerStats : EntityStats
 
     #region SET
 
-    public void SetFusion(Ability fusion)
+    public void SetFusion(IdentityAbility fusion)
     {
-        ID_Fusion = fusion;
+        // Instead of setting it like this, make a LOCAL copy so that it is persistent like the rest of the abilities
+         
+        ID_Fusion = Instantiate(fusion);    // Create a 'new' identity based on what the class has for game use
+        //ID_Fusion.asFusion = true;
+        //ID_Fusion.UseAbility(gameObject);
     }
     #endregion
 }

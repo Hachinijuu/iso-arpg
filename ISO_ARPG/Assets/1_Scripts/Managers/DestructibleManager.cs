@@ -27,7 +27,7 @@ public class DestructibleManager : MonoBehaviour
 
 
     // get a point to the grid data
-    public GridData grid;
+    public Grid grid;
     #endregion
 
     #region UNITY FUNCTIONS
@@ -47,10 +47,10 @@ public class DestructibleManager : MonoBehaviour
             if (LevelManager.Instance.grid != null)
             {
                 grid = LevelManager.Instance.grid;
-                if (grid.cells == null)
-                {
-                    grid.LoadFromList();
-                }
+                // if (grid.cells == null)
+                // {
+                //     grid.LoadFromList();
+                // }
                 if (destructibles != null && destructibles.Length > 0)
                 {
                     StartCoroutine(SpawnDestructibles());
@@ -87,9 +87,9 @@ public class DestructibleManager : MonoBehaviour
                 for (int i = 0; i < numSpawns; i++)
                 {
                     // Get a random cell from the grid
-                    CellIndex cellIndex = GridUtility.GetRandomIndex(grid, 10);
+                    Vector2Int cellIndex = GridUtility.GetRandomIndex(grid, 10);
                     // If a valid cell was found
-                    if (cellIndex.x != -1 && cellIndex.y != -1)
+                    if (cellIndex.x > 0 && cellIndex.y > 0)
                     {
                         // Spawn the object at the cell\
                         Cell currCell = GridUtility.GetCellFromIndex(grid, cellIndex);

@@ -1,35 +1,26 @@
 using UnityEngine;
-public struct CellIndex
-{
-    // Custom container for index, uses INT instead of Vector2 float
-    public int x;
-    public int y;
-
-    public CellIndex(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
-}
 
 [System.Serializable]
 public class Cell 
 {
-    public int x;
-    public int y;
-    public Vector3 position;    // this is the centre of the cell in gamespace
-    public Bounds boundingBox;
-    public bool isObstacle = false;
-    public bool isOccupied = false;
+    public Vector2Int index;
+    //public int x;
+    //public int y;
+    [HideInInspector] public Vector3 position;    // this is the centre of the cell in gamespace
+    [HideInInspector] public Bounds boundingBox;  // this is the size of the cell
+    [HideInInspector] public bool isObstacle = false;
+    [HideInInspector] public bool isOccupied = false;
     public Cell()
     {
-        x = 0;
-        y = 0;
+        index = new Vector2Int(-1,-1);
     }
     public Cell(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        index = new Vector2Int(x, y);
+    }
+
+    public Cell (Vector2Int index)
+    {
+        this.index = index;
     }
 }

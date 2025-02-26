@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // With the difference, gear and tablet slots can extend the functionality to apply the functionality of the item within the slot, to the character.
 public class ItemSlot : MonoBehaviour
 {
-    public CellIndex index;
+    public Vector2Int index;
     public Image img;
     public GameObject selectedIndicator;
     //public TMP_Text temp;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TigersRage", menuName = "sykcorSystems/Abilities/Berserker/TigersRage", order = 4)]
-public class TigersRage : PassiveAbility
+public class TigersRage : IdentityAbility
 {
     #region VARIABLES
     AudioSource source;
@@ -29,6 +29,11 @@ public class TigersRage : PassiveAbility
         controller = actor.GetComponent<PlayerController>();
 
         defaultCopy = stats;
+
+        if (asFusion)
+        {
+            // stop the ability from being timed out, reduce the stat buff values to be expected amounts
+        }
     }
     protected override void Fire(Ability ab, GameObject actor)
     {

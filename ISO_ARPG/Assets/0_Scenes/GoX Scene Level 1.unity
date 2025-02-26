@@ -7605,12 +7605,12 @@ MonoBehaviour:
   vCam: {fileID: 630547185}
   playerSpawn: {fileID: 941618791}
   enemySpawnPoints:
-  - {fileID: 700581644}
-  - {fileID: 1275499642}
-  - {fileID: 1879566141}
-  - {fileID: 727677069}
-  - {fileID: 1044079450}
-  - {fileID: 1409153046}
+  - {fileID: 700581645}
+  - {fileID: 1275499643}
+  - {fileID: 1879566142}
+  - {fileID: 727677070}
+  - {fileID: 1044079451}
+  - {fileID: 1409153047}
   type: 1
   details:
     enemiesToSpawn:
@@ -7622,11 +7622,12 @@ MonoBehaviour:
     elitesToKill: 0
     hordes: []
   material: 0
-  grid: {fileID: 11400000, guid: 885dbe5dae3b46443bbc6be8d4dd77f5, type: 2}
+  gData: {fileID: 11400000, guid: 885dbe5dae3b46443bbc6be8d4dd77f5, type: 2}
   numKilled: 0
   numEliteKilled: 0
   loaderLocation: {fileID: 0}
   levelLoader: {fileID: 100817596}
+  showGrid: 1
 --- !u!1001 &380057713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13383,6 +13384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700581644}
+  - component: {fileID: 700581645}
   m_Layer: 0
   m_Name: Camp One
   m_TagString: Untagged
@@ -13441,6 +13443,20 @@ Transform:
   - {fileID: 1350872611}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &700581645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700581643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c4f00278151224c86e0b92e0e30ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 10
 --- !u!1001 &703281140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14153,6 +14169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 727677069}
+  - component: {fileID: 727677070}
   m_Layer: 0
   m_Name: Camp Four
   m_TagString: Untagged
@@ -14214,6 +14231,20 @@ Transform:
   - {fileID: 1622866936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &727677070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727677068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c4f00278151224c86e0b92e0e30ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 10
 --- !u!1001 &731417898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20357,6 +20388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1044079450}
+  - component: {fileID: 1044079451}
   m_Layer: 0
   m_Name: Camp Five
   m_TagString: Untagged
@@ -20423,6 +20455,20 @@ Transform:
   - {fileID: 642532011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1044079451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044079449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c4f00278151224c86e0b92e0e30ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 10
 --- !u!1001 &1044520110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23095,7 +23141,7 @@ GameObject:
   - component: {fileID: 1201336929}
   - component: {fileID: 1201336928}
   - component: {fileID: 1201336933}
-  - component: {fileID: 1201336932}
+  - component: {fileID: 1201336934}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -23190,7 +23236,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1201336932
+--- !u!114 &1201336933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23199,10 +23245,4137 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201336927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bf550c8a69820b4b81fad8296dd241f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {x: -69.13894, y: 0, z: 109.21532}
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1a7e86b5ac2959048bddf1a578ec69fe, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &1201336934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201336927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae9c740ad35c6af48bf9fe35197da9a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: {x: -68.94665, y: 0, z: 102.05496}
+  removeCells:
+  - index: {x: 41, y: 42}
+    position: {x: 54.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 42}
+    position: {x: 51.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 43}
+    position: {x: 51.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 43}
+    position: {x: 54.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 42}
+    position: {x: 48.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 43}
+    position: {x: 48.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 43}
+    position: {x: 45.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 41}
+    position: {x: 54.053352, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 41}
+    position: {x: 51.053352, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 34}
+    position: {x: 54.053352, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 35}
+    position: {x: 54.053352, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 34}
+    position: {x: 51.053352, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 35}
+    position: {x: 51.053352, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 36}
+    position: {x: 51.053352, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 36}
+    position: {x: 54.053352, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 37}
+    position: {x: 54.053352, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 38}
+    position: {x: 54.053352, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 39}
+    position: {x: 54.053352, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 40}
+    position: {x: 54.053352, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 30}
+    position: {x: 54.053352, y: 0, z: 18.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 18.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 31}
+    position: {x: 54.053352, y: 0, z: 15.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 15.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 32}
+    position: {x: 54.053352, y: 0, z: 12.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 12.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 33}
+    position: {x: 54.053352, y: 0, z: 9.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 9.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 19}
+    position: {x: 54.053352, y: 0, z: 51.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 51.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 20}
+    position: {x: 54.053352, y: 0, z: 48.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 48.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 21}
+    position: {x: 54.053352, y: 0, z: 45.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 45.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 22}
+    position: {x: 54.053352, y: 0, z: 42.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 42.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 23}
+    position: {x: 54.053352, y: 0, z: 39.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 39.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 24}
+    position: {x: 54.053352, y: 0, z: 36.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 36.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 19}
+    position: {x: 51.053352, y: 0, z: 51.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 51.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 20}
+    position: {x: 51.053352, y: 0, z: 48.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 48.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 21}
+    position: {x: 51.053352, y: 0, z: 45.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 45.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 22}
+    position: {x: 51.053352, y: 0, z: 42.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 42.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 23}
+    position: {x: 51.053352, y: 0, z: 39.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 39.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 18}
+    position: {x: 51.053352, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 18}
+    position: {x: 48.053352, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 19}
+    position: {x: 48.053352, y: 0, z: 51.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 51.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 20}
+    position: {x: 48.053352, y: 0, z: 48.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 48.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 21}
+    position: {x: 48.053352, y: 0, z: 45.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 45.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 22}
+    position: {x: 48.053352, y: 0, z: 42.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 42.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 38, y: 18}
+    position: {x: 45.053352, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 19}
+    position: {x: 45.053352, y: 0, z: 51.054962}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 51.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 20}
+    position: {x: 45.053352, y: 0, z: 48.054962}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 48.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 16}
+    position: {x: 48.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 16}
+    position: {x: 45.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 17}
+    position: {x: 45.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 17}
+    position: {x: 48.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 16}
+    position: {x: 42.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 17}
+    position: {x: 42.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 18}
+    position: {x: 42.053352, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 14}
+    position: {x: 45.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 14}
+    position: {x: 42.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 15}
+    position: {x: 42.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 15}
+    position: {x: 45.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 14}
+    position: {x: 39.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 15}
+    position: {x: 39.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 16}
+    position: {x: 39.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 14}
+    position: {x: 36.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 15}
+    position: {x: 36.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 16}
+    position: {x: 36.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 17}
+    position: {x: 36.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 17}
+    position: {x: 39.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 13}
+    position: {x: 54.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 14}
+    position: {x: 54.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 15}
+    position: {x: 54.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 16}
+    position: {x: 54.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 13}
+    position: {x: 51.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 14}
+    position: {x: 51.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 15}
+    position: {x: 51.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 16}
+    position: {x: 51.053352, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 17}
+    position: {x: 51.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 17}
+    position: {x: 54.053352, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 18}
+    position: {x: 54.053352, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 13}
+    position: {x: 48.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 14}
+    position: {x: 48.053352, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 15}
+    position: {x: 48.053352, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 11}
+    position: {x: 54.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 11}
+    position: {x: 51.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 11}
+    position: {x: 48.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 12}
+    position: {x: 48.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 12}
+    position: {x: 51.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 12}
+    position: {x: 54.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 11}
+    position: {x: 45.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 12}
+    position: {x: 45.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 13}
+    position: {x: 45.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 11}
+    position: {x: 42.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 12}
+    position: {x: 42.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 13}
+    position: {x: 42.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 11}
+    position: {x: 39.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 12}
+    position: {x: 39.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 13}
+    position: {x: 39.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 11}
+    position: {x: 36.053352, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 35, y: 12}
+    position: {x: 36.053352, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 35, y: 13}
+    position: {x: 36.053352, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 4}
+    position: {x: 54.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 5}
+    position: {x: 54.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 4}
+    position: {x: 51.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 5}
+    position: {x: 51.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 6}
+    position: {x: 51.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 6}
+    position: {x: 54.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 4}
+    position: {x: 48.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 5}
+    position: {x: 48.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 6}
+    position: {x: 48.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 7}
+    position: {x: 48.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 7}
+    position: {x: 51.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 7}
+    position: {x: 54.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 4}
+    position: {x: 45.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 5}
+    position: {x: 45.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 6}
+    position: {x: 45.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 7}
+    position: {x: 45.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 8}
+    position: {x: 45.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 8}
+    position: {x: 48.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 8}
+    position: {x: 51.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 8}
+    position: {x: 54.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 4}
+    position: {x: 42.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 5}
+    position: {x: 42.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 6}
+    position: {x: 42.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 7}
+    position: {x: 42.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 8}
+    position: {x: 42.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 9}
+    position: {x: 42.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 9}
+    position: {x: 45.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 9}
+    position: {x: 48.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 9}
+    position: {x: 51.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 9}
+    position: {x: 54.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 4}
+    position: {x: 39.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 5}
+    position: {x: 39.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 6}
+    position: {x: 39.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 7}
+    position: {x: 39.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 8}
+    position: {x: 39.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 9}
+    position: {x: 39.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 4}
+    position: {x: 36.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 5}
+    position: {x: 36.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 6}
+    position: {x: 36.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 7}
+    position: {x: 36.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 8}
+    position: {x: 36.053352, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 9}
+    position: {x: 36.053352, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 10}
+    position: {x: 36.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 10}
+    position: {x: 39.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 10}
+    position: {x: 42.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 10}
+    position: {x: 45.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 10}
+    position: {x: 48.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 10}
+    position: {x: 51.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 10}
+    position: {x: 54.053352, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 34, y: 4}
+    position: {x: 33.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 34, y: 5}
+    position: {x: 33.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 34, y: 6}
+    position: {x: 33.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 34, y: 7}
+    position: {x: 33.053352, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 33, y: 4}
+    position: {x: 30.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 33, y: 5}
+    position: {x: 30.053352, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 33, y: 6}
+    position: {x: 30.053352, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 32, y: 4}
+    position: {x: 27.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 27.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 31, y: 4}
+    position: {x: 24.053352, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: 24.053352, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 30, y: 1}
+    position: {x: 21.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 21.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 30, y: 2}
+    position: {x: 21.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 21.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 30, y: 3}
+    position: {x: 21.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 21.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 29, y: 1}
+    position: {x: 18.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 18.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 29, y: 2}
+    position: {x: 18.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 18.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 29, y: 3}
+    position: {x: 18.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 18.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 28, y: 2}
+    position: {x: 15.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 15.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 1}
+    position: {x: 51.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 39, y: 1}
+    position: {x: 48.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 39, y: 2}
+    position: {x: 48.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 2}
+    position: {x: 51.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 1}
+    position: {x: 45.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 38, y: 2}
+    position: {x: 45.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 38, y: 3}
+    position: {x: 45.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 39, y: 3}
+    position: {x: 48.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 40, y: 3}
+    position: {x: 51.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 1}
+    position: {x: 42.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 37, y: 2}
+    position: {x: 42.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 1}
+    position: {x: 39.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 36, y: 2}
+    position: {x: 39.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 1}
+    position: {x: 36.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 35, y: 2}
+    position: {x: 36.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 34, y: 1}
+    position: {x: 33.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 34, y: 2}
+    position: {x: 33.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 34, y: 3}
+    position: {x: 33.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 35, y: 3}
+    position: {x: 36.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 36, y: 3}
+    position: {x: 39.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 37, y: 3}
+    position: {x: 42.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 33, y: 1}
+    position: {x: 30.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 33, y: 2}
+    position: {x: 30.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 33, y: 3}
+    position: {x: 30.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 32, y: 1}
+    position: {x: 27.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 27.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 32, y: 2}
+    position: {x: 27.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 27.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 32, y: 3}
+    position: {x: 27.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 27.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 31, y: 1}
+    position: {x: 24.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 24.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 31, y: 2}
+    position: {x: 24.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 24.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 31, y: 3}
+    position: {x: 24.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 24.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 1}
+    position: {x: 54.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 41, y: 2}
+    position: {x: 54.053352, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 3}
+    position: {x: 54.053352, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 41, y: 0}
+    position: {x: 54.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 54.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 40, y: 0}
+    position: {x: 51.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 51.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 38, y: 0}
+    position: {x: 45.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 45.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 39, y: 0}
+    position: {x: 48.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 48.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 37, y: 0}
+    position: {x: 42.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 42.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 36, y: 0}
+    position: {x: 39.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 39.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 35, y: 0}
+    position: {x: 36.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 36.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 34, y: 0}
+    position: {x: 33.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 33.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 33, y: 0}
+    position: {x: 30.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 30.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 32, y: 0}
+    position: {x: 27.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 27.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 31, y: 0}
+    position: {x: 24.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 24.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 30, y: 0}
+    position: {x: 21.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 21.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 29, y: 0}
+    position: {x: 18.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 18.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 28, y: 0}
+    position: {x: 15.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 15.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 27, y: 0}
+    position: {x: 12.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 12.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 26, y: 0}
+    position: {x: 9.053352, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 9.053352, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 25, y: 0}
+    position: {x: 6.0533524, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 6.0533524, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 24, y: 0}
+    position: {x: 3.0533524, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 23, y: 0}
+    position: {x: 0.053352356, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 22, y: 0}
+    position: {x: -2.9466476, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 21, y: 0}
+    position: {x: -5.9466476, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 20, y: 0}
+    position: {x: -8.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 19, y: 0}
+    position: {x: -11.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 19, y: 1}
+    position: {x: -11.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 20, y: 1}
+    position: {x: -8.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 21, y: 1}
+    position: {x: -5.9466476, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 22, y: 1}
+    position: {x: -2.9466476, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 23, y: 1}
+    position: {x: 0.053352356, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 24, y: 1}
+    position: {x: 3.0533524, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 25, y: 1}
+    position: {x: 6.0533524, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 6.0533524, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 26, y: 1}
+    position: {x: 9.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 9.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 27, y: 1}
+    position: {x: 12.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 12.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 28, y: 1}
+    position: {x: 15.053352, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: 15.053352, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 16, y: 0}
+    position: {x: -20.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 16, y: 1}
+    position: {x: -20.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 17, y: 0}
+    position: {x: -17.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 17, y: 1}
+    position: {x: -17.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 18, y: 0}
+    position: {x: -14.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 18, y: 1}
+    position: {x: -14.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 15, y: 0}
+    position: {x: -23.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 15, y: 1}
+    position: {x: -23.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 10, y: 0}
+    position: {x: -38.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 10, y: 1}
+    position: {x: -38.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 11, y: 0}
+    position: {x: -35.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 11, y: 1}
+    position: {x: -35.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 12, y: 0}
+    position: {x: -32.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 12, y: 1}
+    position: {x: -32.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 13, y: 0}
+    position: {x: -29.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 13, y: 1}
+    position: {x: -29.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 14, y: 0}
+    position: {x: -26.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 14, y: 1}
+    position: {x: -26.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 9, y: 0}
+    position: {x: -41.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 9, y: 1}
+    position: {x: -41.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 19, y: 2}
+    position: {x: -11.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 2}
+    position: {x: -14.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 2}
+    position: {x: -17.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 3}
+    position: {x: -17.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 3}
+    position: {x: -14.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 3}
+    position: {x: -11.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 2}
+    position: {x: -20.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 3}
+    position: {x: -20.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 2}
+    position: {x: -23.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 3}
+    position: {x: -23.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 2}
+    position: {x: -26.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 3}
+    position: {x: -26.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 2}
+    position: {x: -29.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 3}
+    position: {x: -29.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 2}
+    position: {x: -32.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 3}
+    position: {x: -32.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 2}
+    position: {x: -35.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 3}
+    position: {x: -35.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 10, y: 2}
+    position: {x: -38.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 3}
+    position: {x: -38.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 9, y: 2}
+    position: {x: -41.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 3}
+    position: {x: -41.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 19, y: 4}
+    position: {x: -11.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 18, y: 4}
+    position: {x: -14.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 4}
+    position: {x: -17.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 4}
+    position: {x: -20.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 4}
+    position: {x: -23.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 4}
+    position: {x: -26.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 4}
+    position: {x: -29.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 4}
+    position: {x: -32.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 11, y: 4}
+    position: {x: -35.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 18, y: 5}
+    position: {x: -14.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 5}
+    position: {x: -17.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 5}
+    position: {x: -20.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 5}
+    position: {x: -23.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 5}
+    position: {x: -26.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 13, y: 5}
+    position: {x: -29.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 18, y: 6}
+    position: {x: -14.946648, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 6}
+    position: {x: -17.946648, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 6}
+    position: {x: -20.946648, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 5, y: 2}
+    position: {x: -53.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 2}
+    position: {x: -56.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 2}
+    position: {x: -59.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 2}
+    position: {x: -62.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 3}
+    position: {x: -62.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 3}
+    position: {x: -59.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 3}
+    position: {x: -56.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 3}
+    position: {x: -53.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 2}
+    position: {x: -65.94665, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 3}
+    position: {x: -65.94665, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 2}
+    position: {x: -68.94665, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 3}
+    position: {x: -68.94665, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 1}
+    position: {x: -44.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 7, y: 1}
+    position: {x: -47.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 7, y: 2}
+    position: {x: -47.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 2}
+    position: {x: -44.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 1}
+    position: {x: -50.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 6, y: 2}
+    position: {x: -50.946648, y: 0, z: 102.05496}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: 102.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 3}
+    position: {x: -50.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 3}
+    position: {x: -47.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 3}
+    position: {x: -44.946648, y: 0, z: 99.05496}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: 99.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 5, y: 1}
+    position: {x: -53.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 3, y: 4}
+    position: {x: -59.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 5}
+    position: {x: -59.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 4}
+    position: {x: -62.946648, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 5}
+    position: {x: -62.946648, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 6}
+    position: {x: -62.946648, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 6}
+    position: {x: -59.946648, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 1, y: 4}
+    position: {x: -65.94665, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 5}
+    position: {x: -65.94665, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 6}
+    position: {x: -65.94665, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 7}
+    position: {x: -65.94665, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 7}
+    position: {x: -62.946648, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 7}
+    position: {x: -59.946648, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 0, y: 4}
+    position: {x: -68.94665, y: 0, z: 96.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 96.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 5}
+    position: {x: -68.94665, y: 0, z: 93.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 93.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 6}
+    position: {x: -68.94665, y: 0, z: 90.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 90.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 7}
+    position: {x: -68.94665, y: 0, z: 87.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 87.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 8}
+    position: {x: -68.94665, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 8}
+    position: {x: -65.94665, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 8}
+    position: {x: -62.946648, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 8}
+    position: {x: -59.946648, y: 0, z: 84.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 84.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 4, y: 1}
+    position: {x: -56.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 19, y: 35}
+    position: {x: -11.946648, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 36}
+    position: {x: -11.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 37}
+    position: {x: -11.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 38}
+    position: {x: -11.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 39}
+    position: {x: -11.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 40}
+    position: {x: -11.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 41}
+    position: {x: -11.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 42}
+    position: {x: -11.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 36}
+    position: {x: -14.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 37}
+    position: {x: -14.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 38}
+    position: {x: -14.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 36}
+    position: {x: -17.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 17, y: 37}
+    position: {x: -17.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 38}
+    position: {x: -17.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 39}
+    position: {x: -17.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 39}
+    position: {x: -14.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 40}
+    position: {x: -17.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 40}
+    position: {x: -14.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 41}
+    position: {x: -17.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 41}
+    position: {x: -14.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 42}
+    position: {x: -17.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 42}
+    position: {x: -14.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 17, y: 43}
+    position: {x: -17.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -17.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 18, y: 43}
+    position: {x: -14.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -14.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 36}
+    position: {x: -5.9466476, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 37}
+    position: {x: -5.9466476, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 36}
+    position: {x: -8.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 37}
+    position: {x: -8.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 38}
+    position: {x: -8.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 38}
+    position: {x: -5.9466476, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 39}
+    position: {x: -8.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 39}
+    position: {x: -5.9466476, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 40}
+    position: {x: -8.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 40}
+    position: {x: -5.9466476, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 41}
+    position: {x: -8.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 41}
+    position: {x: -5.9466476, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 42}
+    position: {x: -8.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 42}
+    position: {x: -5.9466476, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 19, y: 43}
+    position: {x: -11.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -11.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 20, y: 43}
+    position: {x: -8.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -8.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 21, y: 43}
+    position: {x: -5.9466476, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -5.9466476, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 37}
+    position: {x: 0.053352356, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 22, y: 37}
+    position: {x: -2.9466476, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 22, y: 38}
+    position: {x: -2.9466476, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 38}
+    position: {x: 0.053352356, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 22, y: 39}
+    position: {x: -2.9466476, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 39}
+    position: {x: 0.053352356, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 22, y: 40}
+    position: {x: -2.9466476, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 40}
+    position: {x: 0.053352356, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 22, y: 41}
+    position: {x: -2.9466476, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 41}
+    position: {x: 0.053352356, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 22, y: 42}
+    position: {x: -2.9466476, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 42}
+    position: {x: 0.053352356, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 22, y: 43}
+    position: {x: -2.9466476, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -2.9466476, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 23, y: 43}
+    position: {x: 0.053352356, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 0.053352356, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 24, y: 39}
+    position: {x: 3.0533524, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 24, y: 40}
+    position: {x: 3.0533524, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 24, y: 41}
+    position: {x: 3.0533524, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 24, y: 42}
+    position: {x: 3.0533524, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 24, y: 43}
+    position: {x: 3.0533524, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 3.0533524, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 25, y: 40}
+    position: {x: 6.0533524, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: 6.0533524, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 25, y: 41}
+    position: {x: 6.0533524, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 6.0533524, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 25, y: 42}
+    position: {x: 6.0533524, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 6.0533524, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 25, y: 43}
+    position: {x: 6.0533524, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 6.0533524, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 27, y: 42}
+    position: {x: 12.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 12.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 26, y: 42}
+    position: {x: 9.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 9.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 26, y: 43}
+    position: {x: 9.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 9.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 27, y: 43}
+    position: {x: 12.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 12.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 26, y: 41}
+    position: {x: 9.053352, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 9.053352, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 29, y: 43}
+    position: {x: 18.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 18.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 28, y: 43}
+    position: {x: 15.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 15.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 30, y: 42}
+    position: {x: 21.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 21.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 30, y: 43}
+    position: {x: 21.053352, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: 21.053352, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 29, y: 42}
+    position: {x: 18.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 18.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 28, y: 42}
+    position: {x: 15.053352, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: 15.053352, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 27, y: 41}
+    position: {x: 12.053352, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: 12.053352, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 16, y: 38}
+    position: {x: -20.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 38}
+    position: {x: -23.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 38}
+    position: {x: -26.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 39}
+    position: {x: -26.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 39}
+    position: {x: -23.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 39}
+    position: {x: -20.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 38}
+    position: {x: -29.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 39}
+    position: {x: -29.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 38}
+    position: {x: -32.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 39}
+    position: {x: -32.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 38}
+    position: {x: -35.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 39}
+    position: {x: -35.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 40}
+    position: {x: -35.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 40}
+    position: {x: -32.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 40}
+    position: {x: -29.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 40}
+    position: {x: -26.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 40}
+    position: {x: -23.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 40}
+    position: {x: -20.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 38}
+    position: {x: -38.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 39}
+    position: {x: -38.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 40}
+    position: {x: -38.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 38}
+    position: {x: -41.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 39}
+    position: {x: -41.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 40}
+    position: {x: -41.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 41}
+    position: {x: -41.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 41}
+    position: {x: -38.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 41}
+    position: {x: -35.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 41}
+    position: {x: -32.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 41}
+    position: {x: -29.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 41}
+    position: {x: -26.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 41}
+    position: {x: -23.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 41}
+    position: {x: -20.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 38}
+    position: {x: -44.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 39}
+    position: {x: -44.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 40}
+    position: {x: -44.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 41}
+    position: {x: -44.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 38}
+    position: {x: -47.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 39}
+    position: {x: -47.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 40}
+    position: {x: -47.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 41}
+    position: {x: -47.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 38}
+    position: {x: -50.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 39}
+    position: {x: -50.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 40}
+    position: {x: -50.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 41}
+    position: {x: -50.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 42}
+    position: {x: -50.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 42}
+    position: {x: -47.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 42}
+    position: {x: -44.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 42}
+    position: {x: -41.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 42}
+    position: {x: -38.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 42}
+    position: {x: -35.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 42}
+    position: {x: -32.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 42}
+    position: {x: -29.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 42}
+    position: {x: -26.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 42}
+    position: {x: -23.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 42}
+    position: {x: -20.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 38}
+    position: {x: -53.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 39}
+    position: {x: -53.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 40}
+    position: {x: -53.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 41}
+    position: {x: -53.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 42}
+    position: {x: -53.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 38}
+    position: {x: -56.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 39}
+    position: {x: -56.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 40}
+    position: {x: -56.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 41}
+    position: {x: -56.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 42}
+    position: {x: -56.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 38}
+    position: {x: -59.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 39}
+    position: {x: -59.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 40}
+    position: {x: -59.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 41}
+    position: {x: -59.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 42}
+    position: {x: -59.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 38}
+    position: {x: -62.946648, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 39}
+    position: {x: -62.946648, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 40}
+    position: {x: -62.946648, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 41}
+    position: {x: -62.946648, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 42}
+    position: {x: -62.946648, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 38}
+    position: {x: -65.94665, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 39}
+    position: {x: -65.94665, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 40}
+    position: {x: -65.94665, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 41}
+    position: {x: -65.94665, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 42}
+    position: {x: -65.94665, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 38}
+    position: {x: -68.94665, y: 0, z: -5.945038}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -5.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 39}
+    position: {x: -68.94665, y: 0, z: -8.945038}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -8.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 40}
+    position: {x: -68.94665, y: 0, z: -11.945038}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -11.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 41}
+    position: {x: -68.94665, y: 0, z: -14.945038}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -14.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 42}
+    position: {x: -68.94665, y: 0, z: -17.945038}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -17.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 43}
+    position: {x: -68.94665, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 43}
+    position: {x: -65.94665, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 43}
+    position: {x: -62.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 43}
+    position: {x: -59.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 43}
+    position: {x: -56.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 43}
+    position: {x: -53.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 43}
+    position: {x: -50.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 43}
+    position: {x: -47.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 43}
+    position: {x: -44.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 9, y: 43}
+    position: {x: -41.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -41.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 10, y: 43}
+    position: {x: -38.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -38.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 11, y: 43}
+    position: {x: -35.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -35.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 12, y: 43}
+    position: {x: -32.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -32.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 13, y: 43}
+    position: {x: -29.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -29.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 14, y: 43}
+    position: {x: -26.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -26.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 15, y: 43}
+    position: {x: -23.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -23.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 16, y: 43}
+    position: {x: -20.946648, y: 0, z: -20.945038}
+    boundingBox:
+      m_Center: {x: -20.946648, y: 0, z: -20.945038}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 8, y: 37}
+    position: {x: -44.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 37}
+    position: {x: -47.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 37}
+    position: {x: -50.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 37}
+    position: {x: -53.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 37}
+    position: {x: -56.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 37}
+    position: {x: -59.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 37}
+    position: {x: -62.946648, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 37}
+    position: {x: -65.94665, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 37}
+    position: {x: -68.94665, y: 0, z: -2.9450378}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: -2.9450378}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 7, y: 36}
+    position: {x: -47.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 6, y: 36}
+    position: {x: -50.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 36}
+    position: {x: -53.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 36}
+    position: {x: -56.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 36}
+    position: {x: -59.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 36}
+    position: {x: -65.94665, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 36}
+    position: {x: -62.946648, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 36}
+    position: {x: -68.94665, y: 0, z: 0.05496216}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 0.05496216}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 34}
+    position: {x: -56.946648, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 34}
+    position: {x: -59.946648, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 35}
+    position: {x: -59.946648, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 4, y: 35}
+    position: {x: -56.946648, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 34}
+    position: {x: -62.946648, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 35}
+    position: {x: -62.946648, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 34}
+    position: {x: -65.94665, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 35}
+    position: {x: -65.94665, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 34}
+    position: {x: -68.94665, y: 0, z: 6.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 6.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 35}
+    position: {x: -68.94665, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 33}
+    position: {x: -59.946648, y: 0, z: 9.054962}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 9.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 33}
+    position: {x: -62.946648, y: 0, z: 9.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 9.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 33}
+    position: {x: -65.94665, y: 0, z: 9.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 9.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 33}
+    position: {x: -68.94665, y: 0, z: 9.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 9.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 32}
+    position: {x: -62.946648, y: 0, z: 12.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 12.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 32}
+    position: {x: -65.94665, y: 0, z: 12.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 12.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 32}
+    position: {x: -68.94665, y: 0, z: 12.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 12.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 31}
+    position: {x: -65.94665, y: 0, z: 15.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 15.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 31}
+    position: {x: -68.94665, y: 0, z: 15.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 15.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 5, y: 35}
+    position: {x: -53.946648, y: 0, z: 3.0549622}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: 3.0549622}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 0, y: 29}
+    position: {x: -68.94665, y: 0, z: 21.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 21.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 30}
+    position: {x: -68.94665, y: 0, z: 18.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 18.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 30}
+    position: {x: -65.94665, y: 0, z: 18.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 18.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 2, y: 15}
+    position: {x: -62.946648, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 15}
+    position: {x: -65.94665, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 16}
+    position: {x: -65.94665, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 16}
+    position: {x: -62.946648, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 15}
+    position: {x: -68.94665, y: 0, z: 63.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 63.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 16}
+    position: {x: -68.94665, y: 0, z: 60.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 60.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 17}
+    position: {x: -68.94665, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 17}
+    position: {x: -65.94665, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 17}
+    position: {x: -62.946648, y: 0, z: 57.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 57.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 18}
+    position: {x: -68.94665, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 18}
+    position: {x: -65.94665, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 2, y: 18}
+    position: {x: -62.946648, y: 0, z: 54.054962}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 54.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 1, y: 19}
+    position: {x: -65.94665, y: 0, z: 51.054962}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 51.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 0, y: 19}
+    position: {x: -68.94665, y: 0, z: 51.054962}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 51.054962}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 9}
+    position: {x: -65.94665, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 9}
+    position: {x: -68.94665, y: 0, z: 81.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 81.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 10}
+    position: {x: -68.94665, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 10}
+    position: {x: -65.94665, y: 0, z: 78.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 78.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 11}
+    position: {x: -68.94665, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 11}
+    position: {x: -65.94665, y: 0, z: 75.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 75.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 12}
+    position: {x: -68.94665, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 12}
+    position: {x: -65.94665, y: 0, z: 72.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 72.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 13}
+    position: {x: -68.94665, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 13}
+    position: {x: -65.94665, y: 0, z: 69.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 69.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 0, y: 14}
+    position: {x: -68.94665, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 1, y: 14}
+    position: {x: -65.94665, y: 0, z: 66.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 66.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 0
+    isOccupied: 0
+  - index: {x: 3, y: 1}
+    position: {x: -59.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 2, y: 1}
+    position: {x: -62.946648, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 1, y: 1}
+    position: {x: -65.94665, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 0, y: 1}
+    position: {x: -68.94665, y: 0, z: 105.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 105.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 8, y: 0}
+    position: {x: -44.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -44.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 7, y: 0}
+    position: {x: -47.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -47.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 6, y: 0}
+    position: {x: -50.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -50.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 5, y: 0}
+    position: {x: -53.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -53.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 4, y: 0}
+    position: {x: -56.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -56.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 3, y: 0}
+    position: {x: -59.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -59.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 2, y: 0}
+    position: {x: -62.946648, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -62.946648, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 1, y: 0}
+    position: {x: -65.94665, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -65.94665, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
+  - index: {x: 0, y: 0}
+    position: {x: -68.94665, y: 0, z: 108.05496}
+    boundingBox:
+      m_Center: {x: -68.94665, y: 0, z: 108.05496}
+      m_Extent: {x: 1.5, y: 0, z: 1.5}
+    isObstacle: 1
+    isOccupied: 0
   obstacles:
   - {fileID: 2048351}
   - {fileID: 26029847}
@@ -23519,45 +27692,15 @@ MonoBehaviour:
   - {fileID: 2119139253}
   - {fileID: 2143226383}
   - {fileID: 2146266296}
+  cellMarker: 1
   levelArea: {fileID: 1201336933}
-  cellSize: 2
-  cellTrim: 1
+  cellSize: 3
+  cellTrim: 2
   gridBlockTags:
   - Obstacle
-  ShowCubes: 1
+  ShowCube: 1
   DrawFullTile: 1
   grid: {fileID: 11400000, guid: 885dbe5dae3b46443bbc6be8d4dd77f5, type: 2}
---- !u!114 &1201336933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1201336927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 1a7e86b5ac2959048bddf1a578ec69fe, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1001 &1209291097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24272,6 +28415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1275499642}
+  - component: {fileID: 1275499643}
   m_Layer: 0
   m_Name: Camp Two
   m_TagString: Untagged
@@ -24323,6 +28467,20 @@ Transform:
   - {fileID: 1758660649}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1275499643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275499641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c4f00278151224c86e0b92e0e30ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 10
 --- !u!1001 &1278088758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25987,6 +30145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1409153046}
+  - component: {fileID: 1409153047}
   m_Layer: 0
   m_Name: Camp Six
   m_TagString: Untagged
@@ -26019,6 +30178,20 @@ Transform:
   - {fileID: 46553135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1409153047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409153045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c4f00278151224c86e0b92e0e30ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 10
 --- !u!1001 &1419800800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35739,6 +39912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1879566141}
+  - component: {fileID: 1879566142}
   m_Layer: 0
   m_Name: Camp Three
   m_TagString: Untagged
@@ -35822,6 +39996,20 @@ Transform:
   - {fileID: 1726542814}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1879566142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879566140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c4f00278151224c86e0b92e0e30ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 10
 --- !u!1001 &1880811372
 PrefabInstance:
   m_ObjectHideFlags: 0

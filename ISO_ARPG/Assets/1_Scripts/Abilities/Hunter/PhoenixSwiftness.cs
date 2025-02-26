@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PhoenixSwiftness", menuName = "sykcorSystems/Abilities/Hunter/PhoenixSwiftness", order = 4)]
-public class PhoenixSwiftness : PassiveAbility
+public class PhoenixSwiftness : IdentityAbility
 {
     #region VARIABLES
     public float movespeedIncrease = 1f;
@@ -18,8 +18,12 @@ public class PhoenixSwiftness : PassiveAbility
     {
         stats = actor.GetComponent<PlayerStats>();
         source = actor.GetComponent<AudioSource>();
-
         //defaultCopy = new PlayerStats();
+        if (asFusion)
+        {
+            // stop the ability from being timed out, reduce the stat buff values to be expected amounts
+        }
+    
     }
 
     protected override void Fire(Ability ab, GameObject actor)

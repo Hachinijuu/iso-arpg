@@ -23,6 +23,9 @@ public static class StatLimits
 // SubStat - number w/ extension of substat type (damage, atk_speed, move_speed)
 // TrackedStat - number w/ old and maxValue (clamped)
 
+
+// PENDING STAT TYPES, STAT CATEGORIZATION FOR EASE OF LOOKUPS
+
 #region STAT TYPES
 // Main Stat types are stats that every class will have by default, they are STANDALONE stats that INFLUENCE other stats
 public enum MainStatTypes

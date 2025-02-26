@@ -52,7 +52,7 @@ public class CharacterClass : ScriptableObject
     #region Abilities
     [Header("Abilities")]
     public List<Ability> Abilities = new List<Ability>();
-    public Ability IdentityAbility = null;
+    public IdentityAbility IdentityAbility = null;
     //public float identityCost;                  // what needs to be built up in order to use the identity skill
     #endregion
     #endregion

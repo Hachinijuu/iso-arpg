@@ -71,9 +71,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Respawn()
     {
-        //transform.position = transform.position;
+        transform.position = transform.position;
         moveTarget = transform.position;
-        agent.destination = moveTarget;
+        //agent.destination = moveTarget;
         //Debug.Log(transform.position);
 
         canMove = true;
@@ -98,8 +98,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (canMove)                        // If the player can move
         {
-            agent.destination = moveTarget;       // Move to the target
-            speed = agent.velocity.normalized.magnitude;
+            // Ideally player makes use of NavMesh - temporary movement solution while AI navigation gets looked at
+            HandleMovement();
+            //agent.destination = moveTarget;       // Move to the target
+            //speed = agent.velocity.normalized.magnitude;
         }
         else
         {
@@ -189,6 +191,8 @@ public class PlayerMovement : MonoBehaviour
         // Offset the value by the speed
         float h = moveAxis.x * agent.speed;   // horizontal movement
         float v = moveAxis.y * agent.speed;   // vertical movement
+        // This needs to be relative to the camera positioning, such that the camera can be setup and the directional movement will work properly given all camera directions
+
 
         // for directional move, need to read the input axis and output a destination position based on them.
         // create a projection point based on the direction
@@ -212,6 +216,16 @@ public class PlayerMovement : MonoBehaviour
         // Apply the look
         Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    void HandleMovement()
+    {
+        Vector3 movement = Vector3.MoveTowards(transform.position, moveTarget, 6.0f * Time.deltaTime);
+        transform.position = movement;
+        speed = (transform.position - moveTarget).magnitude;
+        if (speed <= 0.25f)
+            speed = 0;
+        // Debug.Log(speed);
     }
     public void HandleStops(bool stop)
     {
