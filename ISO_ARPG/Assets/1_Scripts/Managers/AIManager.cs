@@ -86,8 +86,8 @@ public class AIManager : MonoBehaviour
     }
     void Start()
     {
-        if (player == null)
-            player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        // if (player == null)
+        //     player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
         InitDistanceGroups();
     }

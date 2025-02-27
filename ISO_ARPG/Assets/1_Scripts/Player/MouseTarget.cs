@@ -31,13 +31,18 @@ public class MouseTarget : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
-        MapActions();
+        // MapActions();
     }
 
-    private void Start()
+    // private void Start()
+    // {
+    //     // Call SetTarget here to get initial target text
+    //     SetTarget();
+    // }
+
+    private void OnEnable()
     {
-        // Call SetTarget here to get initial target text
-        SetTarget();
+        MapActions();
     }
 
     private void OnDestroy()

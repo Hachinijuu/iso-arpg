@@ -119,11 +119,12 @@ public class LevelManager : MonoBehaviour
     }
     public void LevelLoaded()
     {
-        if (player == null)
-            player = GameManager.Instance.Player;
-        //player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        if (player == null)
-            Debug.Log("[LevelManager]: Failed to reference player");
+        player = PlayerManager.Instance.currentPlayer;
+        //if (player == null)
+        //    player = GameManager.Instance.Player;
+        ////player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        //if (player == null)
+        //    Debug.Log("[LevelManager]: Failed to reference player");
 
         // Setup the camera
         vCam.Follow = player.transform;

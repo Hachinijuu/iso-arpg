@@ -67,13 +67,22 @@ public class PlayerAbilityHandler : MonoBehaviour
     #region UNITY FUNCTIONS
     private void Start()
     {
+        // ORDER MATTERS
+        // Abilities must be initialized before mapping the inputs
+        // This is because the functions that are mapped, respond to the types of abilities that are loaded.
+
+
+        //MapPlayerActions();
+    }
+
+    public void InitAbilityHandler()
+    {
         stats = GetComponent<PlayerStats>();
         input = GetComponent<PlayerInput>();
         mouseTarget = GetComponent<MouseTarget>();
         movement = GetComponent<PlayerMovement>();
 
         // Listen for passive ability activation
-
         if (stats != null)
         {
             squareRange = stats.Range.Value * stats.Range.Value;
@@ -85,16 +94,17 @@ public class PlayerAbilityHandler : MonoBehaviour
             else
                 Debug.LogWarning("[AbilityHandler]: No abilities to read from");
         }
-        // ORDER MATTERS
-        // Abilities must be initialized before mapping the inputs
-        // This is because the functions that are mapped, respond to the types of abilities that are loaded.
-
-
-        MapPlayerActions();
+    }
+    private void OnEnable() 
+    {
+        StopAllCoroutines();        // Since whenever enabled, the player is reinitialized, stop all coroutines running on the thread
+        InitAbilityHandler();
+        MapPlayerActions();    
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
+        Debug.Log("Actions unmapped");
         UnmapPlayerActions();
     }
     #endregion
@@ -113,13 +123,20 @@ public class PlayerAbilityHandler : MonoBehaviour
     }
     public void InitAbilities()
     {
-        foreach (Ability ab in stats.Abilities)
+        // Flush the list, this allows for class swap abilities to function
+        canUseAbility.Clear();
+        canUseAbility = new Dictionary<Ability, bool>();
+        Debug.Log(canUseAbility.Count);
+        if (canUseAbility.Count <= 0 || canUseAbility == null)
         {
-            canUseAbility.Add(ab, true);
-            ab.InitAbility(ab, gameObject);
+            foreach (Ability ab in stats.Abilities)
+            {
+                canUseAbility.Add(ab, true);
+                ab.InitAbility(ab, gameObject);
+            }
+            canUseAbility.Add(stats.Identity, true);
+            stats.Identity.InitAbility(stats.Identity, gameObject);
         }
-        canUseAbility.Add(stats.Identity, true);
-        stats.Identity.InitAbility(stats.Identity, gameObject);
     }
     #region HELPER FUNCTIONS
     float GetSquareDistance(Vector3 start, Vector3 end)
@@ -182,7 +199,10 @@ public class PlayerAbilityHandler : MonoBehaviour
                 // Check what type of ability it is (Channel vs Single)
                 if (ab is ChannelAbility channelAb)   // If it is a Channel-able ability
                 {
-                    StartCoroutine(HandleHeld(channelAb));  // Handle the consumption of the hold
+                    // Handle the consumption of the hold
+                    IEnumerator held = HandleHeld(channelAb);   // Store a reference to the coroutine
+                    StopCoroutine(held);                        // Stop it if it is running
+                    StartCoroutine(held);                       // Start the held cycle
                 }
                 else if (ab is PassiveAbility passiveAb)
                 {

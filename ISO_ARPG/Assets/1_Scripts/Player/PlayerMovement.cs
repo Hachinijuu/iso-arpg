@@ -51,23 +51,32 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
 
         // map inputs
+        //MapMovementActions();
+    }
+
+    // private void Start()
+    // {
+    //     //GameManager.Instance.onMoveChanged += UpdateMoveType;
+
+    //     canMove = false;
+    //     canRotate = false;
+
+    //     type = GameManager.Instance.moveType;
+    // }
+
+    private void OnEnable() 
+    {
         MapMovementActions();
     }
 
-    private void Start()
-    {
-        //GameManager.Instance.onMoveChanged += UpdateMoveType;
-
-        canMove = false;
-        canRotate = false;
-
-        type = GameManager.Instance.moveType;
-    }
-
-    private void OnDestroy()
+    private void OnDisable() 
     {
         UnmapMovementActions();
     }
+    // private void OnDestroy()
+    // {
+    //     UnmapMovementActions();
+    // }
 
     public void Respawn()
     {

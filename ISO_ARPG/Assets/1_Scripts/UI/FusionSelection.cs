@@ -18,18 +18,18 @@ public class FusionSelection : MonoBehaviour
     public void CheckForClass()
     {
         // Disable same class buttons
-        switch(GameManager.Instance.playerClass)
-        {
-            case GameManager.eClass.BERSERKER:
-                RageButton.interactable = false;
-            break;
-            case GameManager.eClass.HUNTER:
-                SwiftButton.interactable = false;
-            break;
-            case GameManager.eClass.ELEMENTALIST:
-                GiftButton.interactable = false;
-            break;
-        }
+        // switch(GameManager.Instance.playerClass)
+        // {
+        //     case GameManager.eClass.BERSERKER:
+        //         RageButton.interactable = false;
+        //     break;
+        //     case GameManager.eClass.HUNTER:
+        //         SwiftButton.interactable = false;
+        //     break;
+        //     case GameManager.eClass.ELEMENTALIST:
+        //         GiftButton.interactable = false;
+        //     break;
+        // }
     }
     public void SelectionClicked(IdentityAbility selectedFusion)
     {

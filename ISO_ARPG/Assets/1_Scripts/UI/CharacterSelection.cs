@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterSelection : MonoBehaviour
 {
@@ -13,65 +14,51 @@ public class CharacterSelection : MonoBehaviour
 
     // This is debug character select for temp purposes
     [SerializeField] GameObject panel;
-    [SerializeField] PlayerController berserker;
-    [SerializeField] PlayerController hunter;
-    [SerializeField] PlayerController elementalist;
 
-    public void BerserkerButton()
+    [SerializeField] Button berserker;
+    [SerializeField] Button hunter;
+    [SerializeField] Button elementalist;
+    public void ClassClicked(GoX_Class clickedClass)
     {
-        berserker.gameObject.SetActive(true);
-        hunter.gameObject.SetActive(false);
-        elementalist.gameObject.SetActive(false);
-        GameManager.Instance.GetPlayerReferences();
-    }
-    public void HunterButton()
-    {
-        berserker.gameObject.SetActive(false);
-        hunter.gameObject.SetActive(true);
-        elementalist.gameObject.SetActive(false);
-        GameManager.Instance.GetPlayerReferences();
-    }
-    public void ElementalistButton()
-    {
-        berserker.gameObject.SetActive(false);
-        hunter.gameObject.SetActive(false);
-        elementalist.gameObject.SetActive(true);
-        GameManager.Instance.GetPlayerReferences();
-    }
-    // public void SwitchTo(CharacterClass _class)
-    // {
-    //     if (_class == berserker.Stats.Class)
-    //     {
+        PlayerManager.Instance.ActivatePlayer(clickedClass);
 
-    //     }
-    //     else if (_class == hunter.Stats.Class)
-    //     {
-    //         berserker.gameObject.SetActive(false);
-    //         hunter.gameObject.SetActive(true);
-    //         elementalist.gameObject.SetActive(false);
-    //     }
-    //     else if (_class == elementalist.Stats.Class)
-    //     {
-    //         berserker.gameObject.SetActive(false);
-    //         hunter.gameObject.SetActive(false);
-    //         elementalist.gameObject.SetActive(true);
-    //     }
-    // }
+        ShowCharacterSelection(false);
+    }
+
+    public void BerserkerClicked()
+    {
+        ClassClicked(GoX_Class.BERSERKER);
+    }
+    public void HunterClicked()
+    {
+        ClassClicked(GoX_Class.HUNTER);
+    }
+
+    public void ElementalistClicked()
+    {
+        ClassClicked(GoX_Class.ELEMENTALIST);
+    }
+    public void ShowCharacterSelection(bool value)
+    {
+        // When showing the character selection - disable all characters
+        panel.SetActive(value);
+    }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+            // Allow this popup if debug mode is enabled, otherwise don't handle this shortcut
             if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)
             {
                 if (!panel.activeInHierarchy)
                 {
                     //GameManager.Instance.PauseGame();
-                    panel.SetActive(true);
+                    ShowCharacterSelection(true);
                 }
                 else
                 {
-                    panel.SetActive(false);
+                    ShowCharacterSelection(false);
                     //GameManager.Instance.UnpauseGame();
                 }
             }

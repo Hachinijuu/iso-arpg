@@ -91,6 +91,18 @@ public class PlayerController : MonoBehaviour
         footSteps.enabled = shouldEnable;
     }
 
+    public void Respawn()
+    {
+        EnablePlayer(true);
+        stats.Respawn();
+        movement.Respawn();
+    }
+
+    public void Died()
+    {
+        EnablePlayer(false);
+    }
+
     #endregion
     #region INITALIZATION
     public void InitalizePlayer()           // this can be used for reinit, so be cautious of what to place here.

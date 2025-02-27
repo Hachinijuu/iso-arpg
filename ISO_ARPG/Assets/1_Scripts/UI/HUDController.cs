@@ -23,18 +23,35 @@ public class HUDController : MonoBehaviour
     TrackedStat mana;
     #endregion
     #region UNITY FUNCTIONS
-    private void Start()
+    // private void Start()
+    // {
+    //     PlayerManager.Instance.onPlayerChanged += context => { SetPlayer(context.player); };
+    // }
+
+    private void OnEnable() 
     {
-        InitHud();
+        InitHud();    
+    }
+    void OnDisable()
+    {
+        RemoveEventListeners();
     }
 
+    public void SetPlayer(PlayerController player)
+    {
+        this.player = player;
+        RemoveEventListeners();
+        InitHud();
+    }
     public void InitHud()
     {
-        if (player == null)
-        {
-            // If the player controller is not assigned in editor, find the component through the player
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        }
+        if (player != PlayerManager.Instance.currentPlayer)
+            player = PlayerManager.Instance.currentPlayer;
+        //if (player == null)
+        //{
+        //    // If the player controller is not assigned in editor, find the component through the player
+        //    //player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        //}
 
         if (player != null)
         {
@@ -86,6 +103,7 @@ public class HUDController : MonoBehaviour
     {
         playerStats.Health.Changed -= UpdateHealthSlider;
         playerStats.Mana.Changed -= UpdateManaSlider;
+        RemoveCooldownListeners();
     }
 
     public void AddCooldownListeners()
