@@ -436,8 +436,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainConvert: 1.012
   ArmourConvert: 1
-  controller: {fileID: 0}
   audioSource: {fileID: 0}
+  controller: {fileID: 0}
   currGameState: 0
   levelNames:
   - GoX Main Menu
@@ -451,7 +451,7 @@ MonoBehaviour:
   loseScreen: {fileID: 1009455491}
   CutscenePlayed: 0
   controls: 0
-  moveType: 0
+  difficulties: []
   loadingScreen: {fileID: 1333709529}
   pauseMenu: {fileID: 1059348741}
 --- !u!114 &27658727
@@ -12762,7 +12762,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1616575166}
+        m_TargetAssemblyTypeName: VideoSettings, Assembly-CSharp
+        m_MethodName: SetQualityLevel
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1143608985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14636,6 +14648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1377085189}
   - component: {fileID: 1377085190}
+  - component: {fileID: 1377085191}
   m_Layer: 0
   m_Name: SettingsScreen
   m_TagString: Untagged
@@ -14676,6 +14689,19 @@ MonoBehaviour:
   musicSlider: {fileID: 2076403653}
   sfxSlider: {fileID: 1089751347}
   voicesSlider: {fileID: 500410898}
+--- !u!114 &1377085191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377085188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b37983f358699a489ccbcca2ca4861a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settingsScreen: {fileID: 793601739}
 --- !u!1001 &1389827745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18010,13 +18036,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1616575165}
+  - component: {fileID: 1616575166}
   m_Layer: 5
   m_Name: VideoGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1616575165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18038,6 +18065,19 @@ RectTransform:
   m_AnchoredPosition: {x: -210, y: 75.5}
   m_SizeDelta: {x: 1300, y: 209}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1616575166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616575164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29ffe0409448f544af0bf77a53e1af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qualitySlider: {fileID: 1095862605}
 --- !u!1 &1619489230
 GameObject:
   m_ObjectHideFlags: 0

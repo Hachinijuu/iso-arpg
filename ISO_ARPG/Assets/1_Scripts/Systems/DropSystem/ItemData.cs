@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ItemRarity { COMMON, UNCOMMON, RARE, EPIC, RELIC }
 public enum ItemTypes { RESOURCE, GEAR, RUNE, CONSUMMABLE };
 
 public struct ItemEventArgs
@@ -21,6 +22,7 @@ public class ItemData : ScriptableObject
     public string itemName;
     public string itemDescription;
     public Sprite itemIcon;
+    public ItemRarity rarity;
     public ItemTypes type;
     #endregion
     public GameObject prefab;

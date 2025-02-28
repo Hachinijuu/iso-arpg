@@ -76,8 +76,15 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
+        DeactivatePlayer();
     }
 
+    public void DeactivatePlayer()
+    {
+        currentClass = GoX_Class.NONE;
+        currentPlayer = null;
+        EnableCharacters(false);
+    }
     public void ActivatePlayer(GoX_Class toActivate)
     {
         // Given the class passed to this fuction, see which character should be activated
@@ -105,6 +112,18 @@ public class PlayerManager : MonoBehaviour
             }
             PlayerSelectionArgs arg = new PlayerSelectionArgs(currentClass, currentPlayer);
             FirePlayerChanged(arg);
+        }
+    }
+
+
+    // This function sets ALL the characters in the playable characters dictionary to be either on / off, only use for scripted characters selection logic sequences
+    // (Don't want to have all the characters enabled at once)
+    public void EnableCharacters(bool on)
+    {
+        foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+        {
+            pair.Value.gameObject.SetActive(on);
+            pair.Value.EnablePlayer(on);
         }
     }
 }

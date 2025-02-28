@@ -29,17 +29,20 @@ public class GameManager : MonoBehaviour
     [Range(1, 2)] public float MainConvert = 1.012f;
     [Range(1, 2)] public float ArmourConvert = 0.05f;
 
-    public PlayerController Player { get { return controller; } }
-    [SerializeField] private PlayerController controller;
-    public AudioSource GlobalAudio { get { return audioSource; } }
+    [Header("Global References")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private PlayerController controller;
+    public PlayerController Player { get { return controller; } }
+    public AudioSource GlobalAudio { get { return audioSource; } }
 
     // Get a reference to the hud
     //public HUDController HUD { get { return hud; } }
     //[SerializeField] private HUDController hud;
-    public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
+    [Header("States")]
     public GameState currGameState;
+    public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
     public enum eLevel { MENU, HUB, CUTSCENE, LEVEL_1, TRANSITION, LEVEL_2, LEVEL_3 }
+    [Header("Level Information")]
     [SerializeField] string[] levelNames; // Map this in order of the types
     public eLevel level;
     private string currentLevelName;
@@ -48,9 +51,11 @@ public class GameManager : MonoBehaviour
     public bool CutscenePlayed = false;
 
     // SCENES
-    public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
+    [Header("Control Schemes")]
     public ControlType controls;
-    public PlayerMovement.MoveInput moveType;
+    public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
+    [Header("Difficulty Settings")]
+    public DifficultySetting[] difficulties;
     #endregion
 
     #region EVENTS
