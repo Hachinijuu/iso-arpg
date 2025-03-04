@@ -163,4 +163,21 @@ public class DropSystem : MonoBehaviour
 
     }
     #endregion
+
+    // TODO for drop tables
+    // When an entity registers to the drop system, the question is, how do I know what that enemy should drop?
+    // The answer is a drop table, a list of drops associated with an entity.
+    // The problem, is how are the entities matched up, i.e how do I know which table I should use for whatever enemy or object?
+    // All objects and enemies contain an entityStats.
+    // Add an EntityID, enum or number, to cross reference between the two systems.
+    // Drop table will match the ID and do the drop rolls for the items
+
+    // "Orc Drop Table = 0" and "Orc ID = 0" -- the two match, so do drop rolls for an orc.
+
+    // However, for runes, drops are relative to difficulty level, and class (where main stats drop according to character class)
+    // Therefore, rune drops should be structured a little differently
+    // Upon dropping, a preset is dropped, but the amount is generated on the drop, based on a range allowed by the rarity
+
+    // Create a RuneSystem
+    // This will be responsible for generating Rune stat rolls and handling rarity, stat, and possibly class main stat matching
 }

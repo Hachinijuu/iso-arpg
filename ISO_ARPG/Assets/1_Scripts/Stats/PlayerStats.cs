@@ -240,6 +240,11 @@ public class PlayerStats : EntityStats
 
     public void CheckDied()
     {
+        if (DebugMenu.Instance.Invincible)      // If invincibility is on
+        {
+            return;
+        }
+
         if (health.Value <= 0)
         {
             GameManager.Instance.PlayerDied();  // Tell the game manager the player has died, this will handle the bulk of it?

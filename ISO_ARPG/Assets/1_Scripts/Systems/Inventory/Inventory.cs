@@ -241,6 +241,10 @@ public class Inventory : MonoBehaviour
         {
             if (slot.HasItem)
             {
+                if (slot is RuneSlot runeSlot)
+                {
+                    runeSlot.RemoveRuneEffects();
+                }
                 sourceSlot = slot;
                 ghostItem = sourceSlot.item;
                 Debug.Log("[Inventory]: Source Slot: " + "(" + sourceSlot.index.x + " : " + sourceSlot.index.y + ")");
@@ -316,6 +320,45 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
+                    // Dropped on a position that is not the same slot, or doesn't have an item
+                    // Therefore, check if the slot is a rune, and if it is the matching type as the slot
+                    // We don't want to put defense runes into the slots that are not allowed to contain defense runes
+
+                    if (slot is RuneSlot runeSlot)              // If the slot is a rune slot
+                    {
+                        if (ghostItem.type == ItemTypes.RUNE && ghostItem is RuneData rune)   // If the held item is a rune
+                        {
+                            if (rune.runeType == runeSlot.type) // If the rune type matches the slot
+                            {
+                                Debug.Log("[Inventory]: Matching slots, embed the rune");
+                                slot.item = ghostItem;
+                                ghostItem.LoadSpriteToImage(slot.img);
+
+                                // Tell the slot to use the rune
+                                runeSlot.ApplyRuneEffects();
+                            }
+                            else
+                            {
+                                Debug.Log("[Inventory]: Slot is for " + runeSlot.type + " defaulting");
+                                sourceSlot.item = ghostItem;
+                                ghostItem.LoadSpriteToImage(sourceSlot.img);
+                            }
+                        }
+                        else // The held item is not a rune
+                        {
+                            Debug.Log("[Inventory]: Failed placement, reverting");
+                            // Revert item back to slot
+                            sourceSlot.item = ghostItem;
+                            ghostItem.LoadSpriteToImage(sourceSlot.img);
+                        }
+                    }
+                    else // the selected slot is NOT a rune slot, handle regular placement.
+                    {
+                        Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
+                        slot.item = ghostItem;
+                        ghostItem.LoadSpriteToImage(slot.img);
+                    }
+
                     // When looking at valid slots, check if the item can be used for that slot
                     // if (slot is RuneSlot)
                     // {
@@ -329,9 +372,6 @@ public class Inventory : MonoBehaviour
                     // else
                     // {
                     // }
-                    Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
-                    slot.item = ghostItem;
-                    ghostItem.LoadSpriteToImage(slot.img);
                 }
                 ghostItem = null;
 
