@@ -11,14 +11,14 @@ GameObject:
   - component: {fileID: 1885831531034458892}
   - component: {fileID: 4474055058302910940}
   - component: {fileID: 3733030513887964247}
-  - component: {fileID: 6136086938228873302}
   - component: {fileID: 1774046092802974741}
   - component: {fileID: 4857264372611273061}
   - component: {fileID: 2934287372168685471}
   - component: {fileID: 261368122497287345}
-  m_Layer: 0
+  - component: {fileID: 1060346488955972717}
+  m_Layer: 8
   m_Name: Barrel
-  m_TagString: Hurtbox
+  m_TagString: Destructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,27 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6136086938228873302
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3162809818822135422}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!208 &1774046092802974741
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -189,3 +168,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 4857264372611273061}
+--- !u!136 &1060346488955972717
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162809818822135422}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 35.028515
+  m_Height: 58.951347
+  m_Direction: 1
+  m_Center: {x: 0.0000019073486, y: -0.0000009536745, z: 35.000004}

@@ -9,9 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4931190580317987991}
-  m_Layer: 0
+  - component: {fileID: 4814783120126061995}
+  - component: {fileID: 5600523915662736100}
+  - component: {fileID: 7366374295542926409}
+  - component: {fileID: 2625719241804694089}
+  m_Layer: 8
   m_Name: Destroyed Wagon
-  m_TagString: Untagged
+  m_TagString: Destructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +37,91 @@ Transform:
   - {fileID: 2828273131040228978}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4814783120126061995
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283619824221698988}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.607459, y: 0.67508596, z: 1.3436688}
+  m_Center: {x: -0.014031132, y: 0.37172103, z: 0.17183363}
+--- !u!54 &5600523915662736100
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283619824221698988}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7366374295542926409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283619824221698988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39eaf8fa7dd59042aa7857bef90a6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 2625719241804694089}
+--- !u!114 &2625719241804694089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283619824221698988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6cede2f343404641abee7a1354a0f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    value: 1
+    maxValue: 0
+    type: 1
+  armour:
+    value: -1
+    maxValue: 0
+    type: 0
+  dodge:
+    value: -1
+    maxValue: 0
+    type: 0
 --- !u!1 &2429742534309139652
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,7 +133,7 @@ GameObject:
   - component: {fileID: 2828273131040228978}
   - component: {fileID: 7482762619205383615}
   - component: {fileID: 6337290047004546018}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel004 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +216,7 @@ GameObject:
   - component: {fileID: 1455375459639339464}
   - component: {fileID: 5040333326055941755}
   - component: {fileID: 707179194135240353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GOX_Props_Destroyed-Wagon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
