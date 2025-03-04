@@ -20,13 +20,15 @@ public class DropSystem : MonoBehaviour
     private List<EntityStats> enemies;
     private List<EntityStats> destructibles;
 
-    [SerializeField] ItemData expOrb;
+    [SerializeField] List<DropTable> dropTables;
+    //[SerializeField] ItemData expOrb;
     #endregion
     #region INITIALIZATION
     public void InitDropLists()
     {
         enemies = new List<EntityStats>();
         destructibles = new List<EntityStats>();
+        dropTables = new List<DropTable>();
     }
 
     public GameObject[] destructionParticles;
@@ -35,26 +37,26 @@ public class DropSystem : MonoBehaviour
     public void RegisterEnemyDrop(EntityStats enemy)
     {
         enemies.Add(enemy);
-        enemy.OnDied += CheckDrop;
+        enemy.OnDied += context => { CheckDrop(enemy); } ;
     }
 
     public void UnregisterEnemyDrop(EntityStats enemy)
     {
         enemies.Remove(enemy);
-        enemy.OnDied -= CheckDrop;
+        enemy.OnDied -= context => { CheckDrop(enemy); };
     }
 
     // When destructibles set themselves to inactive, unregister them from the list
     public void RegisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Add(destructible);
-        destructible.OnDied += context => { CheckDrop(context); SpawnParticle(context); HandleDestruction(context); } ;
+        destructible.OnDied += context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); } ;
     }
 
     public void UnregisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Remove(destructible);
-        destructible.OnDied -= context => { CheckDrop(context); SpawnParticle(context); HandleDestruction(context); } ;
+        destructible.OnDied -= context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); } ;
     }
 
     public void HandleDestruction(GameObject source)
@@ -87,13 +89,57 @@ public class DropSystem : MonoBehaviour
     #endregion
     #region FUNCTIONALITY
 
-    private void CheckDrop(GameObject whoDied) // check the thing and map it to what it is supposed to drop
+    private void CheckDrop(EntityStats whoDied) // check the thing and map it to what it is supposed to drop
     {
+        // match the entity to the drop table
+        DropTable dropTable = new DropTable();
+        foreach (DropTable table in dropTables)
+        {
+            if (table.dropId == whoDied.id)
+            {
+                dropTable = table;
+                return;
+            }
+        }
 
-        float dropValue = Random.Range(0, expOrb.dropChance * 2);
+        // Drop rolling
+        foreach (ItemData item in dropTable.items)
+        {
+            float dropValue = Random.Range(0, 100f);
 
-        if (dropValue > expOrb.dropChance)
-            CreatedDroppedObject(whoDied.transform.position, expOrb);
+            // If I get 80 and I have a 20% chance to drop an item
+            // I do not get the item, because I rolled an 80.
+            // I have an 80% chance NOT to get the item 20-100
+            if (dropValue <= item.dropChance)
+            {
+                if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
+                {
+                    // Do another roll for the rune rarity, this is relative to the difficulty
+                    float rarityRoll = Random.Range(0, 100f);
+
+                    DifficultySetting difficultyMod = GameManager.Instance.currDifficulty;
+                    foreach (RarityChances chance in difficultyMod.dropModifiers)
+                    {
+                        // If I get a 30 roll on dropValue
+                        // And the chance for a Relic tier rune is 5%, I get that rune
+                        // Since the loop will check for the chances based on sequential order, (common -> relic)
+                        // The rarity will be update based on the lowest drop chance value
+                        
+                        if (chance.dropChance < rarityRoll)
+                        {
+                            rune.rarity = chance.rarity;
+                        }
+                    }
+                    rune = RuneSystem.Instance.RollRuneStats(rune);
+                }
+                CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
+            }
+        }
+
+        //float dropValue = Random.Range(0, expOrb.dropChance * 2);
+        //
+        //if (dropValue > expOrb.dropChance)
+        //    CreatedDroppedObject(whoDied.transform.position, expOrb);
         //else
         //    Debug.Log("[DropSystem]: No drops");
         //Debug.Log("Will I drop something?");
@@ -156,12 +202,6 @@ public class DropSystem : MonoBehaviour
     {
         InitDropLists();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     #endregion
 
     // TODO for drop tables
@@ -177,6 +217,11 @@ public class DropSystem : MonoBehaviour
     // However, for runes, drops are relative to difficulty level, and class (where main stats drop according to character class)
     // Therefore, rune drops should be structured a little differently
     // Upon dropping, a preset is dropped, but the amount is generated on the drop, based on a range allowed by the rarity
+
+    // Upon dropping a preset rune is dropped that contains the STATS which should be rolled for
+    // Stats are rolled based on the rarity ranges, and a random rune is returned on the roll
+
+    // For item giving, give the preset with specified rolls?
 
     // Create a RuneSystem
     // This will be responsible for generating Rune stat rolls and handling rarity, stat, and possibly class main stat matching

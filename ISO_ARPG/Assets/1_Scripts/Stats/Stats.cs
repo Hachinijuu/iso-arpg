@@ -34,7 +34,6 @@ public enum MainStatTypes
     STRENGTH,       // modifier to berserker damage, health and armour
     DEXTERITY,      // modifier to hunter damage, speed and dodge
     INTELLIGENCE,   // modifier to elementalist damage, mana and mana regen
-    HASTE,          // modifies attack speed and movement speed
 }
 
 // Tracked Stats are stats that will change in value during gameplay, they keep track of current and maximum values
@@ -50,6 +49,7 @@ public enum TrackedStatTypes
 public enum SubStatTypes
 {
     NONE,
+    HASTE,          // modifies attack speed and movement speed
     DAMAGE,         // damage           -- displayed as #, use flat
     MOVE_SPEED,     // movement speed   -- displayed as %, use flat mutl no conversion
     ATTACK_SPEED,   // attack speed     -- displayed as %, use multiplier
@@ -57,6 +57,8 @@ public enum SubStatTypes
     DODGE,          // chance to dodge  -- displayed as %, mult
     CRIT_CHANCE,    // chance to crit   -- displayed as %
     CRIT_DAMAGE,    // damage of critical strikes   -- displayed as %
+    PROJECTILES,    // the number of projectiles    -- flat number
+    CHAINS,         // the number of chained attacks allowed    -- flat number
     // CRIT DAMAGE IS ADDITIVE
 }
 

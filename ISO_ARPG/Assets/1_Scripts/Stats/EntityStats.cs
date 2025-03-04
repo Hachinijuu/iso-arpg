@@ -1,8 +1,11 @@
 using UnityEngine;
 
+public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT }
+
 public class EntityStats : MonoBehaviour
 {
     #region VARIABLES
+    public EntityID id;
     // All entites have a health stat.
     public TrackedStat Health { get { return health; } }
 
@@ -35,7 +38,7 @@ public class EntityStats : MonoBehaviour
     }
     #endregion
     #region FUNCTIONALITY
-    private void CheckDied(float value)
+    public virtual void CheckDied(float value)
     {
         //Debug.Log("Took damage");
         if (health.Value <= 0)

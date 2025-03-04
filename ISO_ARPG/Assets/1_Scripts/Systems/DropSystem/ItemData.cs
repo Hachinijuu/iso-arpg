@@ -13,7 +13,7 @@ public struct ItemEventArgs
     }
 }
 
-[CreateAssetMenu(fileName = "Item", menuName = "sykcorSystems/Items", order = 1)]
+[CreateAssetMenu(fileName = "Item", menuName = "sykcorSystems/Drops/Item", order = 2)]
 public class ItemData : ScriptableObject
 {
     #region VARIABLES

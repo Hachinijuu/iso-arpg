@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     public enum ControlType { MOUSE_KEYBOARD, CONTROLLER }
     [Header("Difficulty Settings")]
     public DifficultySetting[] difficulties;
+    public DifficultySetting currDifficulty;
     #endregion
 
     #region EVENTS

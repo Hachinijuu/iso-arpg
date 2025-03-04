@@ -97,12 +97,12 @@ public class PlayerStats : EntityStats
         LoadAbilities();
         FillStatList();
 
-        health.Changed += context => { CheckDied(); };
+        health.Changed += context => { CheckDied(context); };
     }
 
     public void OnDisable()
     {
-        health.Changed -= context => { CheckDied(); };
+        health.Changed -= context => { CheckDied(context); };
     }
 
     public void FillStatList()
@@ -163,14 +163,6 @@ public class PlayerStats : EntityStats
         damage = new SubStat(playerClass.Damage);
         // weapon damage
 
-        // ability
-
-        // damage 1
-        // damage 2
-
-        // ability calculating damage to deal
-        // player's damage (base damage) + ability damage
-
         attackSpeed = new SubStat(playerClass.AttackSpeed);
         critDamage = new SubStat(playerClass.CritDamage);
         critChance = new SubStat(playerClass.CritChance);
@@ -185,27 +177,6 @@ public class PlayerStats : EntityStats
         PlayerStats temp = new PlayerStats();
         temp = stats;
         return temp;
-        //health = new TrackedStat(stats.health);
-        //mana = new TrackedStat(stats.mana);
-        //
-        //strength = new MainStat(stats.strength);
-        //dexterity = new MainStat(stats.dexterity);
-        //intelligence = new MainStat(stats.intelligence);
-        //
-        //attackRange = new Stat(stats.attackRange);
-        //numProjectiles = new Stat(stats.numProjectiles);
-        //numChains = new Stat(stats.numChains);
-        //
-        //moveSpeed = new SubStat(stats.moveSpeed);
-        //idGain = new Stat(stats.idGain);
-        //
-        //damage = new SubStat(stats.damage);
-        //attackSpeed = new SubStat(stats.attackSpeed);
-        //critDamage = new SubStat(stats.critDamage);
-        //critChance = new SubStat(stats.critChance);
-        //
-        //armour = new SubStat(stats.armour);
-        //dodge = new SubStat(stats.dodge);
     }
 
     public void LoadAbilities()
@@ -217,38 +188,11 @@ public class PlayerStats : EntityStats
         }
         identity = Instantiate(playerClass.IdentityAbility);    // Create a 'new' identity based on what the class has for game use
     }
-
-    //public void LoadDefaultMainStats()
-    //{
-    //    strength = 
-    //    //strength = new MainStat(MainStatTypes.STRENGTH, playerClass.strength);
-    //    //dexterity = new MainStat(MainStatTypes.DEXTERITY, playerClass.dexterity);
-    //    //intelligence = new MainStat(MainStatTypes.INTELLIGENCE, playerClass.intelligence);
-    //}
-    //
-    //public void LoadTrackedStats()
-    //{
-    //    //health = new TrackedStat(TrackedStatTypes.HEALTH, playerClass.health, playerClass.health);
-    //    //mana = new TrackedStat(TrackedStatTypes.MANA, playerClass.mana, playerClass.mana);
-    //    //idBar = new TrackedStat(TrackedStatTypes.ID_BAR, 0, playerClass.identityAbility.Cost);
-    //}
-    //
-    //public void LoadSubstats()
-    //{
-    //    //moveSpeed = new SubStat(SubStatTypes.MOVE_SPEED, playerClass.moveSpeed);
-    //}
-
-    public void CheckDied()
+    public override void CheckDied(float value)
     {
-        if (DebugMenu.Instance.Invincible)      // If invincibility is on
-        {
+        if (DebugMenu.Instance.Invincible)  // If invincibility is on, then don't check for death
             return;
-        }
-
-        if (health.Value <= 0)
-        {
-            GameManager.Instance.PlayerDied();  // Tell the game manager the player has died, this will handle the bulk of it?
-        }
+        base.CheckDied(value);
     }
     public void Respawn()
     {
@@ -259,26 +203,6 @@ public class PlayerStats : EntityStats
     #endregion
 
     #region SET
-
-
-    // This function exists because value assignments ContextCallbacks is not very reliable (Only exists within the frame of the callback)
-    // IEnumerator HandleFusion()
-    // {
-    //     do
-    //     {
-    //         yield return new WaitForSeconds(2);
-    //     } while (stats.Fusion == null);
-    //     if (stats.Fusion != null)
-    //     {
-    //         stats.Fusion.UseAbility(gameObject);
-    //         Debug.Log("[PlayerAbilityHandler]: Fired: " + stats.Fusion.Name);
-    //         foreach(Ability ab in stats.Abilities)
-    //         {
-    //             ab.InitAbility(ab, gameObject); // Reinit the ability (gain projectile sources if any)
-    //         }
-    //         Debug.Log("PlayerAbilityHandler]: Completed Initialization: " + stats.Fusion.Name);
-    //     }
-    // }
 
     public void SetFusion(IdentityAbility fusion)
     {

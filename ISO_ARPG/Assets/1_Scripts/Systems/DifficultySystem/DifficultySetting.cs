@@ -9,7 +9,7 @@ public class DifficultySetting : ScriptableObject
     public float damageMultiplier = 1.0f;
     public int minEnemies = 30;
     public int maxEnemies = 50;
-    public RarityChances[] dropModifiers;
+    public List<RarityChances> dropModifiers;
 
     // TODO: Apply these changes to AI manager and enemies
     // Enemy damage will be relatively simple, their hitboxes have a static damage amount
