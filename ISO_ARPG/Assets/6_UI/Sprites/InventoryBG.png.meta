@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: InventoryBG_0
+      name: Half_Big_L
       rect:
         serializedVersion: 2
         x: 1088
@@ -118,7 +118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: InventoryBG_1
+      name: Half_Small_R
       rect:
         serializedVersion: 2
         x: 2048
@@ -138,6 +138,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Half_Big_R
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 960
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6df1ebfc69020314a9b489c026d8c5aa
+      internalID: 1937759976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Half_Small_L
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 290
+        width: 960
+        height: 790
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13eb92480a3a9b54087c7a6eaa6d58ab
+      internalID: 879567183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -149,8 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      InventoryBG_0: -89027847
-      InventoryBG_1: -1786812613
+      Half_Big_L: -89027847
+      Half_Big_R: 1937759976
+      Half_Small_L: 879567183
+      Half_Small_R: -1786812613
       InventoryBG_2: -2113372607
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
