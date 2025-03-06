@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GoX_Difficulties { MORTAL, DEMIGOD, GOD, DEITY, DISASTER }
+
 [CreateAssetMenu(fileName = "Difficulty", menuName = "sykcorSystems/Difficulty", order = 1)]
 public class DifficultySetting : ScriptableObject
 {
     public float healthMultiplier = 1.0f;
     public float damageMultiplier = 1.0f;
-    public int minEnemies = 30;
-    public int maxEnemies = 50;
+    public float enemyMultipler = 1.0f;
     public List<RarityChances> dropModifiers;
 
     // TODO: Apply these changes to AI manager and enemies

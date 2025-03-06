@@ -60,6 +60,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region EVENTS
+    public delegate void DifficultyChanged(DifficultySetting setting);
+    public event DifficultyChanged onDifficultyChanged;
+    public void FireDifficultyChanged(DifficultySetting setting) {if (onDifficultyChanged != null) onDifficultyChanged(setting); }
+    public void FireDifficultyChanged() {if (onDifficultyChanged != null) onDifficultyChanged(currDifficulty); }
+
     #endregion
 
     #region UNITY FUNCTIONS
@@ -333,10 +338,9 @@ public class GameManager : MonoBehaviour
         controller = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         if (controller != null)
         {
-            
+            PlayerLoading();
+            PlayerRespawn();
         }
-        PlayerLoading();
-        PlayerRespawn();
     }
 
     // Exit Game

@@ -14,9 +14,9 @@ public class CharacterUIPanel
 
     public void LoadFromClass(CharacterClass toLoad)
     {
-        characterName.text = toLoad.className;
-        description.text = toLoad.classDescription;
-        characterIcon.sprite = toLoad.classIcon;
+        characterName.text = toLoad.entityName;
+        description.text = toLoad.description;
+        characterIcon.sprite = toLoad.icon;
         
 
         // How to match ability icons to the class

@@ -13,6 +13,7 @@ public class EnemyController : AdvancedFSM
 
     [HideInInspector]
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
+    // public float damage;
 
     [SerializeField] protected Hitbox damageSource;
     public Hitbox DamageSource { get { return damageSource; } }

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Class", menuName = "sykcorSystems/CharacterClass", order = 1)]
-public class CharacterClass : ScriptableObject
+[CreateAssetMenu(fileName = "Class", menuName = "sykcorSystems/Entities/Class", order = 2)]
+public class CharacterClass : EntityData
 {
     // this character class scriptable object will serve as a blueprint for following class assets to be created from.
     // any realtime gameplay information will be controlled in playerdata / player controller.
@@ -11,16 +11,9 @@ public class CharacterClass : ScriptableObject
 
     // variables
     #region VARIABLES
-    #region Class Description
-    [Header("Descriptions")]
-    public string className;
-    public string classDescription;
-    public Sprite classIcon;
-    #endregion
     #region Stats
 
     [Header("Main Stats")]
-    public TrackedStat Health;
     public TrackedStat Mana;
     public MainStat Strength;
     public MainStat Dexterity;
@@ -37,14 +30,10 @@ public class CharacterClass : ScriptableObject
     [Range(0, StatLimits.MOVE_MAX)] public float rotationSpeed = -1f;
 
     [Header("Offensive Stats")]
-    public SubStat Damage;
     public SubStat AttackSpeed;
     public SubStat CritDamage;
     public SubStat CritChance;
 
-    [Header("Defensive Stats")]
-    public SubStat Armour;
-    public SubStat Dodge;
     #endregion
 
     #region Abilities

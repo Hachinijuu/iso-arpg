@@ -74,6 +74,8 @@ public class AIManager : MonoBehaviour
 
     //[SerializeField] GridData gData;
     public Grid grid;
+
+    float difficultyModifer;
     #endregion
 
     #region UNITY FUNCTIONS
@@ -90,6 +92,7 @@ public class AIManager : MonoBehaviour
         //     player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
         InitDistanceGroups();
+        GameManager.Instance.onDifficultyChanged += context => { UpdateDifficulty(); };
     }
     #endregion
 
@@ -157,6 +160,10 @@ public class AIManager : MonoBehaviour
     #endregion
 
     #region HELPER FUNCTIONS
+    public void UpdateDifficulty()
+    {
+        difficultyModifer = GameManager.Instance.currDifficulty.enemyMultipler;
+    }
     float GetSquareDistance(Vector3 start, Vector3 end)
     {
         return (start - end).sqrMagnitude;
@@ -220,7 +227,7 @@ public class AIManager : MonoBehaviour
             {
                 if (pool.Prefab == enemy)   // If the enemy matches the pool (key), we want to spawn the number of enemies designated in the group
                 {
-                    int numSpawns = Random.Range(group.minSpawn, group.maxSpawn);
+                    int numSpawns = (int)(Random.Range(group.minSpawn, group.maxSpawn) * difficultyModifer);
                     Debug.Log("[AIManager]: Spawning " + numSpawns + " " + enemy.name);
                     // To know how much enemies to spawn at each spawnpoint, take the total number of spawns / number of locations
                     int perPoint = numSpawns / spawnPoints.Count;
@@ -352,6 +359,17 @@ public class AIManager : MonoBehaviour
             EnemyController controller = agent.GetComponent<EnemyController>();
             if (controller)
             {
+                // Get the modified values passed to the controller
+                EntityStats stats = controller.GetComponent<EntityStats>();
+                if (stats != null)
+                {
+                    // How do we get base, relative to adjusted stats?
+                    // i.e, what is the default?
+                    stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
+                    stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
+                }
+                //controller.damage *= GameManager.Instance.currDifficulty.damageMultiplier;
+
                 controller.Respawn();
             }
 

@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour
             foreach (CharacterPair c in characters)
             {
                 playableCharacters.Add(c.Guardian, c.Character);
-                Debug.Log("[PlayerManager]: Loaded " + c.Character.Stats.Class.className + " as a playable character");
+                Debug.Log("[PlayerManager]: Loaded " + c.Character.Stats.Class.entityName + " as a playable character");
                 if (c.Character.gameObject.activeInHierarchy)
                 {
                     c.Character.gameObject.SetActive(false);

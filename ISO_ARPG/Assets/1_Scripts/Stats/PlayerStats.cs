@@ -45,7 +45,7 @@ public class PlayerStats : EntityStats
     public SubStat MoveSpeed { get { return moveSpeed; } }
 
     // Offensive
-    public SubStat Damage { get { return damage; } }
+    //public SubStat Damage { get { return damage; } }
     public SubStat AttackSpeed { get { return attackSpeed; } }
     public SubStat CritDamage { get { return critDamage; } }
     public SubStat CritChance { get { return critChance; } }
@@ -71,7 +71,7 @@ public class PlayerStats : EntityStats
     Stat rotationSpeed;
 
     // Offensive
-    SubStat damage;
+    //SubStat damage;
     SubStat attackSpeed;
     SubStat critDamage;
     SubStat critChance;
@@ -203,6 +203,7 @@ public class PlayerStats : EntityStats
         health.Value = health.MaxValue;
         mana.Value = mana.MaxValue;
         idBar.Value = 0;
+        Debug.Log("[PlayerStats]: Respawned, values set to default");
     }
     #endregion
 

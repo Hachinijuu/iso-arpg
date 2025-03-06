@@ -87,22 +87,22 @@ public class Hitbox : MonoBehaviour
     public virtual void InitHitbox()
     {
         // Stops the hitbox from damaging the source of the damage
-        if (source != null)
-        {
-            Collider sourceCollider = source.GetComponentInChildren<Collider>();
-            Collider damageCollider = GetComponent<Collider>();
+        // if (source != null)
+        // {
+        //     Collider sourceCollider = source.GetComponentInChildren<Collider>();
+        //     Collider damageCollider = GetComponent<Collider>();
 
-            // Want to ignore the collisions between the source of the damage and the hitbox
-            if (sourceCollider != null && damageCollider != null)
-            {
-                //Debug.Log("Ignoring collisions between: " + sourceCollider.name + " and " + damageCollider.name);
-                Physics.IgnoreCollision(sourceCollider, damageCollider);
+        //     // Want to ignore the collisions between the source of the damage and the hitbox
+        //     if (sourceCollider != null && damageCollider != null)
+        //     {
+        //         //Debug.Log("Ignoring collisions between: " + sourceCollider.name + " and " + damageCollider.name);
+        //         Physics.IgnoreCollision(sourceCollider, damageCollider);
 
-                // THIS DOES NOT WORK ON PROJECTILES EVEN THOUGH REFERENCES ARE ASSIGNED PROPERLY, REPORT AS BUG BUT LEAVE FIXING UNTIL LATER
-            }
+        //         // THIS DOES NOT WORK ON PROJECTILES EVEN THOUGH REFERENCES ARE ASSIGNED PROPERLY, REPORT AS BUG BUT LEAVE FIXING UNTIL LATER
+        //     }
 
-            // Need to stop enemies from damaging each other once system is fleshed out
-        }
+        //     // Need to stop enemies from damaging each other once system is fleshed out
+        // }
 
         // To avoid dealing damage to the one who sourced the damage
         // Look for their hitbox, get the collider off of that 
@@ -133,6 +133,11 @@ public class Hitbox : MonoBehaviour
             stats = source.GetComponent<EntityStats>();
         }
 
+        if (stats != null)
+        {
+            damage = stats.Damage.Value;    // Set the damage to the damage defined by the entity
+        }
+
         // get the abilities from the stats
 
         // -> hit, regen for # of time w/o stack
@@ -161,7 +166,7 @@ public class Hitbox : MonoBehaviour
             float critRoll = Random.Range(0.0f, 100.0f);
             if (critRoll <= ps.CritChance.Value)
             {
-                damage += damage * ps.CritDamage.Value;
+                damage += damage * ps.CritDamage.Value; // Additive damage
             } 
         }
     }

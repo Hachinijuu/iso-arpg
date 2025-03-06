@@ -30,12 +30,14 @@ public class GameSettings : MonoBehaviour
             // Get the input map and switch it to controller controls
         }
     }
-    public void UpdateDifficulty(int value)
+    public void UpdateDifficulty(float value)
     {
         // Map this to the GameManager current difficulty
         // Change the GameManager's difficulty values based on the difficulty set here
 
         // Difficulties can be ScriptableObjects for easy editing
         // The base difficulty class can contain health scaling, damage scaling, enemy quantity scaling
+        GameManager.Instance.currDifficulty = GameManager.Instance.difficulties[(int)value];
+        GameManager.Instance.FireDifficultyChanged();
     }
 }

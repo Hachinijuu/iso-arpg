@@ -4,6 +4,10 @@ public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT }
 
 public class EntityStats : MonoBehaviour
 {
+    public EntityData data;
+    // EntityStats can have a source GO like playerstats does,
+    // The source go will have the expected stats to map to, and entityStats will load from them
+
     #region VARIABLES
     public EntityID id;
     // All entites have a health stat.
@@ -20,6 +24,10 @@ public class EntityStats : MonoBehaviour
     // Defensive
     [SerializeField] protected SubStat armour;
     [SerializeField] protected SubStat dodge;
+
+
+    public SubStat Damage { get { return damage; } }
+    [SerializeField] protected SubStat damage;
     #endregion
     #region EVENTS
     // Send an event out whenever the entity has died, drop system will listen to this.
@@ -34,10 +42,21 @@ public class EntityStats : MonoBehaviour
     // Whenever the object disables, fire the OnDied
     public void Awake()
     {
+        LoadData(data);
         health.Changed += CheckDied;
     }
     #endregion
     #region FUNCTIONALITY
+
+    public virtual void LoadData(EntityData toLoad)
+    {
+        if (data != null)
+        {
+            health = new TrackedStat(data.Health);
+            armour = new SubStat(data.Armour);
+            dodge = new SubStat(data.Dodge);
+        }
+    }
     public virtual void CheckDied(float value)
     {
         //Debug.Log("Took damage");
