@@ -91,9 +91,14 @@ public class PlayerController : MonoBehaviour
         footSteps.enabled = shouldEnable;
     }
 
+
+    private int respawnID = Animator.StringToHash("Respawn");
     public void Respawn()
     {
+        if (transform.localScale != Vector3.one)
+            transform.localScale = Vector3.one;
         EnablePlayer(true);
+        animator.SetTrigger(respawnID);
         stats.Respawn();
         movement.Respawn();
     }

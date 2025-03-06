@@ -28,7 +28,7 @@ public abstract class Ability : ScriptableObject
 {
     #region VARIABLES
     #region Public Accessors
-    public Image Icon { get { return abilityIcon; } }
+    public Sprite Icon { get { return abilityIcon; } }
     public string Name { get { return abilityName; } }
     public string Description { get { return abilityDescription; } }
     public float Cooldown { get { return cooldown; } }
@@ -41,7 +41,7 @@ public abstract class Ability : ScriptableObject
 
     #region Descriptions
     [Header("Descriptors")]
-    [SerializeField] protected Image abilityIcon = null;
+    [SerializeField] protected Sprite abilityIcon = null;
 
     [SerializeField] protected string abilityName = "invalid";
 

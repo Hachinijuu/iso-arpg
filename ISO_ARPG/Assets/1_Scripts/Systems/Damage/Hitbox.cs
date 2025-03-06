@@ -1,6 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
+public struct DamageArgs
+{
+    public GameObject source;
+    public float amount;
+}
+
 public class Hitbox : MonoBehaviour
 {
     // HITBOX exists on weapons
@@ -15,6 +21,13 @@ public class Hitbox : MonoBehaviour
 
     protected EntityStats stats; // -> hitbox, stats has abiliites -> apply these effects when I successfully hit
     // entity stats --> regen state, regen passive -> healthregen
+    #endregion
+
+    #region
+    public delegate void DamageDealt(DamageArgs e);
+    public event DamageDealt onDamageDealt;
+
+    private void FireDamageDealt(DamageArgs e) { if (onDamageDealt != null) onDamageDealt(e); }
     #endregion
     #region UNITY FUNCTIONS
 
@@ -41,17 +54,32 @@ public class Hitbox : MonoBehaviour
         {
             return;
         }
-        if (other.CompareTag("Hurtbox") || other.CompareTag("Destructible"))
+
+        // Refactor this hitbox hurtbox logic to not require other tags.
+
+        // This is because, since the damage detection is on it's own layer
+        // The damage interactions should only collide on this layer
+        // Don't need to do tag matching or layer-masking since its done by the physics system
+
+        Hurtbox hb = other.GetComponent<Hurtbox>();
+        if (hb != null)
         {
-            Hurtbox hb = other.GetComponent<Hurtbox>();
-            //Debug.Log(other.name);
-            if (hb)
-            {
-                HandleCollision(hb);
-            }
-            else
-                Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
+            HandleCollision(hb);
         }
+        else
+            Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
+
+        //if (other.CompareTag("Hurtbox") || other.CompareTag("Destructible"))
+        //{
+        //    Hurtbox hb = other.GetComponent<Hurtbox>();
+        //    //Debug.Log(other.name);
+        //    if (hb)
+        //    {
+        //        HandleCollision(hb);
+        //    }
+        //    else
+        //        Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
+        //}
     }
     #endregion
 
@@ -76,6 +104,30 @@ public class Hitbox : MonoBehaviour
             // Need to stop enemies from damaging each other once system is fleshed out
         }
 
+        // To avoid dealing damage to the one who sourced the damage
+        // Look for their hitbox, get the collider off of that 
+
+        if (source != null)
+        {
+            // Look for the hitbox on the source
+            Hurtbox hb = source.GetComponent<Hurtbox>();
+            if (hb)
+            {
+                Collider sourceCollider = hb.GetComponent<Collider>();
+                Collider damageCollider = GetComponent<Collider>();
+                if (sourceCollider != null && damageCollider != null)
+                {
+                    Physics.IgnoreCollision(sourceCollider, damageCollider);
+                    Debug.Log("[Damage]: Ignoring collisions between " + sourceCollider.name + " and " + damageCollider.name);
+                }
+                else
+                {
+                    Debug.Log("[Damage]: No colliders found, not ignoring any collisions");
+                }
+            }
+        }
+
+
         if (stats == null && source != null)
         {
             stats = source.GetComponent<EntityStats>();
@@ -91,6 +143,9 @@ public class Hitbox : MonoBehaviour
         // Before telling the hurtbox to take damage, do a crit roll to see if hitbox should take additional damage
         CritCalculation();
         hb.TakeDamage(damage);
+        DamageArgs args = new DamageArgs();
+        args.amount = damage;
+        FireDamageDealt(args);
     }
     public void AllowDamageForTime(float window)
     {

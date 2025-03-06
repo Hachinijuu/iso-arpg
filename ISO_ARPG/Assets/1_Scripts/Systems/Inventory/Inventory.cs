@@ -58,6 +58,9 @@ public class Inventory : MonoBehaviour
         MapActions();
     }
 
+    // Per play inventory, this system needs to know when a player exists
+    // It also needs to maintain relative data for each class, handling their individual inventories
+
     void InitUISlots()
     {
         slots = slotHolder.GetComponentsInChildren<ItemSlot>();

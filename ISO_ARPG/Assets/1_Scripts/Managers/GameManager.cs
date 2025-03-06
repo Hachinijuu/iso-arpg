@@ -299,9 +299,13 @@ public class GameManager : MonoBehaviour
         {
             // If the player has no class when loading the hub
             // We want to load the hub setup for character selection
+
+            // Default the Camera to the view of the podium
+            // Place the playable characters at the podium
+            // Enable them accordingly
+            PlayerManager.Instance.HandlePlayerSelect();
         }
     }
-
     public void LoadPrototype()
     {
         StartCoroutine(LoadLevel("Prototyping"));

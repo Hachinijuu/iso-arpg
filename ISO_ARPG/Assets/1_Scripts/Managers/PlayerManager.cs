@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
             return instance;
         }
     }
+    [SerializeField] CharacterSelection selectUI;
     [SerializeField] HUDController HUD;
     public List<CharacterPair> characters;
     public Dictionary<GoX_Class, PlayerController> playableCharacters;
@@ -84,6 +85,16 @@ public class PlayerManager : MonoBehaviour
         currentClass = GoX_Class.NONE;
         currentPlayer = null;
         EnableCharacters(false);
+    }
+
+    public void SetPlayer(GoX_Class toActivate)
+    {
+        playableCharacters.TryGetValue(toActivate, out PlayerController controller);
+        if (controller != null)
+        {
+            currentClass = toActivate;
+            currentPlayer = controller;
+        }
     }
     public void ActivatePlayer(GoX_Class toActivate)
     {
@@ -125,5 +136,13 @@ public class PlayerManager : MonoBehaviour
             pair.Value.gameObject.SetActive(on);
             pair.Value.EnablePlayer(on);
         }
+    }
+
+    public void HandlePlayerSelect()
+    {
+        // Place the camera in the proper position
+
+        // Activate the character selection UI
+        selectUI.ShowCharacterSelection(true);
     }
 }

@@ -30,6 +30,7 @@ public class ProjectileSource : MonoBehaviour
                     InitFirePositions((int)stats.Projectiles.Value);
                 }
             }
+            return;
         }
         else
         {
@@ -128,7 +129,7 @@ public class ProjectileSource : MonoBehaviour
             obj.transform.position = pos.position;
             obj.transform.rotation = pos.rotation;
             proj = obj.GetComponent<Projectile>();
-            proj.Source = transform.gameObject;
+            proj.Source = transform.gameObject;     // This places the projectile under the projectile source
             proj.InitHitbox();
             if (!(obj.activeInHierarchy))
             {

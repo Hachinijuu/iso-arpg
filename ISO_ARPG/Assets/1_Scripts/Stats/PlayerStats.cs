@@ -190,8 +190,12 @@ public class PlayerStats : EntityStats
     }
     public override void CheckDied(float value)
     {
-        if (DebugMenu.Instance.Invincible)  // If invincibility is on, then don't check for death
-            return;
+        if (DebugMenu.Instance)
+        {
+            if (DebugMenu.Instance.Invincible)  // If invincibility is on, then don't check for death
+                return;
+        }
+
         base.CheckDied(value);
     }
     public void Respawn()

@@ -6,6 +6,7 @@ public class Fireball : Ability
 {
     Animator anim;
     AudioSource source;
+    PlayerStats stats;
     ProjectileSource shootSource;
     public float damageMultipler = 1.0f;
     float damage;
@@ -15,15 +16,26 @@ public class Fireball : Ability
     {
         anim = actor.GetComponent<Animator>();
         source = actor.GetComponent<AudioSource>();
+        stats = actor.GetComponent<PlayerStats>();
         shootSource = actor.GetComponent<ProjectileSource>();
-    }
-
-    public override void EndAbility()
-    {
-        base.EndAbility();
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        throw new System.NotImplementedException();
+        if (abilityActivated)
+            source.PlayOneShot(abilityActivated);
+        
+        anim.SetTrigger(animId);
+        stats.ID_Bar.Value += stats.IDGain.Value;
+
+        damage = (stats.Damage.Value * damageMultipler) + (stats.INT.Value * GameManager.Instance.MainConvert);
+        for (int i = 0; i < stats.Projectiles.Value; i++)
+        {
+            Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.FIREBALL, i);
+            if (p != null)
+            {
+                p.SetDamage(damage);
+                p.FireProjectile();
+            }
+        }
     }
 }

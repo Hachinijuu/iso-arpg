@@ -14,10 +14,8 @@ public class CharacterClass : ScriptableObject
     #region Class Description
     [Header("Descriptions")]
     public string className;
-
     public string classDescription;
-
-    public Image classIcon;
+    public Sprite classIcon;
     #endregion
     #region Stats
 

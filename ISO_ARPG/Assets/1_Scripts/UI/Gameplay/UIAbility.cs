@@ -14,7 +14,7 @@ public class UIAbility : MonoBehaviour
     {
         Debug.Log("[HUD]: Loading " + toLoad.name);
         if (abImage != null)
-            abImage = toLoad.Icon;
+            abImage.sprite = toLoad.Icon;
         if (abName != null)
             abName.text = toLoad.Name;
         if (description != null)

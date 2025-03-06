@@ -65,12 +65,13 @@ public class PlayerAbilityHandler : MonoBehaviour
     }
     #endregion
     #region UNITY FUNCTIONS
-    private void Start()
+    private void Awake()
     {
         // ORDER MATTERS
         // Abilities must be initialized before mapping the inputs
         // This is because the functions that are mapped, respond to the types of abilities that are loaded.
-
+        InitAbilityHandler();   // Get the references required
+        // Actionable creation happens OnEnable, assuming player switches
 
         //MapPlayerActions();
     }
@@ -83,22 +84,24 @@ public class PlayerAbilityHandler : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
 
         // Listen for passive ability activation
-        if (stats != null)
-        {
-            squareRange = stats.Range.Value * stats.Range.Value;
-            if (stats.Abilities.Count > 0)
-            {
-                InitAbilities();
-                //StartCoroutine(HandleFusion());
-            }
-            else
-                Debug.LogWarning("[AbilityHandler]: No abilities to read from");
-        }
+        //if (stats != null)
+        //{
+        //    squareRange = stats.Range.Value * stats.Range.Value;
+        //    if (stats.Abilities.Count > 0)
+        //    {
+        //        InitAbilities();
+        //        //StartCoroutine(HandleFusion());
+        //    }
+        //    else
+        //        Debug.LogWarning("[AbilityHandler]: No abilities to read from");
+        //}
     }
     private void OnEnable() 
     {
+        // Probably init abilities elsewhere (on start)
+        // 
         StopAllCoroutines();        // Since whenever enabled, the player is reinitialized, stop all coroutines running on the thread
-        InitAbilityHandler();
+        InitAbilities();
         MapPlayerActions();    
     }
 
@@ -106,6 +109,11 @@ public class PlayerAbilityHandler : MonoBehaviour
     {
         Debug.Log("Actions unmapped");
         UnmapPlayerActions();
+        // Deactivate any existing abilities
+        foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
+        {
+            abilityUsage.Key.EndAbility(gameObject);  // Stop using the ability
+        }
     }
     #endregion
 

@@ -51,7 +51,18 @@ public class Hurtbox : MonoBehaviour
         // 100 * (0.8)
         // 80 damage taken --> 20% armour reduction
 
+
+        // How do we get the player's active ability
+        // Does the player gain the mana reduction to damage if they have selected salamander's gift as a fusion
+        
+
         stats.Health.Value -= recalc;
+
+        // When taking damage, if the player has the elementalist's gift active
+        // Then take a portion of the damage as mana instead of health
+        // How will the hurtbox know to do that?
+        
+
         FireOnDamaged(stats.Health.Value);
         //Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");
     }
