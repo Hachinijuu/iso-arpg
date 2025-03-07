@@ -233,6 +233,7 @@ public class SubStat : ClampedStat
     public virtual void Copy(SubStat other)
     {
         this.value = other.value;
+        this.maxValue = other.maxValue;
         this.type = other.type;
     }
 }

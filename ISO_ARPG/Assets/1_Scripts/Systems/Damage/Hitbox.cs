@@ -136,6 +136,7 @@ public class Hitbox : MonoBehaviour
 
         if (stats != null)
         {
+            Debug.Log("Assigned Damage Value");
             damage = stats.Damage.Value;    // Set the damage to the damage defined by the entity
         }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,16 @@ public class DebugMenu : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        invinciblityToggle.isOn = invincible;
+        takeDamage = true;
+        damageToggle.isOn = takeDamage;
+    }
+
     [SerializeField] GameObject debugUI;    // this will be activated by a key press, it will contain the UI elements that the rest of the menu uses
+    [SerializeField] Toggle invinciblityToggle;
+    [SerializeField] Toggle damageToggle;
 
     public bool debugOn;
 
@@ -31,7 +41,7 @@ public class DebugMenu : MonoBehaviour
     bool takeDamage = true;
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             if (debugUI == null)
                 return;
@@ -51,5 +61,23 @@ public class DebugMenu : MonoBehaviour
     {
         takeDamage = value;
         Debug.Log("[Debug]: Take Damage: " + takeDamage);
+        HandleHurtboxes();
+    }
+
+    [SerializeField] Hurtbox[] playerHurtbox;
+
+    public void HandleHurtboxes()
+    {
+        if (playerHurtbox != null && playerHurtbox.Length> 0)
+        {
+            foreach (Hurtbox hb in playerHurtbox)
+            {
+                if (hb.gameObject.transform.parent.gameObject.activeInHierarchy)
+                {
+                    hb.gameObject.SetActive(takeDamage);
+                }
+                // If you want to take damage, enable the hurtbox, otherwise do not
+            }
+        }
     }
 }

@@ -24,8 +24,6 @@ public class EntityStats : MonoBehaviour
     // Defensive
     [SerializeField] protected SubStat armour;
     [SerializeField] protected SubStat dodge;
-
-
     public SubStat Damage { get { return damage; } }
     [SerializeField] protected SubStat damage;
     #endregion
@@ -64,6 +62,8 @@ public class EntityStats : MonoBehaviour
             health = new TrackedStat(data.Health);
             armour = new SubStat(data.Armour);
             dodge = new SubStat(data.Dodge);
+            damage = new SubStat(data.Damage);
+            Debug.Log(damage.Value);
         }
     }
     public virtual void CheckDied(float value)

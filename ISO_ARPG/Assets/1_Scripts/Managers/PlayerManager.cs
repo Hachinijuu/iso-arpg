@@ -80,6 +80,35 @@ public class PlayerManager : MonoBehaviour
         DeactivatePlayer();
     }
 
+    public void Start()
+    {
+        if (playableCharacters != null && playableCharacters.Count > 0)
+        {
+            foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+            {
+                PlayerStats stats = pair.Value.Stats;
+                stats.OnDied += context => { HandleDeath(); };
+            }
+        }
+    }
+
+    public void OnDisable()
+    {
+        if (playableCharacters != null && playableCharacters.Count > 0)
+        {
+            foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+            {
+                PlayerStats stats = pair.Value.Stats;
+                stats.OnDied -= context => { HandleDeath(); };
+            }
+        }
+    }
+
+    public void HandleDeath()
+    {
+        GameManager.Instance.PlayerDied();
+    }
+
     public void DeactivatePlayer()
     {
         currentClass = GoX_Class.NONE;

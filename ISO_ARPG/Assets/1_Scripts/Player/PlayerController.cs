@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         playerTarget.enabled = shouldEnable;
         audioSource.enabled = shouldEnable;
         animator.enabled = shouldEnable;
-        // shootSource.enabled = shouldEnable;
+        shootSource.enabled = shouldEnable;
         footSteps.enabled = shouldEnable;
     }
 
@@ -95,8 +95,8 @@ public class PlayerController : MonoBehaviour
     private int respawnID = Animator.StringToHash("Respawn");
     public void Respawn()
     {
-        //if (transform.localScale != Vector3.one)
-        //    transform.localScale = Vector3.one;
+        if (transform.localScale != Vector3.one)
+           transform.localScale = Vector3.one;
         EnablePlayer(true);
         //animator.SetTrigger(respawnID);
         stats.Respawn();
