@@ -36,10 +36,10 @@ public class PlayerStats : EntityStats
     public MainStat INT { get { return intelligence; } }
 
     // Gameplay Stats
-    public Stat IDGain { get { return idGain; } }
+    public SubStat IDGain { get { return idGain; } }
     public Stat Range { get { return attackRange; } }
-    public Stat Projectiles { get { return numProjectiles; } }
-    public Stat Chains { get { return numChains; } }
+    public SubStat Projectiles { get { return numProjectiles; } }
+    public SubStat Chains { get { return numChains; } }
 
     // Utility
     public SubStat MoveSpeed { get { return moveSpeed; } }
@@ -61,14 +61,13 @@ public class PlayerStats : EntityStats
 
 
     // Gameplay
-    Stat idGain;
+    SubStat idGain;
     Stat attackRange;
-    Stat numProjectiles;
-    Stat numChains;
+    SubStat numProjectiles;
+    SubStat numChains;
 
     // Utility
     SubStat moveSpeed;
-    Stat rotationSpeed;
 
     // Offensive
     //SubStat damage;
@@ -93,16 +92,11 @@ public class PlayerStats : EntityStats
         // this will load stats externally keeping player progress, for now just LoadStats wrapper
         //LoadStats();
         statList = new List<Stat>();
-        LoadDefaultClassStats();
+        //LoadDefaultClassStats();
         LoadAbilities();
         FillStatList();
 
-        health.Changed += context => { CheckDied(context); };
-    }
-
-    public void OnDisable()
-    {
-        health.Changed -= context => { CheckDied(context); };
+        //health.Changed += context => { CheckDied(context); };
     }
 
     public void FillStatList()
@@ -133,6 +127,11 @@ public class PlayerStats : EntityStats
         //LoadSubstats();
     }
 
+    public override void LoadData(EntityData toLoad)
+    {
+        LoadDefaultClassStats();
+    }
+
     public void LoadDefaultClassStats()
     {
         // Need to copy or create new values
@@ -151,12 +150,12 @@ public class PlayerStats : EntityStats
 
         // gameplay stats
         attackRange = new Stat(playerClass.Range);
-        numProjectiles = new Stat(playerClass.Projectiles);
-        numChains = new Stat(playerClass.Chains);
+        numProjectiles = new SubStat(playerClass.Projectiles);
+        numChains = new SubStat(playerClass.Chains);
 
         // utility stats
         moveSpeed = new SubStat(playerClass.moveSpeed);
-        idGain = new Stat(playerClass.ID_Gain);
+        idGain = new SubStat(playerClass.ID_Gain);
         //rotationSpeed.Value += playerClass.rotationSpeed;
 
         // offensive stats

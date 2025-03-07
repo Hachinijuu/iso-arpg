@@ -21,12 +21,12 @@ public class CharacterClass : EntityData
 
     [Header("Gameplay Stats")]
     public Stat Range;
-    public Stat Projectiles;
-    public Stat Chains;
+    public SubStat Projectiles;
+    public SubStat Chains;
 
     [Header("Utility Stats")]
     public SubStat moveSpeed;
-    public Stat ID_Gain;
+    public SubStat ID_Gain;
     [Range(0, StatLimits.MOVE_MAX)] public float rotationSpeed = -1f;
 
     [Header("Offensive Stats")]

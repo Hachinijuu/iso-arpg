@@ -43,7 +43,16 @@ public class EntityStats : MonoBehaviour
     public void Awake()
     {
         LoadData(data);
+    }
+
+    public void OnEnable()
+    {
         health.Changed += CheckDied;
+    }
+
+    public void OnDisable()
+    {
+        health.Changed -= CheckDied;
     }
     #endregion
     #region FUNCTIONALITY

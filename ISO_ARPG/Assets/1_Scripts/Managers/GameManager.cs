@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // CONTROLLER WILL NOT BE FOUND ON START, IT WILL BE ASSIGNED AFTER THE PLAYER HAS BEEN SELECTED
+        currDifficulty = difficulties[0];
 
         //if (controller == null)
         //{

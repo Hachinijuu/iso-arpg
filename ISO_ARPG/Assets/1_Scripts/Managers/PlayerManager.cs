@@ -107,6 +107,7 @@ public class PlayerManager : MonoBehaviour
                 currentClass = toActivate;
                 currentPlayer = controller;
                 GameManager.Instance.PlayerRespawn(currentPlayer);
+                Inventory.Instance.SetupInventory(currentPlayer);
                 if (!HUD.gameObject.activeInHierarchy)
                 {
                     HUD.gameObject.SetActive(true);

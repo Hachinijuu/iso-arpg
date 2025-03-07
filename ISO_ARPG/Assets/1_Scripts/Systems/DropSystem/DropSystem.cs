@@ -28,7 +28,8 @@ public class DropSystem : MonoBehaviour
     {
         enemies = new List<EntityStats>();
         destructibles = new List<EntityStats>();
-        dropTables = new List<DropTable>();
+        if (dropTables == null)
+            dropTables = new List<DropTable>();
     }
 
     public GameObject[] destructionParticles;
@@ -92,15 +93,18 @@ public class DropSystem : MonoBehaviour
     private void CheckDrop(EntityStats whoDied) // check the thing and map it to what it is supposed to drop
     {
         // match the entity to the drop table
-        DropTable dropTable = new DropTable();
+        DropTable dropTable = null;
         foreach (DropTable table in dropTables)
         {
             if (table.dropId == whoDied.id)
             {
                 dropTable = table;
-                return;
+                break;
             }
         }
+        //Debug.Log(dropTable.dropId);
+        if (dropTable == null)
+            return;
 
         // Drop rolling
         foreach (ItemData item in dropTable.items)
@@ -133,6 +137,7 @@ public class DropSystem : MonoBehaviour
                     rune = RuneSystem.Instance.RollRuneStats(rune);
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
+                Debug.Log("[DropSystem]: Dropped an item");
             }
         }
 

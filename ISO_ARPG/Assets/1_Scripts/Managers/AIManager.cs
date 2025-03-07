@@ -227,7 +227,7 @@ public class AIManager : MonoBehaviour
             {
                 if (pool.Prefab == enemy)   // If the enemy matches the pool (key), we want to spawn the number of enemies designated in the group
                 {
-                    int numSpawns = (int)(Random.Range(group.minSpawn, group.maxSpawn) * difficultyModifer);
+                    int numSpawns = Random.Range(group.minSpawn, group.maxSpawn);
                     Debug.Log("[AIManager]: Spawning " + numSpawns + " " + enemy.name);
                     // To know how much enemies to spawn at each spawnpoint, take the total number of spawns / number of locations
                     int perPoint = numSpawns / spawnPoints.Count;
@@ -388,8 +388,8 @@ public class AIManager : MonoBehaviour
             agent.transform.position = pos;
 
             // Place the unit into a group based on their position;
-            float distance = GetSquarePlayerDistance(pos);
-            AssignGameObjectToGroup(agent, distance);
+            //float distance = GetSquarePlayerDistance(pos);
+            //AssignGameObjectToGroup(agent, distance);
             agent.SetActive(true);
         }
     }

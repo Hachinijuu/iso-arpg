@@ -112,7 +112,12 @@ public class PlayerAbilityHandler : MonoBehaviour
         // Deactivate any existing abilities
         foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
         {
-            abilityUsage.Key.EndAbility(gameObject);  // Stop using the ability
+            // If you can't use the ability because it has been activated
+            if (abilityUsage.Value == false)
+            {
+                abilityUsage.Key.EndAbility(gameObject);  // Stop using the ability
+            }
+            // This will shrink the player if they have 
         }
     }
     #endregion

@@ -61,25 +61,26 @@ public class Hitbox : MonoBehaviour
         // The damage interactions should only collide on this layer
         // Don't need to do tag matching or layer-masking since its done by the physics system
 
-        Hurtbox hb = other.GetComponent<Hurtbox>();
-        if (hb != null)
-        {
-            HandleCollision(hb);
-        }
-        else
-            Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
+        // Hurtbox hb = other.gameObject.GetComponent<Hurtbox>();
+        // if (hb != null)
+        // {
+        //     HandleCollision(hb);
+        // }
+        // else
+        //     Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
 
-        //if (other.CompareTag("Hurtbox") || other.CompareTag("Destructible"))
-        //{
-        //    Hurtbox hb = other.GetComponent<Hurtbox>();
-        //    //Debug.Log(other.name);
-        //    if (hb)
-        //    {
-        //        HandleCollision(hb);
-        //    }
-        //    else
-        //        Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
-        //}
+        if (other.CompareTag("Hurtbox") || other.CompareTag("Destructible"))
+        {
+           Hurtbox hb = other.GetComponent<Hurtbox>();
+           //Debug.Log(other.name);
+           if (hb)
+           {
+               HandleCollision(hb);
+               Debug.Log("Handling collision");
+           }
+           else
+               Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
+        }
     }
     #endregion
 
@@ -147,9 +148,9 @@ public class Hitbox : MonoBehaviour
     {
         // Before telling the hurtbox to take damage, do a crit roll to see if hitbox should take additional damage
         CritCalculation();
-        hb.TakeDamage(damage);
         DamageArgs args = new DamageArgs();
         args.amount = damage;
+        hb.TakeDamage(damage);
         FireDamageDealt(args);
     }
     public void AllowDamageForTime(float window)

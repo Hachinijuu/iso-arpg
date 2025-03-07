@@ -12,13 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922056ffdd71cbd43be9d7c8f9b0dc4b, type: 3}
   m_Name: ElementalistPrototype
   m_EditorClassIdentifier: 
-  className: Elementalist
-  classDescription: test text
-  classIcon: {fileID: 21300000, guid: 3ba5b62d40ca43c41aece55dfa33bca6, type: 3}
+  entityName: Elementalist
+  description: A elementalist
+  icon: {fileID: 21300000, guid: 3ba5b62d40ca43c41aece55dfa33bca6, type: 3}
   Health:
     value: 100
     maxValue: 100
     type: 1
+  Damage:
+    value: 50
+    maxValue: 100000
+    type: 2
+  Armour:
+    value: 10
+    maxValue: 400
+    type: 5
+  Dodge:
+    value: 10
+    maxValue: 400
+    type: 6
   Mana:
     value: 100
     maxValue: 100
@@ -39,39 +51,33 @@ MonoBehaviour:
     value: 15
   Projectiles:
     value: 1
+    maxValue: 0
+    type: 9
   Chains:
     value: 0
+    maxValue: 0
+    type: 10
   moveSpeed:
     value: 6
     maxValue: 0
-    type: 2
+    type: 3
   ID_Gain:
     value: 5
+    maxValue: 0
+    type: 11
   rotationSpeed: 10
-  Damage:
-    value: 50
-    maxValue: 100000
-    type: 1
   AttackSpeed:
     value: 1
     maxValue: 1
-    type: 3
+    type: 4
   CritDamage:
     value: 10
     maxValue: 10000
-    type: 7
+    type: 8
   CritChance:
     value: 10
     maxValue: 100
-    type: 6
-  Armour:
-    value: 10
-    maxValue: 400
-    type: 4
-  Dodge:
-    value: 10
-    maxValue: 400
-    type: 5
+    type: 7
   Abilities:
   - {fileID: 11400000, guid: 2aa74705f0cec374e842afe41e55bc74, type: 2}
   - {fileID: 11400000, guid: 55187f970a714bb4091bede58546ce44, type: 2}

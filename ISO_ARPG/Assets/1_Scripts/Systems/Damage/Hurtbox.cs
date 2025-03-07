@@ -57,6 +57,7 @@ public class Hurtbox : MonoBehaviour
         
 
         stats.Health.Value -= recalc;
+        Debug.Log("Taking: " + recalc);
 
         // When taking damage, if the player has the elementalist's gift active
         // Then take a portion of the damage as mana instead of health

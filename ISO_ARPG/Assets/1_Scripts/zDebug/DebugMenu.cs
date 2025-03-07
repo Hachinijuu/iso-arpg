@@ -31,7 +31,7 @@ public class DebugMenu : MonoBehaviour
     bool takeDamage = true;
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tilde))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             if (debugUI == null)
                 return;
@@ -40,5 +40,16 @@ public class DebugMenu : MonoBehaviour
             else
                 debugUI.SetActive(false);
         }
+    }
+    public void SetInvincible(bool value)
+    {
+        invincible = value;
+        Debug.Log("[Debug]: Invinciblity: " + invincible);
+    }
+
+    public void SetDamageTake(bool value)
+    {
+        takeDamage = value;
+        Debug.Log("[Debug]: Take Damage: " + takeDamage);
     }
 }

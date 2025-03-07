@@ -116,6 +116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6cede2f343404641abee7a1354a0f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 4d1f755615a60444e80d1964b090755a, type: 2}
+  id: 2
   health:
     value: 10
     maxValue: 10
@@ -125,6 +127,10 @@ MonoBehaviour:
     maxValue: 0
     type: 0
   dodge:
+    value: -1
+    maxValue: 0
+    type: 0
+  damage:
     value: -1
     maxValue: 0
     type: 0
@@ -153,7 +159,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &261368122497287345
 MonoBehaviour:
@@ -187,7 +193,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 35.028515
-  m_Height: 58.951347
+  m_Radius: 50
+  m_Height: 100
   m_Direction: 1
-  m_Center: {x: 0.0000019073486, y: -0.0000009536745, z: 35.000004}
+  m_Center: {x: 0, y: 0, z: 30}

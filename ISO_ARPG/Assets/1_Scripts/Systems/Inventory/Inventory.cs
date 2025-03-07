@@ -53,13 +53,25 @@ public class Inventory : MonoBehaviour
 
     public void Start()
     {
+        //InitUISlots();
+        //InitItemList();
+        //MapActions();
+    }
+
+    // Per play inventory, this system needs to know when a player exists
+    // It also needs to maintain relative data for each class, handling their individual inventories
+    public void SetupInventory()
+    {
         InitUISlots();
         InitItemList();
         MapActions();
     }
 
-    // Per play inventory, this system needs to know when a player exists
-    // It also needs to maintain relative data for each class, handling their individual inventories
+    public void SetupInventory(PlayerController controller)
+    {
+        input = controller.Input;
+        SetupInventory();
+    }
 
     void InitUISlots()
     {

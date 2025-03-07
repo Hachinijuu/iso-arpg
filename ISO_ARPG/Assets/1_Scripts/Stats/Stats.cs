@@ -59,6 +59,8 @@ public enum SubStatTypes
     CRIT_DAMAGE,    // damage of critical strikes   -- displayed as %
     PROJECTILES,    // the number of projectiles    -- flat number
     CHAINS,         // the number of chained attacks allowed    -- flat number
+
+    ID_GAIN,
     // CRIT DAMAGE IS ADDITIVE
 }
 

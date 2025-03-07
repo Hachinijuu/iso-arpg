@@ -95,10 +95,10 @@ public class PlayerController : MonoBehaviour
     private int respawnID = Animator.StringToHash("Respawn");
     public void Respawn()
     {
-        if (transform.localScale != Vector3.one)
-            transform.localScale = Vector3.one;
+        //if (transform.localScale != Vector3.one)
+        //    transform.localScale = Vector3.one;
         EnablePlayer(true);
-        animator.SetTrigger(respawnID);
+        //animator.SetTrigger(respawnID);
         stats.Respawn();
         movement.Respawn();
     }
