@@ -10,7 +10,6 @@ using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-#endif
 public class GridBuilder : MonoBehaviour
 {
 // Grid info
@@ -185,7 +184,6 @@ public class GridBuilder : MonoBehaviour
     }
     #endregion
 
-#if UNITY_EDITOR
     // When the script is attached, validate
     List<Cell> ghostCells;
     Vector3 drawSize;

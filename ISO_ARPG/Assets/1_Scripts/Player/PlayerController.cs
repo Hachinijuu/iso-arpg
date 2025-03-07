@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 
 
 // Player Controller will assign all required components for ease of use.
@@ -74,8 +75,13 @@ public class PlayerController : MonoBehaviour
             footSteps = GetComponent<FootStepHandler>();
 
         //MapPlayerActions();
-        InitalizePlayer();
+        //InitalizePlayer();
     }
+
+    //public void Start()
+    //{
+    //    InitalizePlayer();
+    //}
 
     public void EnablePlayer(bool shouldEnable)
     {
