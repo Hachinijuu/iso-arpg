@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +31,7 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] GameObject debugUI;    // this will be activated by a key press, it will contain the UI elements that the rest of the menu uses
     [SerializeField] Toggle invinciblityToggle;
     [SerializeField] Toggle damageToggle;
+    [SerializeField] TMP_Dropdown levelDropdown;
 
     public bool debugOn;
 
@@ -62,6 +65,19 @@ public class DebugMenu : MonoBehaviour
         takeDamage = value;
         Debug.Log("[Debug]: Take Damage: " + takeDamage);
         HandleHurtboxes();
+    }
+
+    public void OnEnable()
+    {
+        if (levelDropdown != null)
+            levelDropdown.value = (int)GameManager.Instance.level;
+    }
+
+    public void LevelHandler(Int32 value)
+    {
+        GameManager.Instance.level = (GameManager.eLevel)value;
+        GameManager.Instance.LevelLoad();
+        levelDropdown.value = (int)GameManager.Instance.level;
     }
 
     [SerializeField] Hurtbox[] playerHurtbox;
