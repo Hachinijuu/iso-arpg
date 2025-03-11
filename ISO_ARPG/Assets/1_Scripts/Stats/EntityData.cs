@@ -18,7 +18,12 @@ public class EntityData : ScriptableObject
     
     [Header("Offensive Stats")]
     public SubStat Damage;
+    public SubStat AttackSpeed;
+
     [Header("Defensive Stats")]
     public SubStat Armour;
     public SubStat Dodge;
+
+    [Header("Utility Stats")]
+    public SubStat MoveSpeed;
 }

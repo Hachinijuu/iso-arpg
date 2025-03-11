@@ -2877,6 +2877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f0048b53123414db878088c62b3465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   id: 0
   health:
     value: -1
@@ -2887,6 +2888,10 @@ MonoBehaviour:
     maxValue: 0
     type: 0
   dodge:
+    value: -1
+    maxValue: 0
+    type: 0
+  damage:
     value: -1
     maxValue: 0
     type: 0
@@ -3776,6 +3781,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 163390296433636090}
     m_Modifications:
+    - target: {fileID: 7054521235262637, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 8366322350053213544}
     - target: {fileID: 1656706291053558915, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3803,6 +3812,10 @@ PrefabInstance:
     - target: {fileID: 7192800480831148339, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
       propertyPath: m_Name
       value: Axe
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949443930111448424, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
+      propertyPath: chainRange
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8550560726248635322, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
       propertyPath: m_LocalScale.x
@@ -3874,6 +3887,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1496396845433058046}
     m_Modifications:
+    - target: {fileID: 7054521235262637, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 8366322350053213544}
     - target: {fileID: 1656706291053558915, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3901,6 +3918,10 @@ PrefabInstance:
     - target: {fileID: 7192800480831148339, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
       propertyPath: m_Name
       value: Axe
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949443930111448424, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
+      propertyPath: chainRange
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8550560726248635322, guid: 3ae3aaef6fc37e94db8eecd49f6237af, type: 3}
       propertyPath: m_LocalScale.x

@@ -49,20 +49,40 @@ public enum TrackedStatTypes
 public enum SubStatTypes
 {
     NONE,
+    // UTILITY
     HASTE,          // modifies attack speed and movement speed
-    DAMAGE,         // damage           -- displayed as #, use flat
     MOVE_SPEED,     // movement speed   -- displayed as %, use flat mutl no conversion
+    ID_GAIN,
+    HEALTH_REGEN,
+    MANA_REGEN,
+    MANA_ON_HIT,
+    COOLDOWN_REDUCTION,
+    
+    // OFFENSE
+    DAMAGE,         // damage           -- displayed as #, use flat
     ATTACK_SPEED,   // attack speed     -- displayed as %, use multiplier
-    ARMOUR,         // damage reduction -- displayed as #, use conversion --> armour value * conversion = % reduction
-    DODGE,          // chance to dodge  -- displayed as %, mult
     CRIT_CHANCE,    // chance to crit   -- displayed as %
     CRIT_DAMAGE,    // damage of critical strikes   -- displayed as %
     PROJECTILES,    // the number of projectiles    -- flat number
     CHAINS,         // the number of chained attacks allowed    -- flat number
+    
+    // DEFENSE
+    ARMOUR,         // damage reduction -- displayed as #, use conversion --> armour value * conversion = % reduction
+    DODGE,          // chance to dodge  -- displayed as %, mult
+    DAMAGE_FROM_MANA,
 
-    ID_GAIN,
+    // Additional stats
     // CRIT DAMAGE IS ADDITIVE
 }
+
+public enum AbilityStats
+{ 
+    PRIMARY_DAMAGE,
+    SECONDARY_DAMAGE,
+}
+
+// How can I apply a rune with an ability stats modifer?
+// When the rune is added, go to the respective stat, match up the damage type, and then apply the value increase
 
 // Crit damage is additive
 // 100 Damage to deal, 200% crit damage 

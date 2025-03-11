@@ -361,6 +361,10 @@ public class AIManager : MonoBehaviour
             {
                 // Get the modified values passed to the controller
                 EntityStats stats = controller.GetComponent<EntityStats>();
+
+                // When spawning an enemy, they have a chance to be an 'elite' enemy
+                // This gives them additional stats, and a visual distinction from regular enemies
+
                 if (stats != null)
                 {
                     // How do we get base, relative to adjusted stats?
@@ -392,6 +396,15 @@ public class AIManager : MonoBehaviour
             //AssignGameObjectToGroup(agent, distance);
             agent.SetActive(true);
         }
+    }
+
+    public void SpawnElite()
+    { 
+        // This spawns an elite enemy
+        // Select 2 stats randomly from the stat list
+        // Scale / multiply those stats for elite values
+
+
     }
     public void SpawnEnemy(ObjectPool fromPool, Vector3 pos)
     {

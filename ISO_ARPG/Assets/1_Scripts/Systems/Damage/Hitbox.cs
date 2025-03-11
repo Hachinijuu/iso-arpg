@@ -5,6 +5,7 @@ public struct DamageArgs
 {
     public GameObject source;
     public float amount;
+    public Hurtbox hit;
 }
 
 public class Hitbox : MonoBehaviour
@@ -76,7 +77,7 @@ public class Hitbox : MonoBehaviour
            if (hb)
            {
                HandleCollision(hb);
-               Debug.Log("Handling collision");
+               //Debug.Log("Handling collision");
            }
            else
                Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
@@ -151,6 +152,7 @@ public class Hitbox : MonoBehaviour
         CritCalculation();
         DamageArgs args = new DamageArgs();
         args.amount = damage;
+        args.source = source;
         hb.TakeDamage(damage);
         FireDamageDealt(args);
     }

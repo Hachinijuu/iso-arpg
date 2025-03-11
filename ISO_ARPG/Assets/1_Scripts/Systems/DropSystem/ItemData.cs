@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public enum ItemRarity { COMMON, UNCOMMON, RARE, EPIC, RELIC }
 public enum ItemTypes { RESOURCE, GEAR, RUNE, CONSUMMABLE };
+public enum PotionTypes { HEALTH, MANA };
 
 public struct ItemEventArgs
 {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT }
@@ -15,17 +16,31 @@ public class EntityStats : MonoBehaviour
 
     // Made serializefield for debug purposes
     // Final implementation, stats are loaded externally
-    [SerializeField] protected TrackedStat health;
+    protected TrackedStat health;
 
     // Defensive
     public SubStat Armour { get { return armour; } }
     public SubStat Dodge { get { return dodge; } }
 
     // Defensive
-    [SerializeField] protected SubStat armour;
-    [SerializeField] protected SubStat dodge;
+    protected SubStat armour;
+    protected SubStat dodge;
+    
+    // Offensive
     public SubStat Damage { get { return damage; } }
-    [SerializeField] protected SubStat damage;
+    protected SubStat damage;
+
+    public SubStat AttackSpeed {  get { return attackSpeed; } }
+    protected SubStat attackSpeed;
+
+    // Utility
+    public SubStat MoveSpeed { get { return moveSpeed; } }
+    protected SubStat moveSpeed;
+
+    // Add attack speed and movement speed to enemies for them to have randomized values for elites
+
+    public List<Stat> statList;
+
     #endregion
     #region EVENTS
     // Send an event out whenever the entity has died, drop system will listen to this.
@@ -41,6 +56,7 @@ public class EntityStats : MonoBehaviour
     public void Awake()
     {
         LoadData(data);
+        FillStatList();
     }
 
     public void OnEnable()
@@ -63,8 +79,19 @@ public class EntityStats : MonoBehaviour
             armour = new SubStat(data.Armour);
             dodge = new SubStat(data.Dodge);
             damage = new SubStat(data.Damage);
-            Debug.Log(damage.Value);
+            attackSpeed = new SubStat(data.AttackSpeed);
+            moveSpeed = new SubStat(data.MoveSpeed);
         }
+    }
+
+    public virtual void FillStatList()
+    {
+        statList.Add(health);
+        statList.Add(armour);
+        statList.Add(dodge);
+        statList.Add(damage);
+        statList.Add(moveSpeed);
+        statList.Add(attackSpeed);
     }
     public virtual void CheckDied(float value)
     {

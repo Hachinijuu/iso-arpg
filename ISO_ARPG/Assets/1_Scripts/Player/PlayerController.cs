@@ -13,11 +13,17 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(PlayerMovement))]          // Movement
 [RequireComponent(typeof(PlayerAbilityHandler))]    // Abilities
 [RequireComponent(typeof(MouseTarget))]             // Hover Targetting
+[RequireComponent(typeof(PlayerAudio))]             // Audio Handling
 
-[RequireComponent(typeof(AudioSource))]             // Audio
+[RequireComponent(typeof(AudioSource))]             // Voice Source
 [RequireComponent(typeof(Animator))]                // Animations
 [RequireComponent(typeof(ProjectileSource))]        // Projectiles
 [RequireComponent(typeof(FootStepHandler))]
+
+// music / ambience - own sources / persistent
+// UI - persistent / general
+// effects / voice
+
 public class PlayerController : MonoBehaviour
 {
     // Public References
@@ -30,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public NavMeshAgent Agent { get { return agent; } }
     public PlayerAbilityHandler AbilityHandler { get { return handler; } }
     public MouseTarget PlayerTarget { get { return playerTarget; } }
+    public PlayerAudio AudioController { get { return audioController; } }
     public AudioSource AudioSource { get { return audioSource; } }
     public Animator Animator { get { return animator; } }
     public ProjectileSource ShootSource { get { return shootSource; } }
@@ -40,6 +47,7 @@ public class PlayerController : MonoBehaviour
     NavMeshAgent agent;
     PlayerAbilityHandler handler;
     MouseTarget playerTarget;
+    PlayerAudio audioController;
     AudioSource audioSource;
     Animator animator;
     ProjectileSource shootSource;
@@ -65,6 +73,8 @@ public class PlayerController : MonoBehaviour
             handler = GetComponent<PlayerAbilityHandler>();
         if (playerTarget == null)
             playerTarget = GetComponent<MouseTarget>();
+        if (audioController == null)
+            audioController = GetComponent<PlayerAudio>();
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
         if (animator == null)
@@ -91,6 +101,7 @@ public class PlayerController : MonoBehaviour
         agent.enabled = shouldEnable;
         handler.enabled = shouldEnable;
         playerTarget.enabled = shouldEnable;
+        audioController.enabled = shouldEnable;
         audioSource.enabled = shouldEnable;
         animator.enabled = shouldEnable;
         shootSource.enabled = shouldEnable;
@@ -142,6 +153,44 @@ public class PlayerController : MonoBehaviour
         {
             auraSource.SetActive(value);
         }
+    }
+
+
+    private void MapPlayerActions()
+    {
+        input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
+        input.actions["Potion2"].performed += context => { UsePotion(PotionTypes.MANA); };  // Map whichever potion
+    }
+
+    private void UnmapPlayerActions()
+    { 
+        
+    }
+
+    // Potion Usage
+    public void UsePotion(PotionTypes potion)
+    {
+        switch (potion)
+        { 
+            case PotionTypes.HEALTH:
+                // Get the health stat, increase the health stat
+                break;
+            case PotionTypes.MANA:
+                // Get the mana stat, increase the mana stat
+                break;
+        }
+
+        // Try using the potion
+        // If the potion cannot be used, play cannot use sound
+
+        // If the potion count & potion exists
+        // Consume the potion and increase the respective stat
+
+        // Otherwise
+        // Do not consume (no potion to use)
+        // and play the unable sound
+
+        // Where are potions stored
     }
 
     #endregion

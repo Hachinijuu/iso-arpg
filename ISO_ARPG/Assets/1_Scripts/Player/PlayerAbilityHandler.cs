@@ -32,6 +32,10 @@ public class PlayerAbilityHandler : MonoBehaviour
 
         // For single use abilities, can use .performed event
         // For channel abilities, need to listen to both .started and .canceled
+
+
+        // ALL ABILITIES HAVE HELD FUNCTIONALITY
+
         for (int i = 1; i <= stats.Abilities.Count; i++)
         {
             string keyName = "Ab" + i;

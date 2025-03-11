@@ -10,7 +10,7 @@ public class PlayerStats : EntityStats
 
     // Any additional abilities the player can get through gameplay
     public List<PassiveAbility> passives;
-    public List<Stat> statList;
+    //public List<Stat> statList;
 
     // Instead of casting abilities through the playerClass, load the abilities into this class
 
@@ -42,11 +42,9 @@ public class PlayerStats : EntityStats
     public SubStat Chains { get { return numChains; } }
 
     // Utility
-    public SubStat MoveSpeed { get { return moveSpeed; } }
 
     // Offensive
     //public SubStat Damage { get { return damage; } }
-    public SubStat AttackSpeed { get { return attackSpeed; } }
     public SubStat CritDamage { get { return critDamage; } }
     public SubStat CritChance { get { return critChance; } }
     #endregion
@@ -67,24 +65,14 @@ public class PlayerStats : EntityStats
     SubStat numChains;
 
     // Utility
-    SubStat moveSpeed;
 
     // Offensive
     //SubStat damage;
-    SubStat attackSpeed;
     SubStat critDamage;
     SubStat critChance;
     #endregion
     #endregion
 
-    #region UNITY FUNCTIONS
-    public void Start()
-    {
-        //LoadDefaultClassStats();
-        //LoadAbilities();
-        //LoadStats();
-    }
-    #endregion
     #region INITALIZATION
 
     public void InitializePlayerStats()
@@ -99,9 +87,10 @@ public class PlayerStats : EntityStats
         //health.Changed += context => { CheckDied(context); };
     }
 
-    public void FillStatList()
+    public override void FillStatList()
     {
-        statList.Add(health);
+        base.FillStatList();
+        //statList.Add(health);
         statList.Add(mana);
         statList.Add(idBar);
         statList.Add(strength);
@@ -110,21 +99,14 @@ public class PlayerStats : EntityStats
         statList.Add(attackRange);
         statList.Add(numProjectiles);
         statList.Add(numChains);
-        statList.Add(moveSpeed);
+        //statList.Add(moveSpeed);
         statList.Add(idGain);
-        statList.Add(damage);
-        statList.Add(attackSpeed);
+        //statList.Add(damage);
+        //statList.Add(attackSpeed);
         statList.Add(critDamage);
         statList.Add(critChance);
-        statList.Add(armour);
-        statList.Add(dodge);
-    }
-
-    public void LoadStats()
-    {
-        //LoadDefaultMainStats();
-        //LoadTrackedStats();
-        //LoadSubstats();
+        //statList.Add(armour);
+        //statList.Add(dodge);
     }
 
     public override void LoadData(EntityData toLoad)
