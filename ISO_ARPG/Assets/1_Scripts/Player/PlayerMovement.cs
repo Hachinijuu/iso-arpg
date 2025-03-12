@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -42,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
     private float speed;
     #endregion
     #region UNITY FUNCTIONS
-
     private void Awake()
     {
         // get the references on THIS object
@@ -53,17 +53,6 @@ public class PlayerMovement : MonoBehaviour
         // map inputs
         //MapMovementActions();
     }
-
-    // private void Start()
-    // {
-    //     //GameManager.Instance.onMoveChanged += UpdateMoveType;
-
-    //     canMove = false;
-    //     canRotate = false;
-
-    //     type = GameManager.Instance.moveType;
-    // }
-
     private void OnEnable() 
     {
         MapMovementActions();
@@ -73,11 +62,6 @@ public class PlayerMovement : MonoBehaviour
     {
         UnmapMovementActions();
     }
-    // private void OnDestroy()
-    // {
-    //     UnmapMovementActions();
-    // }
-
     public void Respawn()
     {
         transform.position = transform.position;
@@ -109,6 +93,12 @@ public class PlayerMovement : MonoBehaviour
         {
             // Ideally player makes use of NavMesh - temporary movement solution while AI navigation gets looked at
             HandleMovement();
+
+            // When the player is moving, fire off an event for the AIManager to listen to
+            // This will allow the AIManager to only update the flow field when the player is presumeably in a different cell
+            // On the player end, this will evaluate the movement
+            // On the AIManager end, determine the distance between the current cell, and see if it has exceeded the size of a given cell
+            
             //agent.destination = moveTarget;       // Move to the target
             //speed = agent.velocity.normalized.magnitude;
         }
@@ -128,6 +118,22 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    #endregion
+    #region EVENTS
+    public class MoveArgs
+    {
+        bool moving;
+        float speed;
+        
+        public MoveArgs(bool on, float speed)
+        {
+            moving = on;
+            this.speed = speed;
+        }
+    }
+    public delegate void Moving(MoveArgs e);
+    public event Moving onMove;
+    protected void FireMoving(MoveArgs e) { if (onMove != null) { onMove(e); } } 
     #endregion
     #region ACTION MAPPING
     private void MapMovementActions()
@@ -234,6 +240,10 @@ public class PlayerMovement : MonoBehaviour
         speed = (transform.position - moveTarget).magnitude;
         if (speed <= 0.25f)
             speed = 0;
+        if (speed > 0)
+        {
+            FireMoving(new MoveArgs(true, speed));
+        }
         // Debug.Log(speed);
     }
     public void HandleStops(bool stop)

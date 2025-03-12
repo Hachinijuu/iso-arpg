@@ -65,7 +65,6 @@ public class RuneSystem : MonoBehaviour
         // before doing stat rolls, roll for a rune's rarity
         // this roll is based on the difficulty
 
-
         if (rune.mainStat != null && rune.mainStat.Length > 0)
         {
             foreach (MainStat mainStat in rune.mainStat)
@@ -73,9 +72,25 @@ public class RuneSystem : MonoBehaviour
                 // Need to get the matching roll
                 foreach (MainStatRoll rollRange in mainStatRolls)
                 {
+                    if (mainStat.type == MainStatTypes.NONE)
+                    {
+                        // Match to the player class
+                        switch(PlayerManager.Instance.currentClass)
+                        {
+                            case GoX_Class.BERSERKER:
+                                mainStat.type = MainStatTypes.STRENGTH;
+                            break;
+                            case GoX_Class.HUNTER:
+                                mainStat.type = MainStatTypes.DEXTERITY;
+                            break;
+                            case GoX_Class.ELEMENTALIST:
+                                mainStat.type = MainStatTypes.INTELLIGENCE;
+                            break;
+                        }
+                    }
                     if (mainStat.type == rollRange.type)  // If the stat to change matches the rollRange -- if the rune has a strength stat, look for the strength roll
                     {
-                        if (mainStat.Value > 0)
+                        if (mainStat.Value > 0) // If the value is defined, keep that value instead continue
                             continue;
                         float minRoll = rollRange.maxValue * 0.6f;                      // 60% of max roll, min can be 40% lower
                         mainStat.Value = Random.Range(minRoll, rollRange.maxValue * (1 + ((int)rune.rarity * RollUpperStep)));     // Roll for the stat based on the number
@@ -83,7 +98,7 @@ public class RuneSystem : MonoBehaviour
                 }
             }
         }
-        else if (rune.trackedStat != null && rune.trackedStat.Length > 0)
+        if (rune.trackedStat != null && rune.trackedStat.Length > 0)
         {
             foreach (TrackedStat trackedStat in rune.trackedStat)
             {
@@ -99,7 +114,7 @@ public class RuneSystem : MonoBehaviour
                 }
             }
         }
-        else if (rune.subStat != null && rune.subStat.Length > 0)
+        if (rune.subStat != null && rune.subStat.Length > 0)
         {
             foreach (SubStat subStat in rune.subStat)
             {

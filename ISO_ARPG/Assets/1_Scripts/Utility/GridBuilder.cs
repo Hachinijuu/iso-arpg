@@ -72,7 +72,7 @@ public class GridBuilder : MonoBehaviour
         // Grid build also needs to be offset by the position of where the NavMesh surface is
         Vector3 pos = levelArea.gameObject.transform.position;
 
-        origin = pos + new Vector3(-rowOffset, 0, columnOffset);
+        origin = pos + new Vector3(-rowOffset, 0, -columnOffset);
 
         // Also offset the origin by the cell trim
 
@@ -88,7 +88,7 @@ public class GridBuilder : MonoBehaviour
                 Cell cell = new Cell(row, col);
                 Vector3 cellPos = origin;
                 cellPos.x += (cellSize * row);
-                cellPos.z -= (cellSize * col);
+                cellPos.z += (cellSize * col);
                 cell.position = cellPos;
                 cell.boundingBox = new Bounds(cell.position, new Vector3(cellSize, 0, cellSize));
                 cells[row, col] = cell;
@@ -161,7 +161,10 @@ public class GridBuilder : MonoBehaviour
                 for (int j = 0; j < gColumns; j++)
                 {
                     if (col.bounds.Intersects(cells[i, j].boundingBox))
-                        cells[i, j].isObstacle = true;
+                    {
+                        cells[i, j].isObstacle = true;      // Set obstacle flag to true
+                        cells[i,j].IncreaseCost(255);       // Set the cost value to max, so that the cell should not be used in navigation
+                    }
                 }
             }
         }

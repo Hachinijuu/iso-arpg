@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [System.Serializable]
 public struct UpdateInterval
 {
@@ -27,6 +26,7 @@ public class AIManager : MonoBehaviour
 
     // AI Manager gets the information from the level manager, get a reference to the level manager, can also use the instance
     PlayerController player;
+    Cell playerCell;
     //LevelManager levelManager;
 
     [Header("Spawning Settings")]
@@ -47,14 +47,12 @@ public class AIManager : MonoBehaviour
     public UpdateInterval regularInterval;
     public UpdateInterval farInterval;
     public int currAmount = 0;
-
-    //float spawnTimer = 0.0f;
     [SerializeField] float respawnInterval = 5.0f;
     [SerializeField] float hordeCheckInterval = 1.25f;
 
     // Instead of prefab updates, organize enemies into these distance groups which will dictate their frequency
     // Whenever a player enters a check based on the groups the distances
-    Dictionary<UpdateInterval, List<EnemyController>> distanceGroups;
+    //Dictionary<UpdateInterval, List<EnemyController>> distanceGroups;
     bool distanceGroupUpdated;
     bool enemiesSpawned;
     bool canSpawn;
@@ -70,10 +68,14 @@ public class AIManager : MonoBehaviour
     List<Vector3> spawnDots;
 
 
-    List<EnemyController> aliveEnemies;
+    public List<EntityStats> aliveEnemies;
 
     //[SerializeField] GridData gData;
     public Grid grid;
+    public Flowfield flowfield; // flowfield for navigation
+
+
+    // Difficulty
 
     float difficultyModifer;
     #endregion
@@ -82,7 +84,7 @@ public class AIManager : MonoBehaviour
 
     void Awake()
     {
-        distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
+        //distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
         spawnPoints = new List<EnemySpawnPoint>();
         spawnDots = new List<Vector3>();
     }
@@ -91,8 +93,9 @@ public class AIManager : MonoBehaviour
         // if (player == null)
         //     player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
-        InitDistanceGroups();
-        GameManager.Instance.onDifficultyChanged += context => { UpdateDifficulty(); };
+        //InitDistanceGroups();
+        GameManager.Instance.onDifficultyChanged += context => { UpdateDifficulty(); }; // Listen to the difficulty changed event, whenever it is changed, modify the local variables
+        PlayerManager.Instance.onPlayerChanged += context => { GetPlayer(); };          // Listen to the player changed event, whenever the player is changed, modify the reference
     }
     #endregion
 
@@ -106,6 +109,18 @@ public class AIManager : MonoBehaviour
             if (LevelManager.Instance.grid != null)
             {
                 grid = LevelManager.Instance.grid;
+                playerCell = GetPlayerCell();
+
+                // Setup the flowfield
+                if (flowfield == null)
+                {
+                    flowfield = new Flowfield(grid, playerCell);  // Get the player's position
+                    Debug.Log("Generated a flow field");
+                    // While playing, when should the manager get the player cell?
+                    // For responsive gameplay, get the cell often
+                    // For event based listening, get it whenever the player moves (if speed is greater than 0)
+                    // Or, just get it in update with no step for finding it, just store it for this class to reference
+                }
                 // if (grid.cells == null)
                 // {
                 //     grid.LoadFromList();
@@ -142,6 +157,7 @@ public class AIManager : MonoBehaviour
     public void LevelUnloading()
     {
         UnloadSpawnPoints();
+        flowfield = null;
         foreach (ObjectPool enemyPool in enemyPools)
         {
             enemyPool.Reset();
@@ -173,22 +189,120 @@ public class AIManager : MonoBehaviour
     {
         return GetSquareDistance(pos, player.transform.position);
     }
+
+    private void GetPlayer()
+    {
+        // If a player exists, clean up old references before assigning listeners to the new one
+        if (player != null)
+        {
+            player.Movement.onMove -= context => { UpdateField(); };
+        }
+
+        // Overwrite / assign the new player value
+        player = PlayerManager.Instance.currentPlayer;
+        if (player != null)
+        {
+            // Once the player is found, assign the listener
+            player.Movement.onMove += context => { UpdateField(); };
+        }
+        UpdateField();
+    }
+
+    public Cell GetPlayerCell()
+    {
+        Cell cell = null;
+        if (player != null)
+        {
+            cell = GridUtility.GetCellFromPoint(grid, player.transform.position);
+        }
+        return cell;
+
+        // Transform playerPos = PlayerManager.Instance.currentPlayer.transform;
+        // if (playerPos != null)
+        // {
+        //     playerCell = GridUtility.GetCellFromPoint(grid, playerPos.position);
+        // }
+        // return playerCell;
+    }
+
+    bool fieldUpdated = false;
+    public void UpdateField()
+    {
+        // Check if the current player's position is distanced from stored cell
+        if (playerCell != null)
+        {
+            float dist = GetSquareDistance(player.transform.position, playerCell.position);
+            if (dist < Mathf.Pow(grid.cellSize, 2)) // If the distance is less than the cell's size, early return
+            {
+                return;
+            }
+            else
+            {
+                // If it is greater than the distance, flag that the field should be updated
+                fieldUpdated = false;
+            }
+        }
+        //else
+        //{
+        //    // Player cell is null
+        //    playerCell = GetPlayerCell();
+        //}
+        if (!fieldUpdated)
+        {
+            IEnumerator FlowfieldUpdate = UpdateFlowfield();
+            StopCoroutine(FlowfieldUpdate);
+            StartCoroutine(FlowfieldUpdate);
+            // Otherwise, if the distance is greater, we can assume the player has travelled across cells, therefore calculate a new field
+            // If it is, calculate a new field
+        }
+    }
+
+    IEnumerator UpdateFlowfield()
+    {
+        Debug.Log("[AIManager_Flowfield]: Started updating flow field");
+
+        Cell temp = GetPlayerCell();
+        //playerCell = GetPlayerCell();
+        // Update the flow field
+        if (temp == playerCell) // If the found cell is the same as the current cell
+        {
+            yield break;
+        }
+        else
+        {
+            playerCell = temp;
+        }
+
+        if (playerCell != null)
+        {
+            // Need to reinitalize the field to reset the values back to their expected numbers -- otherwise, tiles marked 0 will persist as 0
+            //flowfield = new Flowfield(grid, playerCell);
+            flowfield.CreateIntergrationField(playerCell);
+            flowfield.CreateFlowField();
+            fieldUpdated = true;
+        }
+        else
+            Debug.LogWarning("[AIManager_Flowfield]: Player Cell is NULL");
+        yield return fieldUpdated = true;
+        Debug.Log("[AIManager_Flowfield]: Finished updating flow field");
+    }
+    
     #endregion
 
     #region ENEMY SPAWNING
-    public void RegisterToList(EnemyController agent)
+    public void RegisterToList(EntityStats agent)
     {
         if (aliveEnemies == null)
-            aliveEnemies = new List<EnemyController>();
+            aliveEnemies = new List<EntityStats>();
         
         if (aliveEnemies != null && aliveEnemies.Count > 0)
             aliveEnemies.Add(agent);
     }
 
-    public void UnregisterFromList(EnemyController agent)
+    public void UnregisterFromList(EntityStats agent)
     {
         if (aliveEnemies == null)
-            aliveEnemies = new List<EnemyController>();
+            aliveEnemies = new List<EntityStats>();
         
         if (aliveEnemies != null && aliveEnemies.Count > 0)
             aliveEnemies.Remove(agent);
@@ -321,34 +435,6 @@ public class AIManager : MonoBehaviour
                     SpawnEnemy(agent, spawnPos);
                     // Otherwise spawn at a random point
                 }
-                // Vector2Int index = GridUtility.GetIndexFromPoint(grid, spawnPos);
-                // Debug.Log(index);
-                // if (index.x > 0 && index.y > 0) // if the index is valid
-                // {
-                //     Cell c = GridUtility.GetCellFromIndex(grid, index);
-                //     if (c != null)
-                //     {
-                //         if (!c.isObstacle && !c.isOccupied) // if the cell is not an obstacle and not occupied. (NOTE: FIGURE OUT WHAT FLAGS AS OCCUPIED --> OBSTACLE SPAWN?)
-                //         {
-                //             spawnPos = c.position;  // Spawn the agent at that cell position
-                //         }
-                //         else // If it is occupied or an obstacle, spawn the agent as a straggler instead (random position)
-                //         {
-                //             index = GridUtility.GetRandomIndex(grid, 3);
-                //             if (index.x > 0 && index.y > 0) // if the index is valid
-                //             {
-                //                 c = GridUtility.GetCellFromIndex(grid, index);
-                //                 spawnPos = c.position;
-                //             }
-                //             else    // If the index is not valid, just skip the spawn
-                //             {
-                //                 continue;   // Skip this spawn (won't spawn the enemy, but continue the loop)
-                //             }
-                //         }
-                //         spawnDots.Add(spawnPos);
-                //         SpawnEnemy(agent, spawnPos);
-                //     }
-                // }
             }
         }
     }
@@ -356,36 +442,36 @@ public class AIManager : MonoBehaviour
     {
         if (agent != null)
         {
-            EnemyController controller = agent.GetComponent<EnemyController>();
-            if (controller)
+            // EnemyController controller = agent.GetComponent<EnemyController>();
+            // if (controller)
+            // {
+            //     // Get the modified values passed to the controller
+            //     EntityStats stats = controller.GetComponent<EntityStats>();
+
+            //     // When spawning an enemy, they have a chance to be an 'elite' enemy
+            //     // This gives them additional stats, and a visual distinction from regular enemies
+
+            //     if (stats != null)
+            //     {
+            //         // How do we get base, relative to adjusted stats?
+            //         // i.e, what is the default?
+            //         stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
+            //         stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
+            //     }
+            //     //controller.damage *= GameManager.Instance.currDifficulty.damageMultiplier;
+
+            //     controller.Respawn();
+            // }
+
+            EntityStats stats = agent.GetComponent<EntityStats>();
+            if (stats != null)
             {
-                // Get the modified values passed to the controller
-                EntityStats stats = controller.GetComponent<EntityStats>();
-
-                // When spawning an enemy, they have a chance to be an 'elite' enemy
-                // This gives them additional stats, and a visual distinction from regular enemies
-
-                if (stats != null)
-                {
-                    // How do we get base, relative to adjusted stats?
-                    // i.e, what is the default?
-                    stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
-                    stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
-                }
-                //controller.damage *= GameManager.Instance.currDifficulty.damageMultiplier;
-
-                controller.Respawn();
+                stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
+                stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
+                aliveEnemies.Add(stats);
             }
 
-            // Add a listener to the enemies
-            // This will work because the number of enemies spawned in the initial batch SHOULD NEVER exceed subsequent spawns.
-            // This needs to be tested
-
-            // Negative current amount still exists (more enemies than accounted for that die)
             currAmount += 1;
-            //controller.stats.OnDied -= context => { };
-            //controller.stats.OnDied -= context => { UpdateDeathNumbers(); };
-            //controller.stats.OnDied += context => { UpdateDeathNumbers(ref controller); };
 
             // This position should be verified based on level's grid.
 
@@ -398,13 +484,48 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    public void SpawnElite()
+    public void SpawnElite(GameObject agent, Vector3 pos)
     { 
         // This spawns an elite enemy
         // Select 2 stats randomly from the stat list
         // Scale / multiply those stats for elite values
 
+        if (agent != null)
+        {
+            EntityStats stats = agent.GetComponent<EntityStats>();
+            if (stats != null)
+            {
+                int statIndex1 = Random.Range(0, stats.statList.Count);
+                int statIndex2 = Random.Range(0, stats.statList.Count);
 
+                while (statIndex1 == statIndex2) // If the stats are the same, roll for different number
+                {
+                    statIndex2 = Random.Range(0, stats.statList.Count);
+                }
+                if (statIndex1 != statIndex2)
+                {
+                    // Once the indices are found, modify the stats at the indices
+                    if (stats.statList[statIndex1] is TrackedStat ts1 || stats.statList[statIndex2] is TrackedStat ts2) // If the stats found are tracked stats (Health)
+                    {
+                        ts1 = stats.statList[statIndex1] as TrackedStat;
+                        ts2 = stats.statList[statIndex2] as TrackedStat;
+                        if (ts1 != null)
+                        {
+                            ts1.MaxValue = ts1.MaxValue * 1.5f * GameManager.Instance.currDifficulty.healthMultiplier; 
+                        }
+                        if (ts2 != null)
+                        {
+
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+
+        }
     }
     public void SpawnEnemy(ObjectPool fromPool, Vector3 pos)
     {
@@ -421,10 +542,6 @@ public class AIManager : MonoBehaviour
         //controller.stats.OnDied -= context => { } ;  // stop listening to the function
     }
 
-    public void GetPlayerReferences()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-    }
     #endregion
     #region Horde Spawning
     public IEnumerator HordeHandler()
@@ -465,108 +582,141 @@ public class AIManager : MonoBehaviour
     }
     #endregion
     #region Distance Groups
-    public void InitDistanceGroups()
-    {
-        distanceGroups.Add(nearInterval, new List<EnemyController>());
-        distanceGroups.Add(regularInterval, new List<EnemyController>());
-        distanceGroups.Add(farInterval, new List<EnemyController>());
-    }
+    // public void InitDistanceGroups()
+    // {
+    //     distanceGroups.Add(nearInterval, new List<EnemyController>());
+    //     distanceGroups.Add(regularInterval, new List<EnemyController>());
+    //     distanceGroups.Add(farInterval, new List<EnemyController>());
+    // }
 
-    public void AssignGameObjectToGroup(GameObject go, float distance)
-    {
-        EnemyController controller = go.GetComponent<EnemyController>();
+    // public void AssignGameObjectToGroup(GameObject go, float distance)
+    // {
+    //     EnemyController controller = go.GetComponent<EnemyController>();
 
-        AssignControllerToGroup(controller, distance);
-    }
+    //     AssignControllerToGroup(controller, distance);
+    // }
 
-    public void AssignControllerToGroup(EnemyController controller, float distance)
-    {
-        if (distance > farInterval.range * farInterval.range)       // if the agent is far from the player
-        {
-            controller.UpdateInterval = farInterval.range;
-            controller.PhysicsInterval = farInterval.range;
-            distanceGroups[farInterval].Add(controller);
-        }
-        else if (distance < nearInterval.range * nearInterval.range) // if the agent is close to the player
-        {
-            controller.UpdateInterval = nearInterval.time;
-            controller.PhysicsInterval = nearInterval.time;
-            distanceGroups[nearInterval].Add(controller);
-        }
-        else    // the agent is not too far, and not too close
-        {
-            controller.UpdateInterval = regularInterval.time;
-            controller.PhysicsInterval = regularInterval.time;
-            distanceGroups[regularInterval].Add(controller);
-        }
-    }
+    // public void AssignControllerToGroup(EnemyController controller, float distance)
+    // {
+    //     if (distance > farInterval.range * farInterval.range)       // if the agent is far from the player
+    //     {
+    //         controller.UpdateInterval = farInterval.range;
+    //         controller.PhysicsInterval = farInterval.range;
+    //         distanceGroups[farInterval].Add(controller);
+    //     }
+    //     else if (distance < nearInterval.range * nearInterval.range) // if the agent is close to the player
+    //     {
+    //         controller.UpdateInterval = nearInterval.time;
+    //         controller.PhysicsInterval = nearInterval.time;
+    //         distanceGroups[nearInterval].Add(controller);
+    //     }
+    //     else    // the agent is not too far, and not too close
+    //     {
+    //         controller.UpdateInterval = regularInterval.time;
+    //         controller.PhysicsInterval = regularInterval.time;
+    //         distanceGroups[regularInterval].Add(controller);
+    //     }
+    // }
     #endregion
     #endregion
     #region RUNTIME FUNCTIONS
-    IEnumerator UpdateDistanceGroups()
-    {
-        distanceGroupUpdated = false;
-        //Debug.Log("[AIManager]: Started to update Distance Groups");
-        // Do a staggered update of the distance groups, checking if the enemies should shift to a different one.
-        foreach (KeyValuePair<UpdateInterval, List<EnemyController>> group in distanceGroups)
-        {
-            // Check each enemy in the current distance group and evaluate if they should be moved
-            // Use a for loop since the size is being modified
+    // IEnumerator UpdateDistanceGroups()
+    // {
+    //     distanceGroupUpdated = false;
+    //     //Debug.Log("[AIManager]: Started to update Distance Groups");
+    //     // Do a staggered update of the distance groups, checking if the enemies should shift to a different one.
+    //     foreach (KeyValuePair<UpdateInterval, List<EnemyController>> group in distanceGroups)
+    //     {
+    //         // Check each enemy in the current distance group and evaluate if they should be moved
+    //         // Use a for loop since the size is being modified
 
-            // This is inefficient when it comes to large sizes,
-            // Cut this value into batches to make it more manageable
+    //         // This is inefficient when it comes to large sizes,
+    //         // Cut this value into batches to make it more manageable
 
-            // If I have a group of 600, I am possibly doing 600 reassignments
-            for (int i = 0; i < group.Value.Count; i++)
-            {
-                // Get the distance between the agent and the player
-                EnemyController enemy = group.Value[i];
-                float dist = GetSquarePlayerDistance(enemy.transform.position);
+    //         // If I have a group of 600, I am possibly doing 600 reassignments
+    //         for (int i = 0; i < group.Value.Count; i++)
+    //         {
+    //             // Get the distance between the agent and the player
+    //             EnemyController enemy = group.Value[i];
+    //             float dist = GetSquarePlayerDistance(enemy.transform.position);
 
-                // If the distance is outside of the specified range of the CURRENT GROUP the agent is a member of
-                if (dist < group.Key.range || dist > group.Key.range)
-                {
-                    // Remove the agent from the group
-                    group.Value.Remove(enemy);
-                    // Reassign the agent to another group
-                    AssignControllerToGroup(enemy, dist);
-                }
+    //             // If the distance is outside of the specified range of the CURRENT GROUP the agent is a member of
+    //             if (dist < group.Key.range || dist > group.Key.range)
+    //             {
+    //                 // Remove the agent from the group
+    //                 group.Value.Remove(enemy);
+    //                 // Reassign the agent to another group
+    //                 //AssignControllerToGroup(enemy, dist);
+    //             }
 
-                // Wait some time between each enemy update
-                yield return new WaitForSeconds(enemyCheckInterval);
-            }
-            yield return new WaitForSeconds(nearInterval.time); // When cycling through the intervals, wait for some time before checking the next set
-        }
-        distanceGroupUpdated = true;
-    }
+    //             // Wait some time between each enemy update
+    //             yield return new WaitForSeconds(enemyCheckInterval);
+    //         }
+    //         yield return new WaitForSeconds(nearInterval.time); // When cycling through the intervals, wait for some time before checking the next set
+    //     }
+    //     distanceGroupUpdated = true;
+    // }
 
 
     // Commands will be sent on intervals based on the distance from the player
     // See Level Manager Cell/Grid System for spacing and boundaries
+    public void FixedUpdate()
+    {
+        if (aliveEnemies == null || aliveEnemies.Count <= 0)
+        {
+            return;
+        }
+        foreach (EntityStats entity in aliveEnemies)
+        {
+            Rigidbody rb = entity.GetComponent<Rigidbody>();    // Get component is probably expensive, better to have a reference
+            // Only way to have a reference is another script / entity stats contains a reference
+            Cell target = GridUtility.GetCellFromPoint(flowfield.grid, entity.transform.position);
+            Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+
+           // Vector3 movement = Vector3.MoveTowards(entity.transform.position, direction, 6.0f * Time.deltaTime);
+           // entity.transform.position = movement;
+            //Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+            ////Debug.Log("Move Direction: " + target.bestDirection.vector);
+            rb.velocity = direction * 6.0f;
+            //Debug.Log("moved");
+        }
+    }
     IEnumerator ManagerLoop()
     {
         // While the level has not ended, run updates for the distance groups and spawn enemies
         // Update Coroutine
         distanceGroupUpdated = true;
         enemiesSpawned = true;
-        float groupTimer = 0.0f;
+        //float groupTimer = 0.0f;
         float spawnTimer = 0.0f;
+        //float moveTimer = 0.0f;
 
         StartCoroutine(HordeHandler());
 
         while (!LevelManager.Instance.LevelComplete)
         {
-            groupTimer += Time.deltaTime;
+            //groupTimer += Time.deltaTime;
+            // moveTimer += Time.deltaTime;
             spawnTimer += Time.deltaTime;
 
-            if (groupTimer > groupCheckInterval)
-            {
-                if (distanceGroupUpdated)
-                {
-                    StartCoroutine(UpdateDistanceGroups());
-                    groupTimer = 0.0f;
-                }
-            }
+            // if (moveTimer > moveInterval)
+            // {
+            //     if (enemyStep)
+            //     {
+            //         StartCoroutine(UpdateEnemyNavigation());
+            //         moveTimer = 0.0f;
+            //     }
+            // }
+            // Handle enemies via coroutine
+
+            // if (groupTimer > groupCheckInterval)
+            // {
+            //     if (distanceGroupUpdated)
+            //     {
+            //         StartCoroutine(UpdateDistanceGroups());
+            //         groupTimer = 0.0f;
+            //     }
+            // }
             // Only spawn more enemies once the count has reached 0.
             if (canSpawn)
             {

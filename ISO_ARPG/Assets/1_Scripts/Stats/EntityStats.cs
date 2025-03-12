@@ -62,11 +62,22 @@ public class EntityStats : MonoBehaviour
     public void OnEnable()
     {
         health.Changed += CheckDied;
+
+        // Register to the corresponding pools if the ID is a valid enemy id
+        Debug.Log("Enabled");
+        if (id == EntityID.ORC || id == EntityID.IMP)
+        {
+            AIManager.Instance.RegisterToList(this);
+        }
     }
 
     public void OnDisable()
     {
         health.Changed -= CheckDied;
+        if (id == EntityID.ORC || id == EntityID.IMP)
+        {
+            AIManager.Instance.UnregisterFromList(this);
+        }
     }
     #endregion
     #region FUNCTIONALITY

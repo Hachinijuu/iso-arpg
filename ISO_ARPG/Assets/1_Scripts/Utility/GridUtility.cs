@@ -78,7 +78,7 @@ public class GridUtility
         float height = grid.columns * grid.cellSize;
 
         return ((point.x >= grid.origin.x) && (point.x <= (grid.origin.x + width)) &&
-                (point.z <= grid.origin.z) && (point.z >= (grid.origin.z - height)));
+                (point.z >= grid.origin.z) && (point.z <= (grid.origin.z + height)));
     }
     public static Vector2Int GetIndexFromPoint(Grid grid, Vector3 pos)
     {
@@ -89,14 +89,14 @@ public class GridUtility
             pos -= grid.origin; // gets the difference between the point and the origin
 
             // start counting the rows and columns from the grid point
-            int x = (int)(pos.z / grid.cellSize);
-            int y = (int)(pos.x / grid.cellSize);
+            int x = (int)(pos.x / grid.cellSize);
+            int y = (int)(pos.z / grid.cellSize);
 
             // based on where the origin is, normalize the values to be non-negative
-            if (grid.origin.x < 0)
-                x *= -1;
-            else
-                y *= -1;
+            //if (grid.origin.x < 0)
+            //    x *= -1;
+            //else
+            //    y *= -1;
 
             return new Vector2Int(x, y);
         }

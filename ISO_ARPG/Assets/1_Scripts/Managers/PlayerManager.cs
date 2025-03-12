@@ -75,6 +75,9 @@ public class PlayerManager : MonoBehaviour
                 {
                     c.Character.gameObject.SetActive(false);
                 }
+
+                // How to account for male / female variations?
+                // Add more GoX_Classes? Add gender to player controller?
             }
         }
         DeactivatePlayer();

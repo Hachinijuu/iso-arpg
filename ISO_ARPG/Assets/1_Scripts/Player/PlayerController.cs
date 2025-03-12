@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
     public void Respawn()
     {
         if (transform.localScale != Vector3.one)
-           transform.localScale = Vector3.one;
+            transform.localScale = Vector3.one;
         EnablePlayer(true);
         //animator.SetTrigger(respawnID);
         stats.Respawn();

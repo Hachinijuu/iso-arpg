@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 #region HELPER DATA STORAGE
@@ -197,6 +198,8 @@ public class LevelManager : MonoBehaviour
     #region DEBUG
     void OnDrawGizmos()
     {
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
         if (!showGrid)
         {
             return;
@@ -212,10 +215,28 @@ public class LevelManager : MonoBehaviour
                 Vector3 cell = new Vector3(grid.cellSize, 0, grid.cellSize);
                 foreach (KeyValuePair<Vector2Int, Cell> c in grid.gridCells)
                 {
+                    Gizmos.color = Color.red;
+                    Vector3 dir = c.Value.position;
+                    dir.x += c.Value.bestDirection.vector.x;
+                    dir.z += c.Value.bestDirection.vector.y;
+                    Gizmos.DrawLine(c.Value.position, dir);
+                    
+                    Handles.Label(c.Value.position, c.Key + "\n" + c.Value.bestCost.ToString(), style);
+                    
                     if (c.Value.isObstacle)
                         Gizmos.color = Color.magenta;
                     else
                         Gizmos.color = Color.white;
+
+
+                    // Get the direction in this function
+                    
+
+                    // Draw the player tile
+                    // if (c.Value == AIManager.Instance.GetPlayerCell())
+                    // {
+                    //     Gizmos.color = Color.cyan;
+                    // }
                     Gizmos.DrawWireCube(c.Value.position, cell);
                 }
             }
