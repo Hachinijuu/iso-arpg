@@ -103,11 +103,50 @@ public class EnemyControllerV2 : MonoBehaviour
             currState.EnterState(args);
         }
     }
+
+    bool actRunning = false;
     public void HandleState(AgentStateArgs e)
     {
         if (currState == null) { return; }
+        // If the state exists, call the logic on the state
         currState.Reason(e);
+
+        if (currState is AICoroutineState)
+        {
+            IEnumerator act = CoroutineAct(e);
+            if (!actRunning)    // If the act is not running, start the coroutine
+            { 
+                StartCoroutine(act);
+            }
+        }
         currState.Act(e);
+
+        // However, is there a possiblity to detect the type of state it is
+        // If it is a coroutine based state, the logic handling is different
+        // It will do reason decisions based on the update loop
+        // But if it is a coroutine based state, the act will run in a coroutine timer?
+
+    }
+
+    // How to call the function from internally in the state
+
+
+    // Only want to start this coroutine if there is none running already
+    IEnumerator CoroutineAct(AgentStateArgs e)
+    {
+        if (currState is AICoroutineState state)
+        {
+            actRunning = true;
+            yield return new WaitForSeconds(state.intervalTime);    // Countdown time
+            currState.Act(e);   // Do the action
+            // Then set coroutine to null, to cancel out the usage
+
+            actRunning = false;
+            //if (cycleComplete)
+            //{
+            //    currState.Act(e);
+            //}
+        }
     }
     #endregion
     #region Movement

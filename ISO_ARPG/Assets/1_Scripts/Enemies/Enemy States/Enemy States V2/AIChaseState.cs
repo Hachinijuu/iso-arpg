@@ -9,11 +9,15 @@ public class AIChaseState : AIState
     {
         // When entering the chase state, assign self to the moving group
         if (e.agent == null) { return; }
+        // Check if they are already part of the moving list
+        if (AIManager.Instance.movingEnemies.Contains(e.agent)) { return; }
+        // Otherwise, add them to the moving list
         AIManager.Instance.RegisterMoving(e.agent);
     }
     public override void ExitState(AgentStateArgs e)
     {
         if (e.agent == null) { return; }
+        if (!AIManager.Instance.movingEnemies.Contains(e.agent)) { return; }
         AIManager.Instance.UnregisterMoving(e.agent);
     }
     public override void Reason(AgentStateArgs e)
@@ -60,6 +64,8 @@ public class AIChaseState : AIState
         EnemyControllerV2 agent = e.agent;
         float speed = agent.Body.velocity.normalized.magnitude;
         agent.Animator.SetFloat(animId, speed);
+
+        // Should movement be passed to this function, probably, considering target driven movement is different
     }
 
 }

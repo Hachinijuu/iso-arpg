@@ -44,7 +44,6 @@ public class MeleeAttackState : FSMState
             if (canAttack != true)
                 canAttack = true;
         }
-
     }
     //Act
     public override void Act(Transform player, Transform npc)

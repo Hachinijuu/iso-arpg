@@ -17,7 +17,6 @@ public abstract class AIState : ScriptableObject
         Regenerating,   // Agent is regenerating themself
         Patrol,         // Agent is patrolling
         Dead,           // Agent has died
-
     }
     // The methods given an AI state are expected to have static functionality
     // I.e, the agent will pass themselves to the function, and act given that passed information

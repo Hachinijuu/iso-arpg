@@ -160,8 +160,8 @@ MonoBehaviour:
   details:
     enemiesToSpawn:
     - entity: {fileID: 8339188839789172028, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      minSpawn: 100
-      maxSpawn: 100
+      minSpawn: 500
+      maxSpawn: 500
     destructiblesToSpawn:
     - entity: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
       minSpawn: 5
@@ -814,6 +814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280883471}
   - component: {fileID: 1280883470}
+  - component: {fileID: 1280883472}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -898,6 +899,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1280883472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280883469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1309868838
 GameObject:
   m_ObjectHideFlags: 0
