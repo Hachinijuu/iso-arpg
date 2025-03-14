@@ -38,7 +38,6 @@ public class EntityStats : MonoBehaviour
     protected SubStat moveSpeed;
 
     // Add attack speed and movement speed to enemies for them to have randomized values for elites
-
     public List<Stat> statList;
 
     #endregion
@@ -65,19 +64,19 @@ public class EntityStats : MonoBehaviour
 
         // Register to the corresponding pools if the ID is a valid enemy id
         Debug.Log("Enabled");
-        if (id == EntityID.ORC || id == EntityID.IMP)
-        {
-            AIManager.Instance.RegisterToList(this);
-        }
+        // if (id == EntityID.ORC || id == EntityID.IMP)
+        // {
+        //     AIManager.Instance.RegisterToList(this);
+        // }
     }
 
     public void OnDisable()
     {
         health.Changed -= CheckDied;
-        if (id == EntityID.ORC || id == EntityID.IMP)
-        {
-            AIManager.Instance.UnregisterFromList(this);
-        }
+        // if (id == EntityID.ORC || id == EntityID.IMP)
+        // {
+        //     AIManager.Instance.UnregisterFromList(this);
+        // }
     }
     #endregion
     #region FUNCTIONALITY

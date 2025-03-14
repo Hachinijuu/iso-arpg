@@ -168,8 +168,10 @@ public class GridBuilder : MonoBehaviour
                 }
             }
         }
-    }
 
+        // When creating the cost field, would making the cell's adjacent to these marked obstacles be efficient?
+        // I.e, push the enemies towards the non-edge path
+    }
     public void CullObstacles()
     {
         GetObstacles();

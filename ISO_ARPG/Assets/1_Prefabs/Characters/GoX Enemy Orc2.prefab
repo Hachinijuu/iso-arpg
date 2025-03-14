@@ -2923,6 +2923,7 @@ GameObject:
   - component: {fileID: 4620611001483524893}
   - component: {fileID: 516974999874407358}
   - component: {fileID: -8609507159126163637}
+  - component: {fileID: 927512050665745881}
   m_Layer: 7
   m_Name: GoX Enemy Orc2
   m_TagString: Enemy
@@ -3052,6 +3053,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &927512050665745881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8339188839789172028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0252b5407d4c0c34db7257104231ad8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtbox: {fileID: 6666653413374980729}
+  hitbox: {fileID: 6111161216217004617}
+  stats: {fileID: 760295845645426928}
+  rb: {fileID: -8609507159126163637}
+  animator: {fileID: 516974999874407358}
+  states: {fileID: 11400000, guid: eb6c16e886244204fbe3c031b7b0852a, type: 2}
 --- !u!1 &8353747348322271582
 GameObject:
   m_ObjectHideFlags: 0

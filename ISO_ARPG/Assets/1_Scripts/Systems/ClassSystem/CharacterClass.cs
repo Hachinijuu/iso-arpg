@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Class", menuName = "sykcorSystems/Entities/Class", order = 2)]
 public class CharacterClass : EntityData
@@ -13,6 +12,15 @@ public class CharacterClass : EntityData
     #region VARIABLES
     #region Stats
 
+    // Base Class Contains
+    // Health
+    // Damage
+    // Attack Speed
+    // Armour
+    // Dodge
+    // MoveSpeed
+
+    [Header("CLASS STATS")]
     [Header("Main Stats")]
     public TrackedStat Mana;
     public MainStat Strength;
@@ -21,18 +29,24 @@ public class CharacterClass : EntityData
 
     [Header("Gameplay Stats")]
     public Stat Range;
-    public SubStat Projectiles;
-    public SubStat Chains;
-
-    [Header("Utility Stats")]
-    public SubStat moveSpeed;
-    public SubStat ID_Gain;
     [Range(0, StatLimits.MOVE_MAX)] public float rotationSpeed = -1f;
 
     [Header("Offensive Stats")]
-    public SubStat AttackSpeed;
+    //public SubStat AttackSpeed;
     public SubStat CritDamage;
     public SubStat CritChance;
+    public SubStat Projectiles;
+    public SubStat Chains;
+    [Header("Defensive Stats")]
+    public SubStat TakeFromMana;
+    public SubStat HealthRegen;
+
+    [Header("Utility Stats")]
+    public SubStat CooldownReduction;
+    //public SubStat moveSpeed;
+    public SubStat ID_Gain;
+    public SubStat ManaRegen;
+    public SubStat ManaOnHit;
 
     #endregion
 

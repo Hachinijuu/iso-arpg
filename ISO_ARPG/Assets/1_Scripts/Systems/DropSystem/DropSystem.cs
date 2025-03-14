@@ -119,21 +119,6 @@ public class DropSystem : MonoBehaviour
                 if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
                 {
                     // Do another roll for the rune rarity, this is relative to the difficulty
-                    float rarityRoll = Random.Range(0, 100f);
-
-                    DifficultySetting difficultyMod = GameManager.Instance.currDifficulty;
-                    foreach (RarityChances chance in difficultyMod.dropModifiers)
-                    {
-                        // If I get a 30 roll on dropValue
-                        // And the chance for a Relic tier rune is 5%, I get that rune
-                        // Since the loop will check for the chances based on sequential order, (common -> relic)
-                        // The rarity will be update based on the lowest drop chance value
-                        
-                        if (chance.dropChance < rarityRoll)
-                        {
-                            rune.rarity = chance.rarity;
-                        }
-                    }
                     rune = RuneSystem.Instance.RollRuneStats(rune);
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?

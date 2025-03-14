@@ -215,18 +215,18 @@ public class LevelManager : MonoBehaviour
                 Vector3 cell = new Vector3(grid.cellSize, 0, grid.cellSize);
                 foreach (KeyValuePair<Vector2Int, Cell> c in grid.gridCells)
                 {
-                    Gizmos.color = Color.red;
-                    Vector3 dir = c.Value.position;
-                    dir.x += c.Value.bestDirection.vector.x;
-                    dir.z += c.Value.bestDirection.vector.y;
-                    Gizmos.DrawLine(c.Value.position, dir);
-                    
-                    Handles.Label(c.Value.position, c.Key + "\n" + c.Value.bestCost.ToString(), style);
-                    
                     if (c.Value.isObstacle)
                         Gizmos.color = Color.magenta;
                     else
+                    {
+                        Gizmos.color = Color.red;
+                        Vector3 dir = c.Value.position;
+                        dir.x += c.Value.bestDirection.vector.x;
+                        dir.z += c.Value.bestDirection.vector.y;
+                        Gizmos.DrawLine(c.Value.position, dir);
                         Gizmos.color = Color.white;
+                        Handles.Label(c.Value.position, c.Key + "\n" + c.Value.bestCost.ToString(), style);
+                    }
 
 
                     // Get the direction in this function

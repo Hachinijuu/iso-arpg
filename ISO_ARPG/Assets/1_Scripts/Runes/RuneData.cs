@@ -22,6 +22,8 @@ public class RuneData : ItemData
     public MainStat[] mainStat;
     public TrackedStat[] trackedStat;
     public SubStat[] subStat;
+
+    public int destroyAmount;   // The amount of dust returned on rune destruction
     public virtual void ApplyStats(ref PlayerStats stats)
     {
         if (mainStat != null && mainStat.Length > 0)

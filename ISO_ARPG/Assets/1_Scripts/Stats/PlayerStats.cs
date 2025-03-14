@@ -36,19 +36,25 @@ public class PlayerStats : EntityStats
     public MainStat INT { get { return intelligence; } }
 
     // Gameplay Stats
-    public SubStat IDGain { get { return idGain; } }
     public Stat Range { get { return attackRange; } }
-    public SubStat Projectiles { get { return numProjectiles; } }
-    public SubStat Chains { get { return numChains; } }
-
-    // Utility
 
     // Offensive
     //public SubStat Damage { get { return damage; } }
     public SubStat CritDamage { get { return critDamage; } }
     public SubStat CritChance { get { return critChance; } }
-    #endregion
+    public SubStat Projectiles { get { return numProjectiles; } }
+    public SubStat Chains { get { return numChains; } }
+    
+    // Utility
+    public SubStat DamageFromMana { get { return dmgFromMana; } }
+    public SubStat HealthRegen { get { return healthRegen; } }
+    // Utility
+    public SubStat CooldownReduction { get { return cdr; } }
+    public SubStat IDGain { get { return idGain; } }
+    public SubStat ManaRegen { get { return manaRegen; } }
+    public SubStat ManaOnHit { get { return manaOnHit; } }
 
+    #endregion
     #region Stats
     TrackedStat mana;
     TrackedStat idBar;
@@ -57,19 +63,24 @@ public class PlayerStats : EntityStats
     MainStat dexterity;
     MainStat intelligence;
 
-
     // Gameplay
-    SubStat idGain;
     Stat attackRange;
+
+    // Offensive
+    SubStat critDamage;
+    SubStat critChance;
     SubStat numProjectiles;
     SubStat numChains;
 
+    // Defensive
+    SubStat dmgFromMana;
+    SubStat healthRegen;
+    
     // Utility
-
-    // Offensive
-    //SubStat damage;
-    SubStat critDamage;
-    SubStat critChance;
+    SubStat cdr;
+    SubStat idGain;
+    SubStat manaRegen;
+    SubStat manaOnHit;
     #endregion
     #endregion
 
@@ -91,20 +102,37 @@ public class PlayerStats : EntityStats
     {
         base.FillStatList();
         //statList.Add(health);
+        // Tracked Stats
         statList.Add(mana);
         statList.Add(idBar);
+
+        // Main Stats
         statList.Add(strength);
         statList.Add(dexterity);
         statList.Add(intelligence);
+
+        // Sub Stats
         statList.Add(attackRange);
-        statList.Add(numProjectiles);
-        statList.Add(numChains);
-        //statList.Add(moveSpeed);
-        statList.Add(idGain);
-        //statList.Add(damage);
-        //statList.Add(attackSpeed);
+        
+            // Offensive
         statList.Add(critDamage);
         statList.Add(critChance);
+        statList.Add(numProjectiles);
+        statList.Add(numChains);
+        
+            // Defensive
+        statList.Add(dmgFromMana);
+        statList.Add(healthRegen);
+
+            // Utility
+        statList.Add(cdr);
+        statList.Add(idGain);
+        statList.Add(manaRegen);
+        statList.Add(manaOnHit);
+
+        //statList.Add(moveSpeed);
+        //statList.Add(damage);
+        //statList.Add(attackSpeed);
         //statList.Add(armour);
         //statList.Add(dodge);
     }
@@ -132,25 +160,26 @@ public class PlayerStats : EntityStats
 
         // gameplay stats
         attackRange = new Stat(playerClass.Range);
-        numProjectiles = new SubStat(playerClass.Projectiles);
-        numChains = new SubStat(playerClass.Chains);
-
-        // utility stats
-        moveSpeed = new SubStat(playerClass.moveSpeed);
-        idGain = new SubStat(playerClass.ID_Gain);
-        //rotationSpeed.Value += playerClass.rotationSpeed;
-
+        
         // offensive stats
         damage = new SubStat(playerClass.Damage);
-        // weapon damage
-
-        attackSpeed = new SubStat(playerClass.AttackSpeed);
+        attackSpeed =  new SubStat(playerClass.AttackSpeed);
         critDamage = new SubStat(playerClass.CritDamage);
         critChance = new SubStat(playerClass.CritChance);
-
+        numProjectiles = new SubStat(playerClass.Projectiles);
+        numChains = new SubStat(playerClass.Chains);
         // defensive stats
         armour = new SubStat(playerClass.Armour);
         dodge = new SubStat(playerClass.Dodge);
+        healthRegen = new SubStat(playerClass.HealthRegen);
+        dmgFromMana = new SubStat(playerClass.TakeFromMana);
+
+        // utility stats
+        moveSpeed = new SubStat(playerClass.MoveSpeed);
+        cdr = new SubStat(playerClass.CooldownReduction);
+        idGain = new SubStat(playerClass.ID_Gain);
+        manaRegen = new SubStat(playerClass.ManaRegen);
+        manaOnHit = new SubStat(playerClass.ManaOnHit);
     }
 
     public PlayerStats CopyFromStats(PlayerStats stats)

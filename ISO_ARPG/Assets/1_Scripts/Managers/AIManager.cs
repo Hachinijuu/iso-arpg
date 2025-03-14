@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using OpenCover.Framework.Model;
 using UnityEngine;
 
 [System.Serializable]
@@ -66,9 +67,7 @@ public class AIManager : MonoBehaviour
     List<EnemySpawnPoint> spawnPoints;    // This will get the points from the level ON LOAD, and cleanup for different levels ON UNLOAD
 
     List<Vector3> spawnDots;
-
-
-    public List<EntityStats> aliveEnemies;
+    public List<EnemyControllerV2> aliveEnemies;
 
     //[SerializeField] GridData gData;
     public Grid grid;
@@ -76,8 +75,17 @@ public class AIManager : MonoBehaviour
 
 
     // Difficulty
-
     float difficultyModifer;
+
+
+    // Reorganize / cleanup this class once all functionality is at expected level
+    // It is VERY messy.
+    public static int CHASE_RANGE;
+    public static int MELEE_RANGE;
+    public static int RANGED_RANGE;
+
+    public List<StateContainer> enemyStates; 
+    AgentStateArgs agentArgs;
     #endregion
 
     #region UNITY FUNCTIONS
@@ -85,8 +93,24 @@ public class AIManager : MonoBehaviour
     void Awake()
     {
         //distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
+        aliveEnemies = new List<EnemyControllerV2>();
+        movingEnemies = new List<EnemyControllerV2>();
         spawnPoints = new List<EnemySpawnPoint>();
         spawnDots = new List<Vector3>();
+
+        if (enemyStates != null)
+        {
+            if (enemyStates.Count <= 0) { return; }
+            foreach (StateContainer enemyState in enemyStates)
+            {
+                enemyState.LoadStates();
+                Debug.Log("[AIManager: Loaded ID " + enemyState.entityId + " states");
+            }
+        }
+        else
+        {
+            Debug.LogError("[AIManager] Enemies do not have any states to load from");
+        }
     }
     void Start()
     {
@@ -96,6 +120,7 @@ public class AIManager : MonoBehaviour
         //InitDistanceGroups();
         GameManager.Instance.onDifficultyChanged += context => { UpdateDifficulty(); }; // Listen to the difficulty changed event, whenever it is changed, modify the local variables
         PlayerManager.Instance.onPlayerChanged += context => { GetPlayer(); };          // Listen to the player changed event, whenever the player is changed, modify the reference
+        agentArgs = new AgentStateArgs();
     }
     #endregion
 
@@ -133,7 +158,7 @@ public class AIManager : MonoBehaviour
                 LoadSpawnPoints();  // Load the spawns
 
                 // Only load enemies if enemies exist and are expected
-                if (details.enemiesToSpawn != null && details.enemiesToSpawn.Count > 0)
+                if (details.enemiesToSpawn != null)
                 {
                     if (enemyPools != null && enemyPools.Length > 0)
                     {
@@ -205,6 +230,7 @@ public class AIManager : MonoBehaviour
             // Once the player is found, assign the listener
             player.Movement.onMove += context => { UpdateField(); };
         }
+        agentArgs.player = player;    // Statically assign the player transform so ALL agents have the same target transform
         UpdateField();
     }
 
@@ -290,22 +316,22 @@ public class AIManager : MonoBehaviour
     #endregion
 
     #region ENEMY SPAWNING
-    public void RegisterToList(EntityStats agent)
+    public void RegisterToList(EnemyControllerV2 agent)
     {
-        if (aliveEnemies == null)
-            aliveEnemies = new List<EntityStats>();
+        // if (aliveEnemies == null)
+        //     aliveEnemies = new List<EnemyControllerV2>();
         
-        if (aliveEnemies != null && aliveEnemies.Count > 0)
+        if (aliveEnemies != null)
             aliveEnemies.Add(agent);
     }
 
-    public void UnregisterFromList(EntityStats agent)
+    public void UnregisterFromList(EnemyControllerV2 agent)
     {
-        if (aliveEnemies == null)
-            aliveEnemies = new List<EntityStats>();
+        // if (aliveEnemies == null)
+        //     aliveEnemies = new List<EnemyControllerV2>();
         
-        if (aliveEnemies != null && aliveEnemies.Count > 0)
-            aliveEnemies.Remove(agent);
+        if (aliveEnemies == null || aliveEnemies.Count == 0) { return; }
+        aliveEnemies.Remove(agent);
     }
 
     #region Standard Spawning
@@ -463,12 +489,31 @@ public class AIManager : MonoBehaviour
             //     controller.Respawn();
             // }
 
-            EntityStats stats = agent.GetComponent<EntityStats>();
-            if (stats != null)
+            EnemyControllerV2 controller = agent.GetComponent<EnemyControllerV2>();
+            if (controller)
             {
-                stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
-                stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
-                aliveEnemies.Add(stats);
+                if (controller.States == null)
+                {
+                    foreach (StateContainer enemyState in enemyStates)
+                    {
+                        if (enemyState.entityId == controller.stats.id)
+                        {
+                            controller.States = enemyState;
+                            break;
+                        }
+                    }
+                }
+
+
+                EntityStats stats = agent.GetComponent<EntityStats>();
+                if (stats != null)
+                {
+                    stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
+                    stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
+                    //aliveEnemies.Add(stats);
+                }
+
+                controller.Respawn();
             }
 
             currAmount += 1;
@@ -660,26 +705,78 @@ public class AIManager : MonoBehaviour
 
     // Commands will be sent on intervals based on the distance from the player
     // See Level Manager Cell/Grid System for spacing and boundaries
+
+    public List<EnemyControllerV2> movingEnemies;
+    public void RegisterMoving(EnemyControllerV2 agent)
+    {
+        if (movingEnemies != null)
+            movingEnemies.Add(agent);
+    }
+    public void UnregisterMoving(EnemyControllerV2 agent)
+    {
+        if (movingEnemies != null)
+            movingEnemies.Remove(agent);
+    }
+    public void Update()
+    {
+        // Only update if a player exists
+        if (player == null) { return; }
+
+        // State handling can be pushed onto coroutine loops for interval steps and non update on irrelevant agents
+        if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
+        foreach (EnemyControllerV2 enemy in aliveEnemies)
+        {
+            agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
+            enemy.HandleState(agentArgs);
+        }
+    }
     public void FixedUpdate()
     {
-        if (aliveEnemies == null || aliveEnemies.Count <= 0)
-        {
-            return;
-        }
-        foreach (EntityStats entity in aliveEnemies)
-        {
-            Rigidbody rb = entity.GetComponent<Rigidbody>();    // Get component is probably expensive, better to have a reference
-            // Only way to have a reference is another script / entity stats contains a reference
-            Cell target = GridUtility.GetCellFromPoint(flowfield.grid, entity.transform.position);
-            Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+        if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
 
-           // Vector3 movement = Vector3.MoveTowards(entity.transform.position, direction, 6.0f * Time.deltaTime);
-           // entity.transform.position = movement;
-            //Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
-            ////Debug.Log("Move Direction: " + target.bestDirection.vector);
-            rb.velocity = direction * 6.0f;
-            //Debug.Log("moved");
+        // Instead of cycling between all enemies, cycle between the enemies that are registered in the MOVING list
+        // Whenever enemies enter a state where they should move, add them to the moving list
+
+        foreach (EnemyControllerV2 enemy in movingEnemies)
+        {
+            // For a moving enemy, check their state
+            // If they are in the chase state, set their target to the player
+
+            if (enemy.State == AIState.StateId.Chase)
+            {
+                Cell target = GridUtility.GetCellFromPoint(flowfield.grid, enemy.transform.position);
+                enemy.MoveAgent(target);
+            }
         }
+        // foreach (EnemyControllerV2 enemy in aliveEnemies)
+        // {
+        //     Cell target = GridUtility.GetCellFromPoint(flowfield.grid, enemy.transform.position);
+        //     enemy.MoveAgent(target);
+        // }
+        // foreach (EntityStats entity in aliveEnemies)
+        // {
+        //     Rigidbody rb = entity.GetComponent<Rigidbody>();    // Get component is probably expensive, better to have a reference
+        //     // Only way to have a reference is another script / entity stats contains a reference
+        //     Cell target = GridUtility.GetCellFromPoint(flowfield.grid, entity.transform.position);
+        //     Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+
+        //     // Vector3 movement = Vector3.MoveTowards(entity.transform.position, direction, 6.0f * Time.deltaTime);
+        //     // entity.transform.position = movement;
+        //     //Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+        //     ////Debug.Log("Move Direction: " + target.bestDirection.vector);
+        //     rb.velocity = direction * 6.0f;
+        //     //Debug.Log("moved");
+
+        //     // Instead, get each enemy controller
+
+        //     // And handle the transitions through this loop
+        //     // Handling the states will determine 
+
+        // }
+
+        // With new state setup, we can organize the chasing enemies into a list
+        // With a limited list of chasing enemies, time of this update is reduced (don't have to update non-chasing enemies)
+
     }
     IEnumerator ManagerLoop()
     {

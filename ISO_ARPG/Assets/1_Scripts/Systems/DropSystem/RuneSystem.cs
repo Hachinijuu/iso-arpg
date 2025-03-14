@@ -50,12 +50,45 @@ public class RuneSystem : MonoBehaviour
         substatRolls = new List<SubStatRoll>();
     }
 
+    public RuneData RollRune(RuneData template)
+    {
+        RuneData rune = template;
+        float rarityRoll = Random.Range(0, 100f);
+        // Roll for the difficulty
+
+        DifficultySetting difficultyMod = GameManager.Instance.currDifficulty;
+        foreach (RarityChances chance in difficultyMod.dropModifiers)
+        {
+            // If I get a 30 roll on dropValue
+            // And the chance for a Relic tier rune is 5%, I get that rune
+            // Since the loop will check for the chances based on sequential order, (common -> relic)
+            // The rarity will be update based on the lowest drop chance value
+            
+            if (chance.dropChance < rarityRoll)
+            {
+                rune.rarity = chance.rarity;
+            }
+        }
+        rune = RollRuneStats(rune);
+        return rune; // Roll for the stats
+    }
+
+    // This is an overload of rune rolling, with the item rarity. It is expected for upgrades, since the rarity is set on the increased rune
+    // I.e, for the upgrade, the rarity is increased by 1 in the upgrade screen
+    public RuneData RollRune(RuneData template, ItemRarity rarity)
+    {
+        RuneData rune = template;
+        rune.rarity = rarity;
+        rune = RollRuneStats(rune);
+        return rune;
+    }
+
     public RuneData RollRuneStats(RuneData template)
     {
         RuneData rune = template;   
         // Create a copy of the rune that should be rolled for
         // Roll the statistics for that rune
-
+        
 
         // How does a rune roll work
 

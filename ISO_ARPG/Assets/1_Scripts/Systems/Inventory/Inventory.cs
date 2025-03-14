@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -31,6 +32,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] GameObject slotHolder;
     [SerializeField] int perRow;
 
+    [SerializeField] TMP_Text dustText;
+    [SerializeField] TMP_Text woodText;
+    [SerializeField] TMP_Text stoneText;
+
     int maxSlots;
 
     [SerializeField] PlayerInput input;
@@ -38,6 +43,43 @@ public class Inventory : MonoBehaviour
     private ItemSlot[] slots;       // UI slots to interface with
     private RuneSlot[] runeSlots;
     private List<ItemData> items;   // The actual items the player has
+
+    public int RuneDust 
+    { 
+        get { return runeDust; } 
+        set { runeDust = value; 
+        if (dustText != null)
+            {
+                dustText.text = runeDust.ToString();        // This method of the accessor calling the functionality might work, can add upper limits (max values to limit set value)
+            }
+        } 
+    }
+    private int runeDust;
+
+    public int WoodAmount
+    { 
+        get { return woodAmount; } 
+        set { woodAmount = value; 
+        if (woodText != null)
+            {
+                woodText.text = woodAmount.ToString();
+            }
+        } 
+    }
+    
+    private int woodAmount;
+
+    public int StoneAmount
+    { 
+        get { return stoneAmount; } 
+        set { stoneAmount = value; 
+        if (stoneText != null)
+            {
+                stoneText.text = stoneAmount.ToString();
+            }
+        } 
+    }
+    private int stoneAmount;
 
     // input handling
     bool held = false;
@@ -50,13 +92,6 @@ public class Inventory : MonoBehaviour
     public delegate void InventoryEvent(InventoryEventArgs e);
     public event InventoryEvent OnItemReleased;
     public void FireReleasedItem(InventoryEventArgs e) { if (OnItemReleased != null) OnItemReleased(e); }
-
-    public void Start()
-    {
-        //InitUISlots();
-        //InitItemList();
-        //MapActions();
-    }
 
     // Per play inventory, this system needs to know when a player exists
     // It also needs to maintain relative data for each class, handling their individual inventories
@@ -373,20 +408,6 @@ public class Inventory : MonoBehaviour
                         slot.item = ghostItem;
                         ghostItem.LoadSpriteToImage(slot.img);
                     }
-
-                    // When looking at valid slots, check if the item can be used for that slot
-                    // if (slot is RuneSlot)
-                    // {
-                    //     if (ghostItem.type == ItemTypes.RUNE)   // If dropped into a rune slot, we want selected to show rune slot occupied
-                    //     {
-                    //         slot.item = ghostItem;
-                    //         slot.SlotSelected(true);
-                    //         ghostItem.LoadSpriteToImage(slot.img);
-                    //     }
-                    // }
-                    // else
-                    // {
-                    // }
                 }
                 ghostItem = null;
 
@@ -410,33 +431,21 @@ public class Inventory : MonoBehaviour
         {
             Destroy(ghost);
         }
-
-        // Vector2 pos = GetMousePos();
-        // ItemSlot s = GetSlotFromPos(pos);
-        // if (s)
-        //     Debug.Log("Slot exists");
-
-        // if (held == false && ghostItem != null)
-        // {
-        //     ItemSlot slot = GetSlotFromPos(pos);
-
-        //     // Destroy the ghost even if it has not been placed in the valid slot (removal)
-        //     //Destroy(ghost); 
-
-        //     if (slot)
-        //     {
-        //         Debug.Log("Is there an item?: " + slot.HasItem);
-        //         if (!slot.HasItem)
-        //         {
-        //             slot.item = ghostItem;
-        //             ghostItem.LoadSpriteToImage(slot.img);
-        //             sourceSlot.item = null;
-        //             sourceSlot.img.sprite = null;
-        //             ghostItem = null;
-        //         }
-        //         else
-        //             Debug.Log("[Inventory]: Cannot move item, item already exists in that slot");
-        //     }
-        // }
     }
+
+    // private void UpdateResourceText(ResourceTypes resource)
+    // {
+    //     switch(resource)
+    //     {
+    //         case ResourceTypes.DUST:
+    //             dustText.text = runeDust.ToString();
+    //         break;
+    //         case ResourceTypes.WOOD:
+    //             woodText
+    //         break;
+    //         case ResourceTypes.STONE:
+
+    //         break;
+    //     }
+    // }
 }
