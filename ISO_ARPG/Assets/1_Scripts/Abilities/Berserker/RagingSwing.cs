@@ -49,6 +49,9 @@ public class RagingSwing : StackAbility
             }
         }
 
+        // Is it possible to change the speed of the animation?
+        // Can abilities have the animationClip?
+
         anim.SetTrigger(animId);
         //if (anim != null)
         //{ 

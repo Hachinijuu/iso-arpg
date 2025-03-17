@@ -130,7 +130,7 @@ public class ProjectileSource : MonoBehaviour
             obj.transform.rotation = pos.rotation;
             proj = obj.GetComponent<Projectile>();
             proj.Source = transform.gameObject;     // This places the projectile under the projectile source
-            proj.InitHitbox();
+            //proj.InitHitbox();
             if (!(obj.activeInHierarchy))
             {
                 obj.SetActive(true);

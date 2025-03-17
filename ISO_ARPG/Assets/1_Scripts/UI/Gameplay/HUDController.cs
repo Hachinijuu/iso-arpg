@@ -12,6 +12,8 @@ public class HUDController : MonoBehaviour
     [SerializeField] Slider manaSlider;
     [SerializeField] TMP_Text manaText;
 
+    [SerializeField] Slider idSlider;
+
     [SerializeField] UIAbility ab1;
     [SerializeField] UIAbility ab2;
     [SerializeField] UIAbility idAbility;
@@ -21,6 +23,7 @@ public class HUDController : MonoBehaviour
     // Get references to the relevant stats
     TrackedStat health;
     TrackedStat mana;
+    TrackedStat idBar;
     #endregion
     #region UNITY FUNCTIONS
     // private void Start()
@@ -58,6 +61,7 @@ public class HUDController : MonoBehaviour
             playerStats = player.Stats;
             health = playerStats.Health;
             mana = playerStats.Mana;
+            idBar = playerStats.ID_Bar;
         }
 
         if (healthSlider != null)
@@ -94,15 +98,17 @@ public class HUDController : MonoBehaviour
     // EVENT MAPPING
     private void AddEventListeners()
     {
-        playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); };
-        playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
+        if (healthSlider)   playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); };
+        if (manaSlider)     playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
+        if (idSlider)       playerStats.ID_Bar.Changed += context => { UpdateIdSlider(context); };
         AddCooldownListeners();
     }
 
     private void RemoveEventListeners()
     {
-        playerStats.Health.Changed -= UpdateHealthSlider;
-        playerStats.Mana.Changed -= UpdateManaSlider;
+        if (healthSlider)   playerStats.Health.Changed -= UpdateHealthSlider;
+        if (manaSlider)     playerStats.Mana.Changed -= UpdateManaSlider;
+        if (idSlider)       playerStats.ID_Bar.Changed -= UpdateIdSlider;
         RemoveCooldownListeners();
     }
 
@@ -143,12 +149,18 @@ public class HUDController : MonoBehaviour
 
     public void UpdateHealthText(float value)
     {
-        healthText.text = value.ToString() + " / " + health.MaxValue;
+        healthText.text = value.ToString("F1") + " / " + health.MaxValue;
     }
 
     public void UpdateManaText(float value)
     {
-        manaText.text = value.ToString() + " / " + mana.MaxValue;
+        manaText.text = value.ToString("F1") + " / " + mana.MaxValue;
+    }
+
+    public void UpdateIdSlider(float value)
+    {
+        idSlider.maxValue = idBar.MaxValue;
+        idSlider.value = value;
     }
 
     public void ShowCooldownText(UIAbility ui, Ability ab)

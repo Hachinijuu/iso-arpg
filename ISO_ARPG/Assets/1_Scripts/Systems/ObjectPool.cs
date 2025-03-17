@@ -40,6 +40,7 @@ public class ObjectPool : MonoBehaviour
 
     public void FillPool()
     {
+        if (pooledPrefab == null) { return; }
         for (int i = 0; i < numPooledObjects; i++)
         {
             CreatePooledObject();

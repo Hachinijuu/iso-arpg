@@ -55,6 +55,9 @@ public class CharacterClass : EntityData
     public List<Ability> Abilities = new List<Ability>();
     public IdentityAbility IdentityAbility = null;
     //public float identityCost;                  // what needs to be built up in order to use the identity skill
+
+    public float BaseIDGain = 5.0f; // The base ID gain generated per kill given this class
+
     #endregion
     #endregion
 }

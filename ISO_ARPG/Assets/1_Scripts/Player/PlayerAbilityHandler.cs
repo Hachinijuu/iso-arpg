@@ -163,7 +163,22 @@ public class PlayerAbilityHandler : MonoBehaviour
     #endregion
     #region FUNCTIONALITY - ABILITY HANDLING
     void AbilityBegan(Ability ab)
-    {
+    {   
+        // What does a basic input action need to account for
+        // Ability begans need to know if the input is held
+
+        // When I am holding this key, I am also moving.
+        // If I happen to move over an enemy, do I begin shooting?
+
+        // Sure.
+        // For ranged attacks should I just stop movement?
+        // No. - will right clicks work? Probably
+        // If I am directional movement, then I want left click to work no matter what.
+        
+        // How do we take these things into consideration?
+
+        
+
         if (ab != null)
         {
             // Check if in range to use
@@ -235,16 +250,6 @@ public class PlayerAbilityHandler : MonoBehaviour
                 Debug.Log("[AbilityHandler]: Cannot use: " + ab.Name);
         }
     }
-
-
-    // ISSUE TO RESOLVE
-    // While on cooldown, ability ended can be called again, causing the cooldown to restart.
-    // Don't want to run cooldown unless ability was actually used.
-
-    // Have it bound to performed actions -> can dictate if/when an actions is performed (complete)
-    // For hold-bound events, the performed would be whenever the conditions is met...
-    // But on release is not performed...
-
     void AbilityEnded(Ability ab)
     {
         // Cooldowns will be activated based on key release - DO NOT WANT THIS TO HAPPEN
@@ -281,26 +286,6 @@ public class PlayerAbilityHandler : MonoBehaviour
             }
         }
     }
-
-    // This function exists because value assignments ContextCallbacks is not very reliable (Only exists within the frame of the callback)
-    // IEnumerator HandleFusion()
-    // {
-    //     do
-    //     {
-    //         yield return new WaitForSeconds(2);
-    //     } while (stats.Fusion == null);
-    //     if (stats.Fusion != null)
-    //     {
-    //         stats.Fusion.UseAbility(gameObject);
-    //         Debug.Log("[PlayerAbilityHandler]: Fired: " + stats.Fusion.Name);
-    //         foreach(Ability ab in stats.Abilities)
-    //         {
-    //             ab.InitAbility(ab, gameObject); // Reinit the ability (gain projectile sources if any)
-    //         }
-    //         Debug.Log("PlayerAbilityHandler]: Completed Initialization: " + stats.Fusion.Name);
-    //     }
-    // }
-
     IEnumerator HandleHeld(ChannelAbility used)
     {
         // Channeled abilities will consume cost every n seconds
@@ -363,31 +348,16 @@ public class PlayerAbilityHandler : MonoBehaviour
         // With this wrapper functionality, PlayerAbilityHandler do calculations here (if CDR) and have updated cooldown values.
         // If theres a reference to the HUD controller, then the HUD's cooldown can also be called here for 1:1 timer
 
-        // FUNCTION REWRITTEN TO CONTAIN ACTIVE COOLDOWN INSTEAD OF WAIT FOR SECONDS
-        // THIS ALLOWS FOR CENTRALIZED COOLDOWN NUMBERS, INSTEAD OF CAUSING EACH SCRIPT TO HANDLE THEIR OWN COOLDOWNS ON ABILITYENDED
-        bool onCd = true;
-        float currTime = used.Cooldown;
-        do
+        float currTime = used.Cooldown * (1 - stats.CooldownReduction.Value);   // CDR value is a decimal, reflected amount visually is * 10
+        
+        while (currTime > 0)
         {
-            currTime -= Time.deltaTime;
+            currTime -= Time.deltaTime;     // Countdownt the time
             used.CurrCooldown = currTime;
-            if (currTime < 0)
-                onCd = false;
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
-        while (onCd);
 
-        //yield return new WaitForSeconds(used.Cooldown); // Wait for the cooldown time
         canUseAbility[used] = true;                     // Allow usage again (time has passed)
     }
     #endregion
 }
-
-
-// Ability System can be refactored to make use of bool events...
-// IsPressed
-// WasPressedThisFrame
-// WasReleasedThisFrame
-
-// BUT - since context callbacks are already setup, that is probably the way to go about it.
-// Need to handle active event, NOT call CD reset if the cooldown is already ticking...

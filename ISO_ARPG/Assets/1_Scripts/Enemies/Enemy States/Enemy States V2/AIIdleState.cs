@@ -16,7 +16,9 @@ public class AIIdleState : AIState
         Vector3 agentPos = e.agent.transform.position;
         Vector3 playerPos = e.player.transform.position;
 
-        if (IsInCurrentRange(playerPos, agentPos, ChaseRange))  // If the player is in chase range
+        // If I am in the idle state and the alarm bell rings, transition to the Alarmed State
+
+        if (IsInCurrentRange(playerPos, agentPos, AIManager.CHASE_RANGE))  // If the player is in chase range
         {
             e.agent.SetState(StateId.Chase);   // Transition to the chase state
             return; // Early return to prevent any further logic from executing in the reason, decision has been made to transition into cjase state
@@ -25,6 +27,6 @@ public class AIIdleState : AIState
 
     public override void Act(AgentStateArgs e)
     {
-        Debug.Log("Idling");
+        //Debug.Log("Idling");
     }
 }

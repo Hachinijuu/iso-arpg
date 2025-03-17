@@ -46,6 +46,20 @@ public abstract class AIState : ScriptableObject
         return inRange;
     }
 
+        protected virtual bool IsInCurrentRange(Vector3 start, Vector3 goal, float range)
+    {
+        bool inRange = false;
+
+        // Transform is the goal, pos is the start
+        float dist = GetSquareDistance(start, goal);
+
+        if (dist <= Mathf.Pow(range, 2))
+        {
+            inRange = true;
+        }
+        return inRange;
+    }
+
     protected virtual float GetSquareDistance(Vector3 start, Vector3 goal)
     {
         return (goal - start).sqrMagnitude;

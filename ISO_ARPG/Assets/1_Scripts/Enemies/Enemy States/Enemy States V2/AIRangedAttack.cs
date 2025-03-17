@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "RangedAttack", menuName = "sykcorSystems/AI/States/RangedAttack", order = 3)]
 public class AIRangedAttack : AIState
 {
     //[Header("Attack Parameters")]
     //public float hitboxUptime = 0.5f;
 
     [Header("Animations")]
-    public static string AttackTrigger = "Attack";
-    public int animId = Animator.StringToHash(AttackTrigger);
+    private static string AttackTrigger = "Attack";
+    private int animId = Animator.StringToHash(AttackTrigger);
     public override void Reason(AgentStateArgs e)
     {
         // Does any movement get driven when in this state, or is it simply shoot and transition out given the conditions

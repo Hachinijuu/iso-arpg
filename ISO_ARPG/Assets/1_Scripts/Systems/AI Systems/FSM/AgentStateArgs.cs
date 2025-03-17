@@ -8,12 +8,14 @@ public class AgentStateArgs
     public EnemyControllerV2 agent;
     public PlayerController player;
     public Transform target;
+    public Cell cellTarget;
 
     public AgentStateArgs()
     {
         agent = null;
         player = null;
         target = null;
+        cellTarget = null;
     }
     public AgentStateArgs(EnemyControllerV2 agent)
     {

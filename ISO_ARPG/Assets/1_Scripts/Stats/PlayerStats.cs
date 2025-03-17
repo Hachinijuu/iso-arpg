@@ -21,7 +21,6 @@ public class PlayerStats : EntityStats
     public IdentityAbility Identity { get { return identity; } }
     IdentityAbility identity;
 
-
     #region Public Accessors
     public CharacterClass Class { get { return playerClass; } }
     public Ability Fusion { get { return ID_Fusion; } }
@@ -86,14 +85,27 @@ public class PlayerStats : EntityStats
 
     #region INITALIZATION
 
+    // void Awake()
+    // {
+    //     InitializePlayerStats();
+    // }
+
     public void InitializePlayerStats()
     {
         // this will load stats externally keeping player progress, for now just LoadStats wrapper
         //LoadStats();
-        statList = new List<Stat>();
+        // if (statList != null)
+        // {
+        //     statList.Clear();
+        // }
+
+        // statList = new List<Stat>();
         //LoadDefaultClassStats();
-        LoadAbilities();
-        FillStatList();
+        if (Abilities.Count == 0)
+        {
+            LoadAbilities();
+        }
+        //FillStatList();
 
         //health.Changed += context => { CheckDied(context); };
     }

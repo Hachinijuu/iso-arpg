@@ -19,7 +19,6 @@ public class Projectile : Hitbox
     #region FUNCTIONALITY
     protected override void HandleCollision(Hurtbox hb)
     {
-
         base.HandleCollision(hb);   // apply damage
         if (!pierces)               // if it does not pierece
             gameObject.SetActive(false);    // deactivate

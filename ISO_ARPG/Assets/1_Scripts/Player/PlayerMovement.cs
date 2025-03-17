@@ -16,10 +16,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] LayerMask moveMask;
     [SerializeField] int raycastLength = 50;
+    [SerializeField] GameObject characterBody;  // This refers to the bones in this case
 
     // Classes
     NavMeshAgent agent;
     PlayerInput input;
+    PlayerStats stats;
     Animator anim;
 
     // Public Accessors
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         input = GetComponent<PlayerInput>();
         anim = GetComponent<Animator>();
+        stats = GetComponent<PlayerStats>();
 
         // map inputs
         //MapMovementActions();
@@ -109,7 +112,10 @@ public class PlayerMovement : MonoBehaviour
 
         // Regardless of movement handle the character's rotation
         if (canRotate)
-            HandleRotation();
+        {
+            if (moveHeld || speed == 0.0f) // If move is held or speed is 0, handle it
+                HandleRotation();
+        }
 
         // Animation handling
         if (UseAnimations)
@@ -229,16 +235,29 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Apply the look
+        //lookDirection.x = -90;
         Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+
+        // Current rotation (full transform)
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //targetRotation.x = -90f;
+        //Quaternion temp = characterBody.transform.rotation;
+        //characterBody.transform.localRotation = Quaternion.Slerp(characterBody.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //temp.rotation.y = Quaternion.LookRotation(lookDirection, Vector3.up).y;
+
+        // ALTERNATE ROTATION -- rig body (requires y up mesh, so z is proper) -- would maintain relative world values for slot system
+        //characterBody.transform.rotation = Quaternion.Slerp(characterBody.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     void HandleMovement()
     {
-        Vector3 movement = Vector3.MoveTowards(transform.position, moveTarget, 6.0f * Time.deltaTime);
+        Vector3 current = transform.position;
+        Vector3 movement = Vector3.MoveTowards(transform.position, moveTarget, stats.MoveSpeed.Value * Time.deltaTime);
         transform.position = movement;
-        speed = (transform.position - moveTarget).magnitude;
-        if (speed <= 0.25f)
+
+        float moved = Vector3.Distance(current, movement);
+        speed = moved / Time.deltaTime;
+        if (moved <= 0.1f)
             speed = 0;
         if (speed > 0)
         {

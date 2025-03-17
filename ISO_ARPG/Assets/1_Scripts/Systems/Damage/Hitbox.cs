@@ -15,10 +15,11 @@ public class Hitbox : MonoBehaviour
     #region VARIABLES
     [SerializeField] GameObject source; // The player / enemy owner of the hitbox, this is referenced so hits will not apply to their own hurtbox
     public GameObject Source { get { return source; } set { source = value; } }
-    [SerializeField] float damage;    // THIS DAMAGE WILL BE CALCULATED AND APPLIED TO PEOPLE
-
+    [SerializeField] protected float damage;    // THIS DAMAGE WILL BE CALCULATED AND APPLIED TO PEOPLE
+    [SerializeField] protected float attackRange;
+    public LayerMask damageLayer;
     public bool ApplyDamage { get { return applyDamage; } set { applyDamage = value; } }
-    private bool applyDamage = false;
+    protected bool applyDamage = false;
 
     protected EntityStats stats; // -> hitbox, stats has abiliites -> apply these effects when I successfully hit
     // entity stats --> regen state, regen passive -> healthregen
@@ -32,119 +33,44 @@ public class Hitbox : MonoBehaviour
     #endregion
     #region UNITY FUNCTIONS
 
-
-    // Shoudl the hitbox get a reference to the player, or be passed a reference to the relevant values when loaded --> pass a reference and then it set's it's own information
+    // Should the hitbox get a reference to the player, or be passed a reference to the relevant values when loaded --> pass a reference and then it set's it's own information
     public void SetDamage(float damage)
     {
         this.damage = damage;
     }
-
-    private void Start()
-    {
-        InitHitbox();
-    }
-
-    private void OnEnable()
-    {
-        InitHitbox();
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        // Only do detections if damage can be applied
-        if (!applyDamage)
-        {
-            return;
-        }
-
-        // Refactor this hitbox hurtbox logic to not require other tags.
-
-        // This is because, since the damage detection is on it's own layer
-        // The damage interactions should only collide on this layer
-        // Don't need to do tag matching or layer-masking since its done by the physics system
-
-        // Hurtbox hb = other.gameObject.GetComponent<Hurtbox>();
-        // if (hb != null)
-        // {
-        //     HandleCollision(hb);
-        // }
-        // else
-        //     Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
-
-        if (other.CompareTag("Hurtbox") || other.CompareTag("Destructible"))
-        {
-           Hurtbox hb = other.GetComponent<Hurtbox>();
-           //Debug.Log(other.name);
-           if (hb)
-           {
-               HandleCollision(hb);
-               //Debug.Log("Handling collision");
-           }
-           else
-               Debug.Log("[DamageSystem]: Hurtbox doesn't exist");
-        }
-    }
     #endregion
 
     #region FUNCTIONALITY
-    public virtual void InitHitbox()
+
+    // Call this function when we need to check for hits
+    public void HandleHits()
     {
-        // Stops the hitbox from damaging the source of the damage
-        // if (source != null)
-        // {
-        //     Collider sourceCollider = source.GetComponentInChildren<Collider>();
-        //     Collider damageCollider = GetComponent<Collider>();
-
-        //     // Want to ignore the collisions between the source of the damage and the hitbox
-        //     if (sourceCollider != null && damageCollider != null)
-        //     {
-        //         //Debug.Log("Ignoring collisions between: " + sourceCollider.name + " and " + damageCollider.name);
-        //         Physics.IgnoreCollision(sourceCollider, damageCollider);
-
-        //         // THIS DOES NOT WORK ON PROJECTILES EVEN THOUGH REFERENCES ARE ASSIGNED PROPERLY, REPORT AS BUG BUT LEAVE FIXING UNTIL LATER
-        //     }
-
-        //     // Need to stop enemies from damaging each other once system is fleshed out
-        // }
-
-        // To avoid dealing damage to the one who sourced the damage
-        // Look for their hitbox, get the collider off of that 
-
-        if (source != null)
+        if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
+        foreach (Collider hit in hitColliders)
         {
-            // Look for the hitbox on the source
-            Hurtbox hb = source.GetComponent<Hurtbox>();
-            if (hb)
+            Hurtbox hb = hit.GetComponent<Hurtbox>();
+            if (hb != null)
             {
-                Collider sourceCollider = hb.GetComponent<Collider>();
-                Collider damageCollider = GetComponent<Collider>();
-                if (sourceCollider != null && damageCollider != null)
-                {
-                    Physics.IgnoreCollision(sourceCollider, damageCollider);
-                    Debug.Log("[Damage]: Ignoring collisions between " + sourceCollider.name + " and " + damageCollider.name);
-                }
-                else
-                {
-                    Debug.Log("[Damage]: No colliders found, not ignoring any collisions");
-                }
+                HandleCollision(hb);
             }
         }
+    }
 
-
-        if (stats == null && source != null)
+    // This is different from handle HITS, it will early return after the collision has been accounted for
+    public void HandleHit()
+    {
+        if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
+        foreach (Collider hit in hitColliders)
         {
-            stats = source.GetComponent<EntityStats>();
+            Hurtbox hb = hit.GetComponent<Hurtbox>();
+            if (hb != null)
+            {
+                HandleCollision(hb);
+                return; // Early return for only single hit detection
+            }
         }
-
-        if (stats != null)
-        {
-            Debug.Log("Assigned Damage Value");
-            damage = stats.Damage.Value;    // Set the damage to the damage defined by the entity
-        }
-
-        // get the abilities from the stats
-
-        // -> hit, regen for # of time w/o stack
-        // empty time -> make complicated mana regen stacking
     }
     protected virtual void HandleCollision(Hurtbox hb)
     {
@@ -154,15 +80,12 @@ public class Hitbox : MonoBehaviour
         args.amount = damage;
         args.source = source;
         hb.TakeDamage(damage);
+
+        // Give the current stats an amount of mana from the hit
+        // The problem is -> if I hit multiple targets, do I get mana for EACH target hit, or that I hit a target?
+
         FireDamageDealt(args);
     }
-    public void AllowDamageForTime(float window)
-    {
-        //Debug.Log("I want to allow damage for: " + window);
-        StopAllCoroutines();
-        StartCoroutine(DamageWindow(window));
-    }
-
     protected virtual void CritCalculation()
     {
         if (stats is PlayerStats ps)
@@ -175,6 +98,13 @@ public class Hitbox : MonoBehaviour
         }
     }
 
+    public void AllowDamageForTime(float window)
+    {
+        //Debug.Log("I want to allow damage for: " + window);
+        StopAllCoroutines();
+        StartCoroutine(HitWindow());            // This will detect the hits
+        StartCoroutine(DamageWindow(window));   // This will determine how long the hits are allowed
+    }
     protected virtual void StartDamageWindow()
     {
         applyDamage = true;
@@ -184,12 +114,27 @@ public class Hitbox : MonoBehaviour
     {
         applyDamage = false;
     }
+    
+    public void OpenHitWindow()
+    {
+        if (applyDamage)
+        StartCoroutine(HitWindow());
+    }
 
     IEnumerator DamageWindow(float time)
     {
         StartDamageWindow();
         yield return new WaitForSeconds(time);
         EndDamageWindow();
+    }
+
+    IEnumerator HitWindow()
+    {
+        do
+        {
+            HandleHit();        // By default, only look for single target per frame
+            yield return null;
+        } while (applyDamage);
     }
     #endregion
     #region DEBUG

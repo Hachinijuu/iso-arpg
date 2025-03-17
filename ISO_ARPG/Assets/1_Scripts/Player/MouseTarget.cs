@@ -82,8 +82,11 @@ public class MouseTarget : MonoBehaviour
             // Build a bounding box
             foreach (string tag in tagsToMatch)
             {
-                if (hit.transform.tag == tag)                   // Check if the hit object was in a valid tag match
+                if (hit.transform.CompareTag(tag))                   // Check if the hit object was in a valid tag match
+                {
                     mouseHit = hit.transform.gameObject;        // If it was, return what was hit.
+                    target = mouseHit;  // Hover target
+                }
             }
         }
         return mouseHit;

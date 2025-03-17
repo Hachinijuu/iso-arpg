@@ -15,7 +15,6 @@ public class Hurtbox : MonoBehaviour
     // Fire event whenever this hurtbox takes damage
     public delegate void OnDamaged(float value);
     public OnDamaged onDamaged;
-
     private void FireOnDamaged(float value) { if (onDamaged != null) { onDamaged(value); } }
     #endregion
     #region UNITY FUNCTIONS
@@ -51,18 +50,31 @@ public class Hurtbox : MonoBehaviour
         // 100 * (0.8)
         // 80 damage taken --> 20% armour reduction
 
-
         // How do we get the player's active ability
         // Does the player gain the mana reduction to damage if they have selected salamander's gift as a fusion
         
 
-        stats.Health.Value -= recalc;
-        //Debug.Log("Taking: " + recalc);
-
         // When taking damage, if the player has the elementalist's gift active
         // Then take a portion of the damage as mana instead of health
         // How will the hurtbox know to do that?
-        
+
+        // Simple - DamageFromMana stat has been implemented
+        // Factor this into the health recalculation before applying the damage to the player
+        // This is ONLY factored in, if the given stats can be a player stat. Therefore
+        if (stats is PlayerStats ps)
+        {
+            // Take the recalculated value, and apply a portion of it to the mana
+            // Get the percentage that is supposed to be reduced
+            float percent = ps.DamageFromMana.Value / 100.0f;   // 25 / 100 = 0.25 --> incoming damage = 100, 100 * 0.25 = 25 to apply to mana, use the inverse for health
+            // How to get the inversed? 1 - 0.25 = 0.75
+            ps.Health.Value -= recalc * (1 - percent);
+            ps.Mana.Value -= recalc * percent;
+        }
+        else
+        {
+            // Standard health deduction
+            stats.Health.Value -= recalc;
+        }
 
         FireOnDamaged(stats.Health.Value);
         //Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");

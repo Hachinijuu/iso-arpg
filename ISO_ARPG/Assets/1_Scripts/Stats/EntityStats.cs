@@ -52,7 +52,7 @@ public class EntityStats : MonoBehaviour
 
     #region UNITY FUNCTIONS
     // Whenever the object disables, fire the OnDied
-    public void Awake()
+    public virtual void Awake()
     {
         LoadData(data);
         FillStatList();
@@ -63,7 +63,7 @@ public class EntityStats : MonoBehaviour
         health.Changed += CheckDied;
 
         // Register to the corresponding pools if the ID is a valid enemy id
-        Debug.Log("Enabled");
+        //Debug.Log("Enabled");
         // if (id == EntityID.ORC || id == EntityID.IMP)
         // {
         //     AIManager.Instance.RegisterToList(this);

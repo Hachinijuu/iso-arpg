@@ -13,6 +13,7 @@ public class Flowfield
 
     // Flowfield can exist as non monobehaviour and be plugged into AIManager for navigation purposes
 
+    private Grid defaultGrid;
     public Grid grid;
     public Cell destination;
 
@@ -24,8 +25,15 @@ public class Flowfield
     }
     public Flowfield(Grid grid, Cell dest)
     {
-        this.grid = grid;
+        defaultGrid = grid;
+        this.grid = new Grid(defaultGrid); // Create a new grid instead of referencing the existing one
+        // Why create a new grid? So that the default cell costs are not overridden.
         destination = dest;
+    }
+
+    public void InitFlowfield()
+    {
+        this.grid = new Grid(defaultGrid);
     }
 
     // Functionality

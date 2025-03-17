@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 
 // Player Controller will assign all required components for ease of use.
@@ -18,7 +16,8 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(AudioSource))]             // Voice Source
 [RequireComponent(typeof(Animator))]                // Animations
 [RequireComponent(typeof(ProjectileSource))]        // Projectiles
-[RequireComponent(typeof(FootStepHandler))]
+[RequireComponent(typeof(FootStepHandler))]         // Footsteps
+[RequireComponent(typeof(PlayerSlotSystem))]        // Slots
 
 // music / ambience - own sources / persistent
 // UI - persistent / general
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public Animator Animator { get { return animator; } }
     public ProjectileSource ShootSource { get { return shootSource; } }
     public FootStepHandler FootSteps { get { return footSteps; } }
+    public PlayerSlotSystem Slots { get { return slots; } }
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     ProjectileSource shootSource;
     FootStepHandler footSteps;
+    PlayerSlotSystem slots;
 
     [SerializeField] GameObject auraSource;
     #endregion
@@ -83,6 +84,8 @@ public class PlayerController : MonoBehaviour
             shootSource = GetComponent<ProjectileSource>();
         if (footSteps == null)
             footSteps = GetComponent<FootStepHandler>();
+        if (slots == null)
+            slots = GetComponent<PlayerSlotSystem>();
 
         //MapPlayerActions();
         //InitalizePlayer();
@@ -127,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
     #region INITALIZATION
-    public void InitalizePlayer()           // this can be used for reinit, so be cautious of what to place here.
+    public void InitializePlayer()           // this can be used for reinit, so be cautious of what to place here.
     {
         if (stats != null)
             stats.InitializePlayerStats();
@@ -195,16 +198,16 @@ public class PlayerController : MonoBehaviour
 
     #endregion
     #region DEBUG
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Debug.DrawRay(transform.position, transform.forward * 5.0f, Color.red);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, EnemyController.MELEEATTACK_DIST);
+        Gizmos.DrawWireSphere(transform.position, AIManager.MELEE_RANGE);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, EnemyController.RANGEATTACK_DIST);
+        Gizmos.DrawWireSphere(transform.position, AIManager.RANGED_RANGE);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, EnemyController.CHASE_DIST);
+        Gizmos.DrawWireSphere(transform.position, AIManager.CHASE_RANGE);
     }
     #endregion
 }

@@ -35,12 +35,12 @@ public class ChainEffect : MonoBehaviour
 
         // hit is whoever was hit by the attack
         // build a physics collider around the hit target to get the subsequent targets to apply damage to
-        Debug.Log("[Damage]: Searching for chain targets");
+        //Debug.Log("[Damage]: Searching for chain targets");
         Collider[] chainTargets = Physics.OverlapSphere(transform.position, chainRange, detectionLayer);
 
         if (chainTargets.Length > 0 && chainTargets != null)
         {
-            Debug.Log("[Damage]: " + chainTargets.Length + " Chain targets exist");
+            //Debug.Log("[Damage]: " + chainTargets.Length + " Chain targets exist");
 
             // If someone is within the chain range
             // Apply the chained damage to them and have THEM chain

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using OpenCover.Framework.Model;
 using UnityEngine;
 
 [System.Serializable]
@@ -53,7 +52,7 @@ public class AIManager : MonoBehaviour
 
     // Instead of prefab updates, organize enemies into these distance groups which will dictate their frequency
     // Whenever a player enters a check based on the groups the distances
-    //Dictionary<UpdateInterval, List<EnemyController>> distanceGroups;
+    Dictionary<UpdateInterval, List<EnemyControllerV2>> distanceGroups;
     bool distanceGroupUpdated;
     bool enemiesSpawned;
     bool canSpawn;
@@ -73,16 +72,14 @@ public class AIManager : MonoBehaviour
     public Grid grid;
     public Flowfield flowfield; // flowfield for navigation
 
-
     // Difficulty
     float difficultyModifer;
 
-
     // Reorganize / cleanup this class once all functionality is at expected level
     // It is VERY messy.
-    public static int CHASE_RANGE;
-    public static int MELEE_RANGE;
-    public static int RANGED_RANGE;
+    public static float CHASE_RANGE = 12.5f;
+    public static float MELEE_RANGE = 2.5f;
+    public static float RANGED_RANGE = 7.5f;
 
     public List<StateContainer> enemyStates; 
     AgentStateArgs agentArgs;
@@ -92,7 +89,7 @@ public class AIManager : MonoBehaviour
 
     void Awake()
     {
-        //distanceGroups = new Dictionary<UpdateInterval, List<EnemyController>>();
+        distanceGroups = new Dictionary<UpdateInterval, List<EnemyControllerV2>>();
         aliveEnemies = new List<EnemyControllerV2>();
         movingEnemies = new List<EnemyControllerV2>();
         spawnPoints = new List<EnemySpawnPoint>();
@@ -117,18 +114,18 @@ public class AIManager : MonoBehaviour
         // if (player == null)
         //     player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
 
-        //InitDistanceGroups();
+        InitDistanceGroups();
         GameManager.Instance.onDifficultyChanged += context => { UpdateDifficulty(); }; // Listen to the difficulty changed event, whenever it is changed, modify the local variables
         PlayerManager.Instance.onPlayerChanged += context => { GetPlayer(); };          // Listen to the player changed event, whenever the player is changed, modify the reference
         agentArgs = new AgentStateArgs();
     }
     #endregion
-
     #region SCENE LOADS
     // When a level (scene) is loading, call this function
     public void LevelLoading()
     {
         // When loading the level, if the level type is none, don't need to set anything up
+        StopAllCoroutines();
         if (LevelManager.Instance.type != LevelManager.LevelType.NONE)
         {
             if (LevelManager.Instance.grid != null)
@@ -187,6 +184,12 @@ public class AIManager : MonoBehaviour
         {
             enemyPool.Reset();
         }
+
+        // Cleanup the lists
+        spawnPoints.Clear();
+        aliveEnemies.Clear();
+        movingEnemies.Clear();
+        ResetDistanceGroups();
     }
 
     public void LoadSpawnPoints()
@@ -199,7 +202,6 @@ public class AIManager : MonoBehaviour
         spawnPoints.Clear();
     }
     #endregion
-
     #region HELPER FUNCTIONS
     public void UpdateDifficulty()
     {
@@ -231,6 +233,7 @@ public class AIManager : MonoBehaviour
             player.Movement.onMove += context => { UpdateField(); };
         }
         agentArgs.player = player;    // Statically assign the player transform so ALL agents have the same target transform
+        Debug.Log("[AIManager]: Player has been assigned to State Arguments ( " + agentArgs.player + " )");
         UpdateField();
     }
 
@@ -251,9 +254,14 @@ public class AIManager : MonoBehaviour
         // return playerCell;
     }
 
-    bool fieldUpdated = false;
+    bool fieldUpdating = false;
+    bool isAlert = false;
+    // Can have a list of alert enemies(?)
     public void UpdateField()
     {
+        // FLOW FIELDS ONLY NEED TO BE UPDATE / USED WHENEVER THE AI ARE IN ALERT MODE (THIS IS WHEN ALL AI HAVE A REFERNCE TO THE PLAYER'S POSITION)
+        if (!isAlert) { return; }
+        if (flowfield == null) { return; }
         // Check if the current player's position is distanced from stored cell
         if (playerCell != null)
         {
@@ -262,31 +270,39 @@ public class AIManager : MonoBehaviour
             {
                 return;
             }
-            else
-            {
-                // If it is greater than the distance, flag that the field should be updated
-                fieldUpdated = false;
-            }
+            // else // Distance is greater (player has moved enough)
+            // {
+
+            //     // If it is greater than the distance, flag that the field should be updated
+            //     //fieldUpdated = false;
+            // }
+        }
+
+        // Player cell exists and the player has moved far enough from the previous cell
+        // Need to update the field
+        if (!fieldUpdating)  // If the field is not updating
+        {
+            StartCoroutine(UpdateFlowfield());
         }
         //else
         //{
         //    // Player cell is null
         //    playerCell = GetPlayerCell();
         //}
-        if (!fieldUpdated)
-        {
-            IEnumerator FlowfieldUpdate = UpdateFlowfield();
-            StopCoroutine(FlowfieldUpdate);
-            StartCoroutine(FlowfieldUpdate);
-            // Otherwise, if the distance is greater, we can assume the player has travelled across cells, therefore calculate a new field
-            // If it is, calculate a new field
-        }
+        // if (!fieldUpdated)
+        // {
+        //     IEnumerator FlowfieldUpdate = UpdateFlowfield();
+        //     StopCoroutine(FlowfieldUpdate);
+        //     StartCoroutine(FlowfieldUpdate);
+        //     // Otherwise, if the distance is greater, we can assume the player has travelled across cells, therefore calculate a new field
+        //     // If it is, calculate a new field
+        // }
     }
 
     IEnumerator UpdateFlowfield()
     {
+        fieldUpdating = true;    // In the process of updating the field
         Debug.Log("[AIManager_Flowfield]: Started updating flow field");
-
         Cell temp = GetPlayerCell();
         //playerCell = GetPlayerCell();
         // Update the flow field
@@ -297,24 +313,26 @@ public class AIManager : MonoBehaviour
         else
         {
             playerCell = temp;
+            // Once the player cell is set, update the agent args
+            agentArgs.cellTarget = playerCell;
         }
 
         if (playerCell != null)
         {
             // Need to reinitalize the field to reset the values back to their expected numbers -- otherwise, tiles marked 0 will persist as 0
             //flowfield = new Flowfield(grid, playerCell);
-            flowfield.CreateIntergrationField(playerCell);
-            flowfield.CreateFlowField();
-            fieldUpdated = true;
+            flowfield.InitFlowfield();                      // Reset the cells
+            flowfield.CreateIntergrationField(playerCell);  // Get the costs
+            flowfield.CreateFlowField();                    // Get the directions
+            fieldUpdating = false;
         }
         else
             Debug.LogWarning("[AIManager_Flowfield]: Player Cell is NULL");
-        yield return fieldUpdated = true;
+        yield return fieldUpdating = false;;
         Debug.Log("[AIManager_Flowfield]: Finished updating flow field");
     }
     
     #endregion
-
     #region ENEMY SPAWNING
     public void RegisterToList(EnemyControllerV2 agent)
     {
@@ -504,6 +522,15 @@ public class AIManager : MonoBehaviour
                     }
                 }
 
+                // Assign the agent to a distance group
+                if (player != null)
+                {
+                    AssignControllerToGroup(controller, player.transform);
+                }
+                else
+                {
+                    AssignControllerToGroup(controller, regularInterval);
+                }
 
                 EntityStats stats = agent.GetComponent<EntityStats>();
                 if (stats != null)
@@ -547,27 +574,27 @@ public class AIManager : MonoBehaviour
                 {
                     statIndex2 = Random.Range(0, stats.statList.Count);
                 }
-                if (statIndex1 != statIndex2)
-                {
-                    // Once the indices are found, modify the stats at the indices
-                    if (stats.statList[statIndex1] is TrackedStat ts1 || stats.statList[statIndex2] is TrackedStat ts2) // If the stats found are tracked stats (Health)
-                    {
-                        ts1 = stats.statList[statIndex1] as TrackedStat;
-                        ts2 = stats.statList[statIndex2] as TrackedStat;
-                        if (ts1 != null)
-                        {
-                            ts1.MaxValue = ts1.MaxValue * 1.5f * GameManager.Instance.currDifficulty.healthMultiplier; 
-                        }
-                        if (ts2 != null)
-                        {
+                // if (statIndex1 != statIndex2)
+                // {
+                //     // Once the indices are found, modify the stats at the indices
+                //     if (stats.statList[statIndex1] is TrackedStat ts1 || stats.statList[statIndex2] is TrackedStat ts2) // If the stats found are tracked stats (Health)
+                //     {
+                //         ts1 = stats.statList[statIndex1] as TrackedStat;
+                //         ts2 = stats.statList[statIndex2] as TrackedStat;
+                //         if (ts1 != null)
+                //         {
+                //             ts1.MaxValue = ts1.MaxValue * 1.5f * GameManager.Instance.currDifficulty.healthMultiplier; 
+                //         }
+                //         if (ts2 != null)
+                //         {
+                //             ts2.MaxValue = ts2.MaxValue * GameManager.Instance.currDifficulty.
+                //         }
+                //     }
+                //     else
+                //     {
 
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                }
+                //     }
+                // }
             }
 
         }
@@ -585,6 +612,19 @@ public class AIManager : MonoBehaviour
         currAmount--;
         LevelManager.Instance.numKilled++;
         //controller.stats.OnDied -= context => { } ;  // stop listening to the function
+
+        // THIS IS A CHEAT METHOD OF ADDING ID GENERATION
+        // HOWEVER IT SHOULD WORK.
+
+        // CONSIDERING THAT ID IS BUILT ON ENEMY KILLS, THE ENEMIES KNOW WHEN THEY ARE KILLED
+        // THIS SETS THE RESPONSIBLITY OF THE ID GAIN GOING UP TO THE ENEMIES, INSTEAD OF THE PLAYER NEEDING A REFERFENCE TO THE ENEMY THAT THEY MIGHT HAVE KILLED
+        // ALTERNATIVE IS PLAYER LISTENS TO THE HURTBOX THEY'VE HIT, AND CHECK ONDAMAGED FOR LETHAL DAMAGE
+
+        if (player != null)
+        {
+            // Base amount gained per kill + percent increase
+            player.Stats.ID_Bar.Value += player.Stats.Class.BaseIDGain * (1 + player.Stats.IDGain.Value);   // This is the percent increase, 1 + decimal to get flat
+        }
     }
 
     #endregion
@@ -626,45 +666,131 @@ public class AIManager : MonoBehaviour
         } while (!LevelManager.Instance.LevelComplete);
     }
     #endregion
-    #region Distance Groups
-    // public void InitDistanceGroups()
-    // {
-    //     distanceGroups.Add(nearInterval, new List<EnemyController>());
-    //     distanceGroups.Add(regularInterval, new List<EnemyController>());
-    //     distanceGroups.Add(farInterval, new List<EnemyController>());
-    // }
-
-    // public void AssignGameObjectToGroup(GameObject go, float distance)
-    // {
-    //     EnemyController controller = go.GetComponent<EnemyController>();
-
-    //     AssignControllerToGroup(controller, distance);
-    // }
-
-    // public void AssignControllerToGroup(EnemyController controller, float distance)
-    // {
-    //     if (distance > farInterval.range * farInterval.range)       // if the agent is far from the player
-    //     {
-    //         controller.UpdateInterval = farInterval.range;
-    //         controller.PhysicsInterval = farInterval.range;
-    //         distanceGroups[farInterval].Add(controller);
-    //     }
-    //     else if (distance < nearInterval.range * nearInterval.range) // if the agent is close to the player
-    //     {
-    //         controller.UpdateInterval = nearInterval.time;
-    //         controller.PhysicsInterval = nearInterval.time;
-    //         distanceGroups[nearInterval].Add(controller);
-    //     }
-    //     else    // the agent is not too far, and not too close
-    //     {
-    //         controller.UpdateInterval = regularInterval.time;
-    //         controller.PhysicsInterval = regularInterval.time;
-    //         distanceGroups[regularInterval].Add(controller);
-    //     }
-    // }
     #endregion
+    #region DISTANCE GROUPS
+    
+    public void InitDistanceGroups()
+    {
+        distanceGroups.Add(nearInterval, new List<EnemyControllerV2>());
+        distanceGroups.Add(regularInterval, new List<EnemyControllerV2>());
+        distanceGroups.Add(farInterval, new List<EnemyControllerV2>());
+    }
+
+    public void ResetDistanceGroups()
+    {
+        foreach (KeyValuePair<UpdateInterval, List<EnemyControllerV2>> group in distanceGroups)
+        {
+            group.Value.Clear();    // Reset the list of enemy controllerss
+        }
+    }
+    public void AssignGameObjectToGroup(GameObject go, float distance)
+    {
+        EnemyControllerV2 controller = go.GetComponent<EnemyControllerV2>();
+        AssignControllerToGroup(controller, distance);
+    }
+
+    public void AssignControllerToGroup(EnemyControllerV2 controller, Transform playerPos)
+    {
+        float distance = (controller.transform.position - playerPos.position).magnitude;
+        AssignControllerToGroup(controller, distance);
+    }
+
+    public void AssignControllerToGroup(EnemyControllerV2 controller, float distance)
+    {
+        if (distance > farInterval.range)       // if the agent is far from the player
+        {
+            //controller.UpdateInterval = farInterval.range;
+            //controller.PhysicsInterval = farInterval.range;
+            distanceGroups[farInterval].Add(controller);
+        }
+        else if (distance < nearInterval.range) // if the agent is close to the player
+        {
+            //controller.UpdateInterval = nearInterval.time;
+            //controller.PhysicsInterval = nearInterval.time;
+            distanceGroups[nearInterval].Add(controller);
+        }
+        else    // the agent is not too far, and not too close
+        {
+            //controller.UpdateInterval = regularInterval.time;
+            //controller.PhysicsInterval = regularInterval.time;
+            distanceGroups[regularInterval].Add(controller);
+        }
+    }
+
+    public void AssignControllerToGroup(EnemyControllerV2 controller, UpdateInterval group)
+    {
+        distanceGroups[group].Add(controller);
+    }
+    
+    public void UpdateDistanceGroups()
+    {
+        // Start the coroutine to update the distance groups, only allow the update to happen if the group has completed it's update
+        if (distanceGroupUpdated) // If the groups have been update, we want to update them again
+        {
+            StartCoroutine(HandleDistanceGroups());
+        }
+    }
+
+    
     #endregion
     #region RUNTIME FUNCTIONS
+
+    IEnumerator HandleDistanceGroups()
+    {
+        distanceGroupUpdated = false;
+
+        // Get the near interval key, and search the list of near enemies if they should join a different distance group
+        List<EnemyControllerV2> toCheck = new List<EnemyControllerV2>();
+        if (distanceGroups.TryGetValue(nearInterval, out toCheck))
+        {
+            foreach (EnemyControllerV2 agent in toCheck)
+            {
+                // Check if they need to  join a different distance group
+                Transform playerPos = player.transform;
+                AssignControllerToGroup(agent, playerPos);
+                yield return new WaitForSeconds(enemyCheckInterval);
+            }
+        }
+        yield return new WaitForSeconds(groupCheckInterval);
+        // because each step is subject to the yield, get the new values on the cycles
+        if (distanceGroups.TryGetValue(nearInterval, out toCheck))
+        {
+            foreach (EnemyControllerV2 agent in toCheck)
+            {
+                // Check if they need to  join a different distance group
+                Transform playerPos = player.transform;
+                AssignControllerToGroup(agent, playerPos);
+                yield return new WaitForSeconds(enemyCheckInterval);
+            }
+        }
+        yield return new WaitForSeconds(groupCheckInterval);
+        if (distanceGroups.TryGetValue(nearInterval, out toCheck))
+        {
+            foreach (EnemyControllerV2 agent in toCheck)
+            {
+                // Check if they need to  join a different distance group
+                Transform playerPos = player.transform;
+                AssignControllerToGroup(agent, playerPos);
+                yield return new WaitForSeconds(enemyCheckInterval);
+            }
+        }
+        distanceGroupUpdated = true;
+        //yield return new WaitForSeconds(groupCheckInterval);
+
+        // Next search the regular
+
+        // Next search the far
+        
+
+        // foreach (KeyValuePair<UpdateInterval, List<EnemyControllerV2>> group in distanceGroups)
+        // {
+        //     // Search each group and see if they should be updated
+        //     // Start with the nearest enemies
+
+        //     yield return null;
+        // }
+    }
+
     // IEnumerator UpdateDistanceGroups()
     // {
     //     distanceGroupUpdated = false;
@@ -730,91 +856,98 @@ public class AIManager : MonoBehaviour
             enemy.HandleState(agentArgs);
         }
     }
+
     public void FixedUpdate()
     {
+        // Only update if a player exists
+        if (player == null) { return; }
+
+        // State handling can be pushed onto coroutine loops for interval steps and non update on irrelevant agents
         if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
-
-        // Instead of cycling between all enemies, cycle between the enemies that are registered in the MOVING list
-        // Whenever enemies enter a state where they should move, add them to the moving list
-
-        foreach (EnemyControllerV2 enemy in movingEnemies)
+        foreach (EnemyControllerV2 enemy in aliveEnemies)
         {
-            // For a moving enemy, check their state
-            // If they are in the chase state, set their target to the player
-
-            if (enemy.State == AIState.StateId.Chase)
+            if (enemy.State is IPhysicsState phyState)
             {
-                Cell target = GridUtility.GetCellFromPoint(flowfield.grid, enemy.transform.position);
-                enemy.MoveAgent(target);
+                agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
+                phyState.FixedAct(agentArgs);
             }
         }
-        // foreach (EnemyControllerV2 enemy in aliveEnemies)
-        // {
-        //     Cell target = GridUtility.GetCellFromPoint(flowfield.grid, enemy.transform.position);
-        //     enemy.MoveAgent(target);
-        // }
-        // foreach (EntityStats entity in aliveEnemies)
-        // {
-        //     Rigidbody rb = entity.GetComponent<Rigidbody>();    // Get component is probably expensive, better to have a reference
-        //     // Only way to have a reference is another script / entity stats contains a reference
-        //     Cell target = GridUtility.GetCellFromPoint(flowfield.grid, entity.transform.position);
-        //     Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
-
-        //     // Vector3 movement = Vector3.MoveTowards(entity.transform.position, direction, 6.0f * Time.deltaTime);
-        //     // entity.transform.position = movement;
-        //     //Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
-        //     ////Debug.Log("Move Direction: " + target.bestDirection.vector);
-        //     rb.velocity = direction * 6.0f;
-        //     //Debug.Log("moved");
-
-        //     // Instead, get each enemy controller
-
-        //     // And handle the transitions through this loop
-        //     // Handling the states will determine 
-
-        // }
-
-        // With new state setup, we can organize the chasing enemies into a list
-        // With a limited list of chasing enemies, time of this update is reduced (don't have to update non-chasing enemies)
-
     }
+
+    // Instead of calling HandleState, call each reason and act function on the AI
+
+    // This is because the step of the reason and act will be called diffrently
+    // Reason (Decision making), will be lagged behind the actions of the agent
+
+    // public void FixedUpdate()
+    // {
+    //     // if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
+    //     // if (movingEnemies == null || movingEnemies.Count <= 0) { return; }
+
+    //     // // Instead of cycling between all enemies, cycle between the enemies that are registered in the MOVING list
+    //     // // Whenever enemies enter a state where they should move, add them to the moving list
+
+    //     // foreach (EnemyControllerV2 enemy in movingEnemies)
+    //     // {
+    //     //     // For a moving enemy, check their state
+    //     //     // If they are in the chase state, set their target to the player
+
+    //     //     if (enemy.State == AIState.StateId.Chase)
+    //     //     {
+    //     //         Cell target = GridUtility.GetCellFromPoint(flowfield.grid, enemy.transform.position);
+    //     //         enemy.MoveAgent(target);
+    //     //     }
+    //     // }
+    //     // foreach (EnemyControllerV2 enemy in aliveEnemies)
+    //     // {
+    //     //     Cell target = GridUtility.GetCellFromPoint(flowfield.grid, enemy.transform.position);
+    //     //     enemy.MoveAgent(target);
+    //     // }
+    //     // foreach (EntityStats entity in aliveEnemies)
+    //     // {
+    //     //     Rigidbody rb = entity.GetComponent<Rigidbody>();    // Get component is probably expensive, better to have a reference
+    //     //     // Only way to have a reference is another script / entity stats contains a reference
+    //     //     Cell target = GridUtility.GetCellFromPoint(flowfield.grid, entity.transform.position);
+    //     //     Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+
+    //     //     // Vector3 movement = Vector3.MoveTowards(entity.transform.position, direction, 6.0f * Time.deltaTime);
+    //     //     // entity.transform.position = movement;
+    //     //     //Vector3 direction = new Vector3(target.bestDirection.vector.x, 0, target.bestDirection.vector.y);
+    //     //     ////Debug.Log("Move Direction: " + target.bestDirection.vector);
+    //     //     rb.velocity = direction * 6.0f;
+    //     //     //Debug.Log("moved");
+
+    //     //     // Instead, get each enemy controller
+
+    //     //     // And handle the transitions through this loop
+    //     //     // Handling the states will determine 
+
+    //     // }
+
+    //     // With new state setup, we can organize the chasing enemies into a list
+    //     // With a limited list of chasing enemies, time of this update is reduced (don't have to update non-chasing enemies)
+
+    // }
     IEnumerator ManagerLoop()
     {
         // While the level has not ended, run updates for the distance groups and spawn enemies
         // Update Coroutine
         distanceGroupUpdated = true;
         enemiesSpawned = true;
-        //float groupTimer = 0.0f;
-        float spawnTimer = 0.0f;
+        float groupTimer = 0.0f;
+        //float spawnTimer = 0.0f;
         //float moveTimer = 0.0f;
 
         StartCoroutine(HordeHandler());
 
         while (!LevelManager.Instance.LevelComplete)
         {
-            //groupTimer += Time.deltaTime;
-            // moveTimer += Time.deltaTime;
-            spawnTimer += Time.deltaTime;
-
-            // if (moveTimer > moveInterval)
-            // {
-            //     if (enemyStep)
-            //     {
-            //         StartCoroutine(UpdateEnemyNavigation());
-            //         moveTimer = 0.0f;
-            //     }
-            // }
-            // Handle enemies via coroutine
-
-            // if (groupTimer > groupCheckInterval)
-            // {
-            //     if (distanceGroupUpdated)
-            //     {
-            //         StartCoroutine(UpdateDistanceGroups());
-            //         groupTimer = 0.0f;
-            //     }
-            // }
-            // Only spawn more enemies once the count has reached 0.
+            //spawnTimer += Time.deltaTime;
+            groupTimer += Time.deltaTime;
+            if (groupTimer > groupCheckInterval)
+            {
+                UpdateDistanceGroups();
+            }
             if (canSpawn)
             {
                 if (currAmount <= 0)
@@ -822,12 +955,12 @@ public class AIManager : MonoBehaviour
                     SpawnEnemies();
                 }
             }
-            // Start Coroutines to run the functions, don't start additional coroutines
+            // Start Coroutines to run the functions, don't start additional coroutines until the current one has completed
             yield return null;
         }
     }
     #endregion
-
+    #region DEBUG
     // Modify FSM to include update frequency variable
     // This will determine how often the FSM updates
 
@@ -866,4 +999,5 @@ public class AIManager : MonoBehaviour
             }
         }
     }
+    #endregion
 }

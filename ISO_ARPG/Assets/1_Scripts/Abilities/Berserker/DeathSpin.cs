@@ -32,7 +32,7 @@ public class DeathSpin : ChannelAbility
     }
     protected override void Fire(Ability ab, GameObject actor)
     {
-        damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert) ;
+        damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert);
         anim.SetBool(abilAnimID, true);
 
         if (abilityActivated)
@@ -104,6 +104,7 @@ public class DeathSpin : ChannelAbility
             {
                 hitboxes[i].ApplyDamage = on;
                 hitboxes[i].SetDamage(damage);
+                hitboxes[i].OpenHitWindow();
             }
         }
     }

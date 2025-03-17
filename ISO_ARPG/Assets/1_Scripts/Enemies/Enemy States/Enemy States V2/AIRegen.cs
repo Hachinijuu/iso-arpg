@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIRegen : AIState
+[CreateAssetMenu(fileName = "Regenerate", menuName = "sykcorSystems/AI/States/Regenerate", order = 4)]
+public class AIRegen : AIState, ICoroutineState
 {
     [Header("Regen Value")]
     public float regenAmount = 20f;
-    public float regenRate = 1.0f;
+    float ICoroutineState.intervalTime { get {return regenInterval; } set { regenInterval = value; } }
+    float regenInterval = 1.0f;
     public override void Reason(AgentStateArgs e)
     {
         //throw new System.NotImplementedException();
@@ -40,6 +42,12 @@ public class AIRegen : AIState
 
         // How do we handle the interval or rate to increase when the state is listed globally
         // There is no individual tracker, UNLESS we create a list for them 
+        // Because this is an AI Coroutine State, this cat is handled inside the AI as a coroutine
 
+        EnemyControllerV2 agent = e.agent;
+        if (agent.stats.Health.Value < agent.stats.Health.MaxValue)
+        {
+            agent.stats.Health.Value += regenAmount;
+        }
     }
 }

@@ -25,6 +25,16 @@ public class Grid
         gridCells = new Dictionary<Vector2Int, Cell>();
         LoadGrid(data);
     }
+
+    public Grid(Grid copy)
+    {
+        origin = copy.origin;
+        rows = copy.rows;
+        columns = copy.columns;
+        cellSize = copy.cellSize;
+        gridCells = copy.gridCells;
+
+    }
     public void LoadGrid(GridData toLoad)
     {
         if (toLoad != null)
