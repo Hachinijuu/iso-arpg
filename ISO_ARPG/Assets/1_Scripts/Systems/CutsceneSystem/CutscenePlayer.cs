@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CutscenePlayer : MonoBehaviour 
+public class CutscenePlayer : MonoBehaviour
 {
     #region VARIABLES
     [SerializeField] PlayerInput input;
@@ -50,7 +50,7 @@ public class CutscenePlayer : MonoBehaviour
             slide.ExitSlide(this);
             slide.gameObject.SetActive(false);
         }
-        GameManager.Instance.LoadLevelByID(GameManager.eLevel.LEVEL_1);
+        GameManager.Instance.LoadLevelByID(GameManager.eLevel.HUB);
     }
     #endregion
 }

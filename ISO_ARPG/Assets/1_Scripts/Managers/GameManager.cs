@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     [Header("States")]
     public GameState currGameState;
     public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
-    public enum eLevel { MENU, HUB, CUTSCENE, LEVEL_1, TRANSITION, LEVEL_2, LEVEL_3 }
+    public enum eLevel { MENU, CHARACTER_SELECT, CUTSCENE, HUB, LEVEL_1, TRANSITION, LEVEL_2, LEVEL_3 }
     [Header("Level Information")]
     [SerializeField] string[] levelNames; // Map this in order of the types
     public eLevel level;
@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
     #region EVENTS
     public delegate void DifficultyChanged(DifficultySetting setting);
     public event DifficultyChanged onDifficultyChanged;
-    public void FireDifficultyChanged(DifficultySetting setting) {if (onDifficultyChanged != null) onDifficultyChanged(setting); }
-    public void FireDifficultyChanged() {if (onDifficultyChanged != null) onDifficultyChanged(currDifficulty); }
+    public void FireDifficultyChanged(DifficultySetting setting) { if (onDifficultyChanged != null) onDifficultyChanged(setting); }
+    public void FireDifficultyChanged() { if (onDifficultyChanged != null) onDifficultyChanged(currDifficulty); }
 
     #endregion
 
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
                 player.transform.position = LevelManager.Instance.PlayerSpawnPoint.position;
                 player.transform.rotation = LevelManager.Instance.PlayerSpawnPoint.rotation;
             }
-        controller.FootSteps.SetMaterial(LevelManager.Instance.material);
+            controller.FootSteps.SetMaterial(LevelManager.Instance.material);
         }
         else
         {
@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour
             pauseMenu.CanPause = true;
         if (loadingScreen)
             loadingScreen.gameObject.SetActive(isLoading);
-        
+
 
 
         // If the level manager exits, do the stuff
@@ -309,7 +309,24 @@ public class GameManager : MonoBehaviour
             // Default the Camera to the view of the podium
             // Place the playable characters at the podium
             // Enable them accordingly
-            PlayerManager.Instance.HandlePlayerSelect();
+            //PlayerManager.Instance.HandlePlayerSelect();
+        }
+    }
+
+    public void LoadCharacterSelect()
+    {
+        LoadLevelFromString((levelNames[(int)eLevel.CHARACTER_SELECT]));
+
+        // Special conditions to check when loading to the hub
+        if (PlayerManager.Instance.currentClass == GoX_Class.NONE)
+        {
+            // If the player has no class when loading the hub
+            // We want to load the hub setup for character selection
+
+            // Default the Camera to the view of the podium
+            // Place the playable characters at the podium
+            // Enable them accordingly
+            //PlayerManager.Instance.HandlePlayerSelect();
         }
     }
     public void LoadPrototype()

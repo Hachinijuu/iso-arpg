@@ -45,7 +45,7 @@ public class PlayerManager : MonoBehaviour
             return instance;
         }
     }
-    [SerializeField] CharacterSelection selectUI;
+    //[SerializeField] CharacterSelection selectUI;
     [SerializeField] HUDController HUD;
     public List<CharacterPair> characters;
     public Dictionary<GoX_Class, PlayerController> playableCharacters;
@@ -171,11 +171,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void HandlePlayerSelect()
-    {
-        // Place the camera in the proper position
-
-        // Activate the character selection UI
-        selectUI.ShowCharacterSelection(true);
-    }
+    //public void HandlePlayerSelect()
+    //{
+    //    // Place the camera in the proper position
+    //
+    //    // Activate the character selection UI
+    //    selectUI.ShowCharacterSelection(true);
+    //}
 }

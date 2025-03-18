@@ -3,6 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
+public class BodySelection
+{
+    public GameObject mainBody;
+    public GameObject altBody;
+}
+
+[System.Serializable]
 public class CharacterUIPanel
 {
     public TMPro.TMP_Text characterName;
@@ -54,19 +61,19 @@ public class CharacterSelection : MonoBehaviour
     //     ShowCharacterSelection(false);
     // }
 
-    public class BodySelection
-    {
-        public GameObject mainBody;
-        public GameObject altBody;
-    }
-
     public List<BodySelection> bodies;
     public AudioClip[] clips;
     public AudioSource source;
 
+    public void Start()
+    {
+        source = GameManager.Instance.GlobalAudio;
+    }
+
     public void SetGhostCharacter()
     {
-        int index = (int)currentClass + 1;
+        int index = (int)currentClass - 1;
+        Debug.Log(currentClass + " : " + index);
         for (int i = 0; i < bodies.Count; i++)
         {
             bodies[i].mainBody.SetActive(false);
@@ -80,7 +87,7 @@ public class CharacterSelection : MonoBehaviour
 
         if (source != null)
         {
-            source.clip = clips[(int)currentClass];
+            source.clip = clips[index];
             source.Play();
         }
     }
@@ -99,7 +106,6 @@ public class CharacterSelection : MonoBehaviour
     {
         currentClass = GoX_Class.HUNTER;
         PlayerManager.Instance.SetPlayer(currentClass);
-        SetGhostCharacter();
 
         // Change the UI to display hunter information
         //ClassClicked(GoX_Class.HUNTER);
@@ -114,7 +120,6 @@ public class CharacterSelection : MonoBehaviour
     {
         currentClass = GoX_Class.ELEMENTALIST;
         PlayerManager.Instance.SetPlayer(currentClass);
-        SetGhostCharacter();
 
         // Change the UI to display elementalist information
         //ClassClicked(GoX_Class.ELEMENTALIST);
@@ -128,7 +133,8 @@ public class CharacterSelection : MonoBehaviour
     public void ConfirmClicked()
     {
         PlayerManager.Instance.ActivatePlayer(currentClass);    // This transitions into gameplay activation
-        ShowCharacterSelection(false);
+        GameManager.Instance.LoadLevelByID(GameManager.eLevel.CUTSCENE);
+        //ShowCharacterSelection(false);
     }
     public void ShowCharacterSelection(bool value)
     {

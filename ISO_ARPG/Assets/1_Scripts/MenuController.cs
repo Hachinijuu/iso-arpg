@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuController : MonoBehaviour
@@ -8,7 +6,7 @@ public class MenuController : MonoBehaviour
     public void StartClicked()
     {
         // Load the hub, character selection
-        GameManager.Instance.LoadHub();
+        GameManager.Instance.LoadCharacterSelect();
     }
 
     public void ContinueClicked()
