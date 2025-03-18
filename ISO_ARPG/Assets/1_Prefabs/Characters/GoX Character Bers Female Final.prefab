@@ -2886,7 +2886,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastLength: 50
+  characterBody: {fileID: 0}
+  body: {fileID: 0}
+  anim: {fileID: 0}
   rotationSpeed: 20
+  clickBuffer: 0.05
 --- !u!114 &1532357188889039818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2918,7 +2922,7 @@ MonoBehaviour:
   - Enemy
   mask:
     serializedVersion: 2
-    m_Bits: 1920
+    m_Bits: 896
 --- !u!82 &7057737631166150019
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3064,6 +3068,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e862e6c2499b645a24b7544e972e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  animator: {fileID: 0}
+  body: {fileID: 0}
   auraSource: {fileID: 4444601953941448277}
 --- !u!114 &7206988346633858353
 MonoBehaviour:
@@ -3082,6 +3090,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3eaa931f3ad66b94cbba26048aad1498, type: 2}
   - {fileID: 11400000, guid: 078211f0ee3dd8942b112eee4c6cfff6, type: 2}
   currStep: {fileID: 0}
+  link: {fileID: 0}
 --- !u!136 &4660037430089400830
 CapsuleCollider:
   m_ObjectHideFlags: 0
