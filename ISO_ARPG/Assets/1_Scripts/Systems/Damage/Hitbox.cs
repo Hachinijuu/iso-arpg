@@ -76,7 +76,7 @@ public class Hitbox : MonoBehaviour
         //Debug.Log(hitColliders.Length);
         foreach (Collider hit in hitColliders)
         {
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
             Hurtbox hb = hit.GetComponent<Hurtbox>();
             if (hb != null)
             {
@@ -91,7 +91,7 @@ public class Hitbox : MonoBehaviour
     public void Attack()
     {
         applyDamage = true;
-        HandleHit();
+        HandleHit();            // This is ONLY for single target attack
         applyDamage = false;
     }
 
@@ -147,7 +147,9 @@ public class Hitbox : MonoBehaviour
     public void OpenHitWindow()
     {
         if (applyDamage)
-        StartCoroutine(HitWindow());
+        { 
+            StartCoroutine(HitWindow());
+        }
     }
 
     IEnumerator DamageWindow(float time)
@@ -161,7 +163,7 @@ public class Hitbox : MonoBehaviour
     {
         do
         {
-            HandleHit();        // By default, only look for single target per frame
+            HandleHits();        // By default, only look for single target per frame
             yield return null;
         } while (applyDamage);
     }

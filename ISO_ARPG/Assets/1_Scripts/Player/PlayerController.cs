@@ -40,7 +40,9 @@ public class PlayerController : MonoBehaviour
     public FootStepHandler FootSteps { get { return footSteps; } }
     public PlayerSlotSystem Slots { get { return slots; } }
     public GameObject Body { get { return body; } }
-    
+
+    public GameObject AltBody { get { return body; } }
+
     public NavMeshAgent Aget { get { return agent; } }
     PlayerStats stats;
     PlayerInput input;
@@ -54,7 +56,11 @@ public class PlayerController : MonoBehaviour
     ProjectileSource shootSource;
     FootStepHandler footSteps;
     PlayerSlotSystem slots;
+
+    enum BodyNumber { MAIN, ALT }
+    BodyNumber type;
     [SerializeField] GameObject body;
+    [SerializeField] GameObject altBody;
 
     NavMeshAgent agent;
 
@@ -155,13 +161,26 @@ public class PlayerController : MonoBehaviour
 
     #region PLAYER ACTIONS
     // Handle targetting
+    //public void SetBody(BodyNumber body)
+    //{
+    //    switch (body)
+    //    {
+    //        case BodyNumber.ALT:
+    //            if (body)
+    //            altBody.SetActive(true); 
+    //        break;
+    //        case BodyNumber.MAIN:
+    //        default:
+    //            
+    //        break;
+    //    }
+    //}
     public IEnumerator HandleStop(int duration)
     {
         movement.HandleStops(true);
         yield return new WaitForSeconds(duration);
         movement.HandleStops(false);
     }
-
     public void SetAura(bool value)
     {
         if (auraSource)
@@ -176,7 +195,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void UnmapPlayerActions()
-    { 
+    {
         input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
         input.actions["Potion2"].performed += context => { UsePotion(PotionTypes.MANA); };  // Map whichever potion
     }
@@ -185,7 +204,7 @@ public class PlayerController : MonoBehaviour
     public void UsePotion(PotionTypes potion)
     {
         switch (potion)
-        { 
+        {
             case PotionTypes.HEALTH:
                 // Get the health stat, increase the health stat
                 break;

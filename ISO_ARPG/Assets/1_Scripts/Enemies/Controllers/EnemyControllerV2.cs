@@ -218,7 +218,7 @@ public class EnemyControllerV2 : MonoBehaviour
         {
             // Perform the attack (play the animation)
             canAttack = false;
-            Debug.Log("Performed Attack");
+            //Debug.Log("Performed Attack");
             //animator.SetTrigger(animId);
             hitbox.Attack();
             //hitbox.AttackForTime(hitboxUptime);
@@ -315,9 +315,10 @@ public class EnemyControllerV2 : MonoBehaviour
 
     public void AnimateAgentMove()
     {
-        currSpeed = rb.velocity.magnitude;
+        //currSpeed = rb.velocity.magnitude;
         animator.SetFloat(moveId, currSpeed);
     }
+
     public void MoveAgent(Vector3 target)
     {
         if (target == null) { return; }
@@ -337,6 +338,13 @@ public class EnemyControllerV2 : MonoBehaviour
         
         Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
         transform.position = movement;
+
+        currSpeed = (transform.position - target).magnitude;    // Magnitude of the direction
+        //Debug.Log(speed);
+        //Debug.Log(agent.desiredVelocity);
+        //speed = body.velocity.magnitude;//(transform.position - moveTarget).magnitude;    // Magnitude of the direction
+        if (currSpeed <= 0.25f)
+            currSpeed = 0;
         //rb.MovePosition(movement);
         //transform.position = movement;
 
@@ -366,6 +374,26 @@ public class EnemyControllerV2 : MonoBehaviour
         MoveAgent(target.position);
     }
 
+    public void MoveAgentAround(Vector3 target, Transform avoid = null)
+    {
+        Vector3 avoidPos = Vector3.zero;
+        if (avoid == null)
+        {
+            // Calculate avoidance based on avoid function
+            avoidPos = AvoidOthers();
+        }
+        else
+        { 
+            avoidPos = avoid.position;
+        }
+
+        //Vector3 offset = 
+
+        // Move the agent to the target position while steering away from the avoid
+        // With the steering calculated
+
+    }
+
     public void HandleRotation(Vector3 direction)
     {
         // Apply the look
@@ -387,11 +415,11 @@ public class EnemyControllerV2 : MonoBehaviour
         Handles.Label(textPos, "State: " + currStateId, style);
         Debug.DrawRay(transform.position, transform.forward * avoidDistance);
 
-        Vector3 avoid = AvoidOthers();
-        avoid.y = 0;
-        Vector3 offset = debugTarget + (avoid * avoidSpacing);
-        Debug.DrawRay(transform.position, (offset - transform.position) * Vector3.Distance(transform.position, offset), Color.green);
-        Debug.DrawRay(transform.position, (debugTarget - transform.position) * Vector3.Distance(transform.position, debugTarget), Color.blue);
+        //Vector3 avoid = AvoidOthers();
+        //avoid.y = 0;
+        //Vector3 offset = debugTarget + (avoid * avoidSpacing);
+        //Debug.DrawRay(transform.position, (offset - transform.position) * Vector3.Distance(transform.position, offset), Color.green);
+        //Debug.DrawRay(transform.position, (debugTarget - transform.position) * Vector3.Distance(transform.position, debugTarget), Color.blue);
     }
     #endif
 }

@@ -546,6 +546,7 @@ public class AIManager : MonoBehaviour
                     stats.Health.MaxValue = stats.data.Health.MaxValue * GameManager.Instance.currDifficulty.healthMultiplier;
                     stats.Damage.Value = stats.data.Damage.Value * GameManager.Instance.currDifficulty.damageMultiplier;
                     //aliveEnemies.Add(stats);
+                    controller.Hitbox.SetDamage(stats.Damage.Value);    // Give the agent hitbox the new value of damage
                 }
 
                 controller.Respawn();

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +16,7 @@ public class CharacterUIPanel
         characterName.text = toLoad.entityName;
         description.text = toLoad.description;
         characterIcon.sprite = toLoad.icon;
-        
+
 
         // How to match ability icons to the class
         // Hardcode it
@@ -30,7 +29,7 @@ public class CharacterSelection : MonoBehaviour
     // Steps for character selection
     // No character exists in persistent scene
     // Menu Start -> Load to Hub.
-    
+
     // Hub Load, This script activates, sees that no characterCLass is selected (GameManager)
     // Opens UI for character select, selected character will have camera show them, and player controls are enabled.
 
@@ -55,15 +54,35 @@ public class CharacterSelection : MonoBehaviour
     //     ShowCharacterSelection(false);
     // }
 
-    public GameObject[] characters;
+    public class BodySelection
+    {
+        public GameObject mainBody;
+        public GameObject altBody;
+    }
+
+    public List<BodySelection> bodies;
     public AudioClip[] clips;
     public AudioSource source;
 
     public void SetGhostCharacter()
     {
-        characters[(int)currentClass].SetActive(true);
-        source.clip = clips[(int)currentClass];
-        source.Play();
+        int index = (int)currentClass + 1;
+        for (int i = 0; i < bodies.Count; i++)
+        {
+            bodies[i].mainBody.SetActive(false);
+        }
+        //foreach (BodySelection body in bodies)
+        //{
+        //    body.mainBody.SetActive(false);
+        //}
+
+        bodies[index].mainBody.SetActive(true);
+
+        if (source != null)
+        {
+            source.clip = clips[(int)currentClass];
+            source.Play();
+        }
     }
     public void BerserkerClicked()
     {
