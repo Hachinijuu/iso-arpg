@@ -2589,7 +2589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &92417538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5651,6 +5651,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e862e6c2499b645a24b7544e972e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &179321092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 656084597172396448, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+  m_PrefabInstance: {fileID: 179321090}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39eaf8fa7dd59042aa7857bef90a6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &192362009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6194,7 +6205,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1947576784191469953, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3266711434720059008, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Volume
@@ -6253,6 +6264,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+--- !u!114 &207897421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7320533039136882555, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+  m_PrefabInstance: {fileID: 207897420}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39eaf8fa7dd59042aa7857bef90a6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &211151995
 GameObject:
   m_ObjectHideFlags: 0
@@ -26237,7 +26259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f652668ce1bbd4293562775a94525e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectUI: {fileID: 2045931076}
   HUD: {fileID: 1853513572}
   characters:
   - Guardian: 1
@@ -26603,7 +26624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1009455490
 Transform:
   m_ObjectHideFlags: 0
@@ -35849,12 +35870,11 @@ MonoBehaviour:
   debugUI: {fileID: 1341603620}
   invinciblityToggle: {fileID: 778124502}
   damageToggle: {fileID: 427914171}
-  levelDropdown: {fileID: 0}
+  levelDropdown: {fileID: 678049952}
   debugOn: 0
   playerHurtbox:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 207897421}
+  - {fileID: 179321092}
 --- !u!1001 &1376997610
 PrefabInstance:
   m_ObjectHideFlags: 0
