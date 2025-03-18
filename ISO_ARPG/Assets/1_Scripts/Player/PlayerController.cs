@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 
@@ -14,7 +15,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(ProjectileSource))]        // Projectiles
 [RequireComponent(typeof(FootStepHandler))]         // Footsteps
 [RequireComponent(typeof(PlayerSlotSystem))]        // Slots
-
+[RequireComponent(typeof(NavMeshAgent))]                // AGENT FOR COLLISION DETECTION -- 
 // music / ambience - own sources / persistent
 // UI - persistent / general
 // effects / voice
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
     public FootStepHandler FootSteps { get { return footSteps; } }
     public PlayerSlotSystem Slots { get { return slots; } }
     public GameObject Body { get { return body; } }
+    
+    public NavMeshAgent Aget { get { return agent; } }
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
@@ -51,8 +54,9 @@ public class PlayerController : MonoBehaviour
     ProjectileSource shootSource;
     FootStepHandler footSteps;
     PlayerSlotSystem slots;
-    
     [SerializeField] GameObject body;
+
+    NavMeshAgent agent;
 
     [SerializeField] GameObject auraSource;
     #endregion
@@ -81,6 +85,9 @@ public class PlayerController : MonoBehaviour
             footSteps = GetComponent<FootStepHandler>();
         if (slots == null)
             slots = GetComponent<PlayerSlotSystem>();
+
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
 
 
         if (animator == null)
@@ -113,6 +120,7 @@ public class PlayerController : MonoBehaviour
         shootSource.enabled = shouldEnable;
         footSteps.enabled = shouldEnable;
         slots.enabled = shouldEnable;
+        agent.enabled = shouldEnable;
     }
 
 

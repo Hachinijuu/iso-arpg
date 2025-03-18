@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 //[RequireComponent(typeof(NavMeshAgent))]
@@ -15,10 +16,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask moveMask;
     [SerializeField] int raycastLength = 50;
     [SerializeField] GameObject characterBody;  // This refers to the bones in this case
+    [SerializeField] Rigidbody body;
 
     // Classes
     PlayerInput input;
     PlayerStats stats;
+    NavMeshAgent agent;
     [SerializeField] Animator anim;
 
     // Public Accessors
@@ -47,7 +50,10 @@ public class PlayerMovement : MonoBehaviour
         // get the references on THIS object
         input = GetComponent<PlayerInput>();
         stats = GetComponent<PlayerStats>();
+        agent = GetComponent<NavMeshAgent>();
 
+        agent.updatePosition = false;
+        agent.updateRotation = false;
         // map inputs
         //MapMovementActions();
     }
@@ -232,6 +238,7 @@ public class PlayerMovement : MonoBehaviour
 
             lookDirection = mousePoint - transform.position;
             lookDirection.Normalize(); // Normalize the look direction
+            //lookDirection.y = transform.position.y + 1; // Offset from the ground
         }
 
         // Apply the look
@@ -252,10 +259,15 @@ public class PlayerMovement : MonoBehaviour
     void HandleMovement()
     {
         Vector3 movement = Vector3.MoveTowards(transform.position, moveTarget, stats.MoveSpeed.Value * Time.deltaTime);
-        movement.y = 0;
-        transform.position = movement;
+        //movement.y = 0;
 
+        //body.MovePosition(movement);
+        transform.position = movement;
+        //agent.destination = moveTarget;
         speed = (transform.position - moveTarget).magnitude;    // Magnitude of the direction
+        //Debug.Log(speed);
+        //Debug.Log(agent.desiredVelocity);
+        //speed = body.velocity.magnitude;//(transform.position - moveTarget).magnitude;    // Magnitude of the direction
         if (speed <= 0.1f)
             speed = 0;
         if (speed > 0)
