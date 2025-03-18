@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 129680790286968377}
   - component: {fileID: 3919095297244932508}
   - component: {fileID: 1263148788468473174}
+  - component: {fileID: -2572130842259683070}
   m_Layer: 0
   m_Name: GOX_Props_Oil-Lantern
   m_TagString: Untagged
@@ -84,6 +85,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &-2572130842259683070
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758688660992261251}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 22.179, y: 10, z: 25.267002}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 25.267002}
+  m_TimeToStationary: 0.5
 --- !u!1 &2192090473199828289
 GameObject:
   m_ObjectHideFlags: 0

@@ -97,12 +97,12 @@ NavMeshObstacle:
   m_GameObject: {fileID: 6542455127046575136}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_Shape: 0
+  m_Extents: {x: 35.029003, y: 29.476002, z: 35.029003}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 35}
   m_TimeToStationary: 0.5
 --- !u!114 &5223661153244560090
 MonoBehaviour:
@@ -118,22 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 4d1f755615a60444e80d1964b090755a, type: 2}
   id: 2
-  health:
-    value: 10
-    maxValue: 10
-    type: 1
-  armour:
-    value: -1
-    maxValue: 0
-    type: 0
-  dodge:
-    value: -1
-    maxValue: 0
-    type: 0
-  damage:
-    value: -1
-    maxValue: 0
-    type: 0
+  statList: []
 --- !u!54 &206290218883429074
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5600523915662736100}
   - component: {fileID: 7366374295542926409}
   - component: {fileID: 2625719241804694089}
+  - component: {fileID: -9110444199452880224}
   m_Layer: 8
   m_Name: Destroyed Wagon
   m_TagString: Destructible
@@ -112,22 +113,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 4d1f755615a60444e80d1964b090755a, type: 2}
   id: 4
-  health:
-    value: 1
-    maxValue: 0
-    type: 1
-  armour:
-    value: -1
-    maxValue: 0
-    type: 0
-  dodge:
-    value: -1
-    maxValue: 0
-    type: 0
-  damage:
-    value: -1
-    maxValue: 0
-    type: 0
+  statList: []
+--- !u!208 &-9110444199452880224
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283619824221698988}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2429742534309139652
 GameObject:
   m_ObjectHideFlags: 0
