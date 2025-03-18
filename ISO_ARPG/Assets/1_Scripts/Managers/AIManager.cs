@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct UpdateInterval
+public class UpdateInterval
 {
     public int range;
     public float time;
+
+    public UpdateInterval()
+    {
+        range = -1;
+        time = -1;
+    }
 }
 public class AIManager : MonoBehaviour
 {
@@ -46,7 +52,6 @@ public class AIManager : MonoBehaviour
     public UpdateInterval nearInterval;
     public UpdateInterval regularInterval;
     public UpdateInterval farInterval;
-    public int currAmount = 0;
     [SerializeField] float respawnInterval = 5.0f;
     [SerializeField] float hordeCheckInterval = 1.25f;
 
@@ -57,6 +62,9 @@ public class AIManager : MonoBehaviour
     bool enemiesSpawned;
     bool canSpawn;
 
+    
+    public int numElites = 0;
+    public int numEnemies = 0;
     // CLEANUP VARIABLES SECTION ASAP
     //List<Horde> hordes;
 
@@ -77,9 +85,9 @@ public class AIManager : MonoBehaviour
 
     // Reorganize / cleanup this class once all functionality is at expected level
     // It is VERY messy.
-    public static float CHASE_RANGE = 12.5f;
-    public static float MELEE_RANGE = 2.5f;
-    public static float RANGED_RANGE = 7.5f;
+    public static float CHASE_RANGE = 20.0f;
+    public static float MELEE_RANGE = 5.0f;
+    public static float RANGED_RANGE = 12.5f;
 
     public List<StateContainer> enemyStates; 
     AgentStateArgs agentArgs;
@@ -543,7 +551,7 @@ public class AIManager : MonoBehaviour
                 controller.Respawn();
             }
 
-            currAmount += 1;
+            numEnemies += 1;
 
             // This position should be verified based on level's grid.
 
@@ -607,10 +615,20 @@ public class AIManager : MonoBehaviour
     }
 
     // Because events with number changing is not very reliable, rely on a function to handle the increase and decrease
-    public void UpdateDeathNumbers()
+    public void UpdateDeathNumbers(EnemyControllerV2 agent)
     {
-        currAmount--;
-        LevelManager.Instance.numKilled++;
+        if (agent == null) { return; }
+        if (agent.stats.id == EntityID.ELITE)
+        {
+            numElites--;
+            LevelManager.Instance.numEliteKilled++;
+        }
+        else
+        {
+            numEnemies--;
+            LevelManager.Instance.numKilled++;
+        }
+
         //controller.stats.OnDied -= context => { } ;  // stop listening to the function
 
         // THIS IS A CHEAT METHOD OF ADDING ID GENERATION
@@ -694,7 +712,6 @@ public class AIManager : MonoBehaviour
         float distance = (controller.transform.position - playerPos.position).magnitude;
         AssignControllerToGroup(controller, distance);
     }
-
     public void AssignControllerToGroup(EnemyControllerV2 controller, float distance)
     {
         if (distance > farInterval.range)       // if the agent is far from the player
@@ -716,10 +733,26 @@ public class AIManager : MonoBehaviour
             distanceGroups[regularInterval].Add(controller);
         }
     }
-
     public void AssignControllerToGroup(EnemyControllerV2 controller, UpdateInterval group)
     {
         distanceGroups[group].Add(controller);
+    }
+
+    public UpdateInterval GetDistanceGroup(EnemyControllerV2 controller, Transform playerPos)
+    {
+        // Figure out which group the agent might be in
+        foreach (KeyValuePair<UpdateInterval, List<EnemyControllerV2>> group in distanceGroups)
+        {
+            if (group.Value.Contains(controller))
+            {
+                return group.Key;
+            }
+        }
+        return null;
+    }
+    public void RemoveControllerFromGroup(EnemyControllerV2 controller, UpdateInterval group)
+    {
+        distanceGroups[group].Remove(controller);
     }
     
     public void UpdateDistanceGroups()
@@ -843,6 +876,13 @@ public class AIManager : MonoBehaviour
         if (movingEnemies != null)
             movingEnemies.Remove(agent);
     }
+
+    // float nearClock = 0.0f;
+    // bool nearUpdating = false;
+    // float regularClock = 0.0f;
+    // bool regularUpdating = false;
+    // float farClock = 0.0f;
+    // bool farUpdating = false;
     public void Update()
     {
         // Only update if a player exists
@@ -850,13 +890,35 @@ public class AIManager : MonoBehaviour
 
         // State handling can be pushed onto coroutine loops for interval steps and non update on irrelevant agents
         if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
+        // nearClock += Time.deltaTime;
+        // regularClock += Time.deltaTime;
+        // farClock += Time.deltaTime;
+
+        // if (nearClock > nearInterval.time && !nearUpdating)
+        // {
+        //     StartCoroutine(UpdateDistanceGroup(nearInterval));
+        //     StartCoroutine(FixedUpdateDistanceGroup(nearInterval));
+        // }
+        // if (regularClock > regularInterval.time && !regularUpdating)
+        // {
+        //     StartCoroutine(UpdateDistanceGroup(regularInterval));
+        //     StartCoroutine(FixedUpdateDistanceGroup(nearInterval));
+        // }
+        // if (farClock > farInterval.time && !farUpdating)
+        // {
+        //     StartCoroutine(UpdateDistanceGroup(farInterval));
+        //     StartCoroutine(FixedUpdateDistanceGroup(nearInterval));
+        // }
+        // Sort by distance groups since the amount in a given distance group is less
+
+        
+
         foreach (EnemyControllerV2 enemy in aliveEnemies)
         {
-            agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
-            enemy.HandleState(agentArgs);
+           agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
+           enemy.HandleState(agentArgs);
         }
     }
-
     public void FixedUpdate()
     {
         // Only update if a player exists
@@ -873,6 +935,41 @@ public class AIManager : MonoBehaviour
             }
         }
     }
+    // public IEnumerator UpdateDistanceGroup(UpdateInterval group)
+    // {
+    //     if (group == nearInterval) { nearUpdating = true; }
+    //     if (group == regularInterval) { regularUpdating = true; }
+    //     if (group == farInterval) { farUpdating = true; }
+    //     Debug.Log("Updating: " + group.range);
+    //     foreach (EnemyControllerV2 agent in distanceGroups[group])
+    //     {
+    //         agentArgs.agent = agent;
+    //         agent.HandleState(agentArgs);
+    //         yield return null;
+    //     }
+    //     if (group == nearInterval) { nearUpdating = false; }
+    //     if (group == regularInterval) { regularUpdating = false; }
+    //     if (group == farInterval) { farUpdating = false; }
+    // }
+
+    // public IEnumerator FixedUpdateDistanceGroup(UpdateInterval group)
+    // {
+    //     if (group == nearInterval) { nearUpdating = true; }
+    //     if (group == regularInterval) { regularUpdating = true; }
+    //     if (group == farInterval) { farUpdating = true; }
+    //     foreach (EnemyControllerV2 agent in distanceGroups[group])
+    //     {
+    //         if (agent.State is IPhysicsState physicsState)
+    //         {
+    //             agentArgs.agent = agent;
+    //             physicsState.FixedAct(agentArgs);
+    //             yield return new WaitForFixedUpdate();
+    //         }
+    //     }
+    //     if (group == nearInterval) { nearUpdating = false; }
+    //     if (group == regularInterval) { regularUpdating = false; }
+    //     if (group == farInterval) { farUpdating = false; }
+    // }
 
     // Instead of calling HandleState, call each reason and act function on the AI
 
@@ -950,7 +1047,7 @@ public class AIManager : MonoBehaviour
             }
             if (canSpawn)
             {
-                if (currAmount <= 0)
+                if (numEnemies <= 0)
                 {
                     SpawnEnemies();
                 }

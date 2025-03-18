@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 
@@ -12,9 +11,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerAbilityHandler))]    // Abilities
 [RequireComponent(typeof(MouseTarget))]             // Hover Targetting
 [RequireComponent(typeof(PlayerAudio))]             // Audio Handling
-
-[RequireComponent(typeof(AudioSource))]             // Voice Source
-[RequireComponent(typeof(Animator))]                // Animations
 [RequireComponent(typeof(ProjectileSource))]        // Projectiles
 [RequireComponent(typeof(FootStepHandler))]         // Footsteps
 [RequireComponent(typeof(PlayerSlotSystem))]        // Slots
@@ -32,27 +28,31 @@ public class PlayerController : MonoBehaviour
     public PlayerStats Stats { get { return stats; } }
     public PlayerInput Input { get { return input; } }
     public PlayerMovement Movement { get { return movement; } }
-    public NavMeshAgent Agent { get { return agent; } }
+    //public NavMeshAgent Agent { get { return agent; } }
     public PlayerAbilityHandler AbilityHandler { get { return handler; } }
     public MouseTarget PlayerTarget { get { return playerTarget; } }
     public PlayerAudio AudioController { get { return audioController; } }
-    public AudioSource AudioSource { get { return audioSource; } }
+    public AudioSource VoiceSource { get { return voiceSource; } }
+    public AudioSource SFXSource { get { return sfxSource; } }
     public Animator Animator { get { return animator; } }
     public ProjectileSource ShootSource { get { return shootSource; } }
     public FootStepHandler FootSteps { get { return footSteps; } }
     public PlayerSlotSystem Slots { get { return slots; } }
+    public GameObject Body { get { return body; } }
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
-    NavMeshAgent agent;
     PlayerAbilityHandler handler;
     MouseTarget playerTarget;
     PlayerAudio audioController;
-    AudioSource audioSource;
-    Animator animator;
+    [SerializeField] AudioSource voiceSource;
+    [SerializeField] AudioSource sfxSource;
+    [SerializeField] Animator animator;
     ProjectileSource shootSource;
     FootStepHandler footSteps;
     PlayerSlotSystem slots;
+    
+    [SerializeField] GameObject body;
 
     [SerializeField] GameObject auraSource;
     #endregion
@@ -68,18 +68,13 @@ public class PlayerController : MonoBehaviour
             input = GetComponent<PlayerInput>();
         if (movement == null)
             movement = GetComponent<PlayerMovement>();
-        if (agent == null)
-            agent = GetComponent<NavMeshAgent>();
         if (handler == null)
             handler = GetComponent<PlayerAbilityHandler>();
         if (playerTarget == null)
             playerTarget = GetComponent<MouseTarget>();
         if (audioController == null)
             audioController = GetComponent<PlayerAudio>();
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-        if (animator == null)
-            animator = GetComponent<Animator>();
+
         if (shootSource == null)
             shootSource = GetComponent<ProjectileSource>();
         if (footSteps == null)
@@ -87,28 +82,37 @@ public class PlayerController : MonoBehaviour
         if (slots == null)
             slots = GetComponent<PlayerSlotSystem>();
 
+
+        if (animator == null)
+            Debug.LogWarning("[PlayerController]: Missing a reference to the ANIMATOR");
+
+        if (body == null)
+            Debug.LogWarning("[PlayerController]: Missing a reference to the PLAYER BODY");
+
+        // NOTE: audio sources are now assigne manually, notify if there is no source found
+        if (voiceSource == null)
+            Debug.LogWarning("[PlayerController]: Missing a reference to the VOICE AUDIO SOURCE");
+        if (sfxSource == null)
+            Debug.LogWarning("[PlayerController]: Missing a reference to the EFFECTS AUDIO SOURCE");
+
         //MapPlayerActions();
         //InitalizePlayer();
     }
 
-    //public void Start()
-    //{
-    //    InitalizePlayer();
-    //}
-
     public void EnablePlayer(bool shouldEnable)
     {
-        //stats.enabled = shouldEnable;
+        body.SetActive(shouldEnable);
         input.enabled = shouldEnable;
         movement.enabled = shouldEnable;
-        agent.enabled = shouldEnable;
         handler.enabled = shouldEnable;
         playerTarget.enabled = shouldEnable;
         audioController.enabled = shouldEnable;
-        audioSource.enabled = shouldEnable;
+        sfxSource.enabled = shouldEnable;
+        voiceSource.enabled = shouldEnable;
         animator.enabled = shouldEnable;
         shootSource.enabled = shouldEnable;
         footSteps.enabled = shouldEnable;
+        slots.enabled = shouldEnable;
     }
 
 
@@ -157,8 +161,6 @@ public class PlayerController : MonoBehaviour
             auraSource.SetActive(value);
         }
     }
-
-
     private void MapPlayerActions()
     {
         input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
@@ -167,7 +169,8 @@ public class PlayerController : MonoBehaviour
 
     private void UnmapPlayerActions()
     { 
-        
+        input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
+        input.actions["Potion2"].performed += context => { UsePotion(PotionTypes.MANA); };  // Map whichever potion
     }
 
     // Potion Usage

@@ -2858,6 +2858,7 @@ GameObject:
   - component: {fileID: 927512050665745881}
   - component: {fileID: 6802952366508969970}
   - component: {fileID: 601961247437104140}
+  - component: {fileID: 2928205891508022049}
   m_Layer: 7
   m_Name: GoX Enemy Orc2
   m_TagString: Enemy
@@ -2940,9 +2941,12 @@ MonoBehaviour:
   hurtbox: {fileID: 601961247437104140}
   hitbox: {fileID: 6111161216217004617}
   stats: {fileID: 760295845645426928}
+  rb: {fileID: 2928205891508022049}
   animator: {fileID: 516974999874407358}
   states: {fileID: 11400000, guid: eb6c16e886244204fbe3c031b7b0852a, type: 2}
   rotationSpeed: 180
+  canAttack: 0
+  canMove: 1
 --- !u!136 &6802952366508969970
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2979,6 +2983,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 760295845645426928}
+--- !u!54 &2928205891508022049
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8339188839789172028}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
 --- !u!1 &8353747348322271582
 GameObject:
   m_ObjectHideFlags: 0

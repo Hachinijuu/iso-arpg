@@ -7,8 +7,8 @@ public class AIRegen : AIState, ICoroutineState
 {
     [Header("Regen Value")]
     public float regenAmount = 20f;
-    float ICoroutineState.intervalTime { get {return regenInterval; } set { regenInterval = value; } }
     float regenInterval = 1.0f;
+    float ICoroutineState.intervalTime { get {return regenInterval; } set { regenInterval = value; } }
     public override void Reason(AgentStateArgs e)
     {
         //throw new System.NotImplementedException();

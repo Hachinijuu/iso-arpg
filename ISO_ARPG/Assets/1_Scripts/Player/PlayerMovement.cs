@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
     #region VARIABLES
@@ -19,16 +17,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject characterBody;  // This refers to the bones in this case
 
     // Classes
-    NavMeshAgent agent;
     PlayerInput input;
     PlayerStats stats;
-    Animator anim;
+    [SerializeField] Animator anim;
 
     // Public Accessors
     public Vector3 MoveTarget { get { return moveTarget; } }
     public bool CanMove { get { return canMove; } set { canMove = value; } }
     public bool CanRotate { get { return canRotate; } set { canRotate = value; } }
-    public float Speed { get { return Speed; } set { speed = value; } }
+    public float Speed { get { return speed; } set { speed = value; } }
 
     // Expose this property to allow movement to be driven externally (by mouse holding)
     public bool MoveHeld { get { return moveHeld; } set { moveHeld = value; } }
@@ -48,9 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // get the references on THIS object
-        agent = GetComponent<NavMeshAgent>();
         input = GetComponent<PlayerInput>();
-        anim = GetComponent<Animator>();
         stats = GetComponent<PlayerStats>();
 
         // map inputs
@@ -195,13 +190,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public float clickBuffer = 0.05f;
     void HandleClickToMove()
     {
         RaycastHit hit;
         // TODO: LIMIT RAY DISTANCE SO MORE COST EFFECTIVE
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, raycastLength, moveMask))
         {
-            moveTarget = hit.point;
+            // If the movetarget is TOO close the player, disregard it
+            if (Vector3.Distance(hit.point, transform.position) > clickBuffer)
+            {
+                moveTarget = hit.point;
+            }
         }
     }
 
@@ -210,8 +210,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 currPoint = transform.position;
         Vector2 moveAxis = input.actions["DirectionalMove"].ReadValue<Vector2>();
         // Offset the value by the speed
-        float h = moveAxis.x * agent.speed;   // horizontal movement
-        float v = moveAxis.y * agent.speed;   // vertical movement
+        float h = moveAxis.x; //* agent.speed;   // horizontal movement
+        float v = moveAxis.y; //* agent.speed;   // vertical movement
         // This needs to be relative to the camera positioning, such that the camera can be setup and the directional movement will work properly given all camera directions
 
 
@@ -239,25 +239,24 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
 
         // Current rotation (full transform)
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         //targetRotation.x = -90f;
         //Quaternion temp = characterBody.transform.rotation;
         //characterBody.transform.localRotation = Quaternion.Slerp(characterBody.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         //temp.rotation.y = Quaternion.LookRotation(lookDirection, Vector3.up).y;
 
         // ALTERNATE ROTATION -- rig body (requires y up mesh, so z is proper) -- would maintain relative world values for slot system
-        //characterBody.transform.rotation = Quaternion.Slerp(characterBody.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        characterBody.transform.rotation = Quaternion.Slerp(characterBody.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     void HandleMovement()
     {
-        Vector3 current = transform.position;
         Vector3 movement = Vector3.MoveTowards(transform.position, moveTarget, stats.MoveSpeed.Value * Time.deltaTime);
+        movement.y = 0;
         transform.position = movement;
 
-        float moved = Vector3.Distance(current, movement);
-        speed = moved / Time.deltaTime;
-        if (moved <= 0.1f)
+        speed = (transform.position - moveTarget).magnitude;    // Magnitude of the direction
+        if (speed <= 0.1f)
             speed = 0;
         if (speed > 0)
         {
@@ -267,7 +266,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void HandleStops(bool stop)
     {
-        agent.isStopped = stop;             // stop the agent in place
+        //agent.isStopped = stop;             // stop the agent in place
+        canMove = stop;
         moveTarget = transform.position;    // reset target to current point
     }
     #endregion

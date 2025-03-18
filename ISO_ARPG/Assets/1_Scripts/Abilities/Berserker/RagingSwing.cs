@@ -15,17 +15,17 @@ public class RagingSwing : StackAbility
     private int animId = Animator.StringToHash("Ability1");
     #endregion
     #region FUNCTIONALITY
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        anim = actor.GetComponent<Animator>();
-        audioSource = actor.GetComponent<AudioSource>();
-        stats = actor.GetComponent<PlayerStats>();
-        hitboxes = actor.GetComponentsInChildren<Hitbox>();
-        shootSource = actor.GetComponent<ProjectileSource>();
+        anim = e.Actor.Animator;
+        audioSource = e.Actor.SFXSource;
+        stats = e.Actor.Stats;
+        hitboxes = e.Actor.transform.GetComponentsInChildren<Hitbox>();
+        shootSource = e.Actor.ShootSource;
 
         shootSource.InitFirePositions();
     }
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         // Call calculator on the relevant hitboxes ... kind of messy in terms of how projectiles run and apply damage
         // Generate damage values and then pass to init?
@@ -98,7 +98,7 @@ public class RagingSwing : StackAbility
         //throw new System.NotImplementedException();
     }
 
-    public override void EndAbility(GameObject actor)
+    public override void EndAbility(AbilityEventArgs e)
     {
         SetDamageDetection(false);
     }

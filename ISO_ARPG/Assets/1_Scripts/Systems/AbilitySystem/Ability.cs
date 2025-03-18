@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AbilityEventArgs
 {
     public Ability Ability { get; private set; }
-    public GameObject Actor { get; private set; }
+    public PlayerController Actor { get; private set; }
 
     public AbilityEventArgs()
     {
@@ -18,7 +18,7 @@ public class AbilityEventArgs
         Ability = ability;
         Actor = null;
     }
-    public AbilityEventArgs(Ability ability, GameObject actor)
+    public AbilityEventArgs(Ability ability, PlayerController actor)
     {
         Ability = ability;
         Actor = actor;
@@ -72,23 +72,23 @@ public abstract class Ability : ScriptableObject
 
     #region FUNCTIONALITY
 
-    public virtual void InitAbility(Ability ab, GameObject actor)
+    public virtual void InitAbility(AbilityEventArgs e)
     {
         // Initialize the ability here, this is where GetComponents from derived abilites should be setup (called on character load)
     }
-    protected abstract void Fire(Ability ab, GameObject actor); // This function must be overriden by base classes, it should contain the actions / effects of the ability.
+    protected abstract void Fire(); // This function must be overriden by base classes, it should contain the actions / effects of the ability.
 
     // call this function in the input handler, if the user can use their ability it will be used, otherwise - output can't
-    public virtual void UseAbility(GameObject actor)            // the actor is WHO used the ability
+    public virtual void UseAbility(AbilityEventArgs e)            // the actor is WHO used the ability
     {
-        Fire(this, actor);
-        FireAbilityUsed(new AbilityEventArgs(this, actor));     // fire off the event with THIS ability, and the actor, allowing any listens to use this information
+        Fire();
+        FireAbilityUsed(e);     // fire off the event with THIS ability, and the actor, allowing any listens to use this information
     }
 
     // This function does not need to be overriden, but if/when - it can be used for ability cleanup or decaying effects.
-    public virtual void EndAbility(GameObject actor)
+    public virtual void EndAbility(AbilityEventArgs e)
     { 
-        FireAbilityEnded(new AbilityEventArgs(this, actor));
+        FireAbilityEnded(e);
     }
     // NO ARGS ENDING
     public virtual void EndAbility()

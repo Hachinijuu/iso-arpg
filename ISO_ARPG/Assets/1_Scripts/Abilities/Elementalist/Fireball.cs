@@ -12,14 +12,14 @@ public class Fireball : Ability
     float damage;
 
     private int animId = Animator.StringToHash("Ability1");
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        anim = actor.GetComponent<Animator>();
-        source = actor.GetComponent<AudioSource>();
-        stats = actor.GetComponent<PlayerStats>();
-        shootSource = actor.GetComponent<ProjectileSource>();
+        anim = e.Actor.Animator;
+        source = e.Actor.SFXSource;
+        stats = e.Actor.Stats;
+        shootSource = e.Actor.ShootSource;
     }
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         if (abilityActivated)
             source.PlayOneShot(abilityActivated);

@@ -18,6 +18,7 @@ public class PlayerSlotSystem : MonoBehaviour
     public void SetupSlots()
     {
         if (slots == null || slots.Count <= 0) { return; }
+        if (occupiedSlots != null) { return; }  // If the slot system has already been setup
         occupiedSlots = new Dictionary<Transform, EnemyControllerV2>();
         foreach (Transform pos in slots)
         {
@@ -28,15 +29,16 @@ public class PlayerSlotSystem : MonoBehaviour
 
     public void CleanupSlots()
     {
-        foreach(KeyValuePair<Transform, EnemyControllerV2> slots in occupiedSlots)
+        foreach(Transform pos in slots)
         {
-            occupiedSlots[transform] = null;
+            occupiedSlots[pos] = null;
         }
     }
     public void ReserveSlot(EnemyControllerV2 agent)    // If an agent fails to reserve a slot when they try, then do nothing
     {
         Debug.Log("trying to reserve a slot");
         Transform slot = GetNearestSlot(agent.transform);
+        if (slot == null) { return; }
         if (occupiedSlots.TryGetValue(slot, out EnemyControllerV2 found))
         {
             if (found == null)
@@ -70,8 +72,11 @@ public class PlayerSlotSystem : MonoBehaviour
                 if (occupiedSlots.TryGetValue(key, out EnemyControllerV2 slotAgent))
                 {
                     if (slotAgent == agent)
-                    occupiedSlots[key] = null;  // Remove the reference
-                    return; // return to end the loop early
+                    {
+                        Debug.Log("Matching agent");
+                        occupiedSlots[key] = null;  // Remove the reference
+                        return; // return to end the loop early
+                    }
                 }
             }
         }
@@ -121,7 +126,8 @@ public class PlayerSlotSystem : MonoBehaviour
         return null;
     }
 
-    private void OnDrawGizmosSelected() 
+    #if UNITY_EDITOR
+    private void OnDrawGizmos() 
     {
         if (occupiedSlots == null || occupiedSlots.Count <= 0 ) { return; }
         foreach (KeyValuePair<Transform, EnemyControllerV2> slot in occupiedSlots)
@@ -137,4 +143,5 @@ public class PlayerSlotSystem : MonoBehaviour
             Gizmos.DrawWireSphere(slot.Key.position, 0.25f);
         }
     }
+    #endif
 }

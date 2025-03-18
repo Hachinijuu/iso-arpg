@@ -25,5 +25,5 @@ public interface IPhysicsState
 // This interface adds interval time for coroutine based states, allow the state to be categorized easily
 public interface ICoroutineState
 {
-    public float intervalTime { get; set; }
+    public abstract float intervalTime { get; set; }
 }

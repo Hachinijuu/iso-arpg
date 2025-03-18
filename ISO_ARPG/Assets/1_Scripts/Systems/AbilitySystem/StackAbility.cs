@@ -15,10 +15,7 @@ public class StackAbility : Ability
 
     // Stack Stats defines WHICH stat type of stat will be incresed (movespeed,attackspeed,etc)
     // The value assigned to the stat is how much each stack will provide (i.e, 1 stack = 10 flat bonus, 2 stack = 20)
-    protected override void Fire(Ability ab, GameObject actor)
-    {
-        throw new System.NotImplementedException();
-    }
+    protected override void Fire() { throw new System.NotImplementedException(); }
 
 
     // Calculation will take the stackedStat's values, modify them, and return and UPDATED stat

@@ -19,19 +19,19 @@ public class HyperBarrage : ChannelAbility
 
     float damage;
     #endregion
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        anim = actor.GetComponent<Animator>();
-        audioSource = actor.GetComponent<AudioSource>();
-        stats = actor.GetComponent<PlayerStats>();
-        shootSource = actor.GetComponent<ProjectileSource>();
+        anim = e.Actor.Animator;
+        audioSource = e.Actor.SFXSource;
+        stats = e.Actor.Stats;
+        shootSource = e.Actor.ShootSource;
 
         if (stats.Projectiles.Value > 0)
         {
             shootSource.InitFirePositions((int)stats.Projectiles.Value);
         }
     }
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         if (abilityActivated)
             audioSource.PlayOneShot(abilityActivated);

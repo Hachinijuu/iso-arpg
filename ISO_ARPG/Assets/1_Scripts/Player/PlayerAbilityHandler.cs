@@ -7,6 +7,7 @@ public class PlayerAbilityHandler : MonoBehaviour
 {
     #region VARIABLES
     [SerializeField] bool showDebug = false;
+    PlayerController controller;
     PlayerStats stats;
     PlayerInput input;
     MouseTarget mouseTarget;
@@ -70,7 +71,9 @@ public class PlayerAbilityHandler : MonoBehaviour
     #endregion
     #region UNITY FUNCTIONS
     private void Awake()
-    {
+    {   
+        if (controller == null)
+            controller = GetComponent<PlayerController>();
         // ORDER MATTERS
         // Abilities must be initialized before mapping the inputs
         // This is because the functions that are mapped, respond to the types of abilities that are loaded.
@@ -119,7 +122,7 @@ public class PlayerAbilityHandler : MonoBehaviour
             // If you can't use the ability because it has been activated
             if (abilityUsage.Value == false)
             {
-                abilityUsage.Key.EndAbility(gameObject);  // Stop using the ability
+                abilityUsage.Key.EndAbility(new AbilityEventArgs(abilityUsage.Key, controller));  // Stop using the ability
             }
             // This will shrink the player if they have 
         }
@@ -149,10 +152,10 @@ public class PlayerAbilityHandler : MonoBehaviour
             foreach (Ability ab in stats.Abilities)
             {
                 canUseAbility.Add(ab, true);
-                ab.InitAbility(ab, gameObject);
+                ab.InitAbility(new AbilityEventArgs(ab, controller));
             }
             canUseAbility.Add(stats.Identity, true);
-            stats.Identity.InitAbility(stats.Identity, gameObject);
+            stats.Identity.InitAbility(new AbilityEventArgs(stats.Identity, controller));
         }
     }
     #region HELPER FUNCTIONS
@@ -223,7 +226,7 @@ public class PlayerAbilityHandler : MonoBehaviour
 
                 held = true;                    // Set value to keypressed (held)
                 stats.Mana.Value -= ab.Cost;    // Consume the cost of mana
-                ab.UseAbility(gameObject);      // Use the ability
+                ab.UseAbility(new AbilityEventArgs(ab, controller));      // Use the ability
 
                 // Set the ability to used
                 canUseAbility[ab] = false;
@@ -257,7 +260,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         if (ab != null)
         {
             held = false;                       // Key is not held anymore
-            ab.EndAbility(gameObject);          // Call the abilities' end
+            ab.EndAbility(new AbilityEventArgs(ab, controller));          // Call the abilities' end
             StopCoroutine("HandleHeld");        // Stop the handle held coroutine
             // ONLY start the cooldown if the ability CAN BE USED
             Debug.Log("Ended");
@@ -276,7 +279,7 @@ public class PlayerAbilityHandler : MonoBehaviour
             {
                 if (stats.ID_Bar.Value == stats.ID_Bar.MaxValue)                // Check if there is enough of the gauge built up
                 {
-                    ab.UseAbility(gameObject);          // Use the ability
+                    ab.UseAbility(new AbilityEventArgs(ab, controller));          // Use the ability
                     canUseAbility[ab] = false;          // Flag usage
                     stats.ID_Bar.Value -= ab.Cost;      // Consume gauge
                     StartCoroutine(HandlePassive(ab as PassiveAbility));
@@ -328,7 +331,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                 if (activeTime > used.ActiveTime)
                 {
                     canUseAbility[used] = true; // Time has elapsed
-                    used.EndAbility(gameObject);
+                    used.EndAbility(new AbilityEventArgs(used, controller));
                     if (showDebug) Debug.Log("[AbilityHandler]: " + used.Name + " ended");
                     break;                      // Exit the loop - coroutine finished
                 }

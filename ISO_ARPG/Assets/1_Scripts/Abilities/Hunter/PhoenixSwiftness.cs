@@ -14,10 +14,10 @@ public class PhoenixSwiftness : IdentityAbility
     PlayerStats defaultCopy;
     #endregion
     #region FUNCTIONALITY
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        stats = actor.GetComponent<PlayerStats>();
-        source = actor.GetComponent<AudioSource>();
+        stats = e.Actor.Stats;
+        source = e.Actor.SFXSource;
         //defaultCopy = new PlayerStats();
         if (asFusion)
         {
@@ -26,7 +26,7 @@ public class PhoenixSwiftness : IdentityAbility
     
     }
 
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         if (stats != null)
         {

@@ -9,6 +9,17 @@ public class FootStepHandler : MonoBehaviour
     public FootStepSounds[] steps;
     FloorMaterials currMaterial;
     public FootStepSounds currStep;
+    public AnimatorEventLink link;
+
+    public void OnEnable()
+    {
+        link.Stepped += PlayFootstep;
+    }
+
+    public void OnDisable()
+    {
+        link.Stepped -= PlayFootstep;
+    }
 
     public void SetMaterial(FloorMaterials toSet)
     {

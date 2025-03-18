@@ -234,14 +234,16 @@ public class PlayerStats : EntityStats
     public void SetFusion(IdentityAbility fusion)
     {
         // Instead of setting it like this, make a LOCAL copy so that it is persistent like the rest of the abilities
+        PlayerController controller = PlayerManager.Instance.currentPlayer;
         Debug.Log("[PlayerStats]: " + fusion.Name + " assigned to player, apply effects");
         ID_Fusion = Instantiate(fusion);    // Create a 'new' identity based on what the class has for game use
         ID_Fusion.asFusion = true;
-        ID_Fusion.InitAbility(ID_Fusion, gameObject);
-        ID_Fusion.UseAbility(gameObject);
+        AbilityEventArgs args = new AbilityEventArgs(ID_Fusion, controller);
+        ID_Fusion.InitAbility(args);
+        ID_Fusion.UseAbility(args);
         foreach (Ability ab in Abilities)
         {
-            ab.InitAbility(ab, gameObject);
+            ab.InitAbility(args);
         }
         Debug.Log("[PlayerStats]: Finished setting up " + fusion.Name);
         //ID_Fusion.asFusion = true;

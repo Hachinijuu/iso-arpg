@@ -8,10 +8,10 @@ public class SalamanderGift : IdentityAbility
     PlayerStats stats;
 
     public float manaMultipler = 2.0f;
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        stats = actor.GetComponent<PlayerStats>();
-        source = actor.GetComponent<AudioSource>();
+        stats = e.Actor.Stats;
+        source = e.Actor.SFXSource;
 
         //defaultCopy = new PlayerStats();
         if (asFusion)
@@ -20,7 +20,7 @@ public class SalamanderGift : IdentityAbility
         }
     }
 
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         if (abilityActivated)
             source.PlayOneShot(abilityActivated);

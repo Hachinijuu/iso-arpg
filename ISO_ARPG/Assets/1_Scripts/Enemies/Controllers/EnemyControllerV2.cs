@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Unity.VisualScripting;
-using System;
 
 public class EnemyControllerV2 : MonoBehaviour
 {
@@ -13,8 +11,8 @@ public class EnemyControllerV2 : MonoBehaviour
     //public static float agentSpacing = 1.5f;    // The space to shift agents
     public LayerMask agentLayer;
     public LayerMask avoidLayer;
-    public static float avoidDistance = 1.5f;
-    public static float avoidSpacing = 3.0f;
+    public static float avoidDistance = 5.0f;
+    public static float avoidSpacing = 7.5f;
     public static float stopDistance = 0.5f;
     public Hurtbox Hurtbox { get { return hurtbox; } }
     [SerializeField] private Hurtbox hurtbox;
@@ -23,8 +21,8 @@ public class EnemyControllerV2 : MonoBehaviour
     [SerializeField] private Hitbox hitbox;
 
     public EntityStats stats;
-    // public Rigidbody Body { get { return rb; } }
-    // [SerializeField] Rigidbody rb;
+    public Rigidbody Body { get { return rb; } }
+    [SerializeField] Rigidbody rb;
 
     public Animator Animator { get { return animator; } }
     [SerializeField] Animator animator;
@@ -47,6 +45,12 @@ public class EnemyControllerV2 : MonoBehaviour
     public float CurrentSpeed { get { return currSpeed; } } 
 
     public float rotationSpeed = 20.0f;
+
+    //public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
+    public bool canAttack = true;
+
+    private static string moveAnimation = "Speed";
+    private int moveId = Animator.StringToHash(moveAnimation);
 
     #region Initalization
     private void Start()
@@ -96,8 +100,15 @@ public class EnemyControllerV2 : MonoBehaviour
     {
         // Unregister from the list
         AIManager.Instance.UnregisterFromList(this);
-        AIManager.Instance.UpdateDeathNumbers();        // Unregister from the AI List
+        AIManager.Instance.UpdateDeathNumbers(this);        // Unregister from the AI List
         DropSystem.Instance.UnregisterEnemyDrop(stats); // Unregister from the drop system
+        
+        // Check for owned slots
+        PlayerSlotSystem slotSystem = PlayerManager.Instance.currentPlayer.Slots;
+        if (slotSystem != null && slotSystem.CheckHasSlot(this))
+        {
+            slotSystem.UnreserveSlot(this);
+        }
         gameObject.SetActive(false);    // Disable the agent
     }
     #endregion
@@ -143,6 +154,7 @@ public class EnemyControllerV2 : MonoBehaviour
         }
     }
 
+    public bool ActRunning { get { return actRunning; } }
     bool actRunning = false;
     public void HandleState(AgentStateArgs e)
     {
@@ -180,16 +192,29 @@ public class EnemyControllerV2 : MonoBehaviour
         if (currState is ICoroutineState state)
         {
             actRunning = true;
-            yield return new WaitForSeconds(state.intervalTime);    // Countdown time
             currState.Act(e);   // Do the action
+            yield return new WaitForSeconds(state.intervalTime);    // Countdown time
             // Then set coroutine to null, to cancel out the usage
-
-            actRunning = false;
+            actRunning = false; // Then set to false to allow reusage
             //if (cycleComplete)
             //{
             //    currState.Act(e);
             //}
         }
+    }
+
+    IEnumerator AttackCoroutine(float duration)
+    {
+        // When an attack is performed, wait for time before allowing other attacks to happen
+        canAttack = false;
+        yield return new WaitForSeconds(duration);
+        canAttack = true;
+    }
+
+    public void Attack(float duration)
+    {
+        if (canAttack)
+            StartCoroutine(AttackCoroutine(duration));
     }
     #endregion
     #region Movement
@@ -232,7 +257,7 @@ public class EnemyControllerV2 : MonoBehaviour
         if (Physics.Raycast(transform.position, forward, out hit, avoidDistance, avoidLayer))
         {
             // If there is something to avoid in FRONT of me
-            steer += (transform.position - hit.transform.position);
+            steer += (transform.position - hit.transform.position) / 4; // Reduce the strength, prefer side
             //return steer.normalized;
         }
         if (Physics.Raycast(transform.position, left, out hit, avoidDistance, avoidLayer))
@@ -245,17 +270,27 @@ public class EnemyControllerV2 : MonoBehaviour
             steer += (transform.position - hit.transform.position);
             //return steer.normalized;
         }
-        return steer.normalized;
+        return steer.normalized * steerPower;
     }
-    float speedShift = 0.5f;    // 0.5 * 0 = 0
+    float steerPower = 5.0f;
+    float speedShift = 0.25f;    // 0.5 * 0 = 0
+    float minSpeed = 0.05f;
     float currSpeed;
     public bool canMove = true;
+    Vector3 debugTarget;
+
+    public void AnimateAgentMove()
+    {
+        currSpeed = rb.velocity.magnitude;
+        animator.SetFloat(moveId, currSpeed);
+    }
     public void MoveAgent(Vector3 target)
     {
         if (target == null) { return; }
         if (!canMove) { currSpeed = 0; return; }
         // When moving the agent, we need to avoid other agents if possible (for nicer control)
         // Therefore, how can spacing be handled nicely?
+        debugTarget = target;
         Vector3 current = transform.position;
         Vector3 avoid = AvoidOthers();
         avoid.y = 0;
@@ -263,17 +298,30 @@ public class EnemyControllerV2 : MonoBehaviour
 
         //if (CheckStop()) { return; } // If I SHOULD stop
         // If you cannot get to your target without intersecting an existing agent, stop.
-        Vector3 movement = Vector3.MoveTowards(transform.position, offset, (stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) * Time.deltaTime);
+        Vector3 movement = Vector3.MoveTowards(transform.position, offset, ((stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) + minSpeed) * Time.deltaTime);
         movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
-        transform.position = movement;
+        
+        rb.MovePosition(movement);
+        //transform.position = movement;
 
-        float moved = Vector3.Distance(current, movement);
-        currSpeed = moved / Time.deltaTime;
-        if (moved <= 0.1f)
-            currSpeed = 0;
+        // float moved = Vector3.Distance(current, movement);
+        // currSpeed = moved / Time.deltaTime;
+        // animator.SetFloat(moveId, currSpeed);
+        // if (currSpeed <= 0.1f)
+        //     currSpeed = 0;
         //HandleRotation(target); // Call handle rotation externally, so that positioning is proper
         //rb.MovePosition(movement);
         //transform.position = movement;
+    }
+
+    public void MoveAgentNoAvoidance(Vector3 target)
+    {
+        if (target == null) { return; }
+        if (!canMove) { currSpeed = 0; return; }
+        Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
+        movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
+        
+        rb.MovePosition(movement);
     }
 
     public void MoveAgent(Transform target)
@@ -285,10 +333,13 @@ public class EnemyControllerV2 : MonoBehaviour
     {
         // Apply the look
         Quaternion targetRotation = Quaternion.LookRotation(direction - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Quaternion look = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        rb.MoveRotation(look);
     }
     #endregion
 
+    #if UNITY_EDITOR
     public void OnDrawGizmos()
     {
         GUIStyle style = new GUIStyle(GUI.skin.label);
@@ -297,5 +348,12 @@ public class EnemyControllerV2 : MonoBehaviour
         textPos.y = 2.5f;
         Handles.Label(textPos, "State: " + currStateId, style);
         Debug.DrawRay(transform.position, transform.forward * avoidDistance);
+
+        Vector3 avoid = AvoidOthers();
+        avoid.y = 0;
+        Vector3 offset = debugTarget + (avoid * avoidSpacing);
+        Debug.DrawRay(transform.position, (offset - transform.position) * Vector3.Distance(transform.position, offset), Color.green);
+        Debug.DrawRay(transform.position, (debugTarget - transform.position) * Vector3.Distance(transform.position, debugTarget), Color.blue);
     }
+    #endif
 }

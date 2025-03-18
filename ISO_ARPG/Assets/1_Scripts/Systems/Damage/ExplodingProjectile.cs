@@ -13,7 +13,7 @@ public class ExplodingProjectile : Projectile
 
         // hit is whoever was hit by the attack
         // build a physics collider around the hit target to get the subsequent targets to apply damage to
-        Debug.Log("[Damage]: Searching for chain targets");
+        Debug.Log("[Damage]: Searching for explosion hit targets");
         Collider[] explosionHit = Physics.OverlapSphere(transform.position, explosionRadius, detectionLayer);
 
         if (explosionHit.Length > 0 && explosionHit != null)

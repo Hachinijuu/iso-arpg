@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DeathSpin", menuName = "sykcorSystems/Abilities/Berserker/DeathSpin", order = 4)]
@@ -21,16 +22,16 @@ public class DeathSpin : ChannelAbility
 
     #endregion
     #region FUNCTIONALITY
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        anim = actor.GetComponent<Animator>();
-        source = actor.GetComponent<AudioSource>();
-        hitboxes = actor.GetComponentsInChildren<Hitbox>();
-        stats = actor.GetComponent<PlayerStats>();
-        move = actor.GetComponent<PlayerMovement>();
-        shootSource = actor.GetComponent<ProjectileSource>();
+        anim = e.Actor.Animator;
+        source = e.Actor.SFXSource;
+        hitboxes = e.Actor.GetComponentsInChildren<Hitbox>();
+        stats = e.Actor.Stats;
+        move = e.Actor.Movement;
+        shootSource = e.Actor.ShootSource;
     }
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert);
         anim.SetBool(abilAnimID, true);
@@ -57,7 +58,7 @@ public class DeathSpin : ChannelAbility
         move.UseAnimations = false;     // Stop the move animations from being used (override with spin)
         move.CanRotate = false;         // Stop player rotation
     }
-    public override void EndAbility(GameObject actor)
+    public override void EndAbility(AbilityEventArgs e)
     {
         anim.SetBool(abilAnimID, false);
         SetDamageDetection(false);
@@ -72,7 +73,7 @@ public class DeathSpin : ChannelAbility
         move.UseAnimations = true;
         move.CanRotate = true;
 
-        base.EndAbility(actor);
+        base.EndAbility(e);
     }
 
     public override void OnTick()

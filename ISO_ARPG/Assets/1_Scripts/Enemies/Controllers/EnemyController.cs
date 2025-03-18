@@ -66,7 +66,7 @@ public class EnemyController : AdvancedFSM
         }
         if (AIManager.Instance != null)
         {
-            stats.OnDied += context => { AIManager.Instance.UpdateDeathNumbers(); };
+            //stats.OnDied += context => { AIManager.Instance.UpdateDeathNumbers(); };
         }
     }
 

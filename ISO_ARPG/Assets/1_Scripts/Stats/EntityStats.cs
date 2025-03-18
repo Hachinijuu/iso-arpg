@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT }
+public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT, ELITE }
 
 public class EntityStats : MonoBehaviour
 {

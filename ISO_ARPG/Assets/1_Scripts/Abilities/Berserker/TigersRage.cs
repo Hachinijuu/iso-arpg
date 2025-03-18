@@ -22,11 +22,11 @@ public class TigersRage : IdentityAbility
 
     #endregion
     #region FUNCTIONALITY
-    public override void InitAbility(Ability ab, GameObject actor)
+    public override void InitAbility(AbilityEventArgs e)
     {
-        stats = actor.GetComponent<PlayerStats>();
-        source = actor.GetComponent<AudioSource>();
-        controller = actor.GetComponent<PlayerController>();
+        controller = e.Actor;
+        stats = controller.Stats;
+        source = controller.SFXSource;
 
         defaultCopy = stats;
 
@@ -35,14 +35,14 @@ public class TigersRage : IdentityAbility
             // stop the ability from being timed out, reduce the stat buff values to be expected amounts
         }
     }
-    protected override void Fire(Ability ab, GameObject actor)
+    protected override void Fire()
     {
         // When this is fired, apply the effects / bonuses for the passive ability, call end once duration has passed.
         //Debug.Log("fired");
         if (stats != null)
         {
-            defaultScale = actor.transform.localScale;      // cache the scale
-            actor.transform.localScale *= scaleFactor;      // resize the character
+            defaultScale = controller.transform.localScale;      // cache the scale
+            controller.transform.localScale *= scaleFactor;      // resize the character
 
             defaultCopy.CopyFromStats(stats);
 
@@ -62,12 +62,12 @@ public class TigersRage : IdentityAbility
         //throw new System.NotImplementedException();
     }
 
-    public override void EndAbility(GameObject actor)
+    public override void EndAbility(AbilityEventArgs e)
     {
         if (stats != null)
         {
             Debug.Log("Reset Values");
-            actor.transform.localScale = defaultScale;              // Return the character to normal size
+            controller.transform.localScale = defaultScale;              // Return the character to normal size
 
             controller.SetAura(false);
 
@@ -82,7 +82,7 @@ public class TigersRage : IdentityAbility
         }
 
         // Don't forget to call end ability to send event out
-        base.EndAbility(actor);
+        base.EndAbility(e);
     }
     #endregion
 }

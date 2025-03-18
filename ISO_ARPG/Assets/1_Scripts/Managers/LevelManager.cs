@@ -196,6 +196,7 @@ public class LevelManager : MonoBehaviour
 
     public bool showGrid = false;
     #region DEBUG
+    #if UNITY_EDITOR
     void OnDrawGizmos()
     {
         GUIStyle style = new GUIStyle(GUI.skin.label);
@@ -242,6 +243,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+    #endif
     #endregion
 
     // Instead, level manager will have a prebuilt grid, and will only contain the cells to reference
