@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class DebugMenu : MonoBehaviour
 {
+    // This object is shutoff, figure out what's shutting it off
     private static DebugMenu instance;
     public static DebugMenu Instance
     {
@@ -80,19 +81,36 @@ public class DebugMenu : MonoBehaviour
         levelDropdown.value = (int)GameManager.Instance.level;
     }
 
-    [SerializeField] Hurtbox[] playerHurtbox;
+    [SerializeField] List<Hurtbox> playerHurtbox;
 
     public void HandleHurtboxes()
     {
-        if (playerHurtbox != null && playerHurtbox.Length> 0)
+        //if (playerHurtbox == null || playerHurtbox.Count <= 0)
+        //{
+        //    // Look for the hurtboxes from the Player Manager
+        //    if (PlayerManager.Instance != null)
+        //    {
+        //        foreach (CharacterPair pair in PlayerManager.Instance.characters)
+        //        { 
+        //            playerHurtbox.Add(pair.Character.GetComponent<Hurtbox>());
+        //        }
+        //    }
+        //}
+
+        if (playerHurtbox != null && playerHurtbox.Count > 0)
         {
-            foreach (Hurtbox hb in playerHurtbox)
+            for (int i = 0; i < playerHurtbox.Count; i++)
             {
+                Hurtbox hb = playerHurtbox[i];
+                if (hb == null)
+                {
+                    hb = PlayerManager.Instance.characters[i].Character.GetComponent<Hurtbox>();
+                }
+
                 if (hb.gameObject.transform.parent.gameObject.activeInHierarchy)
                 {
                     hb.gameObject.SetActive(takeDamage);
                 }
-                // If you want to take damage, enable the hurtbox, otherwise do not
             }
         }
     }

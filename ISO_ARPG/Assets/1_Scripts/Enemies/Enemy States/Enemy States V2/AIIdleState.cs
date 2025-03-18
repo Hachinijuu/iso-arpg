@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 [CreateAssetMenu(fileName = "Idle", menuName = "sykcorSystems/AI/States/Idle", order = 0)]
-public class AIIdleState : AIState
+public class AIIdleState : AIState, IPhysicsState
 {
     // In the idle state, do not do much, mayble play animations, mostly decision making to check if the player is in range
 
     // Since this is a scriptable object, the range to transition can be defined, or just simply listed in the AI Manager.
     // Having the definition here might be better
-    [SerializeField] int ChaseRange;
+    [SerializeField] float maxRoam = 0.5f;
+    [SerializeField] float minRoam = 0.25f;
 
     public override void Reason(AgentStateArgs e)
     {
@@ -28,5 +30,29 @@ public class AIIdleState : AIState
     public override void Act(AgentStateArgs e)
     {
         //Debug.Log("Idling");
+        if (e.agent != null)
+        {
+            e.agent.AnimateAgentMove();
+        }
+
+    }
+
+    void IPhysicsState.FixedAct(AgentStateArgs e)
+    {
+        // Shift away from agent and then stop
+
+        // Space out and wander
+        // Small deviation from current position
+
+        if (e.agent == null) { return; }
+        EnemyControllerV2 agent = e.agent;
+        int randPoint = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
+        float offset = Random.Range(minRoam, maxRoam);
+        Vector3 target = agent.transform.position;
+        target.x += (CircleUtility.CircleListInstance[randPoint].x * offset);
+        target.z += (CircleUtility.CircleListInstance[randPoint].z * offset);
+
+        // Move the agent to the target
+        agent.MoveAgent(target);
     }
 }
