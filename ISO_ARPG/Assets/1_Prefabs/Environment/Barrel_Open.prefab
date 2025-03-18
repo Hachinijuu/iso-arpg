@@ -70,10 +70,34 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: db72faccd8530c149a871466d5552745, type: 2}
     - target: {fileID: 919132149155446097, guid: 300cd9d13e5744e4d971fb90c30d4aa3, type: 3}
       propertyPath: m_Name
-      value: GOX_Props_Barrel_Open
+      value: Barrel_Open
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 300cd9d13e5744e4d971fb90c30d4aa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5771054340776315845}
   m_SourcePrefab: {fileID: 100100000, guid: 300cd9d13e5744e4d971fb90c30d4aa3, type: 3}
+--- !u!1 &696311003499413133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 300cd9d13e5744e4d971fb90c30d4aa3, type: 3}
+  m_PrefabInstance: {fileID: 389740565694645212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &-5771054340776315845
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696311003499413133}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 35.029003, y: 29.476002, z: 35.029003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 35}
+  m_TimeToStationary: 0.5
