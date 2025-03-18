@@ -76,13 +76,14 @@ public class AIMeleeAttack : AIState, IPhysicsState//, ICoroutineState
         Vector3 playerPos = e.player.transform.position;
         distance = Vector3.Distance(agent.transform.position, playerPos);
         // If the agent is close enough to attack, perform the attack and then wait for the interval time
-        if (distance <= attackRange && agent.canAttack)
+        if (agent.canAttack)
         {
-            agent.Attack(attackCooldown);   // This will disable attacks, and re-enable attacks after the time has passed
-            agent.canMove = false;
-            agent.Animator.SetTrigger(animId);
-            agent.Hitbox.AllowDamageForTime(hitboxUptime);
+            agent.Attack();
         }
+        // if (distance <= attackRange && agent.canAttack)
+        // {
+        //     agent.Attack(); // Perform the attack
+        // }
 
         // When performing an attack, stop moving
 
@@ -104,40 +105,45 @@ public class AIMeleeAttack : AIState, IPhysicsState//, ICoroutineState
 
         Vector3 playerPos = e.player.transform.position;
 
+        // Move the agent into attack range
+        agent.canMove = true;
+        agent.MoveAgent(playerPos);
+        agent.HandleRotation(playerPos);
+
         // If the agent cannot perform the attack, because it is on cooldown (EnemyController coroutine)
-        if (player.Movement.Speed <= 0) // If the player is not moving, do the fancy circling
-        {
-            if (!agent.canAttack)
-            {
-                // Move the agent out of the attack range (move them to the slot)
-                if (slotSystem.CheckHasSlot(agent))     // If the agent has a slot
-                {
-                    // Move to the slot
-                    Transform slot = slotSystem.GetSlot(agent);
-                    float slotDistance = Vector3.Distance(slot.position, agent.transform.position);
-                    if (slotDistance > 0.25f)
-                    {
-                        agent.canMove = true;
-                        agent.MoveAgentNoAvoidance(slot.position);
-                        agent.HandleRotation(playerPos);
-                    }
-                }
-                else
-                {
-                    // The agent does not have a slot, reserve a slot for usage
-                    slotSystem.ReserveSlot(agent);
-                    // Possibly play animation or wander around because there is no attack position (not actively attacking)
-                }
-            }
-        }
-        // Agent is moving, chase after
-        else
-        {
-            // Move the agent into attack range
-            agent.canMove = true;
-            agent.MoveAgent(playerPos);
-            agent.HandleRotation(playerPos);
-        }
+        // if (player.Movement.Speed <= 0) // If the player is not moving, do the fancy circling
+        // {
+        //     if (!agent.canAttack)
+        //     {
+        //         // Move the agent out of the attack range (move them to the slot)
+        //         if (slotSystem.CheckHasSlot(agent))     // If the agent has a slot
+        //         {
+        //             // Move to the slot
+        //             Transform slot = slotSystem.GetSlot(agent);
+        //             float slotDistance = Vector3.Distance(slot.position, agent.transform.position);
+        //             if (slotDistance > 0.25f)
+        //             {
+        //                 agent.canMove = true;
+        //                 agent.MoveAgentNoAvoidance(slot.position);
+        //                 agent.HandleRotation(playerPos);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             // The agent does not have a slot, reserve a slot for usage
+        //             slotSystem.ReserveSlot(agent);
+        //             // Possibly play animation or wander around because there is no attack position (not actively attacking)
+        //         }
+        //     }
+        // }
+        // // Agent is moving, chase after
+        // else
+        // {
+        //     // Move the agent into attack range
+        //     agent.canMove = true;
+        //     agent.MoveAgent(playerPos);
+        //     agent.HandleRotation(playerPos);
+        // }
 
         // If the attack is on cooldown (because of act running)
         // if (agent.ActRunning)

@@ -47,8 +47,6 @@ public class EnemyControllerV2 : MonoBehaviour
     public float rotationSpeed = 20.0f;
 
     //public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
-    public bool canAttack = true;
-
     private static string moveAnimation = "Speed";
     private int moveId = Animator.StringToHash(moveAnimation);
 
@@ -203,19 +201,37 @@ public class EnemyControllerV2 : MonoBehaviour
         }
     }
 
-    IEnumerator AttackCoroutine(float duration)
+    [Header("Attack Parameters")]
+    public float hitboxUptime = 0.5f;
+    public float attackRange = 1.0f;
+    public float attackCooldown = 1.5f;
+    public bool canAttack = true;
+    //float ICoroutineState.intervalTime { get { return attackCooldown; } set { attackCooldown = value; } }
+
+    [Header("Animations")]
+    private static string AttackTrigger = "Attack";
+    private int animId = Animator.StringToHash(AttackTrigger);
+    public virtual void Attack()
     {
-        // When an attack is performed, wait for time before allowing other attacks to happen
-        canAttack = false;
-        yield return new WaitForSeconds(duration);
+        if (canAttack)
+        {
+            // Perform the attack (play the animation)
+            canAttack = false;
+            animator.SetTrigger(animId);
+            Debug.Log("Performed Attack");
+            hitbox.HandleHit();
+            //hitbox.AllowDamageForTime(hitboxUptime);
+            Invoke(nameof(ResetAttack), attackCooldown);
+        }
+        // Default attack is 
+    }
+
+    private void ResetAttack()
+    {
         canAttack = true;
     }
 
-    public void Attack(float duration)
-    {
-        if (canAttack)
-            StartCoroutine(AttackCoroutine(duration));
-    }
+    // Elite will derive from this controller, states will check for elite to perform ranged attack override instead of calling attack
     #endregion
     #region Movement
     // There are different move functions
@@ -290,18 +306,20 @@ public class EnemyControllerV2 : MonoBehaviour
         if (!canMove) { currSpeed = 0; return; }
         // When moving the agent, we need to avoid other agents if possible (for nicer control)
         // Therefore, how can spacing be handled nicely?
-        debugTarget = target;
-        Vector3 current = transform.position;
-        Vector3 avoid = AvoidOthers();
-        avoid.y = 0;
-        Vector3 offset = target + (avoid * avoidSpacing);
-
-        //if (CheckStop()) { return; } // If I SHOULD stop
-        // If you cannot get to your target without intersecting an existing agent, stop.
-        Vector3 movement = Vector3.MoveTowards(transform.position, offset, ((stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) + minSpeed) * Time.deltaTime);
-        movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
+        //debugTarget = target;
+        //Vector3 current = transform.position;
+        //Vector3 avoid = AvoidOthers();
+        //avoid.y = 0;
+        //Vector3 offset = target + (avoid * avoidSpacing);
+//
+        ////if (CheckStop()) { return; } // If I SHOULD stop
+        //// If you cannot get to your target without intersecting an existing agent, stop.
+        //Vector3 movement = Vector3.MoveTowards(transform.position, offset, ((stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) + minSpeed) * Time.deltaTime);
+        //movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
         
-        rb.MovePosition(movement);
+        Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
+        transform.position = movement;
+        //rb.MovePosition(movement);
         //transform.position = movement;
 
         // float moved = Vector3.Distance(current, movement);
@@ -321,7 +339,8 @@ public class EnemyControllerV2 : MonoBehaviour
         Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
         movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
         
-        rb.MovePosition(movement);
+        transform.position = movement;
+        //rb.MovePosition(movement);
     }
 
     public void MoveAgent(Transform target)
@@ -334,8 +353,9 @@ public class EnemyControllerV2 : MonoBehaviour
         // Apply the look
         Quaternion targetRotation = Quaternion.LookRotation(direction - transform.position);
         Quaternion look = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        rb.MoveRotation(look);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        
+        //rb.MoveRotation(look);
     }
     #endregion
 

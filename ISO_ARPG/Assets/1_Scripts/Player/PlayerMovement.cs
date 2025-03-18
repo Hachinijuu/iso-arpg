@@ -52,8 +52,8 @@ public class PlayerMovement : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         agent = GetComponent<NavMeshAgent>();
 
-        agent.updatePosition = false;
-        agent.updateRotation = false;
+        //agent.updatePosition = false;
+        //agent.updateRotation = false;
         // map inputs
         //MapMovementActions();
     }

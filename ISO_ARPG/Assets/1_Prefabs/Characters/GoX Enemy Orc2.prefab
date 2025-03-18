@@ -2859,6 +2859,7 @@ GameObject:
   - component: {fileID: 6802952366508969970}
   - component: {fileID: 601961247437104140}
   - component: {fileID: 2928205891508022049}
+  - component: {fileID: 6569224253712974198}
   m_Layer: 7
   m_Name: GoX Enemy Orc2
   m_TagString: Enemy
@@ -2945,7 +2946,10 @@ MonoBehaviour:
   animator: {fileID: 516974999874407358}
   states: {fileID: 11400000, guid: eb6c16e886244204fbe3c031b7b0852a, type: 2}
   rotationSpeed: 180
-  canAttack: 0
+  hitboxUptime: 0.5
+  attackRange: 1
+  attackCooldown: 2.5
+  canAttack: 1
   canMove: 1
 --- !u!136 &6802952366508969970
 CapsuleCollider:
@@ -3010,6 +3014,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!195 &6569224253712974198
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8339188839789172028}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 0
+  m_Acceleration: 0
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 0
+  m_AutoRepath: 0
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 0
 --- !u!1 &8353747348322271582
 GameObject:
   m_ObjectHideFlags: 0

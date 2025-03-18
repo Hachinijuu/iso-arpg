@@ -86,7 +86,7 @@ public class AIManager : MonoBehaviour
     // Reorganize / cleanup this class once all functionality is at expected level
     // It is VERY messy.
     public static float CHASE_RANGE = 20.0f;
-    public static float MELEE_RANGE = 5.0f;
+    public static float MELEE_RANGE = 5.5f;
     public static float RANGED_RANGE = 12.5f;
 
     public List<StateContainer> enemyStates; 
