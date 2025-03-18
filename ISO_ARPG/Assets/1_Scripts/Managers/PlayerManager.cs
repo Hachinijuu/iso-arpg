@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GoX_Class {NONE, BERSERKER, HUNTER, ELEMENTALIST}
+public enum GoX_Class { NONE, BERSERKER, HUNTER, ELEMENTALIST }
 
 [System.Serializable]
 public struct CharacterPair
@@ -39,7 +38,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (instance == null)
                 instance = FindObjectOfType<PlayerManager>();
-            
+
             if (!instance)
                 Debug.LogError("[PlayerManager]: No Player Manager exists!");
 
