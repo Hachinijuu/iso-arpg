@@ -32,6 +32,10 @@ public class Hitbox : MonoBehaviour
     private void FireDamageDealt(DamageArgs e) { if (onDamageDealt != null) onDamageDealt(e); }
     #endregion
     #region UNITY FUNCTIONS
+    void Start()
+    {
+        InitHitbox();
+    }
 
     // Should the hitbox get a reference to the player, or be passed a reference to the relevant values when loaded --> pass a reference and then it set's it's own information
     public void SetDamage(float damage)
@@ -43,6 +47,13 @@ public class Hitbox : MonoBehaviour
     #region FUNCTIONALITY
 
     // Call this function when we need to check for hits
+    public void InitHitbox()
+    {
+        if (stats != null)
+        {
+            damage = stats.Damage.Value;
+        }
+    }
     public void HandleHits()
     {
         if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
@@ -62,15 +73,32 @@ public class Hitbox : MonoBehaviour
     {
         if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
+        //Debug.Log(hitColliders.Length);
         foreach (Collider hit in hitColliders)
         {
+            Debug.Log(hit.transform.name);
             Hurtbox hb = hit.GetComponent<Hurtbox>();
             if (hb != null)
             {
+                //Debug.Log("Handling Collision");
                 HandleCollision(hb);
+                applyDamage = false;    // Stop allowing damage to pass through
                 return; // Early return for only single hit detection
             }
         }
+    }
+
+    public void Attack()
+    {
+        applyDamage = true;
+        HandleHit();
+        applyDamage = false;
+    }
+
+    public void AttackForTime(float duration)
+    {
+        applyDamage = true;
+        AllowDamageForTime(duration);
     }
     protected virtual void HandleCollision(Hurtbox hb)
     {
@@ -101,6 +129,7 @@ public class Hitbox : MonoBehaviour
     public void AllowDamageForTime(float window)
     {
         //Debug.Log("I want to allow damage for: " + window);
+        //Debug.Log("Got into damage");
         StopAllCoroutines();
         StartCoroutine(HitWindow());            // This will detect the hits
         StartCoroutine(DamageWindow(window));   // This will determine how long the hits are allowed

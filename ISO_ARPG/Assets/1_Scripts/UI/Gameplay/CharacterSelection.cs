@@ -54,32 +54,56 @@ public class CharacterSelection : MonoBehaviour
 
     //     ShowCharacterSelection(false);
     // }
+
+    public GameObject[] characters;
+    public AudioClip[] clips;
+    public AudioSource source;
+
+    public void SetGhostCharacter()
+    {
+        characters[(int)currentClass].SetActive(true);
+        source.clip = clips[(int)currentClass];
+        source.Play();
+    }
     public void BerserkerClicked()
     {
         currentClass = GoX_Class.BERSERKER;
         PlayerManager.Instance.SetPlayer(currentClass);
         // Change the UI to display berserker information
         if (!debugSelection)
+        {
+            SetGhostCharacter();
             characterInfo.LoadFromClass(PlayerManager.Instance.currentPlayer.Stats.Class);
+        }
     }
     public void HunterClicked()
     {
         currentClass = GoX_Class.HUNTER;
         PlayerManager.Instance.SetPlayer(currentClass);
+        SetGhostCharacter();
+
         // Change the UI to display hunter information
         //ClassClicked(GoX_Class.HUNTER);
         if (!debugSelection)
+        {
+            SetGhostCharacter();
             characterInfo.LoadFromClass(PlayerManager.Instance.currentPlayer.Stats.Class);
+        }
     }
 
     public void ElementalistClicked()
     {
         currentClass = GoX_Class.ELEMENTALIST;
         PlayerManager.Instance.SetPlayer(currentClass);
+        SetGhostCharacter();
+
         // Change the UI to display elementalist information
         //ClassClicked(GoX_Class.ELEMENTALIST);
         if (!debugSelection)
+        {
+            SetGhostCharacter();
             characterInfo.LoadFromClass(PlayerManager.Instance.currentPlayer.Stats.Class);
+        }
     }
 
     public void ConfirmClicked()

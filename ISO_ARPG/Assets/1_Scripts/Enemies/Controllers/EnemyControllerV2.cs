@@ -204,7 +204,8 @@ public class EnemyControllerV2 : MonoBehaviour
     [Header("Attack Parameters")]
     public float hitboxUptime = 0.5f;
     public float attackRange = 1.0f;
-    public float attackCooldown = 1.5f;
+    public float attackClock = 0.0f;
+    public float attackCooldown = 5.0f;
     public bool canAttack = true;
     //float ICoroutineState.intervalTime { get { return attackCooldown; } set { attackCooldown = value; } }
 
@@ -217,13 +218,30 @@ public class EnemyControllerV2 : MonoBehaviour
         {
             // Perform the attack (play the animation)
             canAttack = false;
-            animator.SetTrigger(animId);
             Debug.Log("Performed Attack");
-            hitbox.HandleHit();
+            //animator.SetTrigger(animId);
+            hitbox.Attack();
+            //hitbox.AttackForTime(hitboxUptime);
             //hitbox.AllowDamageForTime(hitboxUptime);
-            Invoke(nameof(ResetAttack), attackCooldown);
+            //Invoke(nameof(ResetAttack), attackCooldown);
+            StartCoroutine(AttackTimer());
         }
         // Default attack is 
+    }
+
+    IEnumerator AttackTimer()
+    {
+        while (!canAttack)
+        {
+            attackClock += Time.deltaTime;
+            //Debug.Log(attackClock);
+            if (attackClock > attackCooldown)
+            {
+                canAttack = true;
+                attackClock = 0.0f;
+            }
+            yield return null;
+        }
     }
 
     private void ResetAttack()

@@ -213,17 +213,28 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleDirectionalMove()
     {
+        //Transform cameraT = Camera.main.transform;
+        Vector3 camForward = Camera.main.transform.forward;
+        Vector3 camRight = Camera.main.transform.right;
+
         Vector3 currPoint = transform.position;
         Vector2 moveAxis = input.actions["DirectionalMove"].ReadValue<Vector2>();
         // Offset the value by the speed
         float h = moveAxis.x; //* agent.speed;   // horizontal movement
         float v = moveAxis.y; //* agent.speed;   // vertical movement
+
+        Vector3 relativeForward = camForward * v;
+        Vector3 relativeRight = camRight * h;
         // This needs to be relative to the camera positioning, such that the camera can be setup and the directional movement will work properly given all camera directions
 
 
         // for directional move, need to read the input axis and output a destination position based on them.
         // create a projection point based on the direction
-        moveTarget = new Vector3(currPoint.x + h, currPoint.y, currPoint.z + v);
+        //Camera.main.transform
+        Vector3 move = currPoint + relativeForward + relativeRight; //new Vector3(currPoint.x + h, currPoint.y, currPoint.z + v);
+        //move.x *= camPos.x;
+        //move.z *= camPos.z;
+        moveTarget = move;
     }
 
     void HandleRotation()
@@ -238,6 +249,7 @@ public class PlayerMovement : MonoBehaviour
 
             lookDirection = mousePoint - transform.position;
             lookDirection.Normalize(); // Normalize the look direction
+            lookDirection.y = 0f;
             //lookDirection.y = transform.position.y + 1; // Offset from the ground
         }
 
@@ -279,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
     public void HandleStops(bool stop)
     {
         //agent.isStopped = stop;             // stop the agent in place
-        canMove = stop;
+        //canMove = stop;
         moveTarget = transform.position;    // reset target to current point
     }
     #endregion
