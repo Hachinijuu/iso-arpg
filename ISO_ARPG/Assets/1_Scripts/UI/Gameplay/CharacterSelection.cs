@@ -133,7 +133,10 @@ public class CharacterSelection : MonoBehaviour
     public void ConfirmClicked()
     {
         PlayerManager.Instance.ActivatePlayer(currentClass);    // This transitions into gameplay activation
-        GameManager.Instance.LoadLevelByID(GameManager.eLevel.CUTSCENE);
+        if (!debugSelection)
+        {
+            GameManager.Instance.LoadLevelByID(GameManager.eLevel.CUTSCENE);
+        }
         //ShowCharacterSelection(false);
     }
     public void ShowCharacterSelection(bool value)

@@ -129,6 +129,27 @@ public class PlayerAbilityHandler : MonoBehaviour
     }
     #endregion
 
+    public void Respawn()
+    {
+        ResetCooldowns();
+        Debug.Log("[AbilityHandler]: Respawn, Cooldowns reset");
+    }
+
+    public void ResetCooldowns()
+    {
+        StopAllCoroutines();    // THIS MIGHT BREAK THE PASSIVE HANDLING, SIMPLY RESTART PASSIVES ON RESPAWN
+        // foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
+        // {
+        //     Debug.Log(canUseAbility[abilityUsage.Key]);
+        //     canUseAbility[abilityUsage.Key] = true;     // Allow the ability to be used
+        //     //abilityUsage.Key.CurrCooldown = 0.0f;       // Reset the clock
+        // }
+        foreach (Ability ab in stats.Abilities)
+        {
+            canUseAbility[ab] = true;
+            ab.CurrCooldown = 0.0f;
+        }
+    }
     public void AddPassiveListeners()
     {
         foreach (PassiveAbility pAb in stats.passives)

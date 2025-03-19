@@ -138,6 +138,9 @@ public class PlayerController : MonoBehaviour
         EnablePlayer(true);
         //animator.SetTrigger(respawnID);
         stats.Respawn();
+
+        // Reset the ability handler
+        handler.Respawn();
         movement.Respawn();
     }
 

@@ -217,7 +217,6 @@ public class PlayerStats : EntityStats
             if (DebugMenu.Instance.Invincible)  // If invincibility is on, then don't check for death
                 return;
         }
-
         base.CheckDied(value);
     }
     public void Respawn()

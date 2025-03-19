@@ -68,13 +68,15 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Respawn()
     {
-        transform.position = transform.position;
-        moveTarget = transform.position;
+        //transform.position = transform.position;
+        //moveTarget = transform.position;
+        //Debug.Log("[PlayerMovement]: MoveTarget: " + moveTarget);
         //agent.destination = moveTarget;
         //Debug.Log(transform.position);
 
         canMove = true;
         canRotate = true;
+        Debug.Log("[PlayerMovement]: Respawn, Values reset");
     }
     // Update is called once per frame
     void Update()

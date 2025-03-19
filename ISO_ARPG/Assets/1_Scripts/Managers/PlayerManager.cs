@@ -90,6 +90,7 @@ public class PlayerManager : MonoBehaviour
             {
                 PlayerStats stats = pair.Value.Stats;
                 stats.OnDied += context => { HandleDeath(); };
+                Debug.Log("Added death listeners");
             }
         }
     }
@@ -105,9 +106,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
-
     public void HandleDeath()
     {
+        Debug.Log("Player has died, telling the manager");
         GameManager.Instance.PlayerDied();
     }
 

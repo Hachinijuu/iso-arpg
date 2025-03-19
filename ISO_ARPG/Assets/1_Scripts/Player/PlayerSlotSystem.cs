@@ -36,7 +36,7 @@ public class PlayerSlotSystem : MonoBehaviour
     }
     public void ReserveSlot(EnemyControllerV2 agent)    // If an agent fails to reserve a slot when they try, then do nothing
     {
-        Debug.Log("trying to reserve a slot");
+        //Debug.Log("trying to reserve a slot");
         Transform slot = GetNearestSlot(agent.transform);
         if (slot == null) { return; }
         if (occupiedSlots.TryGetValue(slot, out EnemyControllerV2 found))
@@ -44,7 +44,7 @@ public class PlayerSlotSystem : MonoBehaviour
             if (found == null)
             {
                 occupiedSlots[slot] = agent;
-                Debug.Log("reserved a slot");
+                //Debug.Log("reserved a slot");
             }
         }
         //if (occupiedSlots[slot] != null)    // If the nearest slot found is not occupied
@@ -73,7 +73,7 @@ public class PlayerSlotSystem : MonoBehaviour
                 {
                     if (slotAgent == agent)
                     {
-                        Debug.Log("Matching agent");
+                        //Debug.Log("Matching agent");
                         occupiedSlots[key] = null;  // Remove the reference
                         return; // return to end the loop early
                     }
