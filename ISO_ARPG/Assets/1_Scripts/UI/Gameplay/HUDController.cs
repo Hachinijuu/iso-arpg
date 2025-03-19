@@ -20,6 +20,10 @@ public class HUDController : MonoBehaviour
 
     private PlayerStats playerStats;    // Get a reference to the player's stat system
 
+    [SerializeField] TMP_Text healthPotionText;
+    [SerializeField] TMP_Text manaPotionText;
+
+
     // Get references to the relevant stats
     TrackedStat health;
     TrackedStat mana;
@@ -100,6 +104,7 @@ public class HUDController : MonoBehaviour
         if (healthSlider)   playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); };
         if (manaSlider)     playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
         if (idSlider)       playerStats.ID_Bar.Changed += context => { UpdateIdSlider(context); };
+        if (healthPotionText && manaPotionText) AddPotionListeners();
         AddCooldownListeners();
     }
 
@@ -108,6 +113,7 @@ public class HUDController : MonoBehaviour
         if (healthSlider)   playerStats.Health.Changed -= UpdateHealthSlider;
         if (manaSlider)     playerStats.Mana.Changed -= UpdateManaSlider;
         if (idSlider)       playerStats.ID_Bar.Changed -= UpdateIdSlider;
+        if (healthPotionText && manaPotionText) RemovePotionListeners();
         RemoveCooldownListeners();
     }
 
@@ -126,6 +132,16 @@ public class HUDController : MonoBehaviour
         playerStats.Abilities[0].onCooldownChanged -= context => { UpdateCooldownSlider(ab1, context); UpdateCooldownText(ab1, context); };
         playerStats.Abilities[1].onCooldownChanged -= context => { UpdateCooldownSlider(ab2, context); UpdateCooldownText(ab2, context); };
         playerStats.Identity.onCooldownChanged -= context => { UpdateCooldownSlider(idAbility, context); UpdateCooldownText(idAbility, context); };
+    }
+
+    public void AddPotionListeners()
+    {
+        Inventory.Instance.onPotionChanged += UpdatePotions; 
+    }
+
+    public void RemovePotionListeners()
+    {
+        Inventory.Instance.onPotionChanged -= UpdatePotions;
     }
     #endregion
     #region FUNCTIONALITY
@@ -176,6 +192,13 @@ public class HUDController : MonoBehaviour
     {
         ui.cd_slider.value = value;
     }
+
+    public void UpdatePotions()
+    {
+        healthPotionText.text = Inventory.Instance.GetNumHealthPotions().ToString();
+        manaPotionText.text = Inventory.Instance.GetNumManaPotions().ToString();
+    }
+
     #endregion
     #endregion
 }

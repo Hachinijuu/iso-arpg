@@ -154,6 +154,16 @@ public class PlayerController : MonoBehaviour
         EnablePlayer(false);
     }
 
+    public void OnEnable()
+    {
+        MapPlayerActions();
+    }
+
+    public void OnDisable()
+    {
+        UnmapPlayerActions();
+    }
+
     #endregion
     #region INITALIZATION
     public void InitializePlayer()           // this can be used for reinit, so be cautious of what to place here.
@@ -211,14 +221,28 @@ public class PlayerController : MonoBehaviour
     // Potion Usage
     public void UsePotion(PotionTypes potion)
     {
-        switch (potion)
+        if (Inventory.Instance == null) { return; } // If no inventory exists, eject
+        // Check if the player has potions, if no potions exist, cannot
+        PotionData foundPotion = Inventory.Instance.GetPotion(potion);
+        if (foundPotion != null)
         {
-            case PotionTypes.HEALTH:
-                // Get the health stat, increase the health stat
-                break;
-            case PotionTypes.MANA:
-                // Get the mana stat, increase the mana stat
-                break;
+            if (foundPotion.potionType == PotionTypes.HEALTH)
+            {
+                if (stats.Health.Value  < stats.Health.MaxValue) // If the potion is not useless, let it be used
+                    stats.Health.Value += foundPotion.value;
+                else return;    // Otherwise, return (Don't use the potion at all);
+            }
+            else if (foundPotion.potionType == PotionTypes.MANA)
+            {
+                if (stats.Mana.Value < stats.Mana.MaxValue) // If the potion is not useless, let it be used
+                    stats.Mana.Value += foundPotion.value;
+                else return;    // Otherwise, return (Don't use the potion at all);
+            }
+            Inventory.Instance.RemovePotion(foundPotion);
+        }
+        else
+        {
+            PublicEventManager.Instance.FireOnCannot();
         }
 
         // Try using the potion

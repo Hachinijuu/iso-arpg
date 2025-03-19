@@ -18,11 +18,29 @@ public class UIAudioHandler : MonoBehaviour
             return instance;
         }
     }
+
+    public void Start()
+    {
+        if (PublicEventManager.Instance != null) { PublicEventManager.Instance.onCannot += OnCannot; }
+    }
     public AudioSource audioSource;
     public bool randomPitch;
 
     public void PlayAudio(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    // These effects are hooked up the SFX audio source
+    // This will play unable sounds
+
+    [SerializeField] AudioClip cannotClip;
+
+    public void OnCannot()
+    {
+        if (audioSource != null && cannotClip != null)
+        {
+            PlayAudio(cannotClip);
+        }
     }
 }

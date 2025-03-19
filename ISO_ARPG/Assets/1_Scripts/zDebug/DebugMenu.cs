@@ -24,8 +24,8 @@ public class DebugMenu : MonoBehaviour
 
     private void Awake()
     {
-        invinciblityToggle.isOn = invincible;
         takeDamage = true;
+        invinciblityToggle.isOn = invincible;
         damageToggle.isOn = takeDamage;
     }
 

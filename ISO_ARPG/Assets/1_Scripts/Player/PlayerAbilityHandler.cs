@@ -271,6 +271,12 @@ public class PlayerAbilityHandler : MonoBehaviour
                 if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);
             }
             else
+            {
+                if (PublicEventManager.Instance != null)
+                {
+                    PublicEventManager.Instance.FireOnCannot();
+                }
+            }
                 Debug.Log("[AbilityHandler]: Cannot use: " + ab.Name);
         }
     }
@@ -307,6 +313,10 @@ public class PlayerAbilityHandler : MonoBehaviour
                     StartCoroutine(HandleCooldown(ab));                 // Start handling the cooldown for this ability  
                     if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used
                 }
+            }
+            if (PublicEventManager.Instance != null)
+            {
+                PublicEventManager.Instance.FireOnCannot();
             }
         }
     }

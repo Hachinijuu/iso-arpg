@@ -1,11 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RuneUpgradeScreen : MonoBehaviour
 {
-
+    public ItemRarity rank; // this will be swapped via toggles
+    [SerializeField] GameObject runeList;
     [SerializeField] RuneSlot upgradeSlot;
+
+
+    [SerializeField] int baseCost;
+    [SerializeField] float rarityCostModifier;
+    public int CalculateCost()
+    {
+        return (int)(baseCost * (1 + (rarityCostModifier * (int)rank)));
+    }
     public void UpgradeClicked()
     {
         // When the upgrade button is clicked
@@ -34,6 +44,46 @@ public class RuneUpgradeScreen : MonoBehaviour
         }
     }
 
+    public RuneData ghostRune;
+    public void CreateClicked()
+    {
+        // Opens up a list of stats to select from
+        // Stores the current stat on the button press
+
+        // Show the rune rank indicator
+    }
+    
+    public void SetRarity(ItemRarity rarity)
+    {
+        this.rank = rarity;
+    }
+
+    public void MainStatClicked(MainStatTypes type)
+    {
+        ghostRune = RuneSystem.Instance.CreateMainStatRune(rank, type);
+    }
+
+    public void SubStatClicked(SubStatTypes type)
+    {
+        ghostRune = RuneSystem.Instance.CreateSubStatRune(rank, type);
+    }
+
+    public void ConfirmClicked()
+    {
+        // Consume the cost of the rune creation, and add the item to their inventory
+        int cost = CalculateCost();
+        if (cost > Inventory.Instance.RuneDust) 
+        { 
+            if (PublicEventManager.Instance != null)
+            {
+                PublicEventManager.Instance.FireOnCannot();
+            }
+            return; 
+        } 
+        // If the player does not have enough dust, do nothing, disable button prematurely, play error(?)
+        Inventory.Instance.AddItem(ghostRune);
+        Inventory.Instance.RuneDust -= CalculateCost();
+    }
     public void DismantleClicked()
     {
         RuneData rune = upgradeSlot.item as RuneData;

@@ -9,25 +9,61 @@ public class Item : MonoBehaviour
     // Pickup handling for other types will be handled in playerController
     // All items should be tagged interactable
     #region VARIABLES
+    public bool requiresClick;
     [SerializeField] ItemData itemData;
 
     #endregion
     #region UNITY FUNCTIONS
-    void OnTriggerEnter(Collider other)
+
+    public void HandlePlayerPickup(Collider other)
     {
-        //Debug.Log(other.gameObject.tag);
-        if (itemData.type == ItemTypes.RESOURCE)
+        if (other.gameObject.CompareTag("Player"))
         {
-            if (other.gameObject.CompareTag("Player"))
+            // Since the player has collided, see what needs to be added to the inventory
+            if (itemData is PotionData pd)
             {
-                // Set the object to false, return it to the supposed object pool it was pulled from.
-                Inventory.Instance.AddItem(itemData);
-                itemData.FireAcquired(new ItemEventArgs(itemData));
+                switch (pd.potionType)
+                {
+                    case PotionTypes.HEALTH:
+                    if (Inventory.Instance.GetNumHealthPotions() < Inventory.Instance.maxHealthPotions)
+                    {
+                        Inventory.Instance.AddPotion(pd);
+                        Destroy(gameObject);
+                    }
+                    break;
+                    case PotionTypes.MANA:
+                    if (Inventory.Instance.GetNumManaPotions() < Inventory.Instance.maxManaPotions)
+                    {
+                        Inventory.Instance.AddPotion(pd);
+                        Destroy(gameObject);
+                    }
+                    break;
+                }
+                //Inventory.Instance.AddPotion(pd);
+            }
+            else if (itemData is ResourceData rd)
+            {
+                switch (rd.resourceType)
+                {
+                    case ResourceTypes.DUST:
+                        Inventory.Instance.RuneDust += rd.amount;
+                    break;
+                    case ResourceTypes.WOOD:
+                        Inventory.Instance.WoodAmount += rd.amount;
+                    break;
+                    case ResourceTypes.STONE:
+                        Inventory.Instance.StoneAmount += rd.amount;
+                    break;
+                }
                 Destroy(gameObject);
-                //gameObject.SetActive(false);
-                
             }
         }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (requiresClick) { return; }
+        HandlePlayerPickup(other);
+        //Debug.Log(other.gameObject.tag);
     }
     #endregion
 

@@ -51,6 +51,24 @@ public class RuneSystem : MonoBehaviour
         substatRolls = new List<SubStatRoll>();
     }
 
+    public RuneData CreateMainStatRune(ItemRarity rank, MainStatTypes type)
+    {
+        RuneData rune = new RuneData();
+        MainStat stat = new MainStat(type, -1);     // Value less 0 than can be rolled for
+        rune.mainStat = new MainStat[1] { stat };   // Add the stat to the array of stats
+        rune = RollRune(rune, rank);
+        return rune;
+    }
+
+    public RuneData CreateSubStatRune(ItemRarity rank, SubStatTypes type)
+    {
+        RuneData rune = new RuneData();
+        SubStat stat = new SubStat(type, -1);     // Value less 0 than can be rolled for
+        rune.subStat = new SubStat[1] { stat };   // Add the stat to the array of stats
+        rune = RollRune(rune, rank);
+        return rune;
+    }
+
     public RuneData RollRune(RuneData template)
     {
         RuneData rune = template;

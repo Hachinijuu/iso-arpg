@@ -37,21 +37,82 @@ public class Inventory : MonoBehaviour
     [SerializeField] TMP_Text stoneText;
 
     int maxSlots;
-
     [SerializeField] PlayerInput input;
 
     private ItemSlot[] slots;       // UI slots to interface with
     private RuneSlot[] runeSlots;
     private List<ItemData> items;   // The actual items the player has  //// This might be better stored in player
+    private List<PotionData> potions;   // Potions are mapped to the HUD
 
-    public int RuneDust 
+    public int maxHealthPotions = 3;
+    public int maxManaPotions = 3;
+
+    public int numHealthPotions = 0;
+    public int numManaPotions = 0;
+    public void AddPotion(PotionData potion)
+    {
+        potions.Add(potion);
+        FirePotionChanged();
+    }
+
+    public void RemovePotion(PotionData potion)
+    {
+        potions.Remove(potion);
+        FirePotionChanged();
+    }
+
+    public delegate void PotionsChanged();
+    public event PotionsChanged onPotionChanged;
+    public void FirePotionChanged() { if (onPotionChanged != null ) onPotionChanged(); }
+    public PotionData GetPotion(PotionTypes type)
+    {
+        foreach (PotionData pot in potions)
+        {
+            if (pot.potionType == type)
+            {
+                return pot;
+            }
+        }
+        return null;
+    }
+    public int GetNumHealthPotions()
+    {
+        int count = 0;
+        foreach (PotionData pot in potions)
+        {
+            if (pot.potionType == PotionTypes.HEALTH)
+            {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int GetNumManaPotions()
+    {
+        int count = 0;
+        foreach (PotionData pot in potions)
+        {
+            if (pot.potionType == PotionTypes.MANA)
+            {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int maxRuneDust = 100000;
+    public int maxWoodAmount = 100000;
+    public int maxStoneAmount = 100000;
+    public int RuneDust
     { 
         get { return runeDust; } 
-        set { runeDust = value; 
-        if (dustText != null)
-            {
-                dustText.text = runeDust.ToString();        // This method of the accessor calling the functionality might work, can add upper limits (max values to limit set value)
-            }
+        set { 
+            // If the incoming is greater than the max - force to max
+            if (runeDust + value > maxRuneDust) { runeDust = maxRuneDust; }
+            else if (runeDust + value < 0) { runeDust = 0; }
+            else { runeDust = value; }
+            if (dustText != null) { dustText.text = runeDust.ToString(); }
         } 
     }
     private int runeDust;
@@ -59,11 +120,12 @@ public class Inventory : MonoBehaviour
     public int WoodAmount
     { 
         get { return woodAmount; } 
-        set { woodAmount = value; 
-        if (woodText != null)
-            {
-                woodText.text = woodAmount.ToString();
-            }
+        set { 
+            // If the incoming is greater than the max - force to max
+            if (woodAmount + value > maxWoodAmount) { woodAmount = maxWoodAmount; }
+            else if (woodAmount + value < 0) { woodAmount = 0; }
+            else { woodAmount = value; }
+            if (woodText != null) { woodText.text = woodAmount.ToString(); }
         } 
     }
     
@@ -72,11 +134,12 @@ public class Inventory : MonoBehaviour
     public int StoneAmount
     { 
         get { return stoneAmount; } 
-        set { stoneAmount = value; 
-        if (stoneText != null)
-            {
-                stoneText.text = stoneAmount.ToString();
-            }
+        set { 
+            // If the incoming is greater than the max - force to max
+            if (stoneAmount + value > stoneAmount) { stoneAmount = maxStoneAmount; }
+            else if (stoneAmount + value < 0) { stoneAmount = 0; }
+            else { stoneAmount = value; }
+            if (stoneText != null) { stoneText.text = stoneAmount.ToString(); }
         } 
     }
     private int stoneAmount;
@@ -113,6 +176,10 @@ public class Inventory : MonoBehaviour
         if (items != null && items.Count > 0)
         {
             items.Clear();  // Empty the inventory
+        }
+        if (potions != null && potions.Count > 0)
+        {
+            potions.Clear();
         }
     }
 
@@ -164,6 +231,7 @@ public class Inventory : MonoBehaviour
     void InitItemList()
     {
         items = new List<ItemData>();
+        potions = new List<PotionData>();
     }
 
     void MapActions()
