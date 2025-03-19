@@ -50,7 +50,12 @@ public class CutscenePlayer : MonoBehaviour
             slide.ExitSlide(this);
             slide.gameObject.SetActive(false);
         }
-        GameManager.Instance.LoadLevelByID(GameManager.eLevel.HUB);
+        EndCutscene();
+    }
+
+    public void EndCutscene()
+    {
+    GameManager.Instance.LoadLevelByID(GameManager.eLevel.HUB);
     }
     #endregion
 }

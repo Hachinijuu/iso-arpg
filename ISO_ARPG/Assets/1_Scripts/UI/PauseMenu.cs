@@ -44,17 +44,17 @@ public class PauseMenu : MonoBehaviour
         // Only load if not already in hub
         if (GameManager.Instance.level != GameManager.eLevel.HUB)
         {
+            panel.SetActive(false);
             GameManager.Instance.LoadHub();
             GameManager.Instance.UnpauseGame();
-            panel.SetActive(false);
         }
     }
 
     public void ReturnToMainMenuClicked()
     {
+        panel.SetActive(false);
         GameManager.Instance.LoadMainMenu();
         GameManager.Instance.UnpauseGame();
-        panel.SetActive(false);
     }
 
     public void QuitClicked()

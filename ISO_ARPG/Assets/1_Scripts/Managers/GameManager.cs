@@ -154,6 +154,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetPlayer(PlayerController player)
+    {
+        controller = player;
+    }
     public void PlayerRespawn(PlayerController player)
     {
         controller = player;
@@ -255,7 +259,7 @@ public class GameManager : MonoBehaviour
 
 
 
-        // If the level manager exits, do the stuff
+        // If the level manager exists, do the stuff
         if (LevelManager.Instance)
         {
             currGameState = GameState.PLAYING;
@@ -292,42 +296,49 @@ public class GameManager : MonoBehaviour
     public void LoadMainMenu()
     {
         //StartCoroutine(LoadLevel(1);
-        LoadLevelFromString((levelNames[(int)eLevel.MENU]));
+        //LoadLevelFromString((levelNames[(int)eLevel.MENU]));
+        LoadLevelByID(eLevel.MENU);
         currGameState = GameState.MENU;
     }
 
     public void LoadHub()
     {
-        LoadLevelFromString((levelNames[(int)eLevel.HUB]));
+        LoadLevelByID(eLevel.HUB);
+        //LoadLevelFromString((levelNames[(int)eLevel.HUB]));
 
         // Special conditions to check when loading to the hub
-        if (PlayerManager.Instance.currentClass == GoX_Class.NONE)
-        {
-            // If the player has no class when loading the hub
-            // We want to load the hub setup for character selection
+        // if (PlayerManager.Instance.currentClass == GoX_Class.NONE)
+        // {
+        //     // If the player has no class when loading the hub
+        //     // We want to load the hub setup for character selection
 
-            // Default the Camera to the view of the podium
-            // Place the playable characters at the podium
-            // Enable them accordingly
-            //PlayerManager.Instance.HandlePlayerSelect();
-        }
+        //     // Default the Camera to the view of the podium
+        //     // Place the playable characters at the podium
+        //     // Enable them accordingly
+        //     //PlayerManager.Instance.HandlePlayerSelect();
+        // }
     }
 
     public void LoadCharacterSelect()
     {
-        LoadLevelFromString((levelNames[(int)eLevel.CHARACTER_SELECT]));
+        //PlayerManager.Instance.DeactivatePlayer();
+        PlayerManager.Instance.DeactivatePlayer();
+        LoadLevelByID(eLevel.CHARACTER_SELECT);
+        // Disable all players
+        //PlayerManager.Instance.EnableCharacters(false); // Shut off the players for the ghost selection
 
+        //LoadLevelFromString((levelNames[(int)eLevel.CHARACTER_SELECT]));
         // Special conditions to check when loading to the hub
-        if (PlayerManager.Instance.currentClass == GoX_Class.NONE)
-        {
-            // If the player has no class when loading the hub
-            // We want to load the hub setup for character selection
+        // if (PlayerManager.Instance.currentClass == GoX_Class.NONE)
+        // {
+        //     // If the player has no class when loading the hub
+        //     // We want to load the hub setup for character selection
 
-            // Default the Camera to the view of the podium
-            // Place the playable characters at the podium
-            // Enable them accordingly
-            //PlayerManager.Instance.HandlePlayerSelect();
-        }
+        //     // Default the Camera to the view of the podium
+        //     // Place the playable characters at the podium
+        //     // Enable them accordingly
+        //     //PlayerManager.Instance.HandlePlayerSelect();
+        // }
     }
     public void LoadPrototype()
     {

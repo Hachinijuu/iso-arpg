@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
 
     private ItemSlot[] slots;       // UI slots to interface with
     private RuneSlot[] runeSlots;
-    private List<ItemData> items;   // The actual items the player has
+    private List<ItemData> items;   // The actual items the player has  //// This might be better stored in player
 
     public int RuneDust 
     { 
@@ -106,6 +106,14 @@ public class Inventory : MonoBehaviour
     {
         input = controller.Input;
         SetupInventory();
+    }
+
+    public void CleanupInventory()
+    {
+        if (items != null && items.Count > 0)
+        {
+            items.Clear();  // Empty the inventory
+        }
     }
 
     void InitUISlots()

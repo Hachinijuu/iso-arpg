@@ -115,6 +115,8 @@ public class PlayerManager : MonoBehaviour
     {
         currentClass = GoX_Class.NONE;
         currentPlayer = null;
+        GameManager.Instance.SetPlayer(currentPlayer);
+        Inventory.Instance.CleanupInventory();
         EnableCharacters(false);
     }
 
@@ -138,13 +140,15 @@ public class PlayerManager : MonoBehaviour
                 currentClass = toActivate;
                 currentPlayer = controller;
                 controller.InitializePlayer();
-                GameManager.Instance.PlayerRespawn(currentPlayer);
                 Inventory.Instance.SetupInventory(currentPlayer);
-                if (!HUD.gameObject.activeInHierarchy)
-                {
-                    HUD.gameObject.SetActive(true);
-                }
                 HUD.SetPlayer(currentPlayer);
+                //GameManager.Instance.PlayerRespawn(currentPlayer);
+
+                //if (!HUD.gameObject.activeInHierarchy)
+                //{
+                //    HUD.gameObject.SetActive(true);
+                //}
+                //HUD.SetPlayer(currentPlayer);
             }
             foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
             {
@@ -166,8 +170,8 @@ public class PlayerManager : MonoBehaviour
     {
         foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
         {
-            pair.Value.gameObject.SetActive(on);
             pair.Value.EnablePlayer(on);
+            pair.Value.gameObject.SetActive(on);
         }
     }
 

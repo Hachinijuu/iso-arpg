@@ -43,7 +43,6 @@ public class HUDController : MonoBehaviour
     public void SetPlayer(PlayerController player)
     {
         this.player = player;
-        RemoveEventListeners();
         InitHud();
     }
     public void InitHud()

@@ -1521,6 +1521,7 @@ GameObject:
   - component: {fileID: 6288156770444078956}
   - component: {fileID: 6078582123423873865}
   - component: {fileID: 4260820586702984120}
+  - component: {fileID: 4977059417636861567}
   m_Layer: 0
   m_Name: GoX Character ElementalistFinal
   m_TagString: Untagged
@@ -1633,7 +1634,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastLength: 50
+  characterBody: {fileID: 0}
+  body: {fileID: 0}
+  anim: {fileID: 0}
   rotationSpeed: 20
+  clickBuffer: 0.05
 --- !u!114 &4418027919201988944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1663,7 +1668,7 @@ MonoBehaviour:
   tagsToMatch: []
   mask:
     serializedVersion: 2
-    m_Bits: 1920
+    m_Bits: 896
 --- !u!114 &7803795398715279929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1831,6 +1836,7 @@ MonoBehaviour:
   stepSource: {fileID: 0}
   steps: []
   currStep: {fileID: 0}
+  link: {fileID: 0}
 --- !u!114 &4260820586702984120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,7 +1849,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e862e6c2499b645a24b7544e972e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  animator: {fileID: 0}
+  body: {fileID: 0}
+  altBody: {fileID: 0}
   auraSource: {fileID: 0}
+--- !u!114 &4977059417636861567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3980536703856412511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22dc280f10e36d24b8abc6a2af5d3283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: []
 --- !u!1 &4046070199671067813
 GameObject:
   m_ObjectHideFlags: 0
