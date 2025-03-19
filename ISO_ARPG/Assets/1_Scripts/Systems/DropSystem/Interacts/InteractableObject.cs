@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
@@ -7,6 +5,10 @@ public abstract class InteractableObject : MonoBehaviour
     [SerializeField] bool promptInteraction;
     [SerializeField] GameObject interactPrompt;
     public int interactDistance = 5;
+
+
+    public AudioSource interactSource;
+    public AudioClip interactSound;
     public virtual void OnInteract(Transform source = null)
     {
         // only check for distance if source != null and distance > 0
@@ -18,14 +20,24 @@ public abstract class InteractableObject : MonoBehaviour
             }
         }
 
+        if (interactSource != null && interactSound != null)
+        {
+            interactSource.PlayOneShot(interactSound);
+        }
+
         if (!interactPrompt)
             InteractAction();
         else
             interactPrompt.SetActive(true); // prompt needs to handle interact action call
     }
 
-        public virtual void OnInteract()
+    public virtual void OnInteract()
     {
+        if (interactSource != null && interactSound != null)
+        {
+            interactSource.PlayOneShot(interactSound);
+        }
+
         if (!interactPrompt)
             InteractAction();
         else

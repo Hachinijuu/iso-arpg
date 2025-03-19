@@ -16,6 +16,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(FootStepHandler))]         // Footsteps
 [RequireComponent(typeof(PlayerSlotSystem))]        // Slots
 [RequireComponent(typeof(NavMeshAgent))]                // AGENT FOR COLLISION DETECTION -- 
+[RequireComponent(typeof(PlayerParticleHandler))]
 // music / ambience - own sources / persistent
 // UI - persistent / general
 // effects / voice
@@ -39,11 +40,11 @@ public class PlayerController : MonoBehaviour
     public ProjectileSource ShootSource { get { return shootSource; } }
     public FootStepHandler FootSteps { get { return footSteps; } }
     public PlayerSlotSystem Slots { get { return slots; } }
+    public PlayerParticleHandler Particles { get { return particleHandler; } }
     public GameObject Body { get { return body; } }
-
     public GameObject AltBody { get { return body; } }
 
-    public NavMeshAgent Aget { get { return agent; } }
+    public NavMeshAgent Agent { get { return agent; } }
     PlayerStats stats;
     PlayerInput input;
     PlayerMovement movement;
@@ -56,6 +57,8 @@ public class PlayerController : MonoBehaviour
     ProjectileSource shootSource;
     FootStepHandler footSteps;
     PlayerSlotSystem slots;
+
+    PlayerParticleHandler particleHandler;
 
     enum BodyNumber { MAIN, ALT }
     BodyNumber type;
@@ -92,9 +95,11 @@ public class PlayerController : MonoBehaviour
         if (slots == null)
             slots = GetComponent<PlayerSlotSystem>();
 
+        if (particleHandler == null)
+            particleHandler = GetComponent<PlayerParticleHandler>();
+
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
-
 
         if (animator == null)
             Debug.LogWarning("[PlayerController]: Missing a reference to the ANIMATOR");

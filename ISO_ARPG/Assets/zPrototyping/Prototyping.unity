@@ -1071,8 +1071,9 @@ GameObject:
   - component: {fileID: 1615068356}
   - component: {fileID: 1615068355}
   - component: {fileID: 1615068354}
-  - component: {fileID: 1615068353}
   - component: {fileID: 1615068358}
+  - component: {fileID: 1615068360}
+  - component: {fileID: 1615068359}
   m_Layer: 9
   m_Name: ChestInteract
   m_TagString: Interactable
@@ -1080,24 +1081,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1615068353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615068352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7c9aec92e38c334592e5e6f72a1821d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promptInteraction: 0
-  interactPrompt: {fileID: 0}
-  interactDistance: 5
-  itemsToDrop:
-  - {fileID: 11400000, guid: cf6bfb7ac38613c45a5a0a0b8c30d437, type: 2}
-  dropPosition: {fileID: 0}
 --- !u!65 &1615068354
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1211,6 +1194,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1615068359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615068352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c9aec92e38c334592e5e6f72a1821d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptInteraction: 0
+  interactPrompt: {fileID: 0}
+  interactDistance: 5
+  interactSource: {fileID: 0}
+  interactSound: {fileID: 0}
+  stats: {fileID: 0}
+--- !u!114 &1615068360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615068352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6cede2f343404641abee7a1354a0f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 4d1f755615a60444e80d1964b090755a, type: 2}
+  id: 10
+  statList: []
 --- !u!1 &1704307628
 GameObject:
   m_ObjectHideFlags: 0

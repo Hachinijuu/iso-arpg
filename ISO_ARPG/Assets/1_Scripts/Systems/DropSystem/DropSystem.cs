@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class DropSystem : MonoBehaviour
 
     private List<EntityStats> enemies;
     private List<EntityStats> destructibles;
+    private List<EntityStats> chests;
 
     [SerializeField] List<DropTable> dropTables;
     //[SerializeField] ItemData expOrb;
@@ -28,6 +30,7 @@ public class DropSystem : MonoBehaviour
     {
         enemies = new List<EntityStats>();
         destructibles = new List<EntityStats>();
+        chests = new List<EntityStats>();
         if (dropTables == null)
             dropTables = new List<DropTable>();
     }
@@ -62,13 +65,36 @@ public class DropSystem : MonoBehaviour
 
     public void RegisterChestDrops(EntityStats chest)
     {
-
+        chests.Add(chest);
+        chest.OnDied += context => { CheckDrop(chest); FadeObject(context); };
+    }
+    public void UnregisterChestDrops(EntityStats chest)
+    {
+        chests.Remove(chest);
+        chest.OnDied -= context => { CheckDrop(chest); FadeObject(context); };
     }
 
     public void HandleDestruction(GameObject source)
     {
         source.SetActive(false);    // cleanup
         // play a destruction sound
+    }
+
+    public void FadeObject(GameObject source)
+    {
+        Renderer r = source.GetComponent<Renderer>();
+        StartCoroutine(HandleFade(r));
+    }
+
+    public float objectFadeRate = 0.25f;
+    IEnumerator HandleFade(Renderer render)
+    {
+        Color c = render.material.color;
+        while (render.material.color.a > 0)
+        {
+            c.a -= objectFadeRate * Time.deltaTime;
+            yield return null;
+        }
     }
     public void SpawnParticle(GameObject source)
     {

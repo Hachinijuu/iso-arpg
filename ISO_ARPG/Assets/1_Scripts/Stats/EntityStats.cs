@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT, ELITE }
+public enum EntityID { NONE, PLAYER, ORC, IMP, BARREL, ROCK, WAGON, POT, ELITE, BIG_ELITE, CHEST }
 
 public class EntityStats : MonoBehaviour
 {
@@ -25,12 +25,12 @@ public class EntityStats : MonoBehaviour
     // Defensive
     protected SubStat armour;
     protected SubStat dodge;
-    
+
     // Offensive
     public SubStat Damage { get { return damage; } }
     protected SubStat damage;
 
-    public SubStat AttackSpeed {  get { return attackSpeed; } }
+    public SubStat AttackSpeed { get { return attackSpeed; } }
     protected SubStat attackSpeed;
 
     // Utility
