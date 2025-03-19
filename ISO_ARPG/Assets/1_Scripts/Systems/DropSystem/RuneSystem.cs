@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,7 +40,9 @@ public class RuneSystem : MonoBehaviour
     public List<TrackedStatRoll> trackedStatRolls;
     public List<SubStatRoll> substatRolls;
 
-    public float RollUpperStep = 0.1f;
+    public float maxRollDifficultyStep = 0.2f;
+    [Tooltip("Max * minimumPercentage (100 * 0.6) = 60 min value")]
+    public float minimumPercentage = 0.6f;
 
     public void Awake()
     {
@@ -63,7 +64,7 @@ public class RuneSystem : MonoBehaviour
             // And the chance for a Relic tier rune is 5%, I get that rune
             // Since the loop will check for the chances based on sequential order, (common -> relic)
             // The rarity will be update based on the lowest drop chance value
-            
+
             if (chance.dropChance < rarityRoll)
             {
                 rune.rarity = chance.rarity;
@@ -85,10 +86,10 @@ public class RuneSystem : MonoBehaviour
 
     public RuneData RollRuneStats(RuneData template)
     {
-        RuneData rune = template;   
+        RuneData rune = template;
         // Create a copy of the rune that should be rolled for
         // Roll the statistics for that rune
-        
+
 
         // How does a rune roll work
 
@@ -108,25 +109,28 @@ public class RuneSystem : MonoBehaviour
                     if (mainStat.type == MainStatTypes.NONE)
                     {
                         // Match to the player class
-                        switch(PlayerManager.Instance.currentClass)
+                        switch (PlayerManager.Instance.currentClass)
                         {
                             case GoX_Class.BERSERKER:
                                 mainStat.type = MainStatTypes.STRENGTH;
-                            break;
+                                break;
                             case GoX_Class.HUNTER:
                                 mainStat.type = MainStatTypes.DEXTERITY;
-                            break;
+                                break;
                             case GoX_Class.ELEMENTALIST:
                                 mainStat.type = MainStatTypes.INTELLIGENCE;
-                            break;
+                                break;
                         }
                     }
                     if (mainStat.type == rollRange.type)  // If the stat to change matches the rollRange -- if the rune has a strength stat, look for the strength roll
                     {
                         if (mainStat.Value > 0) // If the value is defined, keep that value instead continue
                             continue;
-                        float minRoll = rollRange.maxValue * 0.6f;                      // 60% of max roll, min can be 40% lower
-                        mainStat.Value = Random.Range(minRoll, rollRange.maxValue * (1 + ((int)rune.rarity * RollUpperStep)));     // Roll for the stat based on the number
+
+                        // rarity tier 3 --> 3 * maxRollDifficultyStep = 0.6 + 1 = 1.6, base and increase * default max
+                        float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
+                        float minRoll = maxRoll * minimumPercentage;                      // 60% of max roll, min can be 40% lower
+                        mainStat.Value = Random.Range(minRoll, maxRoll);     // Roll for the stat based on the number
                     }
                 }
             }
@@ -141,8 +145,9 @@ public class RuneSystem : MonoBehaviour
                     {
                         if (trackedStat.Value > 0)
                             continue;
-                        float minRoll = rollRange.maxValue * 0.6f;
-                        trackedStat.Value = Random.Range(minRoll, rollRange.maxValue * (1 + ((int)rune.rarity * RollUpperStep)));
+                        float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
+                        float minRoll = maxRoll * minimumPercentage;
+                        trackedStat.Value = Random.Range(minRoll, maxRoll);
                     }
                 }
             }
@@ -155,17 +160,18 @@ public class RuneSystem : MonoBehaviour
                 {
                     if (subStat.type == rollRange.type)
                     {
-                        if (subStat.Value > 0)
+                        if (subStat.Value > 0)  // IF THE VALUE ALREADY EXISTS IN THE RUNE,  DO NOT RANDOMIZE IT
                             continue;
-                        float minRoll = rollRange.maxValue * 0.6f;
-                        subStat.Value = Random.Range(minRoll, rollRange.maxValue * (1 + ((int)rune.rarity * RollUpperStep)));
+                        float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
+                        float minRoll = maxRoll * minimumPercentage;
+                        subStat.Value = Random.Range(minRoll, maxRoll);
                     }
                 }
             }
         }
 
         // which stats to roll for
-        
+
 
         // roll the ranges for the given stats.. 
         // this will probably be hardcoded to match the types of the stats that exist and should be added
@@ -173,7 +179,7 @@ public class RuneSystem : MonoBehaviour
         // i.e projectile roll can range from 0-2 
         // with a projectile roll, the damage needs to be deducted accordingly
         // how will my rune know i need to deduct the amount based on the roll
-        
+
         // the preset rune amount
 
 
@@ -183,16 +189,16 @@ public class RuneSystem : MonoBehaviour
 
     // This class will handle rune upgrading as well, for sake of ease
 
-    
+
 
     // Rune Rolling Based on Rarities
     // common
 
     // uncommon
-    
+
     // rare
-    
+
     // epic
-    
+
     // relic
 }

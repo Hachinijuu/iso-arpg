@@ -33,6 +33,8 @@ public class CharacterClass : EntityData
 
     [Header("Offensive Stats")]
     //public SubStat AttackSpeed;
+    public SubStat PrimaryDamage;
+    public SubStat SecondaryDamage;
     public SubStat CritDamage;
     public SubStat CritChance;
     public SubStat Projectiles;

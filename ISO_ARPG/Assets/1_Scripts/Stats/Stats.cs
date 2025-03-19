@@ -57,7 +57,7 @@ public enum SubStatTypes
     MANA_REGEN,
     MANA_ON_HIT,
     COOLDOWN_REDUCTION,
-    
+
     // OFFENSE
     DAMAGE,         // damage           -- displayed as #, use flat
     ATTACK_SPEED,   // attack speed     -- displayed as %, use multiplier
@@ -65,7 +65,7 @@ public enum SubStatTypes
     CRIT_DAMAGE,    // damage of critical strikes   -- displayed as %
     PROJECTILES,    // the number of projectiles    -- flat number
     CHAINS,         // the number of chained attacks allowed    -- flat number
-    
+
     // DEFENSE
     ARMOUR,         // damage reduction -- displayed as #, use conversion --> armour value * conversion = % reduction
     DODGE,          // chance to dodge  -- displayed as %, mult
@@ -73,13 +73,15 @@ public enum SubStatTypes
 
     // Additional stats
     // CRIT DAMAGE IS ADDITIVE
-}
-
-public enum AbilityStats
-{ 
     PRIMARY_DAMAGE,
     SECONDARY_DAMAGE,
 }
+
+//public enum AbilityStats
+//{
+//    PRIMARY_DAMAGE,
+//    SECONDARY_DAMAGE,
+//}
 
 // How can I apply a rune with an ability stats modifer?
 // When the rune is added, go to the respective stat, match up the damage type, and then apply the value increase

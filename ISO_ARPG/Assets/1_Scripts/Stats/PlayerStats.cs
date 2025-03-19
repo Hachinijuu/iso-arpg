@@ -43,7 +43,7 @@ public class PlayerStats : EntityStats
     public SubStat CritChance { get { return critChance; } }
     public SubStat Projectiles { get { return numProjectiles; } }
     public SubStat Chains { get { return numChains; } }
-    
+
     // Utility
     public SubStat DamageFromMana { get { return dmgFromMana; } }
     public SubStat HealthRegen { get { return healthRegen; } }
@@ -66,6 +66,8 @@ public class PlayerStats : EntityStats
     Stat attackRange;
 
     // Offensive
+    SubStat primaryDamage;
+    SubStat secondaryDamage;
     SubStat critDamage;
     SubStat critChance;
     SubStat numProjectiles;
@@ -74,7 +76,7 @@ public class PlayerStats : EntityStats
     // Defensive
     SubStat dmgFromMana;
     SubStat healthRegen;
-    
+
     // Utility
     SubStat cdr;
     SubStat idGain;
@@ -125,18 +127,21 @@ public class PlayerStats : EntityStats
 
         // Sub Stats
         statList.Add(attackRange);
-        
-            // Offensive
+
+        // Offensive
+        statList.Add(primaryDamage);
+        statList.Add(secondaryDamage);
+
         statList.Add(critDamage);
         statList.Add(critChance);
         statList.Add(numProjectiles);
         statList.Add(numChains);
-        
-            // Defensive
+
+        // Defensive
         statList.Add(dmgFromMana);
         statList.Add(healthRegen);
 
-            // Utility
+        // Utility
         statList.Add(cdr);
         statList.Add(idGain);
         statList.Add(manaRegen);
@@ -172,10 +177,12 @@ public class PlayerStats : EntityStats
 
         // gameplay stats
         attackRange = new Stat(playerClass.Range);
-        
+
         // offensive stats
         damage = new SubStat(playerClass.Damage);
-        attackSpeed =  new SubStat(playerClass.AttackSpeed);
+        attackSpeed = new SubStat(playerClass.AttackSpeed);
+        primaryDamage = new SubStat(playerClass.PrimaryDamage);
+        secondaryDamage = new SubStat(playerClass.SecondaryDamage);
         critDamage = new SubStat(playerClass.CritDamage);
         critChance = new SubStat(playerClass.CritChance);
         numProjectiles = new SubStat(playerClass.Projectiles);

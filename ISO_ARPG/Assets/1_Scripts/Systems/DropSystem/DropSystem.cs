@@ -38,7 +38,7 @@ public class DropSystem : MonoBehaviour
     public void RegisterEnemyDrop(EntityStats enemy)
     {
         enemies.Add(enemy);
-        enemy.OnDied += context => { CheckDrop(enemy); } ;
+        enemy.OnDied += context => { CheckDrop(enemy); };
     }
 
     public void UnregisterEnemyDrop(EntityStats enemy)
@@ -51,13 +51,18 @@ public class DropSystem : MonoBehaviour
     public void RegisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Add(destructible);
-        destructible.OnDied += context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); } ;
+        destructible.OnDied += context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); };
     }
 
     public void UnregisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Remove(destructible);
-        destructible.OnDied -= context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); } ;
+        destructible.OnDied -= context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); };
+    }
+
+    public void RegisterChestDrops(EntityStats chest)
+    {
+
     }
 
     public void HandleDestruction(GameObject source)
@@ -77,6 +82,7 @@ public class DropSystem : MonoBehaviour
             Destroy(particle, 2);
         }
     }
+
 
     //public void AddListeners()
     //{
