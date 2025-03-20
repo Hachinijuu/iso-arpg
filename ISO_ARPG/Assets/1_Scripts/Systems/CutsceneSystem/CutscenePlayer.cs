@@ -13,8 +13,9 @@ public class CutscenePlayer : MonoBehaviour
     [Header("Slide Details")]
     public List<CutsceneSlide> slides;
 
-    [SerializeField] private float skipTime;
-    [SerializeField] private float skipInterval;
+    [SerializeField] private float skipTime = 1.0f;
+    
+    float skipCounter = 0.0f;
 
     #endregion
 
@@ -36,6 +37,27 @@ public class CutscenePlayer : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        HandleSkip();
+    }
+
+    public void HandleSkip()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            skipCounter += Time.deltaTime;
+            if (skipCounter > skipTime)
+            {
+                StopAllCoroutines();
+                EndCutscene();
+            }
+        }
+        else
+        {
+            skipCounter = 0.0f;
+        }
+    }
     public void StopCutscene()
     {
         StopAllCoroutines();

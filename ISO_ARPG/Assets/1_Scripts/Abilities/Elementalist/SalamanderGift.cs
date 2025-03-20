@@ -14,6 +14,7 @@ public class SalamanderGift : IdentityAbility
     {
         stats = e.Actor.Stats;
         source = e.Actor.SFXSource;
+        particles = e.Actor.Particles;
 
         //defaultCopy = new PlayerStats();
         if (asFusion)
@@ -31,7 +32,8 @@ public class SalamanderGift : IdentityAbility
         stats.Chains.Value += 1;
         stats.DamageFromMana.Value += dmgFromMana;
 
-        particles.ActivateAura();
+        if (!asFusion)
+            particles.ActivateAura();
         // Damage taken as mana instead of health...
 
         // This will require a rework to the hurtbox input
