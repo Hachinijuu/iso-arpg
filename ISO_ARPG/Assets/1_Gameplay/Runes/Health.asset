@@ -20,7 +20,14 @@ MonoBehaviour:
   prefab: {fileID: 0}
   dropChance: 0
   showPopup: 0
-  runeType: 0
-  mainStat: []
-  trackedStat: []
+  runeType: 2
+  mainStat:
+  - value: 0
+    maxValue: 0
+    type: 0
+  trackedStat:
+  - value: 0
+    maxValue: 50
+    type: 1
   subStat: []
+  destroyAmount: 0

@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   itemDescription: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 694344032, guid: 8acf273e6bb447944ad0ca5adcf05caa, type: 3}
   rarity: 0
-  type: 0
+  type: 2
   prefab: {fileID: 0}
   dropChance: 0
   showPopup: 0
-  runeType: 0
-  mainStat: []
+  runeType: 2
+  mainStat:
+  - value: 0
+    maxValue: 0
+    type: 0
   trackedStat: []
-  subStat: []
+  subStat:
+  - value: 0
+    maxValue: 3
+    type: 15
+  destroyAmount: 0
