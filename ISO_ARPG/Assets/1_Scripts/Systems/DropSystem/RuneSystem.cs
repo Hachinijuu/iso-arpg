@@ -35,7 +35,6 @@ public class RuneSystem : MonoBehaviour
             return instance;
         }
     }
-
     public List<MainStatRoll> mainStatRolls;
     public List<TrackedStatRoll> trackedStatRolls;
     public List<SubStatRoll> substatRolls;
@@ -43,6 +42,8 @@ public class RuneSystem : MonoBehaviour
     public float maxRollDifficultyStep = 0.2f;
     [Tooltip("Max * minimumPercentage (100 * 0.6) = 60 min value")]
     public float minimumPercentage = 0.6f;
+
+    public GameObject upgradeUI;
 
     public void Awake()
     {

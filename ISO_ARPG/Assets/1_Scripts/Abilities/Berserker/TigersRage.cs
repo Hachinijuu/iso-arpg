@@ -42,7 +42,7 @@ public class TigersRage : IdentityAbility
         //Debug.Log("fired");
         if (stats != null)
         {
-            defaultScale = controller.transform.localScale;      // cache the scale
+            //defaultScale = controller.transform.localScale;      // cache the scale
             //controller.transform.localScale *= scaleFactor;      // resize the character
 
             defaultCopy.CopyFromStats(stats);

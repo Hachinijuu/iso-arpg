@@ -39,6 +39,9 @@ public class PlayerStats : EntityStats
 
     // Offensive
     //public SubStat Damage { get { return damage; } }
+
+    public SubStat PrimaryDamage { get { return primaryDamage; } }
+    public SubStat SecondaryDamage { get { return secondaryDamage; } }
     public SubStat CritDamage { get { return critDamage; } }
     public SubStat CritChance { get { return critChance; } }
     public SubStat Projectiles { get { return numProjectiles; } }
@@ -252,8 +255,13 @@ public class PlayerStats : EntityStats
             ab.InitAbility(args);
         }
         Debug.Log("[PlayerStats]: Finished setting up " + fusion.Name);
+        FireFusionSelected();
         //ID_Fusion.asFusion = true;
         //ID_Fusion.UseAbility(gameObject);
     }
-    #endregion
+
+    public delegate void FusionSelected();
+    public FusionSelected onFusionSelected;
+    private void FireFusionSelected() { if (onFusionSelected != null) onFusionSelected(); }
+    #endregion 
 }

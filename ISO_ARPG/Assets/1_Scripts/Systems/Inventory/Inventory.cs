@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour
     }
     [SerializeField] HUDController hud;
     [SerializeField] GameObject inventoryScreen;
+    [SerializeField] GameObject stashScreen;
     [SerializeField] Canvas canvas;
     [SerializeField] GameObject slotHolder;
     [SerializeField] int perRow;

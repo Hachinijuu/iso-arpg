@@ -203,7 +203,10 @@ public class GameManager : MonoBehaviour
         currGameState = GameState.LOADING; // block player input while in loading state
         GameUI.SetActive(false);
         if (loadingScreen)
+        {
             loadingScreen.gameObject.SetActive(isLoading);
+            //loadingScreen.FadeIn();
+        }
         if (pauseMenu)
             pauseMenu.CanPause = false; // Do not allow pauses to happen while loading
 
@@ -259,7 +262,10 @@ public class GameManager : MonoBehaviour
         if (pauseMenu)
             pauseMenu.CanPause = true;
         if (loadingScreen)
+        {
+            //loadingScreen.FadeOut();
             loadingScreen.gameObject.SetActive(isLoading);
+        }
 
 
 

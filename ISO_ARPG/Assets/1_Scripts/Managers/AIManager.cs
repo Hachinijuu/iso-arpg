@@ -483,8 +483,16 @@ public class AIManager : MonoBehaviour
                             continue;   // Skip the spawn and continue the loop
                         }
                     }
+                    float eliteRoll = Random.Range(0, 100);
+                    if (eliteRoll > 95)
+                    {
+                        SpawnElite(agent, spawnPos);    // Baby elite, simply has higher stats
+                    }
+                    else
+                    {
+                        SpawnEnemy(agent, spawnPos);
+                    }
                     spawnDots.Add(spawnPos);
-                    SpawnEnemy(agent, spawnPos);
                     // Otherwise spawn at a random point
                 }
             }
@@ -531,14 +539,14 @@ public class AIManager : MonoBehaviour
                 }
 
                 // Assign the agent to a distance group
-                if (player != null)
-                {
-                    AssignControllerToGroup(controller, player.transform);
-                }
-                else
-                {
-                    AssignControllerToGroup(controller, regularInterval);
-                }
+                // if (player != null)
+                // {
+                //     AssignControllerToGroup(controller, player.transform);
+                // }
+                // else
+                // {
+                //     AssignControllerToGroup(controller, regularInterval);
+                // }
 
                 EntityStats stats = agent.GetComponent<EntityStats>();
                 if (stats != null)
@@ -565,6 +573,8 @@ public class AIManager : MonoBehaviour
         }
     }
 
+
+    public float eliteMultipler = 1.5f;
     public void SpawnElite(GameObject agent, Vector3 pos)
     { 
         // This spawns an elite enemy
@@ -583,29 +593,25 @@ public class AIManager : MonoBehaviour
                 {
                     statIndex2 = Random.Range(0, stats.statList.Count);
                 }
-                // if (statIndex1 != statIndex2)
-                // {
-                //     // Once the indices are found, modify the stats at the indices
-                //     if (stats.statList[statIndex1] is TrackedStat ts1 || stats.statList[statIndex2] is TrackedStat ts2) // If the stats found are tracked stats (Health)
-                //     {
-                //         ts1 = stats.statList[statIndex1] as TrackedStat;
-                //         ts2 = stats.statList[statIndex2] as TrackedStat;
-                //         if (ts1 != null)
-                //         {
-                //             ts1.MaxValue = ts1.MaxValue * 1.5f * GameManager.Instance.currDifficulty.healthMultiplier; 
-                //         }
-                //         if (ts2 != null)
-                //         {
-                //             ts2.MaxValue = ts2.MaxValue * GameManager.Instance.currDifficulty.
-                //         }
-                //     }
-                //     else
-                //     {
-
-                //     }
-                // }
+                if (stats.statList[statIndex1] is TrackedStat ts)
+                {
+                    ts.MaxValue = ts.MaxValue * eliteMultipler;
+                }
+                else
+                {
+                    stats.statList[statIndex1].Value *= eliteMultipler;
+                }
+                if (stats.statList[statIndex1] is TrackedStat ts2)
+                {
+                    ts2.MaxValue = ts2.MaxValue * eliteMultipler;
+                }
+                else
+                {
+                    stats.statList[statIndex1].Value *= eliteMultipler;
+                }
+                // Modify the stats, then spawn as per usual
+                SpawnEnemy(agent, pos); 
             }
-
         }
     }
     public void SpawnEnemy(ObjectPool fromPool, Vector3 pos)

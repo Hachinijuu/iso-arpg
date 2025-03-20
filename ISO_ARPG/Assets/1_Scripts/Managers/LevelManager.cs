@@ -73,6 +73,8 @@ public class LevelManager : MonoBehaviour
     public Transform PlayerSpawnPoint { get { return playerSpawn; } }
     [SerializeField] private List<EnemySpawnPoint> enemySpawnPoints;
     public List<EnemySpawnPoint> EnemySpawnPoints { get { return enemySpawnPoints; } }
+    [SerializeField] private List<EnemySpawnPoint> eliteSpawnPoints;
+    public List<EnemySpawnPoint> EliteSpawnPoints { get { return eliteSpawnPoints; } }
     public LevelType type;
     public enum LevelType { NONE, CLEAR, ELITE }
     [SerializeField] private LevelDetails details;

@@ -7,11 +7,20 @@ public class RuneUpgradeScreen : MonoBehaviour
 {
     public ItemRarity rank; // this will be swapped via toggles
     [SerializeField] GameObject runeList;
-    [SerializeField] RuneSlot upgradeSlot;
-
+    [SerializeField] ItemSlot upgradeSlot;
 
     [SerializeField] int baseCost;
     [SerializeField] float rarityCostModifier;
+
+    [SerializeField] Button createButton;
+    [SerializeField] Button upgradeButton;
+    [SerializeField] Button destroyButton;
+
+    public void Start()
+    {
+        Inventory.Instance.OnItemReleased += context => { UpdateGhostRune(); };
+        UpdateGhostRune();
+    }
     public int CalculateCost()
     {
         return (int)(baseCost * (1 + (rarityCostModifier * (int)rank)));
@@ -44,6 +53,22 @@ public class RuneUpgradeScreen : MonoBehaviour
         }
     }
 
+    public void UpdateGhostRune()
+    {
+        if (upgradeSlot.HasItem)
+        {
+            ghostRune = upgradeSlot.item as RuneData;
+            createButton.interactable = false;
+            upgradeButton.interactable = true;
+            destroyButton.interactable = true;
+        }
+        else
+        {
+            createButton.interactable = true;
+            upgradeButton.interactable = false;
+            destroyButton.interactable = false;
+        }
+    }
     public RuneData ghostRune;
     public void CreateClicked()
     {
@@ -51,6 +76,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         // Stores the current stat on the button press
 
         // Show the rune rank indicator
+        runeList.SetActive(true);
     }
     
     public void SetRarity(ItemRarity rarity)
