@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "SalamanderGift", menuName = "sykcorSystems/Abilities/Elementalist/SalamanderGift", order = 4)]
 public class SalamanderGift : IdentityAbility
 {
     AudioSource source;

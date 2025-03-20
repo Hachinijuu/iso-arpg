@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Fireball", menuName = "sykcorSystems/Abilities/Elementalist/Fireball", order = 4)]
 public class Fireball : Ability
 {
     Animator anim;

@@ -185,7 +185,7 @@ public class EnemyControllerV2 : MonoBehaviour
 
 
     // Only want to start this coroutine if there is none running already
-    IEnumerator CoroutineAct(AgentStateArgs e)
+    protected IEnumerator CoroutineAct(AgentStateArgs e)
     {
         if (currState is ICoroutineState state)
         {
@@ -210,8 +210,8 @@ public class EnemyControllerV2 : MonoBehaviour
     //float ICoroutineState.intervalTime { get { return attackCooldown; } set { attackCooldown = value; } }
 
     [Header("Animations")]
-    private static string AttackTrigger = "Attack";
-    private int animId = Animator.StringToHash(AttackTrigger);
+    protected static string AttackTrigger = "Attack";
+    protected int animId = Animator.StringToHash(AttackTrigger);
     public virtual void Attack()
     {
         if (canAttack)
@@ -219,7 +219,7 @@ public class EnemyControllerV2 : MonoBehaviour
             // Perform the attack (play the animation)
             canAttack = false;
             //Debug.Log("Performed Attack");
-            //animator.SetTrigger(animId);
+            animator.SetTrigger(animId);
             hitbox.Attack();
             //hitbox.AttackForTime(hitboxUptime);
             //hitbox.AllowDamageForTime(hitboxUptime);
@@ -229,7 +229,7 @@ public class EnemyControllerV2 : MonoBehaviour
         // Default attack is 
     }
 
-    IEnumerator AttackTimer()
+    protected IEnumerator AttackTimer()
     {
         while (!canAttack)
         {
@@ -244,7 +244,7 @@ public class EnemyControllerV2 : MonoBehaviour
         }
     }
 
-    private void ResetAttack()
+    protected void ResetAttack()
     {
         canAttack = true;
     }
@@ -278,7 +278,7 @@ public class EnemyControllerV2 : MonoBehaviour
     }
 
     // Move agent with a transform moves the agent directly to that position, this can presumably be used with a slot system
-    private Vector3 AvoidOthers()   // Return the steering amount
+    protected Vector3 AvoidOthers()   // Return the steering amount
     {
         Vector3 steer = Vector3.zero;
         

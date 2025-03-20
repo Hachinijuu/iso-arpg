@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ExplodingProjectile : Projectile
 {
+    [SerializeField] protected GameObject destructionEffect;
     public float explosionRadius = 2.0f;
+    public float particleTime = 0.25f;
     public LayerMask detectionLayer;
     protected override void HandleCollision(Hurtbox hb)
     {
@@ -28,6 +30,9 @@ public class ExplodingProjectile : Projectile
                 }
             }
         }
+        GameObject effect = Instantiate(destructionEffect);
+        effect.transform.position = transform.position;
+        Destroy(effect, particleTime);
 
         base.HandleCollision(hb);
     }

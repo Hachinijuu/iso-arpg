@@ -10,6 +10,8 @@ public class Item : MonoBehaviour
     // All items should be tagged interactable
     #region VARIABLES
     public bool requiresClick;
+
+    public ItemData ItemData { get { return itemData; } }
     [SerializeField] ItemData itemData;
 
     #endregion

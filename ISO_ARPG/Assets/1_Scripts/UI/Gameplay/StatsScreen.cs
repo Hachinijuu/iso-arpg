@@ -142,7 +142,7 @@ public class StatsScreen : MonoBehaviour
     void UpdateStat(TMP_Text uiText, float value)
     {
         uiText.text = value.ToString();
-        Debug.Log("Set " + uiText + " to :" + uiText.text);
+        //Debug.Log("Set " + uiText + " to :" + uiText.text);
     }
 
     void UpdateFusion()

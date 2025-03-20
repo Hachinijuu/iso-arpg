@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "FrozenSpikes", menuName = "sykcorSystems/Abilities/Elementalist/FrozenSpikes", order = 4)]
 public class FrozenSpikes : Ability
 {
     Animator anim;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [CreateAssetMenu(fileName = "HyperBarrage", menuName = "sykcorSystems/Abilities/Hunter/HyperBarrage", order = 4)]
 public class HyperBarrage : ChannelAbility
@@ -14,10 +15,10 @@ public class HyperBarrage : ChannelAbility
     AudioSource audioSource;
     PlayerStats stats;
     ProjectileSource shootSource;
+    PlayerParticleHandler particles;
     //int shotCounter = 0;    
     public float damageMultipler = 1.0f;
     private int animID = Animator.StringToHash("Ability2");
-
     float damage;
     #endregion
     public override void InitAbility(AbilityEventArgs e)
@@ -26,6 +27,7 @@ public class HyperBarrage : ChannelAbility
         audioSource = e.Actor.SFXSource;
         stats = e.Actor.Stats;
         shootSource = e.Actor.ShootSource;
+        particles = e.Actor.Particles;
 
         if (stats.Projectiles.Value > 0)
         {
@@ -46,6 +48,7 @@ public class HyperBarrage : ChannelAbility
         if (abilityActivated)
             audioSource.PlayOneShot(abilityActivated);
 
+        particles.HandleAbility2Particles(true);
         anim.SetTrigger(animID);
         // Fire out five projectiles in succession
 
@@ -107,6 +110,8 @@ public class HyperBarrage : ChannelAbility
 
     public override void EndAbility()
     {
+        particles.HandleAbility2Particles(false);
+        base.EndAbility();
         //anim.SetBool(animID, false);
     }
 }

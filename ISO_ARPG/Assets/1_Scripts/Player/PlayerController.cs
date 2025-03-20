@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     NavMeshAgent agent;
 
-    [SerializeField] GameObject auraSource;
+    //[SerializeField] GameObject auraSource;
     #endregion
 
     // input handling
@@ -204,13 +204,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         movement.HandleStops(false);
     }
-    public void SetAura(bool value)
-    {
-        if (auraSource)
-        {
-            auraSource.SetActive(value);
-        }
-    }
+    // public void SetAura(bool value)
+    // {
+    //     if (auraSource)
+    //     {
+    //         auraSource.SetActive(value);
+    //     }
+    // }
     private void MapPlayerActions()
     {
         input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion

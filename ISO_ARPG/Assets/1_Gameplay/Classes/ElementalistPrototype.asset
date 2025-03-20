@@ -58,6 +58,14 @@ MonoBehaviour:
   Range:
     value: 15
   rotationSpeed: 10
+  PrimaryDamage:
+    value: -1
+    maxValue: 0
+    type: 0
+  SecondaryDamage:
+    value: -1
+    maxValue: 0
+    type: 0
   CritDamage:
     value: 10
     maxValue: 10000
@@ -99,6 +107,7 @@ MonoBehaviour:
     maxValue: 0
     type: 6
   Abilities:
-  - {fileID: 11400000, guid: 2aa74705f0cec374e842afe41e55bc74, type: 2}
-  - {fileID: 11400000, guid: 55187f970a714bb4091bede58546ce44, type: 2}
-  IdentityAbility: {fileID: 11400000, guid: 6be7765a94522824f920219dc35f12aa, type: 2}
+  - {fileID: 11400000, guid: 42a9a63c087bf8942be74efbaa6a2381, type: 2}
+  - {fileID: 11400000, guid: a00c51e918b9cd04f859c08813ed1c36, type: 2}
+  IdentityAbility: {fileID: 11400000, guid: 69fc128e250d6f441812059c996778bb, type: 2}
+  BaseIDGain: 5
