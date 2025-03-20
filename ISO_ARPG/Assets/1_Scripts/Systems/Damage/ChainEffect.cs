@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class ChainEffect : MonoBehaviour
 {
     [SerializeField] Hitbox hitbox;
-
+    [SerializeField] PlayerStats stats;
     [SerializeField] int chainLimit; // How much times the attack can chain
     public float chainRange = 2.5f;
     // Chain attacks extend damage to the surroundings
-
     public LayerMask detectionLayer;
     private int chainAmount = 0;
 
@@ -18,10 +19,49 @@ public class ChainEffect : MonoBehaviour
     // This script will depend on an existing hitbox
 
     // When the hitbox successfully applies damage, the chain will extend the damage
-
-    public void Awake()
+    [SerializeField] bool defaultChain = false;
+    int numChains;
+    //public void Awake()
+    //{
+    //    // When the hitbox deals damage, spread the damage out (with chain attacks)
+    //    // But, only let the 
+    //    hitbox.onDamageDealt += context => { HandleChainAttack(context, ref chainAmount, chainLimit); };   // When the hitbox deals damage to a target
+    //    stats.Chains.Changed += context => { UpdateChains(); }; // Update the number of chains
+    //}
+    public void OnEnable()
     {
-        hitbox.onDamageDealt += context => { HandleChainAttack(context, ref chainAmount, chainLimit); };   // When the hitbox deals damage to a target
+        if (stats == null)
+        {
+            stats = PlayerManager.Instance.currentPlayer.Stats;
+        }
+        if (hitbox == null)
+        {
+            hitbox = GetComponent<Hitbox>();
+        }
+
+        if (hitbox != null) hitbox.onDamageDealt += context => { HandleChainAttack(context, ref chainAmount, chainLimit); };   // When the hitbox deals damage to a target
+        if (stats != null) stats.Chains.Changed += context => { UpdateChains(); }; // Update the number of chains
+    }
+
+    public void OnDisable()
+    {
+        if (hitbox != null) hitbox.onDamageDealt += context => { StartChain(context, ref chainAmount, chainLimit); };   // When the hitbox deals damage to a target
+        if (stats != null) stats.Chains.Changed += context => { UpdateChains(); }; // Update the number of chains
+    }
+
+    private void UpdateChains()
+    {
+        numChains = (int)stats.Chains.Value;
+    }
+
+    private void StartChain(DamageArgs args, ref int chainAmount, int chainLimit)
+    {
+        // Before the chain can be started, check if the player has enough chains --> for the ELEMENTALIST
+        // Set this value on fire, and then remove the value
+        if (numChains > 0 || defaultChain)
+        {
+            HandleChainAttack(args, ref chainAmount, chainLimit);
+        }
     }
     private void HandleChainAttack(DamageArgs args, ref int chainAmount, int chainLimit)
     {
@@ -93,16 +133,6 @@ public class ChainEffect : MonoBehaviour
         // Hurtboxes require entity stats, so when finding, the two MUST be together, otherwise the implementation of the target is improper
 
         // There is a list of active enemies that can be referenced
-    }
-
-    private void ContinueChain(ref int currChain, int chainLimit)
-    {
-        if (currChain >= chainLimit)
-            currChain = 0;
-            return;
-
-        // Handle the chain and return
-
     }
 
     private void OnDrawGizmos()

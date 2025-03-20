@@ -45,7 +45,7 @@ public class Projectile : Hitbox
     {
         base.EndDamageWindow();
         gameObject.SetActive(false);
-        Debug.Log("Uptime ended");
+        //Debug.Log("Uptime ended");
     }
     #endregion
     //private void OnGUI()

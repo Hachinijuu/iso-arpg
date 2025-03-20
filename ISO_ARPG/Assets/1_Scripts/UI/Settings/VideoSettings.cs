@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+using TMPro;
 
 public class VideoSettings : MonoBehaviour
 {
     //public RenderPipelineAsset[] qualityLevels;
-    public Slider qualitySlider;
-
+    public TMP_Dropdown qualityDropdown;
+    public TMP_Dropdown resolutionDropdown;
     void Start()
     {
         Debug.Log(QualitySettings.count);
-        qualitySlider.value = QualitySettings.GetQualityLevel();
+        qualityDropdown.value = QualitySettings.GetQualityLevel();
     }
     public void SetQualityLevel(int level)
     {
@@ -20,4 +21,5 @@ public class VideoSettings : MonoBehaviour
         Debug.Log("Set Quality level to: " + QualitySettings.GetQualityLevel());
         //QualitySettings.renderPipeline = qualityLevels[level];
     }
+
 }

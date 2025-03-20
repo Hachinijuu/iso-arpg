@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PauseMenu : MonoBehaviour 
 {
     [SerializeField] GameObject panel;
     public bool CanPause {get { return canPause; } set { canPause = true; } }
     private bool canPause = true;
+
+    [SerializeField] GameObject settingsPanel;
 
     // refactor to new update system in time
 
@@ -14,15 +17,23 @@ public class PauseMenu : MonoBehaviour
         {
             if (canPause && GameManager.Instance.currGameState != GameManager.GameState.MENU && GameManager.Instance.level != GameManager.eLevel.CUTSCENE && GameManager.Instance.level != GameManager.eLevel.TRANSITION)
             {
-                if (!panel.activeInHierarchy)
+                if (!panel.activeInHierarchy && !settingsOn)
                 {
                     GameManager.Instance.PauseGame();
                     panel.SetActive(true);
                 }
-                else
+                else    // 2 step back out if settings is active (back button)
                 {
-                    panel.SetActive(false);
-                    GameManager.Instance.UnpauseGame();
+                    if (settingsOn)
+                    {
+                        settingsPanel.SetActive(false);
+                        settingsOn = false;
+                    }
+                    else
+                    {
+                        panel.SetActive(false);
+                        GameManager.Instance.UnpauseGame();
+                    }
                 }
             }
         }
@@ -34,9 +45,12 @@ public class PauseMenu : MonoBehaviour
         GameManager.Instance.UnpauseGame();
     }
 
+    bool settingsOn = false;
     public void SettingsClicked()
     {
-
+        settingsPanel.SetActive(true);  // Turn settings on
+        settingsOn = true;
+        //panel.SetActive(false);         // Deactivate pause screen
     }
 
     public void ReturnToHubClicked()

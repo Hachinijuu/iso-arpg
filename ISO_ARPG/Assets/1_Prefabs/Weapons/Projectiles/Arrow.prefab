@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 8538889769680120261}
   - component: {fileID: 6842978903335142606}
   - component: {fileID: 7343116606026985181}
+  - component: {fileID: -3215130526568844085}
   m_Layer: 10
-  m_Name: Prelim_BARRAGE_Arrow
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +126,7 @@ MonoBehaviour:
   attackRange: 0
   damageLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   rb: {fileID: 7343116606026985181}
   pierces: 1
   uptime: 3
@@ -157,6 +158,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-3215130526568844085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263715514157930732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca24199dcbf89b34d8ba92f4e7b7c059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitbox: {fileID: 6842978903335142606}
+  stats: {fileID: 0}
+  chainLimit: 2
+  chainRange: 2.5
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &7953554121304051502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8131268659079302424, guid: c5c44ff876f4a2e4b90275934e2a6ec9, type: 3}
       propertyPath: lengthInSec
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8131268659079302424, guid: c5c44ff876f4a2e4b90275934e2a6ec9, type: 3}
       propertyPath: EmissionModule.enabled

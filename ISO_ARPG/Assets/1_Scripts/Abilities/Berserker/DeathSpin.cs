@@ -51,7 +51,7 @@ public class DeathSpin : ChannelAbility
         anim.SetFloat(moveAnimID, 0.0f);   // Set speed to none to return to idle
 
         // Only want this ability to drive movement IF the user is using click to move (current settings are bound locally, final settings will be centralized)
-        if (move.type == PlayerMovement.MoveInput.CLICK)
+        if (move.type == MoveInput.CLICK)
         {
             move.MoveHeld = true;           // Allow this to drive movement
         }
@@ -66,7 +66,7 @@ public class DeathSpin : ChannelAbility
         source.clip = null;
         source.loop = false;
         source.Stop();
-        if (move.type == PlayerMovement.MoveInput.CLICK)
+        if (move.type == MoveInput.CLICK)
         {
             move.MoveHeld = false;           // Allow this to drive movement
         }

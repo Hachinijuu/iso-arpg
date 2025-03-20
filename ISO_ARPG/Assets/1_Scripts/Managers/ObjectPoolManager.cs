@@ -10,7 +10,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     // THIS MANAGER WILL HANDLE THE GENERAL OBJECT POOLS
     // PROJECTILES AND EFFECTS MAYBE
-    public enum PoolTypes { ARROW_PROJECTILE, FIREBALL, AXE_PROJECTILE }
+    public enum PoolTypes { ARROW_PROJECTILE, FIREBALL, ICICLE, AXE_PROJECTILE }
     public static ObjectPoolManager Instance { get { return instance; } }
     private static ObjectPoolManager instance;
 

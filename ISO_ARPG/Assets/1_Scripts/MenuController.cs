@@ -17,6 +17,7 @@ public class MenuController : MonoBehaviour
     public void SettingClicked()
     {
         // open up the settings screen
+        GameManager.Instance.settingsScreen.settingsScreen.SetActive(true);
     }
 
     public void CreditsClicked()

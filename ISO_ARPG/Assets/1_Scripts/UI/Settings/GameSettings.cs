@@ -8,27 +8,46 @@ public class GameSettings : MonoBehaviour
 {
     public Slider difficultySlider; // might be a segmented button
 
-    public Button mouseKeyboard;
-    public Button controller;
+    public Toggle mouseKeyboard;
+    public Toggle controller;
 
+    public Toggle directional;
+    public Toggle clickToMove;
+
+    public void Awake()
+    {
+        difficultySlider.value = (float)GoX_Difficulties.GOD;
+        SwitchMovement();
+    }
     public void SwitchMovement()
     {
+        if (directional.isOn)
+        {
+            PlayerManager.Instance.moveType = MoveInput.DIRECTIONAL;
+        }
+        if (clickToMove.isOn)
+        {
+            PlayerManager.Instance.moveType = MoveInput.CLICK;
+        }
         // This will probably be a dropdown / button
         // Determines whether the player should move based on WASD (directional) or click to move (left click / right click driven)
         // Might force certain inputs based on controllers / disable inputs
         // If controller, don't handle click to move, instead drive all movement via joystick
     }
 
-    public void SwitchInput(String inputType)
+    public void SwitchInput()
     {
-        if (inputType == "mouseKeyboard")
-        {
-            // Get the input map and switch it to mouse keyboard controls
-        }
-        else if (inputType == "controller")
-        {
-            // Get the input map and switch it to controller controls
-        }
+        // THIS WILL SWITCH BETWEEN CONTROL SCHEMES, IT IS EASY TO SETUP
+
+        
+        //if (inputType == "mouseKeyboard")
+        //{
+        //    // Get the input map and switch it to mouse keyboard controls
+        //}
+        //else if (inputType == "controller")
+        //{
+        //    // Get the input map and switch it to controller controls
+        //}
     }
     public void UpdateDifficulty(float value)
     {

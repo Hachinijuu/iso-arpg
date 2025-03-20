@@ -3,11 +3,11 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 //[RequireComponent(typeof(NavMeshAgent))]
+public enum MoveInput { CLICK, DIRECTIONAL }
 public class PlayerMovement : MonoBehaviour
 {
     #region VARIABLES
     // Read controls via external game manager script -- cache locally?
-    public enum MoveInput { CLICK, DIRECTIONAL }
     public MoveInput type;
     //public MoveInput moveType;
     // CLICK is mouse click to move / hold to move
@@ -56,6 +56,16 @@ public class PlayerMovement : MonoBehaviour
         //agent.updateRotation = false;
         // map inputs
         //MapMovementActions();
+    }
+
+    private void Start()
+    {
+        PlayerManager.Instance.OnMovementChanged += UpdateCurrentMovement;
+    }
+
+    private void UpdateCurrentMovement()
+    {
+        type = PlayerManager.Instance.moveType;
     }
     private void OnEnable() 
     {

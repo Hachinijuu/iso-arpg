@@ -151,4 +151,14 @@ public class ProjectileSource : MonoBehaviour
             }
         }
     }
+
+    public void WaitForTime(float time)
+    {
+        StartCoroutine(TimeStep(time));
+    }
+
+    IEnumerator TimeStep(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
 }

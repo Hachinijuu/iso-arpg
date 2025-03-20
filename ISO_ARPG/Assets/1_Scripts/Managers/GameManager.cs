@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     // Multiplicative, keep default of 1
     [Header("Balancing Values")]
     [Range(1, 2)] public float MainConvert = 1.012f;
@@ -48,6 +47,7 @@ public class GameManager : MonoBehaviour
     private string currentLevelName;
     public GameObject GameUI;
     [SerializeField] public DefeatScreen loseScreen;
+    [SerializeField] public SettingsController settingsScreen;
     public bool CutscenePlayed = false;
 
     // SCENES

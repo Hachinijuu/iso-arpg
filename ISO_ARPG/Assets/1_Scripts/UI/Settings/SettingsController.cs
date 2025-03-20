@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SettingsController : MonoBehaviour
 {
-    [SerializeField] GameObject settingsScreen;
+    [SerializeField] public GameObject settingsScreen;
 
     [SerializeField] Toggle gameToggle;
     [SerializeField] Toggle videoToggle;
@@ -22,28 +22,36 @@ public class SettingsController : MonoBehaviour
     // Each sub-tab will have it's own controller
 
     // Update is called once per frame
-    void Update()
-    {
-        // Temp input detection, for debug purposes mostly
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!settingsScreen.activeInHierarchy)
-            {
-                settingsScreen.SetActive(true);
-            }
-            else
-            {
-                settingsScreen.SetActive(false);
-            }
-        }
-    }
+    // void Update()
+    // {
+    //     // Temp input detection, for debug purposes mostly
+    //     if (Input.GetKeyDown(KeyCode.Escape))
+    //     {
+    //         if (!settingsScreen.activeInHierarchy)
+    //         {
+    //             settingsScreen.SetActive(true);
+    //         }
+    //         else
+    //         {
+    //             settingsScreen.SetActive(false);
+    //         }
+    //     }
+    // }
 
     public void Awake()
     {
         if (gameTab.activeInHierarchy)
         {
-           gameToggle.isOn = true;
-           TabClicked();
+            gameToggle.isOn = true;
+            TabClicked();
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            settingsScreen.SetActive(false);
         }
     }
 

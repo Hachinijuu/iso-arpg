@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,6 +47,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
     //[SerializeField] CharacterSelection selectUI;
+    public MoveInput moveType;  // THIS IS THE MOVEMENT TYPE OF THE PLAYER
+    public delegate void MovementChanged();
+    public event MovementChanged OnMovementChanged;
+    public void FireMovementChanged() {if (OnMovementChanged != null) OnMovementChanged(); }
     [SerializeField] HUDController HUD;
     public List<CharacterPair> characters;
     public Dictionary<GoX_Class, PlayerController> playableCharacters;
