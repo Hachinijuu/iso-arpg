@@ -5,10 +5,11 @@ public class TigersRage : IdentityAbility
 {
     #region VARIABLES
     AudioSource source;
-    private Vector3 defaultScale;
+    PlayerParticleHandler particles;
+    //private Vector3 defaultScale;
 
     [Header("Stat Adjusments")]
-    public float scaleFactor = 1.5f;
+    //public float scaleFactor = 1.5f;
 
     // Currently used as multipliers
     public float maxHealthIncrease = 1f;
@@ -42,14 +43,15 @@ public class TigersRage : IdentityAbility
         if (stats != null)
         {
             defaultScale = controller.transform.localScale;      // cache the scale
-            controller.transform.localScale *= scaleFactor;      // resize the character
+            //controller.transform.localScale *= scaleFactor;      // resize the character
 
             defaultCopy.CopyFromStats(stats);
 
             if (abilityActivated)
                 source.PlayOneShot(abilityActivated);
 
-            controller.SetAura(true);
+            particles.ActivateAura();
+            //controller.SetAura(true);
 
             // add increased stats
             stats.Health.MaxValue *= maxHealthIncrease;
@@ -67,9 +69,10 @@ public class TigersRage : IdentityAbility
         if (stats != null)
         {
             Debug.Log("Reset Values");
-            controller.transform.localScale = defaultScale;              // Return the character to normal size
+            //controller.transform.localScale = defaultScale;              // Return the character to normal size
 
-            controller.SetAura(false);
+            particles.DeactivateAura();
+            //controller.SetAura(false);
 
             //stats.CopyFromStats(defaultCopy);
             //Debug.Log("What is the health:" + stats.Health.MaxValue);

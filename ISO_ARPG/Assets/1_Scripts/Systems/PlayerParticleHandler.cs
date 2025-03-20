@@ -2,17 +2,30 @@ using UnityEngine;
 
 public class PlayerParticleHandler : MonoBehaviour
 {
-    [SerializeField] GameObject[] particles;
+    [SerializeField] GameObject[] ab1particles;
+    [SerializeField] GameObject[] ab2particles;
     [SerializeField] GameObject auraGlow;
 
-    public void ActivateParticle(int index)
+    public void HandleAbility1Particles(bool on)
     {
-        particles[index].SetActive(true);
+        if (ab1particles != null && ab1particles.Length > 0)
+        {
+            foreach (GameObject particle in ab1particles)
+            {
+                particle.SetActive(on);
+            }
+        }
     }
 
-    public void DeactivateParticle(int index)
+    public void HandleAbility2Particles(bool on)
     {
-        particles[index].SetActive(false);
+        if (ab1particles != null && ab1particles.Length > 0)
+        {
+            foreach (GameObject particle in ab1particles)
+            {
+                particle.SetActive(on);
+            }
+        }
     }
 
     public void ActivateAura()

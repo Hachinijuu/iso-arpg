@@ -100,13 +100,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   damage: 0
-  attackRange: 0
+  attackRange: 1.5
   damageLayer:
     serializedVersion: 2
     m_Bits: 384
   rb: {fileID: 6667247622329995865}
   pierces: 0
-  uptime: 0
+  uptime: 3
   speed: 65
 --- !u!54 &6667247622329995865
 Rigidbody:
@@ -154,3 +154,4 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 128
+  defaultChain: 0

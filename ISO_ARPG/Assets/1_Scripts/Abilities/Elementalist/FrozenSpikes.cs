@@ -29,7 +29,7 @@ public class FrozenSpikes : Ability
         damage = (stats.Damage.Value * damageMultipler) + (stats.INT.Value * GameManager.Instance.MainConvert);
         for (int i = 0; i < stats.Projectiles.Value; i++)
         {
-            Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.FIREBALL, i);
+            Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ICICLE, i);
             if (p != null)
             {
                 p.SetDamage(damage);

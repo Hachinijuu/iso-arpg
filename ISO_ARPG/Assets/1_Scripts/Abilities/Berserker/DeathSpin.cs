@@ -11,6 +11,7 @@ public class DeathSpin : ChannelAbility
     Hitbox[] hitboxes;
     PlayerStats stats;
     ProjectileSource shootSource;
+    PlayerParticleHandler particles;
     public float damageMultipler = 1.0f;
     float damage;
 
@@ -30,6 +31,7 @@ public class DeathSpin : ChannelAbility
         stats = e.Actor.Stats;
         move = e.Actor.Movement;
         shootSource = e.Actor.ShootSource;
+        particles = e.Actor.Particles;
     }
     protected override void Fire()
     {
@@ -57,6 +59,7 @@ public class DeathSpin : ChannelAbility
         }
         move.UseAnimations = false;     // Stop the move animations from being used (override with spin)
         move.CanRotate = false;         // Stop player rotation
+        particles.HandleAbility2Particles(true);
     }
     public override void EndAbility(AbilityEventArgs e)
     {
@@ -73,6 +76,7 @@ public class DeathSpin : ChannelAbility
         move.UseAnimations = true;
         move.CanRotate = true;
 
+        particles.HandleAbility2Particles(false);
         base.EndAbility(e);
     }
 
@@ -85,7 +89,7 @@ public class DeathSpin : ChannelAbility
             // If there are projectiles to shoot
             for (int i = 0; i < stats.Projectiles.Value; i++)
             {
-                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
+                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.AXE_PROJECTILE, i);
                 if (projectile != null)
                 {
                     projectile.SetDamage(damage);

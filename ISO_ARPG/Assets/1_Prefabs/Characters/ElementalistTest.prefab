@@ -3699,6 +3699,9 @@ GameObject:
   - component: {fileID: 3638355526777216085}
   - component: {fileID: 3368354983348086781}
   - component: {fileID: 1231059411399961664}
+  - component: {fileID: 6814849097843380238}
+  - component: {fileID: 4283279920422525785}
+  - component: {fileID: 3244419878104752286}
   m_Layer: 0
   m_Name: ElementalistTest
   m_TagString: Player
@@ -3740,22 +3743,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f0048b53123414db878088c62b3465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    value: -1
-    maxValue: 0
-    type: 0
-  armour:
-    value: -1
-    maxValue: 0
-    type: 0
-  dodge:
-    value: -1
-    maxValue: 0
-    type: 0
+  data: {fileID: 0}
+  id: 0
+  statList: []
   playerClass: {fileID: 11400000, guid: 04dd0287d7460c94384bbc1a7b2c8ed4, type: 2}
   ID_Fusion: {fileID: 0}
   passives: []
-  statList: []
   Abilities: []
 --- !u!114 &1057835725860376503
 MonoBehaviour:
@@ -3826,7 +3819,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   raycastLength: 50
+  characterBody: {fileID: 0}
+  body: {fileID: 0}
+  anim: {fileID: 0}
   rotationSpeed: 20
+  clickBuffer: 0.05
 --- !u!114 &6521231582714622663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3858,7 +3855,7 @@ MonoBehaviour:
   - Enemy
   mask:
     serializedVersion: 2
-    m_Bits: 1920
+    m_Bits: 896
 --- !u!82 &9086955209170901456
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4009,6 +4006,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3eaa931f3ad66b94cbba26048aad1498, type: 2}
   - {fileID: 11400000, guid: 078211f0ee3dd8942b112eee4c6cfff6, type: 2}
   currStep: {fileID: 0}
+  link: {fileID: 0}
 --- !u!114 &1231059411399961664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4021,7 +4019,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e862e6c2499b645a24b7544e972e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  animator: {fileID: 0}
+  body: {fileID: 0}
+  altBody: {fileID: 0}
   auraSource: {fileID: 0}
+--- !u!114 &6814849097843380238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062612876170716174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d99fd4e3560944096d73ed36960526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voiceSource: {fileID: 0}
+  effectSource: {fileID: 0}
+  efforts: {fileID: 0}
+  hurts: {fileID: 0}
+  cancelSound: {fileID: 0}
+  minPitch: 0
+  maxPitch: 1
+--- !u!114 &4283279920422525785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062612876170716174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22dc280f10e36d24b8abc6a2af5d3283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: []
+--- !u!114 &3244419878104752286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062612876170716174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2dcbf8dce643a746aa64776b09b3821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ab1particles: []
+  ab2particles: []
+  auraGlow: {fileID: 0}
 --- !u!1 &9072673744366376878
 GameObject:
   m_ObjectHideFlags: 0

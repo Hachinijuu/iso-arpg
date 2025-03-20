@@ -4008,6 +4008,7 @@ GameObject:
   - component: {fileID: 1596754456890972535}
   - component: {fileID: 2249985947442588543}
   - component: {fileID: 1885339678937184628}
+  - component: {fileID: 6303614202622227338}
   m_Layer: 11
   m_Name: Elementalist
   m_TagString: Player
@@ -4340,6 +4341,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1824355195502048528}
+--- !u!114 &6303614202622227338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398982663912265838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2dcbf8dce643a746aa64776b09b3821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ab1particles: []
+  ab2particles: []
+  auraGlow: {fileID: 7056222079983982944}
 --- !u!1 &6514671868655972672
 GameObject:
   m_ObjectHideFlags: 0

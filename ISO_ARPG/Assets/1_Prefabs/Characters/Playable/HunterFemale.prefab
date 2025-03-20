@@ -1923,8 +1923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2dcbf8dce643a746aa64776b09b3821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles: []
-  auraGlow: {fileID: 0}
+  ab1particles: []
+  ab2particles: []
+  auraGlow: {fileID: 7056222079983982944}
 --- !u!1 &6402213406995164628
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,7 +2820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3943303136166098651, guid: b428f252630904445ab8752928adf242, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7627819237801327904, guid: b428f252630904445ab8752928adf242, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a

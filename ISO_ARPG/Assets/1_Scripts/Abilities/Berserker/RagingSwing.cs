@@ -9,6 +9,7 @@ public class RagingSwing : StackAbility
     Hitbox[] hitboxes;
     PlayerStats stats;
     ProjectileSource shootSource;
+    PlayerParticleHandler particles;
     public float damageMultipler = 1.0f;
     float damage;
 
@@ -22,6 +23,7 @@ public class RagingSwing : StackAbility
         stats = e.Actor.Stats;
         hitboxes = e.Actor.transform.GetComponentsInChildren<Hitbox>();
         shootSource = e.Actor.ShootSource;
+        particles = e.Actor.Particles;
 
         shootSource.InitFirePositions();
     }
@@ -40,7 +42,7 @@ public class RagingSwing : StackAbility
             // If there are projectiles to shoot
             for (int i = 0; i < stats.Projectiles.Value; i++)
             {
-                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
+                Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.AXE_PROJECTILE, i);
                 if (projectile != null)
                 {
                     projectile.SetDamage(damage);
@@ -96,10 +98,13 @@ public class RagingSwing : StackAbility
 
         //Debug.Log("Raging Swing");
         //throw new System.NotImplementedException();
+
+        particles.HandleAbility1Particles(true);
     }
 
     public override void EndAbility(AbilityEventArgs e)
     {
+        particles.HandleAbility1Particles(false);
         SetDamageDetection(false);
     }
 

@@ -10,6 +10,7 @@ public class PhoenixSwiftness : IdentityAbility
 
     AudioSource source;
     PlayerStats stats;
+    PlayerParticleHandler particles;
 
     PlayerStats defaultCopy;
     #endregion
@@ -41,6 +42,8 @@ public class PhoenixSwiftness : IdentityAbility
             stats.Dodge.Value += dodgeIncrease;                 // Add 25% more dodge -- flat number
             stats.Projectiles.Value += projectileIncrease;      // Add # of projectiles
             Debug.Log("Added Stats to: " + stats);
+
+            particles.ActivateAura();
         }
     }
 
@@ -51,6 +54,7 @@ public class PhoenixSwiftness : IdentityAbility
         stats.Dodge.Value -= dodgeIncrease;                 // Add 25% more dodge -- flat number
         stats.Projectiles.Value -= projectileIncrease;      // Add # of projectiles
 
+        particles.DeactivateAura();
         //stats.CopyFromStats(defaultCopy);
     }
     #endregion
