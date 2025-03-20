@@ -103,16 +103,44 @@ public class PlayerAbilityHandler : MonoBehaviour
         //        Debug.LogWarning("[AbilityHandler]: No abilities to read from");
         //}
     }
-    private void OnEnable() 
+    // private void OnEnable() 
+    // {
+    //     // Probably init abilities elsewhere (on start)
+    //     // 
+    //     StopAllCoroutines();        // Since whenever enabled, the player is reinitialized, stop all coroutines running on the thread
+    //     InitAbilities();
+    //     MapPlayerActions();    
+    // }
+
+    private void OnDisable()
     {
-        // Probably init abilities elsewhere (on start)
-        // 
+        Debug.Log("Actions unmapped");
+        UnmapPlayerActions();
+        // Deactivate any existing abilities
+        foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
+        {
+            // If you can't use the ability because it has been activated
+            if (abilityUsage.Value == false)
+            {
+                abilityUsage.Key.EndAbility(new AbilityEventArgs(abilityUsage.Key, controller));  // Stop using the ability
+            }
+            // This will shrink the player if they have 
+        }
+    }
+
+    // ON ENABLE ON DISABLE SELECTED WILL BREAK GAME LOGIC IF THE PLAYER RETURNS TO THE MENU
+    // IN THE FACT THAT ABILITIES WILL BE REINIALIZED AND SET TO VALUES
+    // BEFORE, LEVEL LOADS WOULD CAUSE DUPLICATES (i.e) load to levels, calling abilities multiple times even though one click (has copys)
+    // Now, there are no copys or shouldn't be any copys -- Not this fix
+
+    public void PlayerSelected()
+    {
         StopAllCoroutines();        // Since whenever enabled, the player is reinitialized, stop all coroutines running on the thread
         InitAbilities();
         MapPlayerActions();    
     }
 
-    private void OnDisable()
+    public void PlayerDeselected()
     {
         Debug.Log("Actions unmapped");
         UnmapPlayerActions();
@@ -167,7 +195,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         // Flush the list, this allows for class swap abilities to function
         canUseAbility.Clear();
         canUseAbility = new Dictionary<Ability, bool>();
-        Debug.Log(canUseAbility.Count);
+        Debug.Log("[AbilityHandler] number of abilites :" + canUseAbility.Count);
         if (canUseAbility.Count <= 0 || canUseAbility == null)
         {
             foreach (Ability ab in stats.Abilities)
@@ -290,7 +318,7 @@ public class PlayerAbilityHandler : MonoBehaviour
             ab.EndAbility(new AbilityEventArgs(ab, controller));          // Call the abilities' end
             StopCoroutine("HandleHeld");        // Stop the handle held coroutine
             // ONLY start the cooldown if the ability CAN BE USED
-            Debug.Log("Ended");
+            //Debug.Log("Ended");
 
             if (!ab.OnCooldown) // Only put it on cooldown if it's not already on cooldown
                 StartCoroutine(HandleCooldown(ab)); // Start the cooldown for the ability

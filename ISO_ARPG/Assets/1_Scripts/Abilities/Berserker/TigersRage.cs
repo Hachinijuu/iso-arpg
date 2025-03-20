@@ -28,6 +28,7 @@ public class TigersRage : IdentityAbility
         controller = e.Actor;
         stats = controller.Stats;
         source = controller.SFXSource;
+        particles = controller.Particles;
 
         defaultCopy = stats;
 
@@ -60,6 +61,8 @@ public class TigersRage : IdentityAbility
             stats.CritDamage.Value *= critDamageIncrease;
         }
 
+        if (!asFusion)
+            particles.ActivateAura();
         //Debug.Log("Tigers Rage");
         //throw new System.NotImplementedException();
     }

@@ -5,7 +5,7 @@ public class LevelVolume : MonoBehaviour
     public GameManager.eLevel toLoad;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collided with " + other.name);
+        //Debug.Log("Collided with " + other.name);
         if (other.CompareTag("Player"))
         {
             // Dirty solution fix later

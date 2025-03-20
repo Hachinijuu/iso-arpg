@@ -19,6 +19,7 @@ public class PhoenixSwiftness : IdentityAbility
     {
         stats = e.Actor.Stats;
         source = e.Actor.SFXSource;
+        particles = e.Actor.Particles;
         //defaultCopy = new PlayerStats();
         if (asFusion)
         {
@@ -43,7 +44,8 @@ public class PhoenixSwiftness : IdentityAbility
             stats.Projectiles.Value += projectileIncrease;      // Add # of projectiles
             Debug.Log("Added Stats to: " + stats);
 
-            particles.ActivateAura();
+            if (!asFusion)
+                particles.ActivateAura();
         }
     }
 

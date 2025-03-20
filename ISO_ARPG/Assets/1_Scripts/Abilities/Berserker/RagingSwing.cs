@@ -21,7 +21,7 @@ public class RagingSwing : StackAbility
         anim = e.Actor.Animator;
         audioSource = e.Actor.SFXSource;
         stats = e.Actor.Stats;
-        hitboxes = e.Actor.transform.GetComponentsInChildren<Hitbox>();
+        hitboxes = e.Actor.hitboxes; //e.Actor.transform.GetComponentsInChildren<Hitbox>();
         shootSource = e.Actor.ShootSource;
         particles = e.Actor.Particles;
 
@@ -33,8 +33,8 @@ public class RagingSwing : StackAbility
         // Generate damage values and then pass to init?
 
         damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert);
-        Debug.Log(damage);
-        Debug.Log(stats.STR.Value * GameManager.Instance.MainConvert);
+        //Debug.Log(damage);
+        //Debug.Log(stats.STR.Value * GameManager.Instance.MainConvert);
         // Listen the the hitboxes for their events, if something was hit, regain mana - if nothing is hit, don't
 
         if (stats.Projectiles.Value > 0)

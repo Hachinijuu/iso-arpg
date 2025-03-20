@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     ProjectileSource shootSource;
     FootStepHandler footSteps;
     PlayerSlotSystem slots;
+    public Hitbox[] hitboxes;
 
     PlayerParticleHandler particleHandler;
 
@@ -132,6 +133,7 @@ public class PlayerController : MonoBehaviour
         footSteps.enabled = shouldEnable;
         slots.enabled = shouldEnable;
         agent.enabled = shouldEnable;
+        particleHandler.enabled = shouldEnable;
     }
 
 
@@ -172,6 +174,9 @@ public class PlayerController : MonoBehaviour
             stats.InitializePlayerStats();
         else
             Debug.LogError("Player has no stats to read from!");
+
+        if (handler != null)
+            handler.PlayerSelected();
 
         //EnablePlayer(false);
     }

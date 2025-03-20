@@ -27,7 +27,7 @@ public class DeathSpin : ChannelAbility
     {
         anim = e.Actor.Animator;
         source = e.Actor.SFXSource;
-        hitboxes = e.Actor.GetComponentsInChildren<Hitbox>();
+        hitboxes = e.Actor.hitboxes; //e.Actor.GetComponentsInChildren<Hitbox>();
         stats = e.Actor.Stats;
         move = e.Actor.Movement;
         shootSource = e.Actor.ShootSource;
