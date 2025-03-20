@@ -177,8 +177,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5148660721048291026, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
+      propertyPath: LightsModule.range
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148660721048291026, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: LightsModule.rangeCurve.scalar
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5148660721048291026, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: LightsModule.intensityCurve.scalar
@@ -186,15 +190,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 0
+      value: 0.050432697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: -0.06000018
       objectReference: {fileID: 0}
     - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 3e-45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 4.3e-44
+      value: 0.99520326
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
