@@ -4324,6 +4324,7 @@ GameObject:
   - component: {fileID: 1596754456890972535}
   - component: {fileID: 2249985947442588543}
   - component: {fileID: 7320533039136882555}
+  - component: {fileID: 6303614202622227338}
   m_Layer: 11
   m_Name: F_Berserker
   m_TagString: Player
@@ -4657,6 +4658,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1824355195502048528}
+--- !u!114 &6303614202622227338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398982663912265838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2dcbf8dce643a746aa64776b09b3821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: []
+  auraGlow: {fileID: 0}
 --- !u!1 &6493513139111829564
 GameObject:
   m_ObjectHideFlags: 0
@@ -6103,7 +6118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6144,6 +6159,10 @@ PrefabInstance:
     - target: {fileID: 3943303136166098651, guid: b428f252630904445ab8752928adf242, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627819237801327904, guid: b428f252630904445ab8752928adf242, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.16862746
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
