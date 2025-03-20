@@ -692,7 +692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6330880182863983328
 RectTransform:
   m_ObjectHideFlags: 0
@@ -835,6 +835,9 @@ MonoBehaviour:
     ab1Icon: {fileID: 8868200393427285015}
     ab2Icon: {fileID: 4203228845686604960}
   currentClass: 0
+  bodies: []
+  clips: []
+  source: {fileID: 0}
 --- !u!1 &5952320540688360158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112607602531361143, guid: 608b324084a4c1944b85ad72a279b342, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1460,7 +1463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112607602531361143, guid: 608b324084a4c1944b85ad72a279b342, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1787,7 +1790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112607602531361143, guid: 608b324084a4c1944b85ad72a279b342, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
