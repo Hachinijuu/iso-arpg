@@ -28,6 +28,7 @@ public class UIAudioHandler : MonoBehaviour
 
     public void PlayAudio(AudioClip clip)
     {
+        if (clip == null) { return; }
         audioSource.PlayOneShot(clip);
     }
 

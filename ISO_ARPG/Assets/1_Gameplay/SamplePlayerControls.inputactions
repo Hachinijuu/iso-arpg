@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "CharacterScreen",
+                    "type": "Button",
+                    "id": "b4a929c9-8ad2-4493-bb45-aebba881c911",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Click",
                     "type": "Value",
                     "id": "de86ffd2-51e3-46fd-9838-46c6b9242c42",
@@ -184,7 +193,7 @@
                 {
                     "name": "",
                     "id": "378ef8d0-a809-414c-8868-70a29e04d5c4",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -327,7 +336,7 @@
                 {
                     "name": "",
                     "id": "ee6e9f5e-ac41-4866-8ee0-f588476cf3d6",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -338,11 +347,22 @@
                 {
                     "name": "",
                     "id": "56b7abb6-1ef0-4d6a-bcc0-6fdf458b4d67",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Potion2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76d83443-4ef5-4897-a8b9-90c779418276",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CharacterScreen",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

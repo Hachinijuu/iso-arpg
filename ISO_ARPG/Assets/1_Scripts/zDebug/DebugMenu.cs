@@ -106,10 +106,9 @@ public class DebugMenu : MonoBehaviour
                 {
                     hb = PlayerManager.Instance.characters[i].Character.GetComponent<Hurtbox>();
                 }
-
-                if (hb.gameObject.transform.parent.gameObject.activeInHierarchy)
+                if (hb != null)
                 {
-                    hb.gameObject.SetActive(takeDamage);
+                    hb.enabled = takeDamage;
                 }
             }
         }

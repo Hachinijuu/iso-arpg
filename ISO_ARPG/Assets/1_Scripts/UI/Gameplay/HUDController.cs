@@ -199,6 +199,37 @@ public class HUDController : MonoBehaviour
         manaPotionText.text = Inventory.Instance.GetNumManaPotions().ToString();
     }
 
+    [SerializeField] GameObject objectivePanel;
+    [SerializeField] TMP_Text objectiveCounter;
+
+    public void ShowLevelObjectives()
+    {
+        objectivePanel.SetActive(true);
+        ListenForDeaths();
+        UpdateEnemyNumber();
+    }
+    public void RemoveLevelObjective()
+    {
+        objectivePanel.SetActive(false);
+        UnlistenForDeaths();
+    }
+
+    public void ListenForDeaths()
+    {
+        AIManager.Instance.onEnemyDied += UpdateEnemyNumber;
+    }
+
+    public void UnlistenForDeaths()
+    {
+        AIManager.Instance.onEnemyDied -= UpdateEnemyNumber;
+    }
+    public void UpdateEnemyNumber()
+    {
+        if (LevelManager.Instance == null) { return; }
+        objectiveCounter.text = LevelManager.Instance.numKilled  + " / " + LevelManager.Instance.Details.enemiesToKill;
+        // Rework tracking to maintain enemy amount with remains logic
+    }
+
     #endregion
     #endregion
 }

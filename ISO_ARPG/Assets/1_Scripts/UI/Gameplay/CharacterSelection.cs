@@ -148,7 +148,7 @@ public class CharacterSelection : MonoBehaviour
     {
         if (debugSelection)
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.F4))
             {
                 // Allow this popup if debug mode is enabled, otherwise don't handle this shortcut
                 if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)

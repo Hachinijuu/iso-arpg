@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public eLevel level;
     private string currentLevelName;
     public GameObject GameUI;
+    [SerializeField] HUDController hud;
     [SerializeField] public DefeatScreen loseScreen;
     [SerializeField] public SettingsController settingsScreen;
     public bool CutscenePlayed = false;
@@ -214,6 +215,11 @@ public class GameManager : MonoBehaviour
         if (controller != null)
             controller.EnablePlayer(false);
 
+        if (LevelManager.Instance)
+        {
+            hud.RemoveLevelObjective();
+        }
+
         if (AIManager.Instance)
             AIManager.Instance.LevelUnloading();
         if (DestructibleManager.Instance)
@@ -241,6 +247,10 @@ public class GameManager : MonoBehaviour
         if (LevelManager.Instance != null)
         {
             LevelManager.Instance.LevelLoading();
+            if (LevelManager.Instance.type == LevelManager.LevelType.CLEAR)
+            {
+                hud.ShowLevelObjectives();
+            }
             if (AIManager.Instance)
             {
                 AIManager.Instance.LevelLoading();

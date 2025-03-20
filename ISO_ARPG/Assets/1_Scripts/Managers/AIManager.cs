@@ -622,6 +622,9 @@ public class AIManager : MonoBehaviour
     }
 
     // Because events with number changing is not very reliable, rely on a function to handle the increase and decrease
+    public delegate void EnemyDeathUpdate();
+    public event EnemyDeathUpdate onEnemyDied;
+    private void FireEnemyDied() { if (onEnemyDied != null) onEnemyDied(); }
     public void UpdateDeathNumbers(EnemyControllerV2 agent)
     {
         if (agent == null) { return; }
@@ -635,7 +638,7 @@ public class AIManager : MonoBehaviour
             numEnemies--;
             LevelManager.Instance.numKilled++;
         }
-
+        FireEnemyDied();
         //controller.stats.OnDied -= context => { } ;  // stop listening to the function
 
         // THIS IS A CHEAT METHOD OF ADDING ID GENERATION

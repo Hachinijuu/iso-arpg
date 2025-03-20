@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour
     }
     [SerializeField] HUDController hud;
     [SerializeField] GameObject inventoryScreen;
+    [SerializeField] GameObject statsScreen;
     [SerializeField] GameObject stashScreen;
     [SerializeField] Canvas canvas;
     [SerializeField] GameObject slotHolder;
@@ -240,6 +241,10 @@ public class Inventory : MonoBehaviour
         //UI_Input = InputActionMap("UI");
         // based on the action map, we want to map inventory open to I
         // want to map UI click to handling inventory movement
+        // THIS IS CHEATING FOR COMPONENT ACCESSING
+        input.actions["CharacterScreen"].performed += context => { ShowCharacterScreen(); };
+
+
         input.actions["OpenInventory"].performed += context => { ShowInventory(); };
         input.actions["Click"].performed += context =>
         {
@@ -267,7 +272,31 @@ public class Inventory : MonoBehaviour
         //input.SwitchCurrentActionMap("Player");
 
         // swap action map to UI -- temporary
+        HandlePause();
+    }
+    public void ShowCharacterScreen()
+    {
+        if (statsScreen.activeInHierarchy)
+        {
+            statsScreen.SetActive(false);
+        }
+        else
+        {
+            statsScreen.SetActive(true);
+        }
+        HandlePause();
+    }
 
+    public void HandlePause()
+    {
+        if ((statsScreen.activeInHierarchy && inventoryScreen.activeInHierarchy) || (stashScreen.activeInHierarchy && inventoryScreen.activeInHierarchy))
+        {
+            GameManager.Instance.PauseGame();
+        }
+        else
+        {
+            GameManager.Instance.UnpauseGame();
+        }
     }
     public void AddItem(ItemData data)
     {
