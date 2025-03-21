@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class CutscenePlayer : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class CutscenePlayer : MonoBehaviour
     public List<CutsceneSlide> slides;
 
     [SerializeField] private float skipTime = 1.0f;
-    
+    [SerializeField] Slider skipSlider;
+    public void UpdateSkipSlider()
+    {
+        skipSlider.value = skipCounter;
+    }
     float skipCounter = 0.0f;
 
     #endregion
@@ -22,7 +27,6 @@ public class CutscenePlayer : MonoBehaviour
     #region BUTTON MAPPING
 
     #endregion
-
     public void Start()
     {
         StartCutscene();
@@ -44,6 +48,7 @@ public class CutscenePlayer : MonoBehaviour
 
     public void HandleSkip()
     {
+        UpdateSkipSlider();
         if (Input.GetMouseButton(0))
         {
             skipCounter += Time.deltaTime;
