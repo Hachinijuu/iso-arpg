@@ -165,6 +165,7 @@ public class Inventory : MonoBehaviour
 
     public void OnEnable()
     {
+
         SetupInventory();
     }
 
@@ -174,6 +175,7 @@ public class Inventory : MonoBehaviour
     }
     public void SetupInventory()
     {
+        input = PlayerManager.Instance.currentPlayer.Input;
         StoneAmount = 0;
         WoodAmount = 0;
         RuneDust = 0;
@@ -183,11 +185,11 @@ public class Inventory : MonoBehaviour
         MapActions();
     }
 
-    public void SetupInventory(PlayerController controller)
-    {
-        input = controller.Input;
-        SetupInventory();
-    }
+    //public void SetupInventory(PlayerController controller)
+    //{
+    //    input = controller.Input;
+    //    SetupInventory();
+    //}
 
     public void CleanupInventory()
     {
