@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,7 +49,7 @@ public class PlayerManager : MonoBehaviour
     public MoveInput moveType;  // THIS IS THE MOVEMENT TYPE OF THE PLAYER
     public delegate void MovementChanged();
     public event MovementChanged OnMovementChanged;
-    public void FireMovementChanged() {if (OnMovementChanged != null) OnMovementChanged(); }
+    public void FireMovementChanged() { if (OnMovementChanged != null) OnMovementChanged(); }
     [SerializeField] HUDController HUD;
     public List<CharacterPair> characters;
     public Dictionary<GoX_Class, PlayerController> playableCharacters;
@@ -168,8 +167,8 @@ public class PlayerManager : MonoBehaviour
                 currentClass = toActivate;
                 currentPlayer = controller;
                 //controller.InitializePlayer();
-                if (Inventory.Instance != null) Inventory.Instance.SetupInventory(currentPlayer);
-                HUD.SetPlayer(currentPlayer);
+                //if (Inventory.Instance != null) Inventory.Instance.SetupInventory(currentPlayer);
+                //HUD.SetPlayer(currentPlayer);
                 //GameManager.Instance.PlayerRespawn(currentPlayer);
 
                 //if (!HUD.gameObject.activeInHierarchy)

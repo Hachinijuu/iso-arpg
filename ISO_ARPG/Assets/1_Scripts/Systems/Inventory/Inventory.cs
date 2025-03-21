@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class InventoryEventArgs
 {
@@ -66,7 +64,7 @@ public class Inventory : MonoBehaviour
 
     public delegate void PotionsChanged();
     public event PotionsChanged onPotionChanged;
-    public void FirePotionChanged() { if (onPotionChanged != null ) onPotionChanged(); }
+    public void FirePotionChanged() { if (onPotionChanged != null) onPotionChanged(); }
     public PotionData GetPotion(PotionTypes type)
     {
         foreach (PotionData pot in potions)
@@ -108,42 +106,45 @@ public class Inventory : MonoBehaviour
     public int maxWoodAmount = 100000;
     public int maxStoneAmount = 100000;
     public int RuneDust
-    { 
-        get { return runeDust; } 
-        set { 
+    {
+        get { return runeDust; }
+        set
+        {
             // If the incoming is greater than the max - force to max
             if (runeDust + value > maxRuneDust) { runeDust = maxRuneDust; }
             else if (runeDust + value < 0) { runeDust = 0; }
             else { runeDust = value; }
             if (dustText != null) { dustText.text = runeDust.ToString(); }
-        } 
+        }
     }
     private int runeDust;
 
     public int WoodAmount
-    { 
-        get { return woodAmount; } 
-        set { 
+    {
+        get { return woodAmount; }
+        set
+        {
             // If the incoming is greater than the max - force to max
             if (woodAmount + value > maxWoodAmount) { woodAmount = maxWoodAmount; }
             else if (woodAmount + value < 0) { woodAmount = 0; }
             else { woodAmount = value; }
             if (woodText != null) { woodText.text = woodAmount.ToString(); }
-        } 
+        }
     }
-    
+
     private int woodAmount;
 
     public int StoneAmount
-    { 
-        get { return stoneAmount; } 
-        set { 
+    {
+        get { return stoneAmount; }
+        set
+        {
             // If the incoming is greater than the max - force to max
             if (stoneAmount + value > stoneAmount) { stoneAmount = maxStoneAmount; }
             else if (stoneAmount + value < 0) { stoneAmount = 0; }
             else { stoneAmount = value; }
             if (stoneText != null) { stoneText.text = stoneAmount.ToString(); }
-        } 
+        }
     }
     private int stoneAmount;
 
@@ -161,6 +162,16 @@ public class Inventory : MonoBehaviour
 
     // Per play inventory, this system needs to know when a player exists
     // It also needs to maintain relative data for each class, handling their individual inventories
+
+    public void OnEnable()
+    {
+        SetupInventory();
+    }
+
+    public void OnDisable()
+    {
+        CleanupInventory();
+    }
     public void SetupInventory()
     {
         StoneAmount = 0;

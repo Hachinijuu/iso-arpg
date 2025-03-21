@@ -39,11 +39,12 @@ public class DropSystem : MonoBehaviour
         float shortest = float.MaxValue;
         foreach (EntityStats agent in destructibles)
         {
+            if (agent == null) continue;
             float distance = Vector3.Distance(agent.transform.position, pos.position);
             {
                 if (distance < shortest)
                     shortest = distance;
-            }    
+            }
         }
         return shortest;
     }
