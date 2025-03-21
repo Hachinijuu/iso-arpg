@@ -580,6 +580,7 @@ MonoBehaviour:
   - GoX Scene Level 1
   - GoX Transition Selection
   - GoX Scene Level 2
+  - GoX Scene Level 3
   level: 0
   GameUI: {fileID: 2057246292}
   hud: {fileID: 119157253}
@@ -1414,8 +1415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEnemies: 1
-  minSpawnDistance: 2
-  maxSpawnDistance: 4
+  minSpawnDistance: 10
+  maxSpawnDistance: 30
   enemyPools:
   - {fileID: 714920339}
   - {fileID: 1245929811}
@@ -6331,6 +6332,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1824355195502048528, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: playerClass
+      value: 
+      objectReference: {fileID: 11400000, guid: 869f88c4e726d9645ba6da3b8d84e21a, type: 2}
     - target: {fileID: 2309156911622825006, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -6342,6 +6347,10 @@ PrefabInstance:
     - target: {fileID: 2968612172320888678, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480834777675334296, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5566678593245308486, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6818,6 +6827,10 @@ PrefabInstance:
     - target: {fileID: 6398982663912265838, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Name
       value: Berserker
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398982663912265838, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7092342755375898073, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_IsActive
@@ -16302,6 +16315,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1824355195502048528, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+      propertyPath: playerClass
+      value: 
+      objectReference: {fileID: 11400000, guid: 255d02603351c9646aacdaff4bb8cbbf, type: 2}
     - target: {fileID: 5566678593245308486, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

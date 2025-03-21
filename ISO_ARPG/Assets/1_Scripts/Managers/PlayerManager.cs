@@ -64,7 +64,31 @@ public class PlayerManager : MonoBehaviour
     {
         if (onPlayerChanged != null) { onPlayerChanged(e); }
     }
-    void Awake()
+    // void Awake()
+    // {
+    //     Debug.Log("[PlayerManager]: Loading characters into gameplay");
+    //     if (characters != null)
+    //     {
+    //         if (playableCharacters == null)
+    //             playableCharacters = new Dictionary<GoX_Class, PlayerController>();
+    //         foreach (CharacterPair c in characters)
+    //         {
+    //             playableCharacters.Add(c.Guardian, c.Character);
+    //             c.Character.InitializePlayer();
+    //             Debug.Log("[PlayerManager]: Loaded " + c.Character.Stats.Class.entityName + " as a playable character");
+    //             if (c.Character.gameObject.activeInHierarchy)
+    //             {
+    //                 c.Character.gameObject.SetActive(false);
+    //             }
+
+    //             // How to account for male / female variations?
+    //             // Add more GoX_Classes? Add gender to player controller?
+    //         }
+    //     }
+    //     //DeactivatePlayer();
+    // }
+
+    public void Start()
     {
         Debug.Log("[PlayerManager]: Loading characters into gameplay");
         if (characters != null)
@@ -74,6 +98,7 @@ public class PlayerManager : MonoBehaviour
             foreach (CharacterPair c in characters)
             {
                 playableCharacters.Add(c.Guardian, c.Character);
+                c.Character.InitializePlayer();
                 Debug.Log("[PlayerManager]: Loaded " + c.Character.Stats.Class.entityName + " as a playable character");
                 if (c.Character.gameObject.activeInHierarchy)
                 {
@@ -84,16 +109,13 @@ public class PlayerManager : MonoBehaviour
                 // Add more GoX_Classes? Add gender to player controller?
             }
         }
-        DeactivatePlayer();
-    }
 
-    public void Start()
-    {
         if (playableCharacters != null && playableCharacters.Count > 0)
         {
             foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
             {
                 PlayerStats stats = pair.Value.Stats;
+                //pair.valu.InitializePlayer();
                 stats.OnDied += context => { HandleDeath(); };
                 Debug.Log("Added death listeners");
             }
@@ -122,7 +144,7 @@ public class PlayerManager : MonoBehaviour
         currentClass = GoX_Class.NONE;
         currentPlayer = null;
         GameManager.Instance.SetPlayer(currentPlayer);
-        Inventory.Instance.CleanupInventory();
+        if (Inventory.Instance != null) Inventory.Instance.CleanupInventory();
         EnableCharacters(false);
     }
 
@@ -145,8 +167,8 @@ public class PlayerManager : MonoBehaviour
             {
                 currentClass = toActivate;
                 currentPlayer = controller;
-                controller.InitializePlayer();
-                Inventory.Instance.SetupInventory(currentPlayer);
+                //controller.InitializePlayer();
+                if (Inventory.Instance != null) Inventory.Instance.SetupInventory(currentPlayer);
                 HUD.SetPlayer(currentPlayer);
                 //GameManager.Instance.PlayerRespawn(currentPlayer);
 

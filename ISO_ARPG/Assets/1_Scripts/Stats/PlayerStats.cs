@@ -110,7 +110,7 @@ public class PlayerStats : EntityStats
         {
             LoadAbilities();
         }
-        //FillStatList();
+        FillStatList();
 
         //health.Changed += context => { CheckDied(context); };
     }
@@ -155,6 +155,7 @@ public class PlayerStats : EntityStats
         //statList.Add(attackSpeed);
         //statList.Add(armour);
         //statList.Add(dodge);
+        Debug.Log("FILLED STAT LIST");
     }
 
     public override void LoadData(EntityData toLoad)

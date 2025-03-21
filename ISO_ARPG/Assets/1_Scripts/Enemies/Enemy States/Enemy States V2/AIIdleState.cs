@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Android;
 
 [CreateAssetMenu(fileName = "Idle", menuName = "sykcorSystems/AI/States/Idle", order = 0)]
 public class AIIdleState : AIState, IPhysicsState

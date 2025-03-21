@@ -58,6 +58,14 @@ MonoBehaviour:
   Range:
     value: 15
   rotationSpeed: 10
+  PrimaryDamage:
+    value: -1
+    maxValue: 0
+    type: 17
+  SecondaryDamage:
+    value: -1
+    maxValue: 0
+    type: 18
   CritDamage:
     value: 10
     maxValue: 10000
@@ -102,3 +110,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55187f970a714bb4091bede58546ce44, type: 2}
   - {fileID: 11400000, guid: 2aa74705f0cec374e842afe41e55bc74, type: 2}
   IdentityAbility: {fileID: 11400000, guid: 74b76a209d6a7044e86850a9e453f716, type: 2}
+  BaseIDGain: 5

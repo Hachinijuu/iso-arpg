@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922056ffdd71cbd43be9d7c8f9b0dc4b, type: 3}
+  m_Name: BerserkerTest
+  m_EditorClassIdentifier: 
+  entityName: Elementalist
+  description: A elementalist
+  icon: {fileID: 21300000, guid: 3ba5b62d40ca43c41aece55dfa33bca6, type: 3}
+  Health:
+    value: 100
+    maxValue: 100
+    type: 1
+  Damage:
+    value: 50
+    maxValue: 100000
+    type: 2
+  AttackSpeed:
+    value: 1
+    maxValue: 1
+    type: 9
+  Armour:
+    value: 10
+    maxValue: 400
+    type: 14
+  Dodge:
+    value: 10
+    maxValue: 400
+    type: 15
+  MoveSpeed:
+    value: 8
+    maxValue: 8
+    type: 2
+  Mana:
+    value: 100
+    maxValue: 100
+    type: 2
+  Strength:
+    value: 100
+    maxValue: 1000
+    type: 1
+  Dexterity:
+    value: 10
+    maxValue: 1000
+    type: 2
+  Intelligence:
+    value: 10
+    maxValue: 1000
+    type: 3
+  Range:
+    value: 15
+  rotationSpeed: 10
+  PrimaryDamage:
+    value: 0
+    maxValue: 0
+    type: 17
+  SecondaryDamage:
+    value: 0
+    maxValue: 0
+    type: 18
+  CritDamage:
+    value: 10
+    maxValue: 10000
+    type: 11
+  CritChance:
+    value: 10
+    maxValue: 100
+    type: 10
+  Projectiles:
+    value: 0
+    maxValue: 5
+    type: 12
+  Chains:
+    value: 0
+    maxValue: 0
+    type: 13
+  TakeFromMana:
+    value: 0
+    maxValue: 0
+    type: 16
+  HealthRegen:
+    value: 0
+    maxValue: 0
+    type: 4
+  CooldownReduction:
+    value: 0
+    maxValue: 0
+    type: 7
+  ID_Gain:
+    value: 5
+    maxValue: 10
+    type: 3
+  ManaRegen:
+    value: 0
+    maxValue: 0
+    type: 5
+  ManaOnHit:
+    value: 0
+    maxValue: 0
+    type: 6
+  Abilities:
+  - {fileID: 11400000, guid: 42a9a63c087bf8942be74efbaa6a2381, type: 2}
+  - {fileID: 11400000, guid: a00c51e918b9cd04f859c08813ed1c36, type: 2}
+  IdentityAbility: {fileID: 11400000, guid: 69fc128e250d6f441812059c996778bb, type: 2}
+  BaseIDGain: 5
