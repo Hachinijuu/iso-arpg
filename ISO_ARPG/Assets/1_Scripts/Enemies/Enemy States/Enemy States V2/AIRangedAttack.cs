@@ -39,7 +39,21 @@ public class AIRangedAttack : AIState
     {
         //throw new System.NotImplementedException();
         EnemyControllerV2 agent = e.agent;
-        agent.Animator.SetTrigger(animId);
+        agent.HandleRotation(e.player.transform.position);
+        agent.Attack();
+        //agent.Animator.SetTrigger(animId);
+
+        // Vector3 playerPos = e.player.transform.position;
+        // distance = Vector3.Distance(agent.transform.position, playerPos);
+        // // If the agent is close enough to attack, perform the attack and then wait for the interval time
+        // if (distance < attackRange && agent.canAttack)
+        // {
+        //     // Unreserve the slot
+        //     if (e.player.Slots != null && e.player.Slots.CheckHasSlot(agent))
+        //     {
+        //         e.player.Slots.UnreserveSlot(agent);
+        //     }
+        // }
         // Fire a projectile from the AI's projectile source
         // But if projectiles are bound to the 
     }

@@ -149,10 +149,12 @@ public class PlayerController : MonoBehaviour
         // Reset the ability handler
         handler.Respawn();
         movement.Respawn();
+        animator.SetTrigger("Respawn");
     }
 
     public void Died()
     {
+        animator.SetTrigger("Death");
         EnablePlayer(false);
     }
 

@@ -80,6 +80,9 @@ public class EnemyControllerV2 : MonoBehaviour
     // We can find the controller from the box, and play the hit reaction there.
     public void Respawn()
     {
+        //dying = false;
+        //animator.SetTrigger("Respawn");
+        //animator.SetInteger("Death", 0 );  // Set to invalid value so that the death animation is not played
         stats.Health.Value = stats.Health.MaxValue; // reset the health value to max
         AIManager.Instance.RegisterToList(this);
 
@@ -94,8 +97,19 @@ public class EnemyControllerV2 : MonoBehaviour
         //Debug.Log("Agent respawned");
     }
 
+    //bool dying = false;
+    // public void OnDied()
+    // {
+    //     if (!dying)
+    //     {
+    //         dying = true;
+    //         StartCoroutine(HandleDeath());
+    //     }
+    // }
     public void Died()
     {
+        //int range = Random.Range(1, 3);   // max exclusive upper, 0 - 1
+        //animator.SetInteger("Death", range);
         // Unregister from the list
         AIManager.Instance.UnregisterFromList(this);
         AIManager.Instance.UpdateDeathNumbers(this);        // Unregister from the AI List
@@ -108,6 +122,21 @@ public class EnemyControllerV2 : MonoBehaviour
             slotSystem.UnreserveSlot(this);
         }
         gameObject.SetActive(false);    // Disable the agent
+    }
+
+    //public IEnumerator HandleDeath()
+    //{
+    //    // Play the death animation
+    //    int range = Random.Range(1, 3);   // max exclusive upper, 0 - 1
+    //    animator.SetInteger("Death", range);
+    //    yield return new WaitForSeconds(0.25f); // Wait for some time to allow the animation to play through.
+    //    Died();
+    //}
+
+    public IEnumerator ShutOffAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.SetActive(false);
     }
     #endregion
     #region State Handling

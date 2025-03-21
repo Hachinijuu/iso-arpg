@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour
 {
     public Vector2Int index;
-    public Image img;
+    public Sprite img;
     public GameObject selectedIndicator;
     //public TMP_Text temp;
     public ItemData item;

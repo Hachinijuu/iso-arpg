@@ -240,24 +240,51 @@ public class PlayerAbilityHandler : MonoBehaviour
             // Don't want the ability to be fired when I am not in range\
 
             // TEMPORARY SOLUTION
-            if (ab.CheckRange)
+            // if (ab.CheckRange)
+            // {
+            //     if (movement.CanMove)
+            //     {
+            //         Vector3 temp = transform.position;
+            //         if (mouseTarget.Target == null)
+            //         {
+            //             // If the target does not exist , send the range somewh
+            //             //temp = movement.MoveTarget;
+            //             return;
+            //         }
+            //         else
+            //             temp = mouseTarget.Target.transform.position;
+            //         float dist = GetSquareDistance(transform.position, temp);
+            //         //Debug.Log(dist + " from " + squareRange);
+            //         if (dist > squareRange && movement.CanMove)
+            //             return;
+            //     }
+            // }
+
+            if (ab.CheckRange)  // If the player range should be checked when performing attacks
             {
+                //EnemyControllerV2 nearest = AIManager.Instance.GetNearestEnemy(transform);
+                // If the player IS NOT STOPPED (MOVING)
                 if (movement.CanMove)
                 {
-                    Vector3 temp = transform.position;
-                    if (mouseTarget.Target == null)
-                    {
-                        // If the target does not exist , send the range somewh
-                        //temp = movement.MoveTarget;
-                        return;
-                    }
-                    else
-                        temp = mouseTarget.Target.transform.position;
-                    float dist = GetSquareDistance(transform.position, temp);
-                    //Debug.Log(dist + " from " + squareRange);
-                    if (dist > squareRange && movement.CanMove)
+                    float enemyDist = AIManager.Instance.GetShortestDistance(transform);
+                    float destructDist = DropSystem.Instance.GetShortestDestructibleDistance(transform);
+                    // Then check for the range to perform the attack, if the range is too far - eject
+                    if (enemyDist > stats.Range.Value && destructDist > stats.Range.Value)
                         return;
                 }
+
+                //if (movement.CanMove)
+                //{
+                    // If the player can move, 
+                //if (enemyDist > stats.Range.Value || destructDist > stats.Range.Value && !movement.isStopped)
+                //{
+                //    return;
+                //}
+
+                    // Check their range
+                //}
+                // If they cannot move, then allow them to perform the action, because of virtue of click allowed
+                // If the enemy distance or destructible distance is far, and the player CAN MOVE
             }
 
             // But if I am not in range and not moving, I want the ability to be fired

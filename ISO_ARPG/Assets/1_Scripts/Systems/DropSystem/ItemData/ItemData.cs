@@ -39,6 +39,17 @@ public class ItemData : ScriptableObject
 
     public void LoadSpriteToImage(Image loadTo)
     {
+        Color c = loadTo.color;
+        if (c.a == 0.0f)
+        {
+            c.a = 1.0f;
+            loadTo.color = c;
+        }
+        else
+        {
+            c.a = 0.0f;
+            loadTo.color = c;
+        }
         loadTo.sprite = itemIcon;
     }
 }

@@ -303,8 +303,10 @@ public class PlayerMovement : MonoBehaviour
     public void HandleStops(bool stop)
     {
         //agent.isStopped = stop;             // stop the agent in place
-        //canMove = stop;
+        isStopped = stop;
         moveTarget = transform.position;    // reset target to current point
     }
+
+    public bool isStopped = false;
     #endregion
 }

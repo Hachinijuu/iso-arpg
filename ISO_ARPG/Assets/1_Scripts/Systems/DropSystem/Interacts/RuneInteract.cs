@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class RuneInteract : InteractableObject
 {
-    Item item;
+    [SerializeField] Item item;
     protected override void InteractAction()
     {
         // When this is interacted with, give the player the item
-        Inventory.Instance.AddItem(item.ItemData);
+        if (item != null && item.ItemData != null)
+            Inventory.Instance.AddItem(item.ItemData);
+        Destroy(gameObject);
     }
 }

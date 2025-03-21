@@ -34,6 +34,19 @@ public class DropSystem : MonoBehaviour
         if (dropTables == null)
             dropTables = new List<DropTable>();
     }
+    public float GetShortestDestructibleDistance(Transform pos)
+    {
+        float shortest = float.MaxValue;
+        foreach (EntityStats agent in destructibles)
+        {
+            float distance = Vector3.Distance(agent.transform.position, pos.position);
+            {
+                if (distance < shortest)
+                    shortest = distance;
+            }    
+        }
+        return shortest;
+    }
 
     public GameObject[] destructionParticles;
 
@@ -155,6 +168,7 @@ public class DropSystem : MonoBehaviour
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
                 Debug.Log("[DropSystem]: Dropped an item");
+                return;
             }
         }
 

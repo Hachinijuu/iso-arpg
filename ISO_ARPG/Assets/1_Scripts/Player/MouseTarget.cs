@@ -19,8 +19,8 @@ public class MouseTarget : MonoBehaviour
     public LayerMask mask;
 
     // GameObjects
-    GameObject target;
-    GameObject mouseHit;
+    public GameObject target;
+    public GameObject mouseHit;
 
 
     // Player Variables

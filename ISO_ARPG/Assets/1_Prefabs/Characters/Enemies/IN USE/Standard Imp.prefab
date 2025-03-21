@@ -1091,9 +1091,9 @@ GameObject:
   - component: {fileID: 750419005341385754}
   - component: {fileID: 1081736335433214754}
   - component: {fileID: 9169883723987307114}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Standard Imp
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1135,11 +1135,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   hurtbox: {fileID: 8611043780159646300}
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 1060452018947857966, guid: e13143d7cc0916247b7b04c4640f20ed, type: 3}
   stats: {fileID: 750419005341385754}
   rb: {fileID: 0}
   animator: {fileID: 1081736335433214754}
-  states: {fileID: 0}
+  states: {fileID: 11400000, guid: 42e68a5beb38d8a4d80f860c6a218350, type: 2}
   rotationSpeed: 20
   hitboxUptime: 0.5
   attackRange: 1
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   attackCooldown: 5
   canAttack: 1
   canMove: 1
-  shotPrefab: {fileID: 0}
+  shotPrefab: {fileID: 5975814979003332245, guid: e13143d7cc0916247b7b04c4640f20ed, type: 3}
   shootLocation: {fileID: 2325835710571658629}
 --- !u!114 &8611043780159646300
 MonoBehaviour:
@@ -1187,7 +1187,7 @@ Animator:
   m_GameObject: {fileID: 2503497217363545633}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc8dfd484acdf1940b98b1216a19c83e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

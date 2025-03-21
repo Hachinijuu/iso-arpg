@@ -693,6 +693,35 @@ public class AIManager : MonoBehaviour
             yield return new WaitForSeconds(hordeCheckInterval);
         } while (!LevelManager.Instance.LevelComplete);
     }
+
+    public EnemyControllerV2 GetNearestEnemy(Transform pos)
+    {
+        float closest = float.MaxValue;
+        EnemyControllerV2 nearest = null;
+        foreach (EnemyControllerV2 agent in aliveEnemies)
+        {
+            float distance = Vector3.Distance(agent.transform.position, pos.position);
+            if (distance < closest)
+            {
+                nearest = agent;
+            }
+        }
+        return nearest;
+    }
+    
+    public float GetShortestDistance(Transform pos)
+    {
+        float shortest = float.MaxValue;
+        foreach (EnemyControllerV2 agent in aliveEnemies)
+        {
+            float distance = Vector3.Distance(agent.transform.position, pos.position);
+            {
+                if (distance < shortest)
+                    shortest = distance;
+            }    
+        }
+        return shortest;
+    }
     #endregion
     #endregion
     #region DISTANCE GROUPS
