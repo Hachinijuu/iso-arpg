@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,6 +51,15 @@ public class DebugMenu : MonoBehaviour
                 debugUI.SetActive(true);
             else
                 debugUI.SetActive(false);
+        }
+    }
+
+    public void FillIdentity()
+    {
+        PlayerStats stats = PlayerManager.Instance.currentPlayer.Stats;
+        if (stats != null)
+        {
+            stats.ID_Bar.Value = stats.ID_Bar.MaxValue;
         }
     }
     public void SetInvincible(bool value)
