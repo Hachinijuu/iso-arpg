@@ -163,6 +163,10 @@ public class Inventory : MonoBehaviour
     // It also needs to maintain relative data for each class, handling their individual inventories
     public void SetupInventory()
     {
+        StoneAmount = 0;
+        WoodAmount = 0;
+        RuneDust = 0;
+
         InitUISlots();
         InitItemList();
         MapActions();

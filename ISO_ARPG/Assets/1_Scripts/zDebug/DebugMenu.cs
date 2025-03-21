@@ -81,6 +81,18 @@ public class DebugMenu : MonoBehaviour
         levelDropdown.value = (int)GameManager.Instance.level;
     }
 
+    public void AddRune()
+    {
+        if (RuneSystem.Instance != null)
+        {
+            RuneData rune = RuneSystem.Instance.CreateMainStatRune(ItemRarity.COMMON, MainStatTypes.NONE);
+            if (rune != null)
+            {
+                Inventory.Instance.AddItem(rune);
+            }
+        }
+    }
+
     [SerializeField] List<Hurtbox> playerHurtbox;
 
     public void HandleHurtboxes()
