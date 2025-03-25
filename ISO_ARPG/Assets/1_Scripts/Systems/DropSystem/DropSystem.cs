@@ -55,43 +55,69 @@ public class DropSystem : MonoBehaviour
     public void RegisterEnemyDrop(EntityStats enemy)
     {
         enemies.Add(enemy);
-        enemy.OnDied += context => { CheckDrop(enemy); };
+        enemy.OnDied += HandleEnemyDrops;
+        
+        //context => { CheckDrop(enemy); };
     }
 
     public void UnregisterEnemyDrop(EntityStats enemy)
     {
+        //Debug.Log("Unregistered, stopped listening");
         enemies.Remove(enemy);
-        enemy.OnDied -= context => { CheckDrop(enemy); };
+        
+        enemy.OnDied -= HandleEnemyDrops; //context => { CheckDrop(enemy); };
+    }
+    void HandleEnemyDrops(GameObject go)
+    {
+        EntityStats stats = go.GetComponent<EntityStats>(); // This function is required to have proper unassignment of the event.
+        CheckDrop(stats);
+
+        // With lambda functionality for context passing to events, it needs to be the same function, the lambda -= context => { CheckDrop() } is not the same
+        // Therefore have a function and handle straight across without context passing
     }
 
     // When destructibles set themselves to inactive, unregister them from the list
     public void RegisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Add(destructible);
-        destructible.OnDied += context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); };
+        destructible.OnDied += HandleDestructibleDrop;
     }
 
     public void UnregisterDestructibleDrop(EntityStats destructible)
     {
         destructibles.Remove(destructible);
-        destructible.OnDied -= context => { CheckDrop(destructible); SpawnParticle(context); HandleDestruction(context); };
+        destructible.OnDied -= HandleDestructibleDrop;
+    }
+
+    public void HandleDestructibleDrop(GameObject go)
+    {
+        EntityStats stats = go.GetComponent<EntityStats>();
+        CheckDrop(stats);
+        SpawnParticle(go);
+        HandleDestruction(go);
+    }
+    public void HandleDestruction(GameObject source)
+    {
+        source.SetActive(false);    // cleanup
+        // play a destruction sound
     }
 
     public void RegisterChestDrops(EntityStats chest)
     {
         chests.Add(chest);
-        chest.OnDied += context => { CheckDrop(chest); FadeObject(context); };
+        chest.OnDied += HandleChestDrop;
     }
     public void UnregisterChestDrops(EntityStats chest)
     {
         chests.Remove(chest);
-        chest.OnDied -= context => { CheckDrop(chest); FadeObject(context); };
+        chest.OnDied -= HandleChestDrop;
     }
 
-    public void HandleDestruction(GameObject source)
+    public void HandleChestDrop(GameObject go)
     {
-        source.SetActive(false);    // cleanup
-        // play a destruction sound
+        EntityStats stats = go.GetComponent<EntityStats>();
+        CheckDrop(stats);
+        FadeObject(go);
     }
 
     public void FadeObject(GameObject source)

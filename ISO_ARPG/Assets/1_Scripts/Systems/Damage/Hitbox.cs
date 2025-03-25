@@ -100,14 +100,28 @@ public class Hitbox : MonoBehaviour
         applyDamage = true;
         AllowDamageForTime(duration);
     }
+
+    public DamageArgs GetArgs(Hurtbox hb)
+    {
+        DamageArgs args = new DamageArgs();
+        args.hit = hb;
+        args.amount = damage;
+        if (source != null)
+        {
+            args.source = source;    
+        }
+        else
+        {
+            args.source = gameObject;
+        }
+        return args;
+    }
     protected virtual void HandleCollision(Hurtbox hb)
     {
         // Before telling the hurtbox to take damage, do a crit roll to see if hitbox should take additional damage
         CritCalculation();
-        DamageArgs args = new DamageArgs();
-        args.amount = damage;
-        args.source = source;
-        hb.TakeDamage(damage);
+        DamageArgs args = GetArgs(hb);
+        hb.TakeDamage(args);
 
         // Give the current stats an amount of mana from the hit
         // The problem is -> if I hit multiple targets, do I get mana for EACH target hit, or that I hit a target?

@@ -111,10 +111,10 @@ public class ChainEffect : MonoBehaviour
                 // 25% reduced damage per chain sequence
                 // total amount to take * (0.25 * chain step) // 2 steps = 50% of total damage
                 float chainDamage = args.amount * (0.25f * chainAmount);    // Reduction per chain sequence
-                chainedHit.TakeDamage(chainDamage); // Have chain attacks as a recursive function with a limiter on the amount via the chain limit
                 DamageArgs chainArgs = new DamageArgs();
                 chainArgs.amount = chainDamage;
                 chainArgs.hit = chainedHit;
+                chainedHit.TakeDamage(chainArgs); // Have chain attacks as a recursive function with a limiter on the amount via the chain limit
                 HandleChainAttack(chainArgs, ref chainAmount, chainLimit);
                 //ContinueChain(ref chainAmount, chainLimit);
                 return;

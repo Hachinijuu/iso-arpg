@@ -25,7 +25,8 @@ public class ExplodingProjectile : Projectile
                 if (collider.CompareTag("Hurtbox") && !collider.transform.parent.CompareTag("Player")) // The hurtbox hit by the explosion
                 { 
                     Hurtbox explodeHB = collider.GetComponent<Hurtbox>();
-                    explodeHB.TakeDamage(damage);
+                    DamageArgs args = GetArgs(hb);
+                    explodeHB.TakeDamage(args);
                     break;
                 }
             }

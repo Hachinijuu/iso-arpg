@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
@@ -8,6 +9,7 @@ public class Hurtbox : MonoBehaviour
 
     // Get a reference to the health on the specified object
     [SerializeField] protected EntityStats stats;
+    [SerializeField] bool applyKnockback;
     #endregion
     //TrackedStat health;
 
@@ -34,14 +36,14 @@ public class Hurtbox : MonoBehaviour
     }
     #endregion
     #region FUNCTIONALITY
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(DamageArgs args)
     {
         // DODGE -- potential to miss, no damage taken
         float dodge = Random.Range(0.0f, 100.0f); // float inclusive 0-100
         if (dodge <= stats.Dodge.Value)
             return;
 
-        float recalc = damage * Mathf.Clamp01(1.0f - ((stats.Armour.Value * GameManager.Instance.ArmourConvert) / 100));
+        float recalc = args.amount * Mathf.Clamp01(1.0f - ((stats.Armour.Value * GameManager.Instance.ArmourConvert) / 100));
         // 100 damage incoming - 400 armour stat, conversion is 0.05
         // 100 * # between 0-1 -> 1 would be no resistance, 0 would full resistance
         // 100 * (1 - ((400 * 0.05) / 100))
@@ -76,8 +78,22 @@ public class Hurtbox : MonoBehaviour
             stats.Health.Value -= recalc;
         }
 
+        if (applyKnockback)
+        {
+            HandleKnockback(args);
+        }
+
         FireOnDamaged(stats.Health.Value);
         //Debug.Log("[DamageSystem]: " + gameObject.name + " took " + damage + " damage, value changed from (" + stats.Health.OldValue + " to " + stats.Health.Value + ")");
+    }
+
+    [SerializeField] float knockbackForce = 1.0f;
+    public virtual void HandleKnockback(DamageArgs args)
+    {
+        if (!applyKnockback || args.source == null ) { return; }    // If you cannot knockback, or the source of the damage is null, return
+        Vector3 dir = (transform.position - args.source.transform.position);    // my position - where was the damage from
+        dir.y = 0;
+        transform.position += dir  * knockbackForce * Time.deltaTime;
     }
     #endregion
 }

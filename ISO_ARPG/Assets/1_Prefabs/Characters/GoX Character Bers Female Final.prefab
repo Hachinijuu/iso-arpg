@@ -2772,6 +2772,7 @@ GameObject:
   - component: {fileID: 1694132099440175233}
   - component: {fileID: 2568971933848716563}
   - component: {fileID: 5246866664012777604}
+  - component: {fileID: 7110654670124554487}
   m_Layer: 11
   m_Name: GoX Character Bers Female Final
   m_TagString: Player
@@ -2792,7 +2793,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1592273350133506420}
   - {fileID: 2727428596404548032}
   - {fileID: 713095917341025221}
   - {fileID: 4277472491899391564}
@@ -2891,6 +2891,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   rotationSpeed: 20
   clickBuffer: 0.05
+  isStopped: 0
 --- !u!114 &1532357188889039818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2923,6 +2924,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 896
+  target: {fileID: 0}
+  mouseHit: {fileID: 0}
 --- !u!82 &7057737631166150019
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3071,8 +3074,9 @@ MonoBehaviour:
   voiceSource: {fileID: 0}
   sfxSource: {fileID: 0}
   animator: {fileID: 0}
+  hitboxes: []
   body: {fileID: 0}
-  auraSource: {fileID: 4444601953941448277}
+  altBody: {fileID: 0}
 --- !u!114 &7206988346633858353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3159,6 +3163,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 7875754769750784783}
+  applyKnockback: 0
+  knockbackForce: 1
+--- !u!114 &7110654670124554487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366322350053213544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2dcbf8dce643a746aa64776b09b3821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ab1particles: []
+  ab2particles: []
+  auraGlow: {fileID: 0}
 --- !u!1 &8381090316102406410
 GameObject:
   m_ObjectHideFlags: 0
@@ -3673,77 +3694,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2544098792811105631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &799116954659115150
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 9174102325388976082}
-    m_Modifications:
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3943303136166098651, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_Name
-      value: GoXAuraParticleSmall
-      objectReference: {fileID: 0}
-    - target: {fileID: 3943303136166098651, guid: b428f252630904445ab8752928adf242, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b428f252630904445ab8752928adf242, type: 3}
---- !u!4 &1592273350133506420 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2094152446723338746, guid: b428f252630904445ab8752928adf242, type: 3}
-  m_PrefabInstance: {fileID: 799116954659115150}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4444601953941448277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3943303136166098651, guid: b428f252630904445ab8752928adf242, type: 3}
-  m_PrefabInstance: {fileID: 799116954659115150}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4044561584709585822
 PrefabInstance:
   m_ObjectHideFlags: 0
