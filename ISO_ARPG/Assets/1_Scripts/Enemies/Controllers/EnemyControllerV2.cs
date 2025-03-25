@@ -50,6 +50,9 @@ public class EnemyControllerV2 : MonoBehaviour
     private static string moveAnimation = "Speed";
     private int moveId = Animator.StringToHash(moveAnimation);
 
+    public bool IsDead { get { return isDead; } }
+    private bool isDead = false;
+
     #region Initalization
     private void Start()
     {
@@ -65,6 +68,10 @@ public class EnemyControllerV2 : MonoBehaviour
         if (AIManager.Instance != null)
         {
             stats.OnDied += context => { Died(); };
+        }
+        if (hurtbox != null)
+        {
+            hurtbox.onDamaged += context => { PlayHit(); };
         }
     }
 
@@ -85,6 +92,7 @@ public class EnemyControllerV2 : MonoBehaviour
         //animator.SetInteger("Death", 0 );  // Set to invalid value so that the death animation is not played
         stats.Health.Value = stats.Health.MaxValue; // reset the health value to max
         AIManager.Instance.RegisterToList(this);
+        isDead = false;
 
         if (currState == null && states != null)
         {
@@ -108,20 +116,55 @@ public class EnemyControllerV2 : MonoBehaviour
     // }
     public void Died()
     {
-        //int range = Random.Range(1, 3);   // max exclusive upper, 0 - 1
-        //animator.SetInteger("Death", range);
-        // Unregister from the list
-        AIManager.Instance.UnregisterFromList(this);
-        AIManager.Instance.UpdateDeathNumbers(this);        // Unregister from the AI List
-        DropSystem.Instance.UnregisterEnemyDrop(stats); // Unregister from the drop system
-        
-        // Check for owned slots
-        PlayerSlotSystem slotSystem = PlayerManager.Instance.currentPlayer.Slots;
-        if (slotSystem != null && slotSystem.CheckHasSlot(this))
+        if (!isDead)
         {
-            slotSystem.UnreserveSlot(this);
+            isDead = true;
+            //int range = Random.Range(1, 3);   // max exclusive upper, 0 - 1
+            //animator.SetInteger("Death", range);
+            // Unregister from the list
+            AIManager.Instance.UnregisterFromList(this);
+            AIManager.Instance.UpdateDeathNumbers(this);        // Unregister from the AI List
+            DropSystem.Instance.UnregisterEnemyDrop(stats); // Unregister from the drop system
+            
+            // Check for owned slots
+            PlayerSlotSystem slotSystem = PlayerManager.Instance.currentPlayer.Slots;
+            if (slotSystem != null && slotSystem.CheckHasSlot(this))
+            {
+                slotSystem.UnreserveSlot(this);
+            }
+
+            // Simple, do not diable the agent, let the agent play the animation and then disable afterwards
+            int animValue = Random.Range(1, 3);    // Max exclusive upper 1 - 2
+            animator.SetInteger("Death", animValue);
+            return;
+            // Animation event on the end to cleanup entity
+            //this.enabled = false;   // disable the script
+            //gameObject.SetActive(false);    // Disable the agent
         }
-        gameObject.SetActive(false);    // Disable the agent
+    }
+
+    
+    public void PlayHit()
+    {
+        // Use triggers for these hits so that the animations are automatically played only once
+
+        if (!isDead)
+        { 
+            int animValue = Random.Range(1, 3);
+
+            if (animValue == 1)
+            {
+                animator.SetTrigger("HitLeft");
+                //return;
+            }
+            else if (animValue == 2)
+            {
+                animator.SetTrigger("HitRight");
+                //return;
+            }
+            //animator.SetInteger("Hurt", animValue); // allow the left / right animation to play
+            //animator.SetInteger("Hurt", 0);         // reset back to default so trigger is not enabled
+        }
     }
 
     //public IEnumerator HandleDeath()

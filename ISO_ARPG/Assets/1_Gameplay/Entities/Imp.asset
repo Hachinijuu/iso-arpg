@@ -12,22 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b6d7e0190c1f7748addfd4a32eb07fa, type: 3}
   m_Name: Imp
   m_EditorClassIdentifier: 
-  entityName: 
-  description: 
+  entityName: Imp
+  description: imp
   icon: {fileID: 0}
   Health:
-    value: -1
-    maxValue: 0
-    type: 0
+    value: 10
+    maxValue: 10
+    type: 1
   Damage:
-    value: -1
-    maxValue: 0
-    type: 0
+    value: 5
+    maxValue: 5
+    type: 8
+  AttackSpeed:
+    value: 1
+    maxValue: 1
+    type: 9
   Armour:
-    value: -1
-    maxValue: 0
-    type: 0
+    value: 1
+    maxValue: 1
+    type: 14
   Dodge:
-    value: -1
+    value: 0
     maxValue: 0
-    type: 0
+    type: 15
+  MoveSpeed:
+    value: 2
+    maxValue: 2
+    type: 2

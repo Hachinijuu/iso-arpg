@@ -239,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 relativeRight = camRight * h;
         // This needs to be relative to the camera positioning, such that the camera can be setup and the directional movement will work properly given all camera directions
 
+        // How to force movement vector in speed running
 
         // for directional move, need to read the input axis and output a destination position based on them.
         // create a projection point based on the direction
@@ -289,6 +290,9 @@ public class PlayerMovement : MonoBehaviour
         transform.position = movement;
         //agent.destination = moveTarget;
         speed = (transform.position - moveTarget).magnitude;    // Magnitude of the direction
+
+        // advocate for y threshold
+
         //Debug.Log(speed);
         //Debug.Log(agent.desiredVelocity);
         //speed = body.velocity.magnitude;//(transform.position - moveTarget).magnitude;    // Magnitude of the direction

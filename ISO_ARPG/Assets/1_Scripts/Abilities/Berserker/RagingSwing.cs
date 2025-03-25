@@ -12,6 +12,8 @@ public class RagingSwing : StackAbility
     PlayerParticleHandler particles;
     public float damageMultipler = 1.0f;
     float damage;
+    GameObject body;
+    int animCounter;
 
     private int animId = Animator.StringToHash("Ability1");
     #endregion
@@ -24,6 +26,8 @@ public class RagingSwing : StackAbility
         hitboxes = e.Actor.hitboxes; //e.Actor.transform.GetComponentsInChildren<Hitbox>();
         shootSource = e.Actor.ShootSource;
         particles = e.Actor.Particles;
+        body = e.Actor.Body;
+        animCounter = 0;
 
         shootSource.InitFirePositions();
     }
@@ -54,7 +58,14 @@ public class RagingSwing : StackAbility
         // Is it possible to change the speed of the animation?
         // Can abilities have the animationClip?
 
-        anim.SetTrigger(animId);
+
+        animCounter++;
+        anim.SetInteger(animId, animCounter);       // why does the animation not play -- toggle swap works
+        Debug.Log(animCounter);
+        // figure out animation transition
+
+        //anim.SetBool(animId, left);
+        //left = !left;
         //if (anim != null)
         //{ 
         //}
@@ -105,6 +116,10 @@ public class RagingSwing : StackAbility
     public override void EndAbility(AbilityEventArgs e)
     {
         particles.HandleAbility1Particles(false);
+        if (animCounter == 2)
+        {
+            animCounter = 0;
+        }
         SetDamageDetection(false);
     }
 
