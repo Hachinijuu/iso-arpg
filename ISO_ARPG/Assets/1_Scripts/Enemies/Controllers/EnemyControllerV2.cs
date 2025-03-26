@@ -43,6 +43,8 @@ public class EnemyControllerV2 : MonoBehaviour
 
     public float rotationSpeed = 20.0f;
 
+    public float moveSpeed;
+
     //public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
     private static string moveAnimation = "Speed";
     private int moveId = Animator.StringToHash(moveAnimation);
@@ -73,6 +75,7 @@ public class EnemyControllerV2 : MonoBehaviour
         {
             hurtbox.onDamaged += context => { PlayHit(); };
         }
+        moveSpeed = stats.MoveSpeed.Value;
     }
 
     // How to handle hit-reaction and hit-stun
@@ -415,7 +418,8 @@ public class EnemyControllerV2 : MonoBehaviour
         //Vector3 movement = Vector3.MoveTowards(transform.position, offset, ((stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) + minSpeed) * Time.deltaTime);
         //movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
         
-        Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
+        Vector3 movement = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        movement.y = 0;
         transform.position = movement;
 
         currSpeed = (transform.position - target).magnitude;    // Magnitude of the direction
@@ -424,6 +428,8 @@ public class EnemyControllerV2 : MonoBehaviour
         //speed = body.velocity.magnitude;//(transform.position - moveTarget).magnitude;    // Magnitude of the direction
         if (currSpeed <= 0.25f)
             currSpeed = 0;
+        
+        AnimateAgentMove();
         //rb.MovePosition(movement);
         //transform.position = movement;
 
@@ -437,16 +443,18 @@ public class EnemyControllerV2 : MonoBehaviour
         //transform.position = movement;
     }
 
-    public void MoveAgentNoAvoidance(Vector3 target)
-    {
-        if (target == null) { return; }
-        if (!canMove) { currSpeed = 0; return; }
-        Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
-        movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
+    // public void MoveAgentNoAvoidance(Vector3 target)
+    // {
+    //     if (target == null) { return; }
+    //     if (!canMove) { currSpeed = 0; return; }
+    //     Vector3 movement = Vector3.MoveTowards(transform.position, target, stats.MoveSpeed.Value * Time.deltaTime);
+    //     movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
         
-        transform.position = movement;
-        //rb.MovePosition(movement);
-    }
+    //     currSpeed = (transform.position - target).magnitude;
+
+    //     transform.position = movement;
+    //     //rb.MovePosition(movement);
+    // }
 
     public void MoveAgent(Transform target)
     {

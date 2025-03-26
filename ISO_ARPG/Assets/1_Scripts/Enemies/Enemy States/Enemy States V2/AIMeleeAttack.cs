@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MeleeAttack", menuName = "sykcorSystems/AI/States/MeleeAttack", order = 2)]
@@ -9,30 +10,26 @@ public class AIMeleeAttack : AIState//, IPhysicsState//, ICoroutineState
     public float hitboxUptime = 0.5f;
     public float attackRange = 1.0f;
     public float attackCooldown = 5.0f;
+
+    public float moveSpeedReduction = 0.5f;
     //float ICoroutineState.intervalTime { get { return attackCooldown; } set { attackCooldown = value; } }
 
     [Header("Animations")]
     private static string AttackTrigger = "Attack";
     private int animId = Animator.StringToHash(AttackTrigger);
-    // public override void EnterState(AgentStateArgs e)
-    // {
-    //     EnemyControllerV2 agent = e.agent;
-    //     if (agent == null) { return; }
-    //     PlayerSlotSystem slotSystem = e.player.Slots;
-    //     if (slotSystem != null)
-    //     {
-    //         if (!slotSystem.CheckHasSlot(agent))    // If the agent does not have a slot
-    //         {
-    //             slotSystem.ReserveSlot(agent);      // Reserve a slot
-    //         }
-    //     }
-    // }
+    public override void EnterState(AgentStateArgs e)
+    {
+        EnemyControllerV2 agent = e.agent;
+        if (agent == null) { return; }
+        agent.moveSpeed = agent.stats.MoveSpeed.Value * moveSpeedReduction;
+    }
 
     public override void ExitState(AgentStateArgs e)
     {
         EnemyControllerV2 agent = e.agent;
         if (agent == null) { return; }
         agent.canMove = true;
+        agent.moveSpeed = agent.stats.MoveSpeed.Value;
         
         PlayerSlotSystem slotSystem = e.player.Slots;
         if (slotSystem != null)
@@ -75,32 +72,33 @@ public class AIMeleeAttack : AIState//, IPhysicsState//, ICoroutineState
         PlayerSlotSystem slotSystem = e.player.Slots;
 
         Vector3 playerPos = e.player.transform.position;
-        distance = Vector3.Distance(agent.transform.position, playerPos);
-        // If the agent is close enough to attack, perform the attack and then wait for the interval time
-        if (distance < attackRange && agent.canAttack)
-        {
-            agent.Attack();
-            // Unreserve the slot
-            if (slotSystem != null && slotSystem.CheckHasSlot(agent))
-            {
-                slotSystem.UnreserveSlot(agent);
-            }
-        }
 
+
+        // What is the sequence for the melee attack
+        // If the agent is close enough to perform the attack, target (player) and perform the attack
+        // If the attack has been performed, move to position around the player - occupy a slot
+        // If the agent is close enough to attack, perform the attack and then wait for the interval time
         if (!agent.canAttack)
         {
             // Move the agent out of the attack range (move them to the slot)
             if (slotSystem.CheckHasSlot(agent))     // If the agent has a slot
             {
                 // Move to the slot
-                Transform slot = slotSystem.GetSlot(agent);
-                float slotDistance = Vector3.Distance(slot.position, agent.transform.position);
+                //Transform slot = slotSystem.GetSlot(agent);
+                Vector3 slotPos = slotSystem.GetSlot(agent).position;
+                slotPos.y = 0;
+                float slotDistance = Vector3.Distance(slotPos, agent.transform.position);
                 if (slotDistance > 0.25f)
                 {
-                    agent.canMove = true;
-                    agent.MoveAgentNoAvoidance(slot.position);
+                    agent.Destination = slotPos;
+                    //agent.canMove = true;
+                    agent.MoveAgent();
                     agent.HandleRotation(playerPos);
                 }
+                // else
+                // {
+                //     agent.CurrentSpeed = 0.0f;
+                // }
             }
             else
             {
@@ -112,9 +110,18 @@ public class AIMeleeAttack : AIState//, IPhysicsState//, ICoroutineState
         else
         {
             // Move the agent into attack range
-            agent.canMove = true;
             agent.MoveAgent(playerPos);
             agent.HandleRotation(playerPos);
+            distance = Vector3.Distance(agent.transform.position, playerPos);
+            if (distance < attackRange && agent.canAttack)
+            {
+                agent.Attack();
+                // Unreserve the slot
+                if (slotSystem != null && slotSystem.CheckHasSlot(agent))
+                {
+                    slotSystem.UnreserveSlot(agent);
+                }
+            }
         }
         // if (distance <= attackRange && agent.canAttack)
         // {

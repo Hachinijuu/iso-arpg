@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     [Header("States")]
     public GameState currGameState;
     public enum GameState { MENU, SELECT, LOADING, PLAYING, PAUSE }
-    public enum eLevel { MENU, CHARACTER_SELECT, CUTSCENE, HUB, LEVEL_1, TRANSITION, LEVEL_2, LEVEL_3 }
+    public enum eLevel { MENU, CHARACTER_SELECT, CUTSCENE, HUB, LEVEL_1, TRANSITION, LEVEL_2, LEVEL_3, PROTOTYPE }
     [Header("Level Information")]
     [SerializeField] string[] levelNames; // Map this in order of the types
     public eLevel level;

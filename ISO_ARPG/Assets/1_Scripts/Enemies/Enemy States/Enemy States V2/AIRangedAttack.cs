@@ -61,7 +61,7 @@ public class AIRangedAttack : AIState
         //throw new System.NotImplementedException();
         EnemyControllerV2 agent = e.agent;
         agent.HandleRotation(e.player.transform.position);
-        agent.Attack();
+        if (agent.canAttack) { agent.Attack(); }
 
         if (!moveAfterAttacks) { return; }
         if (!agent.canAttack)   // If the agent has performed their attack

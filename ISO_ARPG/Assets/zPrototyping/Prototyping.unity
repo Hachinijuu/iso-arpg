@@ -156,12 +156,13 @@ MonoBehaviour:
   playerSpawn: {fileID: 1309868839}
   enemySpawnPoints:
   - {fileID: 404076533}
+  eliteSpawnPoints: []
   type: 1
   details:
     enemiesToSpawn:
-    - entity: {fileID: 8339188839789172028, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
-      minSpawn: 50
-      maxSpawn: 50
+    - entity: {fileID: 5571526629560849239, guid: 2416fe9db6e82674dbe6e6142e42901f, type: 3}
+      minSpawn: 1
+      maxSpawn: 1
     destructiblesToSpawn:
     - entity: {fileID: 3162809818822135422, guid: e283f1c90bd493e4896009053f31bcbe, type: 3}
       minSpawn: 5
@@ -171,7 +172,7 @@ MonoBehaviour:
     hordes:
     - hordeCondition: 2
       enemiesToSpawn:
-      - entity: {fileID: 8339188839789172028, guid: 3941220fce1ed9046ac18bdfe9c4388b, type: 3}
+      - entity: {fileID: 2503497217363545633, guid: 16976591a3ba6b84b84bbd1777aedc90, type: 3}
         minSpawn: 50
         maxSpawn: 50
       TriggerAmount: 20
