@@ -11,6 +11,18 @@ public class AIRangedAttack : AIState
     [Header("Animations")]
     private static string AttackTrigger = "Attack";
     private int animId = Animator.StringToHash(AttackTrigger);
+
+    [Header("Attack Parameters")]
+    [SerializeField] bool moveAfterAttacks;
+    [SerializeField] float minMoveDistance = 0.5f;
+    [SerializeField] float maxMoveDistance = 1.25f;
+    [SerializeField] float moveThreshold = 0.25f;
+
+    public override void EnterState(AgentStateArgs e)
+    {
+        e.agent.Destination = e.agent.transform.position;
+    }
+
     public override void Reason(AgentStateArgs e)
     {
         // Does any movement get driven when in this state, or is it simply shoot and transition out given the conditions
@@ -20,17 +32,26 @@ public class AIRangedAttack : AIState
         EnemyControllerV2 agent = e.agent;
         Vector3 agentPos = e.agent.transform.position;
         Vector3 playerPos = e.player.transform.position;
-        if (IsInCurrentRange(playerPos, agentPos, AIManager.MELEE_RANGE))
+
+        // Only check for melee transition if the agent is an elite
+        if (agent.stats.id == EntityID.ELITE || agent.stats.id == EntityID.BIG_ELITE)
         {
-            agent.SetState(StateId.MeleeAttack);
-            return;
+            if (IsInCurrentRange(playerPos, agentPos, AIManager.MELEE_RANGE))
+            {
+                agent.SetState(StateId.MeleeAttack);
+                return;
+            }
         }
-        // If the target is not in ranged attack distance (further range)
-        else if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
+        else
         {
-            agent.SetState(StateId.Chase);
-            return;
+            // If the target is not in ranged attack distance (further range)
+            if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
+            {
+                agent.SetState(StateId.Chase);
+                return;
+            }
         }
+
 
         //throw new System.NotImplementedException();
     }
@@ -41,6 +62,25 @@ public class AIRangedAttack : AIState
         EnemyControllerV2 agent = e.agent;
         agent.HandleRotation(e.player.transform.position);
         agent.Attack();
+
+        if (!moveAfterAttacks) { return; }
+        if (!agent.canAttack)   // If the agent has performed their attack
+        {
+            float dist = Vector3.Distance(agent.transform.position, agent.Destination);
+            if (dist < moveThreshold)
+            {
+                Vector3 shiftPos = GetCirclePoint(minMoveDistance, maxMoveDistance, agent.transform);   // This just causes agent jittering
+                agent.Destination = shiftPos;
+            }
+            // Check the distance between the agent and their destination, it if is small, then move them again
+
+            agent.MoveAgent();
+            // Need to store a destination position
+            //agent.MoveAgent(shiftPos);
+            //agent.HandleRotation(shiftPos);
+        }
+        // after performing an attack, the agent can shift if they are NOT a turret
+        // this can be dictated as a flag
         //agent.Animator.SetTrigger(animId);
 
         // Vector3 playerPos = e.player.transform.position;

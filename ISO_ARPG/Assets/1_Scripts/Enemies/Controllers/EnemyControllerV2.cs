@@ -21,9 +21,6 @@ public class EnemyControllerV2 : MonoBehaviour
     [SerializeField] private Hitbox hitbox;
 
     public EntityStats stats;
-    public Rigidbody Body { get { return rb; } }
-    [SerializeField] Rigidbody rb;
-
     public Animator Animator { get { return animator; } }
     [SerializeField] Animator animator;
 
@@ -52,6 +49,9 @@ public class EnemyControllerV2 : MonoBehaviour
 
     public bool IsDead { get { return isDead; } }
     private bool isDead = false;
+
+    private Vector3 destination;
+    public Vector3 Destination { get {return destination; } set {destination = value; } }
 
     #region Initalization
     private void Start()
@@ -216,11 +216,17 @@ public class EnemyControllerV2 : MonoBehaviour
         }
 
         // Once the previous state has been cleaned up, set the new ID and lookup the next state
-        currStateId = id;
-        if (states.stateMap.TryGetValue(currStateId, out AIState foundState))
+        if (states.stateMap.TryGetValue(id, out AIState foundState))
         {
+            currStateId = id;
             currState = foundState;
             currState.EnterState(args);
+        }
+        else
+        {
+            // stay in the state your were
+            currState.EnterState(args);
+            return;
         }
     }
 
@@ -395,6 +401,7 @@ public class EnemyControllerV2 : MonoBehaviour
     {
         if (target == null) { return; }
         if (!canMove) { currSpeed = 0; return; }
+        if (destination == null) { destination = target; }
         // When moving the agent, we need to avoid other agents if possible (for nicer control)
         // Therefore, how can spacing be handled nicely?
         //debugTarget = target;
@@ -444,6 +451,12 @@ public class EnemyControllerV2 : MonoBehaviour
     public void MoveAgent(Transform target)
     {
         MoveAgent(target.position);
+    }
+
+    public void MoveAgent()
+    {
+        if (destination == null) { return; }
+        MoveAgent(destination);
     }
 
     public void MoveAgentAround(Vector3 target, Transform avoid = null)

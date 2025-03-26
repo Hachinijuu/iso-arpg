@@ -46,7 +46,7 @@ public abstract class AIState : ScriptableObject
         return inRange;
     }
 
-        protected virtual bool IsInCurrentRange(Vector3 start, Vector3 goal, float range)
+    protected virtual bool IsInCurrentRange(Vector3 start, Vector3 goal, float range)
     {
         bool inRange = false;
 
@@ -63,5 +63,15 @@ public abstract class AIState : ScriptableObject
     protected virtual float GetSquareDistance(Vector3 start, Vector3 goal)
     {
         return (goal - start).sqrMagnitude;
+    }
+
+    protected virtual Vector3 GetCirclePoint(float min, float max, Transform source)
+    {
+        int randPoint = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
+        float offset = Random.Range(min, max);
+        Vector3 target = source.position;
+        target.x += (CircleUtility.CircleListInstance[randPoint].x * offset);
+        target.z += (CircleUtility.CircleListInstance[randPoint].z * offset);
+        return target;
     }
 }

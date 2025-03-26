@@ -45,12 +45,7 @@ public class AIIdleState : AIState, IPhysicsState
 
         if (e.agent == null) { return; }
         EnemyControllerV2 agent = e.agent;
-        int randPoint = Random.Range(0, CircleUtility.MAX_CIRCLE_POSITIONS);
-        float offset = Random.Range(minRoam, maxRoam);
-        Vector3 target = agent.transform.position;
-        target.x += (CircleUtility.CircleListInstance[randPoint].x * offset);
-        target.z += (CircleUtility.CircleListInstance[randPoint].z * offset);
-
+        Vector3 target = GetCirclePoint(minRoam, maxRoam, agent.transform);
         // Move the agent to the target
         agent.MoveAgent(target);
     }
