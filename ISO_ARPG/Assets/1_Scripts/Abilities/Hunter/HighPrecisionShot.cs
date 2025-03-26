@@ -27,7 +27,7 @@ public class HighPrecisionShot : Ability
             audioSource.PlayOneShot(abilityActivated);
 
         anim.SetTrigger(animID);
-        stats.ID_Bar.Value += stats.IDGain.Value;
+        //stats.ID_Bar.Value += stats.IDGain.Value;
 
         // Calculate damage
         damage = (stats.Damage.Value * damageMultipler) + (stats.DEX.Value * GameManager.Instance.MainConvert);

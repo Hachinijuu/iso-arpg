@@ -82,7 +82,7 @@ public class DeathSpin : ChannelAbility
 
     public override void OnTick()
     {
-        stats.ID_Bar.Value += stats.IDGain.Value;
+        //stats.ID_Bar.Value += stats.IDGain.Value;
 
         if (stats.Projectiles.Value > 0)
         {

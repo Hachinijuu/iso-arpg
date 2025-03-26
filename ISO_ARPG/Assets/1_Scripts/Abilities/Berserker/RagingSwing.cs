@@ -85,7 +85,7 @@ public class RagingSwing : StackAbility
 
 
         // For now, to stop things from breaking, simply give id gains and such
-        stats.ID_Bar.Value += stats.IDGain.Value;
+        //stats.ID_Bar.Value += stats.IDGain.Value;
         if (stacks < maxStacks)
         {
             stacks++;

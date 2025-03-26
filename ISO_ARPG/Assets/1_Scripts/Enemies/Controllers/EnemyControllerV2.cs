@@ -73,7 +73,7 @@ public class EnemyControllerV2 : MonoBehaviour
         }
         if (hurtbox != null)
         {
-            hurtbox.onDamaged += context => { PlayHit(); };
+            hurtbox.onDamaged += context => { OnDamaged(); };
         }
         moveSpeed = stats.MoveSpeed.Value;
     }
@@ -96,6 +96,7 @@ public class EnemyControllerV2 : MonoBehaviour
         stats.Health.Value = stats.Health.MaxValue; // reset the health value to max
         AIManager.Instance.RegisterToList(this);
         isDead = false;
+        hurtbox.applyKnockback = true;
 
         if (currState == null && states != null)
         {
@@ -122,13 +123,15 @@ public class EnemyControllerV2 : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
+            hurtbox.applyKnockback = false;
             //int range = Random.Range(1, 3);   // max exclusive upper, 0 - 1
             //animator.SetInteger("Death", range);
             // Unregister from the list
             AIManager.Instance.UnregisterFromList(this);
             AIManager.Instance.UpdateDeathNumbers(this);        // Unregister from the AI List
             DropSystem.Instance.UnregisterEnemyDrop(stats); // Unregister from the drop system
-            
+            PlayerManager.Instance.GiveResourceOnKill();
+
             // Check for owned slots
             PlayerSlotSystem slotSystem = PlayerManager.Instance.currentPlayer.Slots;
             if (slotSystem != null && slotSystem.CheckHasSlot(this))
@@ -145,8 +148,11 @@ public class EnemyControllerV2 : MonoBehaviour
             //gameObject.SetActive(false);    // Disable the agent
         }
     }
-
-    
+    public void OnDamaged()
+    {
+        PlayerManager.Instance.GiveResourceOnDamage();
+        PlayHit();
+    }
     public void PlayHit()
     {
         // Use triggers for these hits so that the animations are automatically played only once

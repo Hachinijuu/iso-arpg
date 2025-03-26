@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         // Check for playmode override
         bool playOverride = EditorPrefs.GetBool("shouldOverride");
-        Debug.Log(playOverride);
+        //Debug.Log(playOverride);
         if (!playOverride)
         {
             LoadMainMenu();
@@ -360,10 +360,19 @@ public class GameManager : MonoBehaviour
         //     //PlayerManager.Instance.HandlePlayerSelect();
         // }
     }
+
+    
     public void LoadPrototype()
     {
         StartCoroutine(LoadLevel("Prototyping"));
     }
+
+
+    public void CoroutineStarter(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
+    }
+
     #endregion
 
     #region GENERAL FUNCTIONALITY

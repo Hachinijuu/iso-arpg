@@ -26,7 +26,7 @@ public class Fireball : Ability
             source.PlayOneShot(abilityActivated);
         
         anim.SetTrigger(animId);
-        stats.ID_Bar.Value += stats.IDGain.Value;
+        //stats.ID_Bar.Value += stats.IDGain.Value;
 
         damage = (stats.Damage.Value * damageMultipler) + (stats.INT.Value * GameManager.Instance.MainConvert);
         for (int i = 0; i < stats.Projectiles.Value; i++)

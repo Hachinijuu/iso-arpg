@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6842978903335142606}
   - component: {fileID: 7343116606026985181}
   - component: {fileID: -3215130526568844085}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   attackRange: 1.5
   damageLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 4480
   rb: {fileID: 7343116606026985181}
   pierces: 1
   uptime: 3
@@ -189,6 +189,10 @@ PrefabInstance:
     - target: {fileID: 7271742512138195746, guid: c5c44ff876f4a2e4b90275934e2a6ec9, type: 3}
       propertyPath: m_Name
       value: Trails
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271742512138195746, guid: c5c44ff876f4a2e4b90275934e2a6ec9, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7271742512138195746, guid: c5c44ff876f4a2e4b90275934e2a6ec9, type: 3}
       propertyPath: m_IsActive

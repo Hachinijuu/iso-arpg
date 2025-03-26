@@ -17,6 +17,40 @@ public class Projectile : Hitbox
 
     #endregion
     #region FUNCTIONALITY
+    // public override void HandleHit()
+    // {
+    //     if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
+    //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
+    //     foreach (Collider hit in hitColliders)
+    //     {
+    //         // if what was hit is an obstacle
+    //         if (hit.CompareTag("Obstacle")) { gameObject.SetActive(false); return; } // Eject, and recycle the object
+    //         Hurtbox hb = hit.GetComponent<Hurtbox>();
+    //         if (hb != null)
+    //         {
+    //             HandleCollision(hb);
+    //         }
+    //     }
+    // }
+
+    // public override void HandleHits()
+    // {
+    //     if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
+    //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
+    //     //Debug.Log(hitColliders.Length);
+    //     foreach (Collider hit in hitColliders)
+    //     {
+    //         if (hit.CompareTag("Obstacle")) { gameObject.SetActive(false); return; } // Eject, and recycle the object
+    //         Hurtbox hb = hit.GetComponent<Hurtbox>();
+    //         if (hb != null)
+    //         {
+    //             //Debug.Log("Handling Collision");
+    //             HandleCollision(hb);
+    //             applyDamage = false;    // Stop allowing damage to pass through
+    //             return; // Early return for only single hit detection
+    //         }
+    //     }
+    // }
     protected override void HandleCollision(Hurtbox hb)
     {
         base.HandleCollision(hb);   // apply damage

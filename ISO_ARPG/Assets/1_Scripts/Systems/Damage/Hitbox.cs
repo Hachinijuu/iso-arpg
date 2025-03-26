@@ -54,7 +54,7 @@ public class Hitbox : MonoBehaviour
             damage = stats.Damage.Value;
         }
     }
-    public void HandleHits()
+    public virtual void HandleHits()
     {
         if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
@@ -69,7 +69,7 @@ public class Hitbox : MonoBehaviour
     }
 
     // This is different from handle HITS, it will early return after the collision has been accounted for
-    public void HandleHit()
+    public virtual void HandleHit()
     {
         if (!applyDamage) { return; }   // If you cannot apply damage, return from this function
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space

@@ -9,7 +9,7 @@ public class Hurtbox : MonoBehaviour
 
     // Get a reference to the health on the specified object
     [SerializeField] protected EntityStats stats;
-    [SerializeField] bool applyKnockback;
+    [SerializeField] public bool applyKnockback;
     #endregion
     //TrackedStat health;
 

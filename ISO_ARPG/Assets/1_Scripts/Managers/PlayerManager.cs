@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum GoX_Class { NONE, BERSERKER, HUNTER, ELEMENTALIST }
@@ -119,6 +120,61 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("Added death listeners");
             }
         }
+    }
+
+    public void GivePlayerTrackedStat(TrackedStatTypes type, float value)
+    {
+        foreach (Stat stat in currentPlayer.Stats.statList)
+        {
+            if (stat is TrackedStat ts)
+            {
+                if (ts.type == type)
+                {
+                    ts.Value += value;
+                }
+            }
+        }
+    }
+
+    public void GivePlayerMainStat(MainStatTypes type, float value)
+    {
+        foreach (Stat stat in currentPlayer.Stats.statList)
+        {
+            if (stat is MainStat ms)
+            {
+                if (ms.type == type)
+                {
+                    ms.Value += value;
+                }
+            }
+        }
+    }
+
+    public void GivePlayerSubstat(SubStatTypes type, float value)
+    {
+        foreach (Stat stat in currentPlayer.Stats.statList)
+        {
+            if (stat is SubStat ss)
+            {
+                if (ss.type == type)
+                {
+                    ss.Value += value;
+                }
+            }
+        }
+    }
+
+    public void GiveResourceOnDamage()
+    {
+        PlayerStats stats = currentPlayer.Stats;
+        stats.Mana.Value += stats.ManaOnHit.Value;
+    }
+
+    public void GiveResourceOnKill()
+    {
+        PlayerStats stats = currentPlayer.Stats;
+        float idGain = stats.Class.BaseIDGain * stats.IDGain.Value;     // This will increase based on the amount of idGain the player has
+        GivePlayerTrackedStat(TrackedStatTypes.ID_BAR, idGain);         // This will be base gain modified
     }
 
     public void OnDisable()
