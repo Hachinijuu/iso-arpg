@@ -11,6 +11,7 @@ public abstract class InteractableObject : MonoBehaviour
     public AudioClip interactSound;
     public virtual void OnInteract(Transform source = null)
     {
+        // source is by default null, when is oninteract called?
         // only check for distance if source != null and distance > 0
         if (source != null && interactDistance > 0)
         {

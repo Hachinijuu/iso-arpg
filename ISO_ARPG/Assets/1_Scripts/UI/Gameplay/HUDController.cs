@@ -23,7 +23,6 @@ public class HUDController : MonoBehaviour
     [SerializeField] TMP_Text healthPotionText;
     [SerializeField] TMP_Text manaPotionText;
 
-
     // Get references to the relevant stats
     TrackedStat health;
     TrackedStat mana;
@@ -35,9 +34,9 @@ public class HUDController : MonoBehaviour
     //     PlayerManager.Instance.onPlayerChanged += context => { SetPlayer(context.player); };
     // }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
-        InitHud();    
+        InitHud();
     }
     void OnDisable()
     {
@@ -101,18 +100,18 @@ public class HUDController : MonoBehaviour
     // EVENT MAPPING
     private void AddEventListeners()
     {
-        if (healthSlider)   playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); };
-        if (manaSlider)     playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
-        if (idSlider)       playerStats.ID_Bar.Changed += context => { UpdateIdSlider(context); };
+        if (healthSlider) playerStats.Health.Changed += context => { UpdateHealthSlider(context); UpdateHealthText(context); };
+        if (manaSlider) playerStats.Mana.Changed += context => { UpdateManaSlider(context); UpdateManaText(context); };
+        if (idSlider) playerStats.ID_Bar.Changed += context => { UpdateIdSlider(context); };
         if (healthPotionText && manaPotionText) AddPotionListeners();
         AddCooldownListeners();
     }
 
     private void RemoveEventListeners()
     {
-        if (healthSlider)   playerStats.Health.Changed -= UpdateHealthSlider;
-        if (manaSlider)     playerStats.Mana.Changed -= UpdateManaSlider;
-        if (idSlider)       playerStats.ID_Bar.Changed -= UpdateIdSlider;
+        if (healthSlider) playerStats.Health.Changed -= UpdateHealthSlider;
+        if (manaSlider) playerStats.Mana.Changed -= UpdateManaSlider;
+        if (idSlider) playerStats.ID_Bar.Changed -= UpdateIdSlider;
         if (healthPotionText && manaPotionText) RemovePotionListeners();
         RemoveCooldownListeners();
     }
@@ -136,7 +135,7 @@ public class HUDController : MonoBehaviour
 
     public void AddPotionListeners()
     {
-        Inventory.Instance.onPotionChanged += UpdatePotions; 
+        Inventory.Instance.onPotionChanged += UpdatePotions;
     }
 
     public void RemovePotionListeners()
@@ -226,7 +225,7 @@ public class HUDController : MonoBehaviour
     public void UpdateEnemyNumber()
     {
         if (LevelManager.Instance == null) { return; }
-        objectiveCounter.text = LevelManager.Instance.numKilled  + " / " + LevelManager.Instance.Details.enemiesToKill;
+        objectiveCounter.text = LevelManager.Instance.numKilled + " / " + LevelManager.Instance.Details.enemiesToKill;
         // Rework tracking to maintain enemy amount with remains logic
     }
 

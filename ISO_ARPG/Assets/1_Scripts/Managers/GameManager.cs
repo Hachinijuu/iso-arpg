@@ -277,12 +277,11 @@ public class GameManager : MonoBehaviour
             loadingScreen.gameObject.SetActive(isLoading);
         }
 
-
-
         // If the level manager exists, do the stuff
-        if (LevelManager.Instance)
+        if (LevelManager.Instance)  // ASSUME PLAYABLE IF A LEVEL MANAGER EXISTS
         {
-            currGameState = GameState.PLAYING;
+            SetGameState(GameState.PLAYING);
+            //currGameState = GameState.PLAYING;
             // Load the player
             GameUI.SetActive(true);
             if (controller)         // If the player exists, load the player -- there should be no player by default
@@ -344,6 +343,7 @@ public class GameManager : MonoBehaviour
         //PlayerManager.Instance.DeactivatePlayer();
         PlayerManager.Instance.DeactivatePlayer();
         LoadLevelByID(eLevel.CHARACTER_SELECT);
+        currGameState = GameState.SELECT;
         // Disable all players
         //PlayerManager.Instance.EnableCharacters(false); // Shut off the players for the ghost selection
 
@@ -361,7 +361,7 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    
+
     public void LoadPrototype()
     {
         StartCoroutine(LoadLevel("Prototyping"));
@@ -379,15 +379,27 @@ public class GameManager : MonoBehaviour
     // Pause Controls
     [SerializeField] PauseMenu pauseMenu;
 
+    GameState prevGameState;
+
+    public void SetGameState(GameState newState)
+    {
+        prevGameState = currGameState;
+        currGameState = newState;
+    }
+
     public void PauseGame()
     {
-        currGameState = GameState.PAUSE;
+        SetGameState(GameState.PAUSE);
+        //currGameState = GameState.PAUSE;
+        // For unpause and pause, revert back to whichever was the previous state
+
         Time.timeScale = 0.0f;
     }
 
     public void UnpauseGame()
     {
-        currGameState = GameState.PLAYING;
+        SetGameState(prevGameState);
+        //currGameState = GameState.PLAYING;
         Time.timeScale = 1.0f;
     }
 

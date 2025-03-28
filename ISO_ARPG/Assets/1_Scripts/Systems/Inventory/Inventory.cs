@@ -313,7 +313,10 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.UnpauseGame();
+            if (GameManager.Instance.currGameState == GameManager.GameState.PAUSE)
+            {
+                GameManager.Instance.UnpauseGame();
+            }
         }
     }
     public void AddItem(ItemData data)
@@ -427,8 +430,9 @@ public class Inventory : MonoBehaviour
 
                 // 'pickup the item' --> set the values to null, and have the init slot that follows the mouse be the item.
                 StartCoroutine(HandleGhostItem());
-                slot.img = null;
-                slot.item = null;
+                slot.SetItem(null);
+                //slot.img = null;
+                //slot.item = null;
 
                 //ghost = GameObject.Instantiate(sourceSlot.gameObject, canvas.transform);
                 clickedItem = true;
@@ -456,7 +460,8 @@ public class Inventory : MonoBehaviour
         ghost = GameObject.Instantiate(sourceSlot.gameObject, canvas.transform); // probably don't instantiate, just active existing ghost set to mouse position
 
         ItemSlot ghostSlot = ghost.GetComponent<ItemSlot>();
-        ghostSlot.img = sourceSlot.img;
+        //ghostSlot.img = sourceSlot.img;
+        ghostSlot.SetItem(sourceSlot.item);
         ghostSlot.SlotSelected(true);
 
         //Image gImage = ghost.GetComponent<Image>();
@@ -489,8 +494,10 @@ public class Inventory : MonoBehaviour
                 {
                     Debug.Log("[Inventory]: Failed placement, reverting");
                     // Revert item back to slot
-                    sourceSlot.item = ghostItem;
-                    sourceSlot.img = ghostItem.itemIcon;
+
+                    sourceSlot.SetItem(ghostItem);
+                    //sourceSlot.item = ghostItem;
+                    //sourceSlot.img = ghostItem.itemIcon;
                     //ghostItem.LoadSpriteToImage(sourceSlot.img);
                 }
                 else
@@ -506,8 +513,9 @@ public class Inventory : MonoBehaviour
                             if (rune.runeType == runeSlot.type) // If the rune type matches the slot
                             {
                                 Debug.Log("[Inventory]: Matching slots, embed the rune");
-                                slot.item = ghostItem;
-                                slot.img = sourceSlot.img;
+                                slot.SetItem(ghostItem);
+                                //slot.item = ghostItem;
+                                //slot.img = sourceSlot.img;
                                 //ghostItem.LoadSpriteToImage(slot.img);
 
                                 // Tell the slot to use the rune
@@ -516,8 +524,9 @@ public class Inventory : MonoBehaviour
                             else
                             {
                                 Debug.Log("[Inventory]: Slot is for " + runeSlot.type + " defaulting");
-                                sourceSlot.item = ghostItem;
-                                sourceSlot.img = ghostItem.itemIcon;
+                                sourceSlot.SetItem(ghostItem);
+                                //sourceSlot.item = ghostItem;
+                                //sourceSlot.img = ghostItem.itemIcon;
                                 //ghostItem.LoadSpriteToImage(sourceSlot.img);
                             }
                         }
@@ -525,16 +534,19 @@ public class Inventory : MonoBehaviour
                         {
                             Debug.Log("[Inventory]: Failed placement, reverting");
                             // Revert item back to slot
-                            sourceSlot.item = ghostItem;
-                            sourceSlot.img = ghostItem.itemIcon;
+                            sourceSlot.SetItem(ghostItem);
+                            //sourceSlot.item = ghostItem;
+                            //sourceSlot.img = ghostItem.itemIcon;
                             //ghostItem.LoadSpriteToImage(sourceSlot.img);
                         }
                     }
                     else // the selected slot is NOT a rune slot, handle regular placement.
                     {
                         Debug.Log("[Inventory]: Index (" + slot.index.x + " : " + slot.index.y + ") is empty, placing item here");
-                        slot.item = ghostItem;
-                        slot.img = ghostItem.itemIcon;
+
+                        slot.SetItem(ghostItem);
+                        //slot.item = ghostItem;
+                        //slot.img = ghostItem.itemIcon;
                         //ghostItem.LoadSpriteToImage(slot.img);
                     }
                 }
@@ -549,8 +561,9 @@ public class Inventory : MonoBehaviour
                 Debug.Log("[Inventory]: Did not release mouse on a valid position, reverting");
 
                 // If release position is outside of the canvas --> we can detect to drop the item / discard
-                sourceSlot.item = ghostItem;
-                sourceSlot.img = ghostItem.itemIcon;
+                sourceSlot.SetItem(ghostItem);
+                //sourceSlot.item = ghostItem;
+                //sourceSlot.img = ghostItem.itemIcon;
                 //ghostItem.LoadSpriteToImage(sourceSlot.img);
             }
         }

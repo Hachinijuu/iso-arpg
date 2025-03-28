@@ -93,6 +93,8 @@ public class DebugMenu : MonoBehaviour
         if (RuneSystem.Instance != null)
         {
             RuneData rune = RuneSystem.Instance.CreateMainStatRune(ItemRarity.COMMON, MainStatTypes.NONE);
+            // This creates a rune and adds it to the inventory
+            // The problem is the created run is fake
             if (rune != null)
             {
                 Inventory.Instance.AddItem(rune);

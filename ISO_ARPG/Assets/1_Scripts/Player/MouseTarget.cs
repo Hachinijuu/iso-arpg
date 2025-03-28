@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -63,7 +62,7 @@ public class MouseTarget : MonoBehaviour
     }
 
     private void UnmapActions()
-    { 
+    {
         input.actions["TargetLocked"].performed -= context => { SetTarget(); };
     }
     #endregion
@@ -102,6 +101,7 @@ public class MouseTarget : MonoBehaviour
             if (target.CompareTag("Interactable"))
             {
                 InteractableObject interact = target.GetComponent<InteractableObject>();
+                Debug.Log("Interact clicked");
                 if (interact != null)
                 {
                     if (interact.interactDistance > 0)
@@ -115,12 +115,12 @@ public class MouseTarget : MonoBehaviour
             //    dbMenu.UpdateTargetText(target.name);
         }
         else
-        { 
+        {
             target = null;
             //if (dbMenu)
             //    dbMenu.UpdateTargetText(null);
         }
-
+        Debug.Log(mouseHit);
     }
 
     void UpdateMouseHover()

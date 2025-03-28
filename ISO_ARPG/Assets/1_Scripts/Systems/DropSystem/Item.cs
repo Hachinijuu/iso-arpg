@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -21,25 +19,26 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            itemData.FireAcquired(new ItemEventArgs(itemData));
             // Since the player has collided, see what needs to be added to the inventory
             if (itemData is PotionData pd)
             {
                 switch (pd.potionType)
                 {
                     case PotionTypes.HEALTH:
-                    if (Inventory.Instance.GetNumHealthPotions() < Inventory.Instance.maxHealthPotions)
-                    {
-                        Inventory.Instance.AddPotion(pd);
-                        Destroy(gameObject);
-                    }
-                    break;
+                        if (Inventory.Instance.GetNumHealthPotions() < Inventory.Instance.maxHealthPotions)
+                        {
+                            Inventory.Instance.AddPotion(pd);
+                            Destroy(gameObject);
+                        }
+                        break;
                     case PotionTypes.MANA:
-                    if (Inventory.Instance.GetNumManaPotions() < Inventory.Instance.maxManaPotions)
-                    {
-                        Inventory.Instance.AddPotion(pd);
-                        Destroy(gameObject);
-                    }
-                    break;
+                        if (Inventory.Instance.GetNumManaPotions() < Inventory.Instance.maxManaPotions)
+                        {
+                            Inventory.Instance.AddPotion(pd);
+                            Destroy(gameObject);
+                        }
+                        break;
                 }
                 //Inventory.Instance.AddPotion(pd);
             }
@@ -49,13 +48,13 @@ public class Item : MonoBehaviour
                 {
                     case ResourceTypes.DUST:
                         Inventory.Instance.RuneDust += rd.amount;
-                    break;
+                        break;
                     case ResourceTypes.WOOD:
                         Inventory.Instance.WoodAmount += rd.amount;
-                    break;
+                        break;
                     case ResourceTypes.STONE:
                         Inventory.Instance.StoneAmount += rd.amount;
-                    break;
+                        break;
                 }
                 Destroy(gameObject);
             }

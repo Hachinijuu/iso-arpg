@@ -18,6 +18,12 @@ public class DropSystem : MonoBehaviour
         }
     }
 
+    [Header("Popup Settings")]
+    [SerializeField] GameObject popupPanel;
+    [SerializeField] GameObject popupPrefab;
+    [SerializeField] float destroyTime = 0.25f;
+
+
     private List<EntityStats> enemies;
     private List<EntityStats> destructibles;
     private List<EntityStats> chests;
@@ -56,7 +62,7 @@ public class DropSystem : MonoBehaviour
     {
         enemies.Add(enemy);
         enemy.OnDied += HandleEnemyDrops;
-        
+
         //context => { CheckDrop(enemy); };
     }
 
@@ -64,7 +70,7 @@ public class DropSystem : MonoBehaviour
     {
         //Debug.Log("Unregistered, stopped listening");
         enemies.Remove(enemy);
-        
+
         enemy.OnDied -= HandleEnemyDrops; //context => { CheckDrop(enemy); };
     }
     void HandleEnemyDrops(GameObject go)
@@ -252,12 +258,30 @@ public class DropSystem : MonoBehaviour
     {
         // Build the UI popup to display on screen.
         ItemData item = e.data;
+        HandlePopup(item);
+
         //Debug.Log("[DropSystem]: Show popup for: " + item.itemName);
         item.OnItemAcquired -= ItemPopup;
     }
     // This drop system manages all drops in the game
     // It will contain a dictionary to the possible drops and stuff
     #endregion
+
+    public void HandlePopup(ItemData data)
+    {
+        // Five popups appear when potions are capped out at 3...
+        GameObject copy = GameObject.Instantiate(popupPrefab, popupPanel.transform);
+        PickupPopup popup = copy.GetComponent<PickupPopup>();
+        if (popup != null)
+        {
+            popup.SetupPopup(data);
+        }
+
+        // Set the created object to destroy after time to clear up the popup list
+        // Alternatively, maintain count of list and destroy once full
+        Destroy(copy, destroyTime); // can fade out instead of straight up destroy
+        //Debug.LogWarning("Popup Setup: " + data.name);
+    }
 
     #region UNITY FUNCTIONS
     // Start is called before the first frame update

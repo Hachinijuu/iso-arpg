@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,8 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour
 {
     public Vector2Int index;
-    public Sprite img;
+    public Image image;
+    //public Sprite icon;
     public GameObject selectedIndicator;
     //public TMP_Text temp;
     public ItemData item;
@@ -15,5 +15,26 @@ public class ItemSlot : MonoBehaviour
     public void SlotSelected(bool show)
     {
         selectedIndicator.SetActive(show);
+    }
+
+    public void SetItem(ItemData data)
+    {
+        item = data;    // The the value of the item, null works
+        if (data != null)
+        {
+            // Setup the image
+            Color c = Color.white;
+            c.a = 1.0f;
+            image.sprite = data.itemIcon;
+            image.color = c;
+        }
+        else
+        {
+            // Data is set to null, shutoff the alpha
+            Color c = Color.white;
+            c.a = 0.0f;
+            image.color = c;
+            image.sprite = null;
+        }
     }
 }
