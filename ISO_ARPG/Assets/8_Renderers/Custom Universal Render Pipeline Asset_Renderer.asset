@@ -42,7 +42,7 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
---- !u!114 &-5911788927850380378
+--- !u!114 &-6701728976169658486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,25 +52,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: PlayerHidden
+  m_Name: Outline Weapon
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
-    passTag: PlayerHidden
-    Event: 300
+    passTag: Outline Weapon
+    Event: 450
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 2048
+        m_Bits: 8192
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 83f2efe6b9f9dc74d9584804f83a6414, type: 2}
+    overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
     overrideMode: 1
-    overrideDepthState: 1
-    depthCompareFunction: 5
+    overrideDepthState: 0
+    depthCompareFunction: 4
     enableWrite: 1
     stencilSettings:
       overrideStencilState: 0
@@ -102,9 +102,9 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -8977762188383273168}
   - {fileID: 8294044794474646339}
-  - {fileID: -5911788927850380378}
   - {fileID: 1257522548049044994}
-  m_RendererFeatureMap: 303f7b1bdb94688343cbd6fdcb5d1a73a60364c84a1bf5ad02e68145189e7311
+  - {fileID: -6701728976169658486}
+  m_RendererFeatureMap: 303f7b1bdb94688343cbd6fdcb5d1a7302e68145189e73118a1777e200adfea2
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -138,7 +138,7 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 2
+  m_RenderingMode: 1
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
@@ -153,26 +153,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Name: Outline Weapon
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
-    passTag: RenderObjects
-    Event: 300
+    passTag: Outline Weapon
+    Event: 400
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 2048
+        m_Bits: 8192
       PassNames: []
-    overrideMaterial: {fileID: 0}
+    overrideMaterial: {fileID: 2100000, guid: 7cd695ed36099724686964885064ef93, type: 2}
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
     overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
+    overrideDepthState: 1
+    depthCompareFunction: 6
+    enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
       stencilReference: 0
@@ -195,11 +195,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Name: Outline Character
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: RenderObjects
+    passTag: Outline Character
     Event: 450
     filterSettings:
       RenderQueueType: 0

@@ -65,8 +65,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5148660721048291026, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
+      propertyPath: LightsModule.maxLights
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148660721048291026, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: LightsModule.rangeCurve.scalar
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148660721048291026, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
+      propertyPath: LightsModule.intensityCurve.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
+      propertyPath: m_Range
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
+      propertyPath: m_Intensity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7072285381563174300, guid: a6a27f50d06551a44841042bd9bbbcd3, type: 3}
       propertyPath: m_BoundingSphereOverride.w
