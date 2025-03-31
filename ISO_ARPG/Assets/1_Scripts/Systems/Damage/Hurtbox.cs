@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
@@ -54,7 +53,7 @@ public class Hurtbox : MonoBehaviour
 
         // How do we get the player's active ability
         // Does the player gain the mana reduction to damage if they have selected salamander's gift as a fusion
-        
+
 
         // When taking damage, if the player has the elementalist's gift active
         // Then take a portion of the damage as mana instead of health
@@ -90,10 +89,19 @@ public class Hurtbox : MonoBehaviour
     [SerializeField] float knockbackForce = 1.0f;
     public virtual void HandleKnockback(DamageArgs args)
     {
-        if (!applyKnockback || args.source == null ) { return; }    // If you cannot knockback, or the source of the damage is null, return
+        if (!applyKnockback || args.source == null) { return; }    // If you cannot knockback, or the source of the damage is null, return
         Vector3 dir = (transform.position - args.source.transform.position);    // my position - where was the damage from
         dir.y = 0;
-        transform.position += dir  * knockbackForce * Time.deltaTime;
+        transform.position += dir * knockbackForce * Time.deltaTime;
     }
     #endregion
+
+    protected void OnMouseOver()
+    {
+        GameplayUIController.Instance.FireMouseHovered(new MouseHoverEventArgs(this.gameObject));
+    }
+    protected void OnMouseExit()
+    {
+        GameplayUIController.Instance.FireMouseExit(new MouseHoverEventArgs(null));
+    }
 }

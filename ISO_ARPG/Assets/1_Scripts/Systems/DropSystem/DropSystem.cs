@@ -217,27 +217,38 @@ public class DropSystem : MonoBehaviour
     // Create dropped object
     public void CreatedDroppedObject(Vector3 pos, ItemData item)
     {
-        GameObject go = GameObject.Instantiate(item.prefab);
+        // Create a copy of the item, this will have modified data
+
+        ItemData droppedItem = Instantiate(item);
+        //foreach (Ability ab in playerClass.Abilities)
+        //{
+        //    Abilities.Add(Instantiate(ab));
+        //}
+        //identity = Instantiate(playerClass.IdentityAbility);    // Create a 'new' identity based on what the class has for game use
+
+
+        GameObject go = GameObject.Instantiate(droppedItem.prefab);
         // This creates the object, but where does it create the object...
         // Create it at the parent of whoever called this 
-
-        go.transform.position = pos;
 
         // Call specific functions based on the type it is, pickup vs interactable
         // Let the created object know what kind of item it is
         Item temp = go.GetComponent<Item>();
         if (temp)
         {
-            temp.LoadItemData(item);
+            temp.LoadItemData(droppedItem);
+            pos.y += temp.dropYOffset;
+            go.transform.position = pos;
+
             // Add a listener to the drop if it should provide information when it is picked up.
-            if (item.showPopup)
+            if (droppedItem.showPopup)
             {
-                item.OnItemAcquired += ItemPopup; // Once the item has popped up, need to stop listening to the event
+                droppedItem.OnItemAcquired += ItemPopup; // Once the item has popped up, need to stop listening to the event
             }
         }
         else
         {
-            Debug.Log("[DropSystem]: Created " + item.itemName + " but object does not have Item Component");
+            Debug.Log("[DropSystem]: Created " + droppedItem.itemName + " but object does not have Item Component");
         }
         if (!go.activeInHierarchy)
         {

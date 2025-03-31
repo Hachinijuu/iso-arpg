@@ -45,12 +45,12 @@ public class RuneSystem : MonoBehaviour
 
     public GameObject upgradeUI;
 
-    public void Awake()
-    {
-        mainStatRolls = new List<MainStatRoll>();
-        trackedStatRolls = new List<TrackedStatRoll>();
-        substatRolls = new List<SubStatRoll>();
-    }
+    //public void Awake()
+    //{
+    //    mainStatRolls = new List<MainStatRoll>();
+    //    trackedStatRolls = new List<TrackedStatRoll>();
+    //    substatRolls = new List<SubStatRoll>();
+    //}
 
     public RuneData CreateMainStatRune(ItemRarity rank, MainStatTypes type)
     {
@@ -149,6 +149,9 @@ public class RuneSystem : MonoBehaviour
                         // rarity tier 3 --> 3 * maxRollDifficultyStep = 0.6 + 1 = 1.6, base and increase * default max
                         float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
                         float minRoll = maxRoll * minimumPercentage;                      // 60% of max roll, min can be 40% lower
+
+                        // Set the max value here
+                        mainStat.MaxValue = maxRoll;
                         mainStat.Value = Random.Range(minRoll, maxRoll);     // Roll for the stat based on the number
                     }
                 }

@@ -33,6 +33,11 @@ public class MouseTarget : MonoBehaviour
         // MapActions();
     }
 
+    private void Start()
+    {
+        // Listen to the GameUI handler events for mouse triggering
+    }
+
     // private void Start()
     // {
     //     // Call SetTarget here to get initial target text
@@ -48,16 +53,18 @@ public class MouseTarget : MonoBehaviour
     {
         UnmapActions();
     }
-    void Update()
-    {
-        if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)
-            UpdateMouseHover();
-    }
+    //void Update()
+    //{
+    //    if (GameManager.Instance.currGameState == GameManager.GameState.PLAYING)
+    //        UpdateMouseHover();
+    //}
 
     #endregion
     #region ACTION MAPPING
     private void MapActions()
     {
+        GameplayUIController.Instance.OnHoverEnter += UpdateHover;
+        GameplayUIController.Instance.OnHoverExit += UpdateHover;
         input.actions["TargetLocked"].performed += context => { SetTarget(); };
     }
 
@@ -67,12 +74,18 @@ public class MouseTarget : MonoBehaviour
     }
     #endregion
     #region FUNCTIONALITY
+
+    void UpdateHover(MouseHoverEventArgs e)
+    {
+        //if (e.hovered) { Debug.Log("Hovering" + e.hovered.name); }
+        mouseHit = e.hovered;
+    }
     GameObject GetMouseHit()
     {
         // Raycast will be layer based, detecting only for
         // - Interactable objects
         // - Enemies
-        mouseHit = null;
+        //mouseHit = null;
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, raycastLength, mask))
         {
@@ -84,8 +97,10 @@ public class MouseTarget : MonoBehaviour
                 if (hit.transform.CompareTag(tag))                   // Check if the hit object was in a valid tag match
                 {
                     mouseHit = hit.transform.gameObject;        // If it was, return what was hit.
-                    target = mouseHit;  // Hover target
+                    //target = mouseHit;  // Hover target
                 }
+                else
+                    mouseHit = null;
             }
         }
         return mouseHit;

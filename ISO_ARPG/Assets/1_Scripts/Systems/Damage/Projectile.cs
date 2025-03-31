@@ -14,6 +14,7 @@ public class Projectile : Hitbox
     [SerializeField] bool pierces;
     [SerializeField] float uptime;
     [SerializeField] float speed;
+    [SerializeField] bool destroyAfterDone;
 
     #endregion
     #region FUNCTIONALITY
@@ -56,6 +57,9 @@ public class Projectile : Hitbox
         base.HandleCollision(hb);   // apply damage
         if (!pierces)               // if it does not pierece
             gameObject.SetActive(false);    // deactivate
+
+        if (destroyAfterDone)
+            Destroy(gameObject);
     }
     public void FireProjectile()
     {
@@ -78,6 +82,8 @@ public class Projectile : Hitbox
     protected override void EndDamageWindow()
     {
         base.EndDamageWindow();
+        if (destroyAfterDone)
+            Destroy(gameObject);
         gameObject.SetActive(false);
         //Debug.Log("Uptime ended");
     }

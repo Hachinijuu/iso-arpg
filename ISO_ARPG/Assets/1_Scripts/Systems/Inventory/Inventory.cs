@@ -327,7 +327,9 @@ public class Inventory : MonoBehaviour
         {
             if (slotToUse != null)
             {
-                slotToUse.item = data;
+                slotToUse.SetItem(data);
+
+                //slotToUse.item = data;
                 //Image img = slotToUse.GetComponent<Image>();
                 //if (img != null)
                 //data.LoadSpriteToImage(slotToUse.img);

@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
     // All items should be tagged interactable
     #region VARIABLES
     public bool requiresClick;
+    public float dropYOffset = 1.0f;
 
     public ItemData ItemData { get { return itemData; } }
     [SerializeField] ItemData itemData;

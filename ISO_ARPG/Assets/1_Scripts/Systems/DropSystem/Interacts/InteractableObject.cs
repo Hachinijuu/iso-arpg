@@ -61,5 +61,15 @@ public abstract class InteractableObject : MonoBehaviour
         return inRange;
     }
 
+    protected void OnMouseOver()
+    {
+        GameplayUIController.Instance.FireMouseHovered(new MouseHoverEventArgs(this.gameObject));
+    }
+
+    protected void OnMouseExit()
+    {
+        GameplayUIController.Instance.FireMouseExit(new MouseHoverEventArgs(null));
+    }
+
     protected abstract void InteractAction();
 }
