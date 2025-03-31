@@ -37,4 +37,22 @@ public class ItemSlot : MonoBehaviour
             image.sprite = null;
         }
     }
+
+
+    // SEE MOUSE OVER EVENT
+    private void OnMouseOver()
+    {
+        // THIS MAY BE THE PROPER FUNCTION FOR UI HOVER DETECTION
+    }
+
+    // THIS IS ONLY IF COLLIDER EXISTS, UI SLOTS NEED DIFFERENT SETUP
+    protected void OnMouseEnter()
+    {
+        GameplayUIController.Instance.FireMouseHovered(new MouseHoverEventArgs(gameObject));
+    }
+
+    protected void OnMouseExit()
+    {
+        GameplayUIController.Instance.FireMouseExit(new MouseHoverEventArgs(null));
+    }
 }

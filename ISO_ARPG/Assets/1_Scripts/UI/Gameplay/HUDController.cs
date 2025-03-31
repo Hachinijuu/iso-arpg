@@ -82,6 +82,11 @@ public class HUDController : MonoBehaviour
         if (manaText != null)
             UpdateManaText(mana.Value);
 
+        if (healthPotionText != null && manaPotionText != null)
+        {
+            UpdatePotions();
+        }
+
         LoadAbilities();
         AddEventListeners();
     }

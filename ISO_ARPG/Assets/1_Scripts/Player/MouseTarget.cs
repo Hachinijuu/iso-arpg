@@ -77,7 +77,7 @@ public class MouseTarget : MonoBehaviour
 
     void UpdateHover(MouseHoverEventArgs e)
     {
-        //if (e.hovered) { Debug.Log("Hovering" + e.hovered.name); }
+        if (e.hovered) { Debug.Log("Hovering" + e.hovered.name); }
         mouseHit = e.hovered;
     }
     GameObject GetMouseHit()

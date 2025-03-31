@@ -32,6 +32,9 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] Toggle damageToggle;
     [SerializeField] TMP_Dropdown levelDropdown;
 
+    [SerializeField] PotionData healthPotion;
+    [SerializeField] PotionData manaPotion;
+
     public bool debugOn;
 
     // When invincible, the player will not die even if their health reaches 0 or below - no death screen
@@ -100,6 +103,17 @@ public class DebugMenu : MonoBehaviour
                 Inventory.Instance.AddItem(rune);
             }
         }
+    }
+
+    public void AddHealthPotion()
+    {
+        // Need a reference to health potions
+        Inventory.Instance.AddPotion(healthPotion);
+    }
+
+    public void AddManaPotion()
+    {
+        Inventory.Instance.AddPotion(manaPotion);
     }
 
     [SerializeField] List<Hurtbox> playerHurtbox;

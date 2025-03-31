@@ -42,8 +42,8 @@ public class Inventory : MonoBehaviour
 
     private ItemSlot[] slots;       // UI slots to interface with
     private RuneSlot[] runeSlots;
-    private List<ItemData> items;   // The actual items the player has  //// This might be better stored in player
-    private List<PotionData> potions;   // Potions are mapped to the HUD
+    [SerializeField] private List<ItemData> items;   // The actual items the player has  //// This might be better stored in player
+    [SerializeField] private List<PotionData> potions;   // Potions are mapped to the HUD
 
     public int maxHealthPotions = 3;
     public int maxManaPotions = 3;
@@ -200,8 +200,21 @@ public class Inventory : MonoBehaviour
         if (potions != null && potions.Count > 0)
         {
             potions.Clear();
+
+
+            // This event will not replicate the changes to the HUD due to script execution order
+            //FirePotionChanged(); // Therefore, onEnable of the hud, do an update to get relative values.
         }
+
+        foreach (ItemSlot slot in slots)
+        {
+            slot.SetItem(null);
+        }
+
+        // Update the HUD -- how?
     }
+
+    // For the inventory cleanup, clearing the items is insufficient since components still exist in the slots
 
     void InitUISlots()
     {

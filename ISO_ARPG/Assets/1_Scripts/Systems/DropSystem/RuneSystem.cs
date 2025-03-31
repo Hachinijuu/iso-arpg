@@ -58,6 +58,10 @@ public class RuneSystem : MonoBehaviour
         MainStat stat = new MainStat(type, -1);     // Value less 0 than can be rolled for
         rune.mainStat = new MainStat[1] { stat };   // Add the stat to the array of stats
         rune = RollRune(rune, rank);
+
+        // Add a random type to it
+        rune.type = ItemTypes.RUNE;
+        rune.runeType = (RuneType)Random.Range(1, 4);
         return rune;
     }
 
@@ -66,6 +70,9 @@ public class RuneSystem : MonoBehaviour
         RuneData rune = new RuneData();
         SubStat stat = new SubStat(type, -1);     // Value less 0 than can be rolled for
         rune.subStat = new SubStat[1] { stat };   // Add the stat to the array of stats
+
+        rune.type = ItemTypes.RUNE;
+        rune.runeType = (RuneType)Random.Range(1, 4);
         rune = RollRune(rune, rank);
         return rune;
     }
@@ -152,7 +159,7 @@ public class RuneSystem : MonoBehaviour
 
                         // Set the max value here
                         mainStat.MaxValue = maxRoll;
-                        mainStat.Value = Random.Range(minRoll, maxRoll);     // Roll for the stat based on the number
+                        mainStat.Value = (int)Random.Range(minRoll, maxRoll);     // Roll for the stat based on the number
                     }
                 }
             }
@@ -169,7 +176,7 @@ public class RuneSystem : MonoBehaviour
                             continue;
                         float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
                         float minRoll = maxRoll * minimumPercentage;
-                        trackedStat.Value = Random.Range(minRoll, maxRoll);
+                        trackedStat.Value = (int)Random.Range(minRoll, maxRoll);
                     }
                 }
             }
@@ -186,7 +193,8 @@ public class RuneSystem : MonoBehaviour
                             continue;
                         float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
                         float minRoll = maxRoll * minimumPercentage;
-                        subStat.Value = Random.Range(minRoll, maxRoll);
+
+                        subStat.Value = (int)Random.Range(minRoll, maxRoll);
                     }
                 }
             }
