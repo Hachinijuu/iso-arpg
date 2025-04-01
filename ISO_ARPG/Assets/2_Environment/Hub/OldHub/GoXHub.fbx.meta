@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 0f2dfdd79ec8baa48bf0435b74ae4176
+guid: e86ff69074647eb45a1fe6087373f173
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ConcreteMaterial
+    second: {fileID: 2100000, guid: 1c336cee39c55e445baa8661de0e7ba8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -47,7 +52,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
