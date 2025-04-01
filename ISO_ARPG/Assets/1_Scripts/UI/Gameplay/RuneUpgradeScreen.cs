@@ -78,6 +78,17 @@ public class RuneUpgradeScreen : MonoBehaviour
         // Show the rune rank indicator
         runeList.SetActive(true);
     }
+
+    public void RuneClicked(RuneData data)
+    {
+        // Only allow a rune to be clicked if there is no rune occupying the slot already
+        if (ghostRune != null) { return; }
+        RuneData createdRune = new RuneData();
+        createdRune = RuneSystem.Instance.RollRuneStats(data);  // Given the new rune instance
+
+        ghostRune = createdRune;
+        upgradeSlot.SetItem(ghostRune);
+    }
     
     public void SetRarity(ItemRarity rarity)
     {

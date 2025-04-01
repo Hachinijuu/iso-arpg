@@ -16,6 +16,14 @@ public class HendokInteract : InteractableObject
     public void LeaveInteract()
     {   
         GameplayUIController.Instance.HideSmith();
+
         // If too far, hide the screen and clean it 
+    }
+
+    // Collider space
+    public void OnTriggerExit(Collider other)
+    {
+        GameplayUIController.Instance.HideSmith();
+        Debug.Log("Exited Trigger");
     }
 }
