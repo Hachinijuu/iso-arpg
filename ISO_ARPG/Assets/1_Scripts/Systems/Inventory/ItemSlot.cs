@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // For gear and tablet slots simply derive from item slots such that they can interact with the rest of the inventory system without much difficulty (slot insertion)
 // With the difference, gear and tablet slots can extend the functionality to apply the functionality of the item within the slot, to the character.
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Vector2Int index;
     public Image image;
@@ -11,6 +12,7 @@ public class ItemSlot : MonoBehaviour
     public GameObject selectedIndicator;
     //public TMP_Text temp;
     public ItemData item;
+    public bool hovered;
     public bool HasItem { get { return item != null; } }
     public void SlotSelected(bool show)
     {
@@ -38,21 +40,33 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
-
-    // SEE MOUSE OVER EVENT
-    private void OnMouseOver()
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        // THIS MAY BE THE PROPER FUNCTION FOR UI HOVER DETECTION
+        // Having inventory slots handle an update loop would be a HORROR
+        if (!hovered)
+        {
+            hovered = true;
+            if (HasItem && item is RuneData)
+            {
+                ToolTipArgs args = new ToolTipArgs();
+                args.over = true;
+                args.screenPos = eventData.position;
+                args.item = item;
+
+                // hover works with clicking, perhaps tooltip on click
+                // that would work with existing inventory framework calls
+
+                GameplayUIController.Instance.CreateRuneTooltip(args);
+            }
+        }
+        //throw new System.NotImplementedException();
     }
 
-    // THIS IS ONLY IF COLLIDER EXISTS, UI SLOTS NEED DIFFERENT SETUP
-    protected void OnMouseEnter()
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        GameplayUIController.Instance.FireMouseHovered(new MouseHoverEventArgs(gameObject));
-    }
-
-    protected void OnMouseExit()
-    {
-        GameplayUIController.Instance.FireMouseExit(new MouseHoverEventArgs(null));
+        hovered = false;
+        ToolTipArgs args = new ToolTipArgs();
+        args.over = hovered;
+        GameplayUIController.Instance.CreateRuneTooltip(args);
     }
 }

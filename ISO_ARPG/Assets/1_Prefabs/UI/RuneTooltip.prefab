@@ -220,7 +220,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2089559247130590925}
   - component: {fileID: 8288948252439834385}
+  - component: {fileID: 1829057190605570376}
   - component: {fileID: 3783667530734007897}
+  - component: {fileID: 2844279476480420453}
   m_Layer: 5
   m_Name: RuneTooltip
   m_TagString: Untagged
@@ -258,6 +260,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2297758180474040749}
   m_CullTransparentMesh: 1
+--- !u!225 &1829057190605570376
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2297758180474040749}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &3783667530734007897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +302,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 8
+--- !u!114 &2844279476480420453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2297758180474040749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec1849e1d56dee4e89479e7c4c12c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rarityText: {fileID: 421903632503376623}
+  attributeAmount: {fileID: 7358664266102253364}
+  affixAmount: {fileID: 410080018213885965}
 --- !u!1 &4339527262861509756
 GameObject:
   m_ObjectHideFlags: 0

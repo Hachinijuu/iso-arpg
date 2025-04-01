@@ -307,14 +307,15 @@ public class Inventory : MonoBehaviour
     }
     public void ShowCharacterScreen()
     {
-        if (statsScreen.activeInHierarchy)
-        {
-            statsScreen.SetActive(false);
-        }
-        else
-        {
-            statsScreen.SetActive(true);
-        }
+        UIUtility.ToggleUIElementShift(statsScreen);
+        // if (statsScreen.activeInHierarchy)
+        // {
+        //     statsScreen.SetActive(false);
+        // }
+        // else
+        // {
+        //     statsScreen.SetActive(true);
+        // }
         HandlePause();
     }
 
@@ -589,6 +590,11 @@ public class Inventory : MonoBehaviour
         {
             Destroy(ghost);
         }
+    }
+
+    void OnMouseOver()
+    {
+        Debug.Log("Over");
     }
 
     // private void UpdateResourceText(ResourceTypes resource)

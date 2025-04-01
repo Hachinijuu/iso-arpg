@@ -32,7 +32,15 @@ public class UIUtility : MonoBehaviour
             if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
             {
                 toToggle.SetActive(true);
-                newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
+                if (rt.anchorMin.x == 0)
+                {
+                    newCam.x = rt.anchorMax.x;
+                }
+                else
+                {
+                    newCam.x = -rt.anchorMin.x;
+                }
+                //newCam.x -= (rt.anchorMax.x - rt.anchorMin.x);
             }
             else                                // If it is active, shut it off
             {

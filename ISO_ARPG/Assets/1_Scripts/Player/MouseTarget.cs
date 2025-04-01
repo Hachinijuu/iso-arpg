@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 
 // Targetting system will display tooltips on whatever is hovered by the mouse
@@ -82,6 +83,7 @@ public class MouseTarget : MonoBehaviour
     }
     GameObject GetMouseHit()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) { return null; }
         // Raycast will be layer based, detecting only for
         // - Interactable objects
         // - Enemies

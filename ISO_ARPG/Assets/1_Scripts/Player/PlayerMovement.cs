@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 //[RequireComponent(typeof(NavMeshAgent))]
@@ -211,6 +212,9 @@ public class PlayerMovement : MonoBehaviour
     public float clickBuffer = 0.05f;
     void HandleClickToMove()
     {
+        // Early return if mouse is over UI
+        if (EventSystem.current.IsPointerOverGameObject()) { return; }
+
         RaycastHit hit;
         // TODO: LIMIT RAY DISTANCE SO MORE COST EFFECTIVE
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, raycastLength, moveMask))
@@ -253,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
     void HandleRotation()
     {
         // For mouse keyboard controls, drive rotation by mouse
+        if (EventSystem.current.IsPointerOverGameObject()) { return; }
 
         // Get look direction relative to the mouse position in the world
         RaycastHit hit;
