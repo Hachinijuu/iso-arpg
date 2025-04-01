@@ -21,6 +21,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] SoundHolder efforts;
     [SerializeField] SoundHolder hurts;
     [SerializeField] AudioClip cancelSound;
+    [SerializeField] AudioClip potionUse;
 
     [Header("Audio Settings")]
     public float minPitch = 0.0f;
@@ -61,5 +62,10 @@ public class PlayerAudio : MonoBehaviour
     {
         // Unable sound
         effectSource.PlayOneShot(cancelSound);
+    }
+
+    public void PlayPotionUse()
+    {
+        effectSource.PlayOneShot(potionUse);
     }
 }

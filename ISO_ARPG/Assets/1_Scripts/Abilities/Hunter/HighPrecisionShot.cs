@@ -40,5 +40,12 @@ public class HighPrecisionShot : Ability
                 projectile.FireProjectile();
             }
         }
+        PlayerManager.Instance.SetGiveDamage(true);
+    }
+
+    public override void EndAbility()
+    {
+        PlayerManager.Instance.SetGiveDamage(false);
+        base.EndAbility();
     }
 }

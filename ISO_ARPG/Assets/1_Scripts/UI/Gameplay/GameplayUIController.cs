@@ -24,7 +24,7 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] GameObject statsScreen;
     [SerializeField] GameObject inventoryScreen;
     [SerializeField] GameObject stashScreen;
-    [SerializeField] GameObject smithScreen;
+    [SerializeField] RuneUpgradeScreen smithScreen;
 
     private void OnEnable()
     {
@@ -43,12 +43,24 @@ public class GameplayUIController : MonoBehaviour
         statsScreen.SetActive(false);
         inventoryScreen.SetActive(false);
         stashScreen.SetActive(false);
-        smithScreen.SetActive(false);
+        smithScreen.gameObject.SetActive(false);
     }
 
     public void TurnOnRelevantElements()
     {
         hud.gameObject.SetActive(true);
+    }
+
+    public void ShowSmith()
+    {
+        Debug.Log("Showing smithing screen");
+        smithScreen.gameObject.SetActive(true);
+    }
+
+    public void HideSmith()
+    {
+        Debug.Log("Hiding smithing screen");
+        smithScreen.gameObject.SetActive(false);
     }
 
 
