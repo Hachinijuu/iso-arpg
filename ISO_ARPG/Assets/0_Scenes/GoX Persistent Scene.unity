@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 27658726}
   - component: {fileID: 27658728}
   - component: {fileID: 27658727}
-  - component: {fileID: 27658729}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -709,36 +708,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &27658729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 27658724}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 029176e26067cce48b9280f2290a8459, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &33795365
 GameObject:
   m_ObjectHideFlags: 0
@@ -5674,6 +5643,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5396809368262634646, guid: 2ba27e3b00bbcf7409da06e8185994c4, type: 3}
+      propertyPath: hurts
+      value: 
+      objectReference: {fileID: 11400000, guid: 762998a525094c943a0f90e39f02a699, type: 2}
+    - target: {fileID: 5396809368262634646, guid: 2ba27e3b00bbcf7409da06e8185994c4, type: 3}
+      propertyPath: potionUse
+      value: 
+      objectReference: {fileID: 8300000, guid: 431a63022c415e84280e5b125946e440, type: 3}
     - target: {fileID: 5566678593245308486, guid: 2ba27e3b00bbcf7409da06e8185994c4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5722,6 +5699,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7167014737276909258, guid: 2ba27e3b00bbcf7409da06e8185994c4, type: 3}
+      propertyPath: steps.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167014737276909258, guid: 2ba27e3b00bbcf7409da06e8185994c4, type: 3}
+      propertyPath: steps.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3eaa931f3ad66b94cbba26048aad1498, type: 2}
+    - target: {fileID: 7167014737276909258, guid: 2ba27e3b00bbcf7409da06e8185994c4, type: 3}
+      propertyPath: steps.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 078211f0ee3dd8942b112eee4c6cfff6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6400,14 +6389,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3266711434720059008, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4355840976679697575, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5396809368262634646, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: hurts
+      value: 
+      objectReference: {fileID: 11400000, guid: 762998a525094c943a0f90e39f02a699, type: 2}
+    - target: {fileID: 5396809368262634646, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: efforts
       value: 
       objectReference: {fileID: 11400000, guid: b32d68af0ebc5e44a9873f9e81433a18, type: 2}
+    - target: {fileID: 5396809368262634646, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: potionUse
+      value: 
+      objectReference: {fileID: 8300000, guid: 431a63022c415e84280e5b125946e440, type: 3}
     - target: {fileID: 5480834777675334296, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -6896,6 +6897,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7167014737276909258, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: steps.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167014737276909258, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: steps.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3eaa931f3ad66b94cbba26048aad1498, type: 2}
+    - target: {fileID: 7167014737276909258, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: steps.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 078211f0ee3dd8942b112eee4c6cfff6, type: 2}
     - target: {fileID: 9180897400233963875, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -15149,6 +15162,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 119157253}
     - target: {fileID: 7616948895013091585, guid: 6766c6c126597e448a9cb94614ce44fa, type: 3}
+      propertyPath: pickupItem
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b0098fee6ec38342aaae6431d5667a5, type: 3}
+    - target: {fileID: 7616948895013091585, guid: 6766c6c126597e448a9cb94614ce44fa, type: 3}
+      propertyPath: releaseItem
+      value: 
+      objectReference: {fileID: 8300000, guid: ba75a2130d921914896522241f81dc99, type: 3}
+    - target: {fileID: 7616948895013091585, guid: 6766c6c126597e448a9cb94614ce44fa, type: 3}
       propertyPath: stashScreen
       value: 
       objectReference: {fileID: 2108047094}
@@ -16653,6 +16674,14 @@ PrefabInstance:
       propertyPath: playerClass
       value: 
       objectReference: {fileID: 11400000, guid: 255d02603351c9646aacdaff4bb8cbbf, type: 2}
+    - target: {fileID: 5396809368262634646, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+      propertyPath: hurts
+      value: 
+      objectReference: {fileID: 11400000, guid: 762998a525094c943a0f90e39f02a699, type: 2}
+    - target: {fileID: 5396809368262634646, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+      propertyPath: potionUse
+      value: 
+      objectReference: {fileID: 8300000, guid: 431a63022c415e84280e5b125946e440, type: 3}
     - target: {fileID: 5566678593245308486, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -16701,6 +16730,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7167014737276909258, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+      propertyPath: steps.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167014737276909258, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+      propertyPath: steps.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3eaa931f3ad66b94cbba26048aad1498, type: 2}
+    - target: {fileID: 7167014737276909258, guid: f16d33dea16aee043b04789b6e26493b, type: 3}
+      propertyPath: steps.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 078211f0ee3dd8942b112eee4c6cfff6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21285,11 +21326,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1570440450 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6826249843355662861, guid: 6766c6c126597e448a9cb94614ce44fa, type: 3}
+--- !u!114 &1570440451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 312488524041947478, guid: 6766c6c126597e448a9cb94614ce44fa, type: 3}
   m_PrefabInstance: {fileID: 932669331}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de612dbba6376fa44949bd8bcc2c264c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1579447620
 GameObject:
   m_ObjectHideFlags: 0
@@ -24393,6 +24440,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1943951669}
+  titleMusic: {fileID: 8300000, guid: 20825c3840bc66344a02467b4288694a, type: 3}
+  hubMusic: {fileID: 8300000, guid: 3032a0bb6efd6e04b88a8c1e1f1ac7b4, type: 3}
+  battleMusic: {fileID: 0}
 --- !u!82 &1943951669
 AudioSource:
   m_ObjectHideFlags: 0
@@ -24407,7 +24457,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -25628,7 +25678,7 @@ MonoBehaviour:
   statsScreen: {fileID: 932669333}
   inventoryScreen: {fileID: 1621638645}
   stashScreen: {fileID: 2108047094}
-  smithScreen: {fileID: 1570440450}
+  smithScreen: {fileID: 1570440451}
   infoTooltip: {fileID: 0}
   runeTooltip: {fileID: 2297758180474040749, guid: 03a4aab6710e7234ea55f76936b3316c, type: 3}
 --- !u!1 &2066237199

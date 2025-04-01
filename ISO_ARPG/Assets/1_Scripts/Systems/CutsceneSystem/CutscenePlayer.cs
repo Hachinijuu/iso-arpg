@@ -82,7 +82,8 @@ public class CutscenePlayer : MonoBehaviour
 
     public void EndCutscene()
     {
-    GameManager.Instance.LoadLevelByID(GameManager.eLevel.HUB);
+        GameManager.Instance.LoadHub();
+    //GameManager.Instance.LoadLevelByID(GameManager.eLevel.HUB);
     }
     #endregion
 }

@@ -50,6 +50,9 @@ public class Inventory : MonoBehaviour
 
     public int numHealthPotions = 0;
     public int numManaPotions = 0;
+
+    [SerializeField] AudioClip pickupItem;
+    [SerializeField] AudioClip releaseItem;
     public void AddPotion(PotionData potion)
     {
         potions.Add(potion);
@@ -452,6 +455,7 @@ public class Inventory : MonoBehaviour
 
                 //ghost = GameObject.Instantiate(sourceSlot.gameObject, canvas.transform);
                 clickedItem = true;
+                GameManager.Instance.PlayOneShotClip(pickupItem);
             }
         }
         return clickedItem;
@@ -583,6 +587,9 @@ public class Inventory : MonoBehaviour
                 //ghostItem.LoadSpriteToImage(sourceSlot.img);
             }
         }
+
+        // Play the release audio from Game Manager source
+        GameManager.Instance.PlayOneShotClip(releaseItem);
 
 
         // NOTE: ISSUE WITH GHOST PLACEMENTS, STUCK IN CURSOR ON INVALID POSITIONS

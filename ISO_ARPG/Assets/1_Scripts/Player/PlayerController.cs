@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 
@@ -245,6 +246,8 @@ public class PlayerController : MonoBehaviour
                     stats.Mana.Value += foundPotion.value;
                 else return;    // Otherwise, return (Don't use the potion at all);
             }
+
+            audioController.PlayPotionUse();
             Inventory.Instance.RemovePotion(foundPotion);
         }
         else

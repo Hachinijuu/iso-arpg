@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-    [SerializeField] bool promptInteraction;
-    [SerializeField] GameObject interactPrompt;
+    //[SerializeField] bool promptInteraction;
+    //[SerializeField] GameObject interactPrompt;
     public int interactDistance = 5;
 
 
@@ -26,10 +26,12 @@ public abstract class InteractableObject : MonoBehaviour
             interactSource.PlayOneShot(interactSound);
         }
 
-        if (!interactPrompt)
-            InteractAction();
-        else
-            interactPrompt.SetActive(true); // prompt needs to handle interact action call
+        InteractAction();
+
+        //if (!interactPrompt)
+        //    InteractAction();
+        //else
+        //    interactPrompt.SetActive(true); // prompt needs to handle interact action call
     }
 
     public virtual void OnInteract()
@@ -39,10 +41,12 @@ public abstract class InteractableObject : MonoBehaviour
             interactSource.PlayOneShot(interactSound);
         }
 
-        if (!interactPrompt)
-            InteractAction();
-        else
-            interactPrompt.SetActive(true); // prompt needs to handle interact action call
+        InteractAction();
+
+        //if (!interactPrompt)
+        //    InteractAction();
+        //else
+        //    interactPrompt.SetActive(true); // prompt needs to handle interact action call
     }
 
     protected virtual bool IsInCurrentRange(Vector3 start, Vector3 goal, int range)

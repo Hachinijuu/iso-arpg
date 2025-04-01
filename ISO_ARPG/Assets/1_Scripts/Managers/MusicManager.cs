@@ -28,9 +28,34 @@ public class MusicManager : MonoBehaviour
     }
 
 
+    [SerializeField] AudioClip titleMusic;
+    [SerializeField] AudioClip hubMusic;
+    [SerializeField] AudioClip battleMusic;
+
     // This will be in the persistent scene and have the source for music to play off of
 
     // It might also contain the references / tracks to play given the level, and functionality to play music overall (set clip)
 
     // Each level can have it's own track, and then set the track?
+
+    public void SetTitleMusic()
+    { 
+        if (titleMusic == null) { return; }
+        audioSource.clip = titleMusic;
+        audioSource.Play();
+    }
+
+    public void SetHubMusic()
+    {
+        if (hubMusic == null) { return; }
+        audioSource.clip = hubMusic;
+        audioSource.Play();
+    }
+
+    public void SetBattleMusic()
+    {
+        if (battleMusic == null) { return; }
+        audioSource.clip = battleMusic;
+        audioSource.Play();
+    }
 }

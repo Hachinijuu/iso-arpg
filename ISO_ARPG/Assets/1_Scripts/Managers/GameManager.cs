@@ -280,6 +280,12 @@ public class GameManager : MonoBehaviour
         // If the level manager exists, do the stuff
         if (LevelManager.Instance)  // ASSUME PLAYABLE IF A LEVEL MANAGER EXISTS
         {
+            // If the levelManager is NOT NONE condition, then play the battle music
+            if (LevelManager.Instance.type == LevelManager.LevelType.CLEAR || LevelManager.Instance.type == LevelManager.LevelType.ELITE)
+            {
+                MusicManager.Instance.SetBattleMusic();
+            }
+
             SetGameState(GameState.PLAYING);
             //currGameState = GameState.PLAYING;
             // Load the player
@@ -318,10 +324,12 @@ public class GameManager : MonoBehaviour
         //LoadLevelFromString((levelNames[(int)eLevel.MENU]));
         LoadLevelByID(eLevel.MENU);
         currGameState = GameState.MENU;
+        MusicManager.Instance.SetTitleMusic();
     }
 
     public void LoadHub()
     {
+        MusicManager.Instance.SetHubMusic();
         LoadLevelByID(eLevel.HUB);
         //LoadLevelFromString((levelNames[(int)eLevel.HUB]));
 
@@ -411,6 +419,11 @@ public class GameManager : MonoBehaviour
             PlayerLoading();
             PlayerRespawn();
         }
+    }
+
+    public void PlayOneShotClip(AudioClip toPlay)
+    { 
+        audioSource.PlayOneShot(toPlay);
     }
 
     // Exit Game
