@@ -164,8 +164,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    bool canGiveOnDamage = false;
+
+    public void SetGiveDamage(bool value)
+    {
+        canGiveOnDamage = value;
+    }
+
     public void GiveResourceOnDamage()
     {
+        if (!canGiveOnDamage) { return; }
+        // Only do this if the attack is the basic / standard attack
+        // How does this know which player attack was performed
+
         PlayerStats stats = currentPlayer.Stats;
         stats.Mana.Value += stats.ManaOnHit.Value;
     }

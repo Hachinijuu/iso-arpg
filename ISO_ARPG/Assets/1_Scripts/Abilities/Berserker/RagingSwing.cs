@@ -15,7 +15,9 @@ public class RagingSwing : StackAbility
     GameObject body;
     int animCounter;
 
-    private int animId = Animator.StringToHash("Ability1");
+    private int swing1 = Animator.StringToHash("Ability1_Left");
+    private int swing2 = Animator.StringToHash("Ability1_Right");
+
     #endregion
     #region FUNCTIONALITY
     public override void InitAbility(AbilityEventArgs e)
@@ -60,8 +62,18 @@ public class RagingSwing : StackAbility
 
 
         animCounter++;
-        anim.SetInteger(animId, animCounter);       // why does the animation not play -- toggle swap works
-        Debug.Log(animCounter);
+        Debug.Log("AnimStep: " + animCounter);
+
+        if (animCounter == 1)
+        {
+            anim.SetTrigger(swing1);
+        }
+        else
+        {
+            anim.SetTrigger(swing2);
+        }
+        //anim.SetInteger(animId, animCounter);       // why does the animation not play -- toggle swap works
+        //Debug.Log(animCounter);
         // figure out animation transition
 
         //anim.SetBool(animId, left);
@@ -111,6 +123,8 @@ public class RagingSwing : StackAbility
         //throw new System.NotImplementedException();
 
         particles.HandleAbility1Particles(true);
+
+        PlayerManager.Instance.SetGiveDamage(true);
     }
 
     public override void EndAbility(AbilityEventArgs e)
@@ -121,6 +135,7 @@ public class RagingSwing : StackAbility
             animCounter = 0;
         }
         SetDamageDetection(false);
+        PlayerManager.Instance.SetGiveDamage(false);
     }
 
     #region HELPER FUNCTIONS
