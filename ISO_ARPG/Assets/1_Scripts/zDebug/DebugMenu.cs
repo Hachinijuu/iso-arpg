@@ -35,6 +35,9 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] PotionData healthPotion;
     [SerializeField] PotionData manaPotion;
 
+    public enum DebugMath { ADD, SUBTRACT, MUTIPLY, DIVIDE };
+    public DebugMath resourceMath;
+
     public bool debugOn;
 
     // When invincible, the player will not die even if their health reaches 0 or below - no death screen
@@ -115,6 +118,78 @@ public class DebugMenu : MonoBehaviour
     {
         Inventory.Instance.AddPotion(manaPotion);
     }
+
+
+    public void ResourceHandler(Int32 value)
+    {
+        resourceMath = (DebugMath)value;
+    }
+    [SerializeField] TMP_Dropdown resourceMathDropdown;
+    [SerializeField] TMP_InputField woodInput;
+    [SerializeField] TMP_InputField dustInput;
+    [SerializeField] TMP_InputField stoneInput;
+
+    // [SerializeField] Button woodSubmit;
+    // [SerializeField] Button dustSubmit;
+    // [SerializeField] Button stoneSubmit;
+
+    public void WoodSubmit()
+    {
+        switch(resourceMath)
+        {
+            case DebugMath.ADD:
+                Inventory.Instance.WoodAmount += int.Parse(woodInput.text);
+            break;
+            case DebugMath.SUBTRACT:
+                Inventory.Instance.WoodAmount -= int.Parse(woodInput.text);
+            break;
+            case DebugMath.MUTIPLY:
+                Inventory.Instance.WoodAmount *= int.Parse(woodInput.text);
+            break;
+            case DebugMath.DIVIDE:
+                Inventory.Instance.WoodAmount /= int.Parse(woodInput.text);
+            break;
+        }
+    }
+
+    public void DustSubmit()
+    {
+        switch(resourceMath)
+        {
+            case DebugMath.ADD:
+                Inventory.Instance.RuneDust += int.Parse(dustInput.text);
+            break;
+            case DebugMath.SUBTRACT:
+                Inventory.Instance.RuneDust -= int.Parse(dustInput.text);
+            break;
+            case DebugMath.MUTIPLY:
+                Inventory.Instance.RuneDust *= int.Parse(dustInput.text);
+            break;
+            case DebugMath.DIVIDE:
+                Inventory.Instance.RuneDust /= int.Parse(dustInput.text);
+            break;
+        }
+    }
+
+    public void StoneSubmit()
+    {
+        switch(resourceMath)
+        {
+            case DebugMath.ADD:
+                Inventory.Instance.StoneAmount += int.Parse(stoneInput.text);
+            break;
+            case DebugMath.SUBTRACT:
+                Inventory.Instance.StoneAmount -= int.Parse(stoneInput.text);
+            break;
+            case DebugMath.MUTIPLY:
+                Inventory.Instance.StoneAmount *= int.Parse(stoneInput.text);
+            break;
+            case DebugMath.DIVIDE:
+                Inventory.Instance.StoneAmount /= int.Parse(stoneInput.text);
+            break;
+        }
+    }
+
 
     [SerializeField] List<Hurtbox> playerHurtbox;
 

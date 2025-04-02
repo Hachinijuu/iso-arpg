@@ -9,6 +9,7 @@ public class RuneUpgradeScreen : MonoBehaviour
     [SerializeField] GameObject runeList;
     [SerializeField] ItemSlot upgradeSlot;
 
+    [SerializeField] int buildCost;
     [SerializeField] int baseCost;
     [SerializeField] float rarityCostModifier;
 
@@ -64,7 +65,16 @@ public class RuneUpgradeScreen : MonoBehaviour
         }
         else
         {
-            createButton.interactable = true;
+            // If the user does not have enough dust to create the rune, then prevent the creation
+            if (Inventory.Instance.RuneDust >= buildCost)
+            {
+                createButton.interactable = true;   // Can build, enough dust
+            }
+            else
+            {
+                createButton.interactable = false;  // Can't build, not enough dust
+            }
+
             upgradeButton.interactable = false;
             destroyButton.interactable = false;
         }
@@ -82,12 +92,20 @@ public class RuneUpgradeScreen : MonoBehaviour
     public void RuneClicked(RuneData data)
     {
         // Only allow a rune to be clicked if there is no rune occupying the slot already
-        if (ghostRune != null) { return; }
+        if (ghostRune != null && upgradeSlot.item !=null ) { Debug.Log("[RuneUpgrades]: Slot is already occupied"); return; }
         RuneData createdRune = new RuneData();
         createdRune = RuneSystem.Instance.RollRuneStats(data);  // Given the new rune instance
 
         ghostRune = createdRune;
         upgradeSlot.SetItem(ghostRune);
+
+        // I create a rune
+        // I place it in the ghost slot
+        // THIS is the rune that is created, unless otherwise logic to prevent it
+        // From here, this rune can be pulled out and used.
+        // I can only create more runes from this menu, IF A RUNE DOES NOT EXIST IN THE SLOT
+
+        // How to verify the rune creation, is there no confirmation button or such? Is there 2-step verification?
     }
     
     public void SetRarity(ItemRarity rarity)
@@ -122,12 +140,14 @@ public class RuneUpgradeScreen : MonoBehaviour
         Inventory.Instance.RuneDust -= CalculateCost();
     }
     public void DismantleClicked()
-    {
+    {        
         RuneData rune = upgradeSlot.item as RuneData;
         if (rune != null)
         {
             // Add dust to the player's inventory
             Inventory.Instance.RuneDust += rune.destroyAmount;
+            Destroy(rune);
+            upgradeSlot.SetItem(null);
         }
     }
 }
