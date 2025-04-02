@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2148229614994840427}
   - component: {fileID: 6667247622329995865}
   - component: {fileID: 1294630052119076900}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: AxeProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,9 +105,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4480
   rb: {fileID: 6667247622329995865}
-  pierces: 0
+  pierces: 1
   uptime: 3
-  speed: 65
+  speed: 35
+  destroyAfterDone: 0
 --- !u!54 &6667247622329995865
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca24199dcbf89b34d8ba92f4e7b7c059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 6842978903335142606, guid: 348c40cc0b1f9ea428678776175f6455, type: 3}
+  hitbox: {fileID: 0}
   stats: {fileID: 0}
   chainLimit: 2
   chainRange: 2.5
