@@ -28,7 +28,7 @@ public class PhoenixSwiftness : IdentityAbility
     
     }
 
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         if (stats != null)
         {

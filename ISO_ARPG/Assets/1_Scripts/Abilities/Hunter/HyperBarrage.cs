@@ -19,10 +19,12 @@ public class HyperBarrage : ChannelAbility
     //int shotCounter = 0;    
     public float damageMultipler = 1.0f;
     private int animID = Animator.StringToHash("Ability2");
+    AbilityEventArgs args;
     float damage;
     #endregion
     public override void InitAbility(AbilityEventArgs e)
     {
+        args = e;
         anim = e.Actor.Animator;
         audioSource = e.Actor.SFXSource;
         stats = e.Actor.Stats;
@@ -34,7 +36,7 @@ public class HyperBarrage : ChannelAbility
             shootSource.InitFirePositions((int)stats.Projectiles.Value);
         }
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         // Calculate damage
         damage = stats.Damage.Value + damageMultipler * (stats.DEX.Value * GameManager.Instance.MainConvert);
@@ -69,6 +71,7 @@ public class HyperBarrage : ChannelAbility
                     Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, pos);
                     if (p != null)
                     {
+                        args.Hitboxes.Add(p);
                         p.transform.position += p.transform.forward * arrowOffset * shots;
                         p.SetDamage(damage);
                         p.FireProjectile();
@@ -101,7 +104,7 @@ public class HyperBarrage : ChannelAbility
     
     public override void OnTick()
     {
-        Fire();
+        Fire(ref args);
         // every tick, want to fire out a projectile until num projectiles reached.
         //HandleCycle(); // Continue firing on ticks
         // for (int i = 0; i < stats.Projectiles.Value; i++)

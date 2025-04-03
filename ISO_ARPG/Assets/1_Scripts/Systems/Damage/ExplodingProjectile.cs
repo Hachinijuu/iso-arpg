@@ -27,7 +27,9 @@ public class ExplodingProjectile : Projectile
                     Hurtbox explodeHB = collider.GetComponent<Hurtbox>();
                     DamageArgs args = GetArgs(hb);
                     explodeHB.TakeDamage(args);
-                    break;
+                    
+                    // Early breaking gets rid of the splash damage, hit each target that was within the AOE radius
+                    //break;
                 }
             }
         }

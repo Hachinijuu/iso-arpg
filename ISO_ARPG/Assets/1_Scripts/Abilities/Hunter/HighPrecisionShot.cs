@@ -21,7 +21,7 @@ public class HighPrecisionShot : Ability
         stats = e.Actor.Stats;
         shootSource = e.Actor.ShootSource;
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         if (abilityActivated)
             audioSource.PlayOneShot(abilityActivated);
@@ -36,6 +36,7 @@ public class HighPrecisionShot : Ability
             Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);
             if (projectile != null)
             {
+                e.Hitboxes.Add(projectile);
                 projectile.SetDamage(damage);
                 projectile.FireProjectile();
             }

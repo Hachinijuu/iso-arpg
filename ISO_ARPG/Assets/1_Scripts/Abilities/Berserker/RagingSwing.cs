@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "RagingSwing", menuName = "sykcorSystems/Abilities/Berserker/RagingSwing", order = 4)]
 public class RagingSwing : StackAbility
@@ -26,6 +27,12 @@ public class RagingSwing : StackAbility
         audioSource = e.Actor.SFXSource;
         stats = e.Actor.Stats;
         hitboxes = e.Actor.hitboxes; //e.Actor.transform.GetComponentsInChildren<Hitbox>();
+
+        foreach (Hitbox hb in hitboxes)
+        {
+            e.Hitboxes.Add(hb);
+        }
+
         shootSource = e.Actor.ShootSource;
         particles = e.Actor.Particles;
         body = e.Actor.Body;
@@ -33,7 +40,7 @@ public class RagingSwing : StackAbility
 
         shootSource.InitFirePositions();
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         // Call calculator on the relevant hitboxes ... kind of messy in terms of how projectiles run and apply damage
         // Generate damage values and then pass to init?
@@ -62,7 +69,7 @@ public class RagingSwing : StackAbility
 
 
         animCounter++;
-        Debug.Log("AnimStep: " + animCounter);
+        //Debug.Log("AnimStep: " + animCounter);
 
         if (animCounter == 1)
         {

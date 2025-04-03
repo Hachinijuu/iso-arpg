@@ -16,7 +16,7 @@ public class ChannelAbility : Ability
 
     // Overrides abstract Fire method, but does not do anything
     // This acts as a base class to Channelable abilities (easier ability sorting)
-    protected override void Fire() { throw new System.NotImplementedException(); }
+    protected override void Fire(ref AbilityEventArgs e) { throw new System.NotImplementedException(); }
 
     // OnTick is virtual so derived classes DO NOT need to override the method.
     // This is handled externally, by the ability handler

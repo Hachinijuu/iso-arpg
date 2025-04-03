@@ -18,6 +18,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerSlotSystem))]        // Slots
 [RequireComponent(typeof(NavMeshAgent))]                // AGENT FOR COLLISION DETECTION -- 
 [RequireComponent(typeof(PlayerParticleHandler))]
+[RequireComponent(typeof(ChainHandler))]
 // music / ambience - own sources / persistent
 // UI - persistent / general
 // effects / voice
@@ -42,8 +43,8 @@ public class PlayerController : MonoBehaviour
     public FootStepHandler FootSteps { get { return footSteps; } }
     public PlayerSlotSystem Slots { get { return slots; } }
     public PlayerParticleHandler Particles { get { return particleHandler; } }
+    public ChainHandler ChainHandler { get { return chainHandler; } }
     public GameObject Body { get { return body; } }
-    public GameObject AltBody { get { return body; } }
 
     public NavMeshAgent Agent { get { return agent; } }
     PlayerStats stats;
@@ -61,12 +62,8 @@ public class PlayerController : MonoBehaviour
     public Hitbox[] hitboxes;
 
     PlayerParticleHandler particleHandler;
-
-    enum BodyNumber { MAIN, ALT }
-    BodyNumber type;
+    ChainHandler chainHandler;
     [SerializeField] GameObject body;
-    [SerializeField] GameObject altBody;
-
     NavMeshAgent agent;
 
     //[SerializeField] GameObject auraSource;
@@ -99,6 +96,9 @@ public class PlayerController : MonoBehaviour
 
         if (particleHandler == null)
             particleHandler = GetComponent<PlayerParticleHandler>();
+
+        if (chainHandler == null)
+            chainHandler = GetComponent<ChainHandler>();
 
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
@@ -180,6 +180,9 @@ public class PlayerController : MonoBehaviour
 
         if (handler != null)
             handler.PlayerSelected();
+
+        if (chainHandler != null)
+            chainHandler.InitChainHandler();
 
         //EnablePlayer(false);
     }

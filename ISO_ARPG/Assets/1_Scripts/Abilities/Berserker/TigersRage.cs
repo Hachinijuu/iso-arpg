@@ -37,7 +37,7 @@ public class TigersRage : IdentityAbility
             // stop the ability from being timed out, reduce the stat buff values to be expected amounts
         }
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         // When this is fired, apply the effects / bonuses for the passive ability, call end once duration has passed.
         //Debug.Log("fired");

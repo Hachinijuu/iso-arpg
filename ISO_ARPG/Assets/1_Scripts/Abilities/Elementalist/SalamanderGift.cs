@@ -24,7 +24,7 @@ public class SalamanderGift : IdentityAbility
         }
     }
 
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         if (abilityActivated)
             source.PlayOneShot(abilityActivated);

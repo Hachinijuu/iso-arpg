@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,19 +8,22 @@ public class AbilityEventArgs
 {
     public Ability Ability { get; private set; }
     public PlayerController Actor { get; private set; }
-
+    public List<Hitbox> Hitboxes { get; set; }    // This is used for external listening
     public AbilityEventArgs()
     {
+        Hitboxes = new List<Hitbox>();
         Ability = null;
         Actor = null;
     }
     public AbilityEventArgs(Ability ability)
     {
+        Hitboxes = new List<Hitbox>();
         Ability = ability;
         Actor = null;
     }
     public AbilityEventArgs(Ability ability, PlayerController actor)
     {
+        Hitboxes = new List<Hitbox>();
         Ability = ability;
         Actor = actor;
     }
@@ -76,12 +80,12 @@ public abstract class Ability : ScriptableObject
     {
         // Initialize the ability here, this is where GetComponents from derived abilites should be setup (called on character load)
     }
-    protected abstract void Fire(); // This function must be overriden by base classes, it should contain the actions / effects of the ability.
+    protected abstract void Fire(ref AbilityEventArgs e); // This function must be overriden by base classes, it should contain the actions / effects of the ability.
 
     // call this function in the input handler, if the user can use their ability it will be used, otherwise - output can't
     public virtual void UseAbility(AbilityEventArgs e)            // the actor is WHO used the ability
     {
-        Fire();
+        Fire(ref e);
         FireAbilityUsed(e);     // fire off the event with THIS ability, and the actor, allowing any listens to use this information
     }
 
@@ -107,9 +111,9 @@ public abstract class Ability : ScriptableObject
     public delegate void CooldownChanged(float value);
     public event CooldownChanged onCooldownChanged;
 
-    private void FireAbilityUsed(AbilityEventArgs e) { if (onAbilityUsed != null) onAbilityUsed(e); }
-    private void FireAbilityEnded(AbilityEventArgs e) { if (onAbilityEnded != null) onAbilityEnded(e); }
-    private void FireCooldownChanged(float value) { if (onCooldownChanged != null) onCooldownChanged(value); }
+    protected void FireAbilityUsed(AbilityEventArgs e) { if (onAbilityUsed != null) onAbilityUsed(e); }
+    protected void FireAbilityEnded(AbilityEventArgs e) { if (onAbilityEnded != null) onAbilityEnded(e); }
+    protected void FireCooldownChanged(float value) { if (onCooldownChanged != null) onCooldownChanged(value); }
 
 
     #endregion

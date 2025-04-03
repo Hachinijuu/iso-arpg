@@ -5938,6 +5938,7 @@ GameObject:
   - component: {fileID: 2249985947442588543}
   - component: {fileID: 656084597172396448}
   - component: {fileID: 6303614202622227338}
+  - component: {fileID: 2425715358433181407}
   m_Layer: 11
   m_Name: HunterFemale
   m_TagString: Player
@@ -6001,7 +6002,6 @@ MonoBehaviour:
   animator: {fileID: 4383250601210214221}
   hitboxes: []
   body: {fileID: 6715707932559419331}
-  altBody: {fileID: 0}
 --- !u!114 &1947576784191469953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6024,6 +6024,7 @@ MonoBehaviour:
   anim: {fileID: 4383250601210214221}
   rotationSpeed: 20
   clickBuffer: 1
+  isStopped: 0
 --- !u!114 &1784442111661722623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6057,6 +6058,8 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 896
+  target: {fileID: 0}
+  mouseHit: {fileID: 0}
 --- !u!114 &8330103400809054566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6090,6 +6093,7 @@ MonoBehaviour:
   efforts: {fileID: 0}
   hurts: {fileID: 0}
   cancelSound: {fileID: 0}
+  potionUse: {fileID: 0}
   minPitch: 0
   maxPitch: 1
 --- !u!114 &7167014737276909258
@@ -6271,6 +6275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1824355195502048528}
+  applyKnockback: 0
+  knockbackForce: 1
 --- !u!114 &6303614202622227338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6284,9 +6290,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ab1particles: []
-  ab2particles:
-  - {fileID: 4529882936309214353}
+  ab2particles: []
   auraGlow: {fileID: 1457489462956182928}
+--- !u!114 &2425715358433181407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398982663912265838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1618def204944b44fb0e4c1db2d4047b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainPrefab: {fileID: 217610164322264260, guid: 0379c5bd1462a4e469d744334b4f2fc6, type: 3}
 --- !u!1 &6402213406995164628
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public struct DamageArgs
 {
-    public GameObject source;
+    public Hitbox source;
     public float amount;
     public Hurtbox hit;
 }
@@ -106,27 +106,20 @@ public class Hitbox : MonoBehaviour
         DamageArgs args = new DamageArgs();
         args.hit = hb;
         args.amount = damage;
-        if (source != null)
-        {
-            args.source = source;    
-        }
-        else
-        {
-            args.source = gameObject;
-        }
+        args.source = this;
         return args;
     }
     protected virtual void HandleCollision(Hurtbox hb)
     {
         // Before telling the hurtbox to take damage, do a crit roll to see if hitbox should take additional damage
         CritCalculation();
-        DamageArgs args = GetArgs(hb);
-        hb.TakeDamage(args);
+        if (!hb.Stats.isDead)
+        {
+            DamageArgs args = GetArgs(hb);
+            hb.TakeDamage(args);
+            FireDamageDealt(args);
+        }
 
-        // Give the current stats an amount of mana from the hit
-        // The problem is -> if I hit multiple targets, do I get mana for EACH target hit, or that I hit a target?
-
-        FireDamageDealt(args);
     }
     protected virtual void CritCalculation()
     {

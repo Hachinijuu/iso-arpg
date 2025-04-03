@@ -19,7 +19,7 @@ public class FrozenSpikes : Ability
         stats = e.Actor.Stats;
         shootSource = e.Actor.ShootSource;
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         if (abilityActivated)
             source.PlayOneShot(abilityActivated);
@@ -33,6 +33,7 @@ public class FrozenSpikes : Ability
             Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ICICLE, i);
             if (p != null)
             {
+                e.Hitboxes.Add(p);
                 p.SetDamage(damage);
                 p.FireProjectile();
 

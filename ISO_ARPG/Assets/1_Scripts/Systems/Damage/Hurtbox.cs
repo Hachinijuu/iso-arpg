@@ -7,6 +7,7 @@ public class Hurtbox : MonoBehaviour
     // IT WILL BE FLESHED ONCE STAT LOADING AND CHARACTER INFORMATION IS ORGANIZED
 
     // Get a reference to the health on the specified object
+    public EntityStats Stats { get { return stats; } }
     [SerializeField] protected EntityStats stats;
     [SerializeField] public bool applyKnockback;
     #endregion

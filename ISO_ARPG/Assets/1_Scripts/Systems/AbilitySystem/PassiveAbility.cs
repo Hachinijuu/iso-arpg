@@ -18,7 +18,7 @@ public class PassiveAbility : Ability
     // This acts as a base class to passive abilities (easier ability sorting)
 
     // FIRE is when the passive ability has been activated
-    protected override void Fire() { throw new System.NotImplementedException(); }
+    protected override void Fire(ref AbilityEventArgs e) { throw new System.NotImplementedException(); }
 
     // Because update is not called on scriptable objects, THIS is called by the ability handler on any passive ability
 

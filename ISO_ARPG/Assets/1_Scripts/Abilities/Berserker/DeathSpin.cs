@@ -14,6 +14,7 @@ public class DeathSpin : ChannelAbility
     PlayerParticleHandler particles;
     public float damageMultipler = 1.0f;
     float damage;
+    AbilityEventArgs args;
 
     // EACH ABILITY IS UNIQUE, BUT IS IT A GOOD PRACTICE TO GET THESE VALUES UNIQUELY -- SO ASSET SO IT MIGHT BE FINE EXISTING AS UNIQUE VALUES
 
@@ -28,12 +29,19 @@ public class DeathSpin : ChannelAbility
         anim = e.Actor.Animator;
         source = e.Actor.SFXSource;
         hitboxes = e.Actor.hitboxes; //e.Actor.GetComponentsInChildren<Hitbox>();
+        
+        foreach (Hitbox hb in hitboxes)
+        {
+            e.Hitboxes.Add(hb);
+        }
+        
         stats = e.Actor.Stats;
         move = e.Actor.Movement;
         shootSource = e.Actor.ShootSource;
         particles = e.Actor.Particles;
+        args = e;
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert);
         anim.SetBool(abilAnimID, true);
@@ -83,6 +91,7 @@ public class DeathSpin : ChannelAbility
     public override void OnTick()
     {
         //stats.ID_Bar.Value += stats.IDGain.Value;
+        
 
         if (stats.Projectiles.Value > 0)
         {
@@ -97,6 +106,7 @@ public class DeathSpin : ChannelAbility
                 }
             }
         }
+        FireAbilityUsed(args);
     }
 
     #region HELPER FUNCTIONS

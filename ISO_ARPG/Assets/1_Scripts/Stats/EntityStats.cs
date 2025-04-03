@@ -46,6 +46,8 @@ public class EntityStats : MonoBehaviour
     public delegate void Died(GameObject go);
     public event Died OnDied;
     private void FireOnDied(GameObject go) { if (OnDied != null) { OnDied(go); } }
+
+    public bool isDead { get { return (health.Value <= 0); }}
     #endregion
 
     // Assume all entities are returned to an object pool - SetActive(false)

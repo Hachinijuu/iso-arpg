@@ -20,7 +20,7 @@ public class Fireball : Ability
         stats = e.Actor.Stats;
         shootSource = e.Actor.ShootSource;
     }
-    protected override void Fire()
+    protected override void Fire(ref AbilityEventArgs e)
     {
         if (abilityActivated)
             source.PlayOneShot(abilityActivated);
@@ -34,6 +34,7 @@ public class Fireball : Ability
             Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.FIREBALL, i);
             if (p != null)
             {
+                e.Hitboxes.Add(p);
                 p.SetDamage(damage);
                 p.FireProjectile();
             }

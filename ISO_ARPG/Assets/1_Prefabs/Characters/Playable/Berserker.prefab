@@ -7210,6 +7210,7 @@ GameObject:
   - component: {fileID: 2249985947442588543}
   - component: {fileID: 7320533039136882555}
   - component: {fileID: 6303614202622227338}
+  - component: {fileID: 2425715358433181407}
   m_Layer: 11
   m_Name: Berserker
   m_TagString: Player
@@ -7276,7 +7277,6 @@ MonoBehaviour:
   - {fileID: 2858645977463370836}
   - {fileID: 8314839861601997833}
   body: {fileID: 2309156911622825006}
-  altBody: {fileID: 0}
 --- !u!114 &1947576784191469953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7299,6 +7299,7 @@ MonoBehaviour:
   anim: {fileID: 4001235285261476427}
   rotationSpeed: 20
   clickBuffer: 1
+  isStopped: 0
 --- !u!114 &1784442111661722623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7367,6 +7368,7 @@ MonoBehaviour:
   efforts: {fileID: 0}
   hurts: {fileID: 0}
   cancelSound: {fileID: 0}
+  potionUse: {fileID: 0}
   minPitch: 0
   maxPitch: 1
 --- !u!114 &7167014737276909258
@@ -7548,6 +7550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1824355195502048528}
+  applyKnockback: 0
+  knockbackForce: 1
 --- !u!114 &6303614202622227338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7566,6 +7570,19 @@ MonoBehaviour:
   ab2particles:
   - {fileID: 7092342755375898073}
   auraGlow: {fileID: 7108203439600533594}
+--- !u!114 &2425715358433181407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6398982663912265838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1618def204944b44fb0e4c1db2d4047b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainPrefab: {fileID: 217610164322264260, guid: 0379c5bd1462a4e469d744334b4f2fc6, type: 3}
 --- !u!1 &6433793215445032381
 GameObject:
   m_ObjectHideFlags: 0
