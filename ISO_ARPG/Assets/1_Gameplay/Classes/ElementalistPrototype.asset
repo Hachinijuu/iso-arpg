@@ -22,7 +22,7 @@ MonoBehaviour:
   Damage:
     value: 50
     maxValue: 100000
-    type: 2
+    type: 8
   AttackSpeed:
     value: 1
     maxValue: 1
@@ -59,12 +59,12 @@ MonoBehaviour:
     value: 15
   rotationSpeed: 10
   PrimaryDamage:
-    value: -1
-    maxValue: 0
+    value: 0
+    maxValue: 100
     type: 17
   SecondaryDamage:
-    value: -1
-    maxValue: 0
+    value: 0
+    maxValue: 100
     type: 18
   CritDamage:
     value: 10
@@ -83,24 +83,24 @@ MonoBehaviour:
     maxValue: 10
     type: 13
   TakeFromMana:
-    value: -1
-    maxValue: 0
+    value: 0
+    maxValue: 50
     type: 16
   HealthRegen:
-    value: -1
-    maxValue: 0
+    value: 1
+    maxValue: 50
     type: 4
   CooldownReduction:
-    value: -1
-    maxValue: 0
+    value: 1
+    maxValue: 50
     type: 7
   ID_Gain:
     value: 5
     maxValue: 10
     type: 3
   ManaRegen:
-    value: -1
-    maxValue: 0
+    value: 1
+    maxValue: 50
     type: 5
   ManaOnHit:
     value: 10
