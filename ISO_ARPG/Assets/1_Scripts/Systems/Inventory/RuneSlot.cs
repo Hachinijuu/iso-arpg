@@ -4,21 +4,32 @@ public class RuneSlot : ItemSlot
     // Unique slots, intended for stat applications to happen when bound to the character
     public RuneType type;
     private PlayerStats stats;
-    public void Start()
-    {
-        //if (Inventory.Instance != null)
-        //{
-        //    Inventory.Instance.OnItemReleased += context => { ApplyRuneEffects(); };
-        //}
-    }
-
     // The current issue is that the inventory is not bound by character, but rather by player.
     // Should the inventory be bound to character or just player overall?
     public void OnEnable()
     {
         if (stats == null)
-            stats = GetComponent<PlayerStats>();
+            stats = PlayerManager.Instance.currentPlayer.Stats;
+            //stats = GetComponent<PlayerStats>();
+        //Inventory.Instance.OnItemReleased += CheckHasItem;
     }
+
+    // public void OnDisable() 
+    // {
+    //     Inventory.Instance.OnItemReleased -= CheckHasItem;
+    // }
+
+    // protected void CheckHasItem(InventoryEventArgs e)
+    // {
+    //     if (HasItem)
+    //     {
+    //         ApplyRuneEffects();
+    //     }
+    //     else if (!HasItem)
+    //     {
+    //         RemoveRuneEffects();
+    //     }
+    // }
 
     // When should the RuneSlots apply stats to the player.
     // When the slot is not empty.
@@ -37,6 +48,7 @@ public class RuneSlot : ItemSlot
     {
         if (HasItem)
         {
+            Debug.Log("[Gear]: Removed rune effects");
             RuneData rune = item as RuneData; // Convert the base class item into rune data
             if (rune != null)
             {
@@ -59,6 +71,17 @@ public class RuneSlot : ItemSlot
         else
         {
             Debug.Log("[Gear]: Did not have a rune to apply effects");
+        }
+    }
+    public void HighlightSlot(bool on)
+    {
+        if (on)
+        {
+            selectedIndicator.SetActive(true);
+        }
+        else
+        {
+            selectedIndicator.SetActive(false);
         }
     }
 }

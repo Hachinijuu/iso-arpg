@@ -228,6 +228,7 @@ public class MainStat : ClampedStat
     public virtual void Copy(MainStat other)
     {
         this.value = other.value;
+        this.maxValue = other.maxValue;
         this.type = other.type;
     }
 

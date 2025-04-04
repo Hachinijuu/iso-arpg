@@ -110,6 +110,7 @@ public class PlayerStats : EntityStats
         {
             LoadAbilities();
         }
+        statList.Clear();
         FillStatList();
 
         //health.Changed += context => { CheckDied(context); };
@@ -117,8 +118,8 @@ public class PlayerStats : EntityStats
 
     public override void FillStatList()
     {
-        base.FillStatList();
-        //statList.Add(health);
+        //base.FillStatList();
+        statList.Add(health);
         // Tracked Stats
         statList.Add(mana);
         statList.Add(idBar);
@@ -129,7 +130,9 @@ public class PlayerStats : EntityStats
         statList.Add(intelligence);
 
         // Sub Stats
-        statList.Add(attackRange);
+        //statList.Add(attackRange);
+        statList.Add(damage);
+        statList.Add(attackSpeed);
 
         // Offensive
         statList.Add(primaryDamage);
@@ -143,18 +146,16 @@ public class PlayerStats : EntityStats
         // Defensive
         statList.Add(dmgFromMana);
         statList.Add(healthRegen);
+        statList.Add(armour);
+        statList.Add(dodge);
 
         // Utility
         statList.Add(cdr);
         statList.Add(idGain);
         statList.Add(manaRegen);
         statList.Add(manaOnHit);
+        statList.Add(moveSpeed);
 
-        //statList.Add(moveSpeed);
-        //statList.Add(damage);
-        //statList.Add(attackSpeed);
-        //statList.Add(armour);
-        //statList.Add(dodge);
         Debug.Log("FILLED STAT LIST");
     }
 

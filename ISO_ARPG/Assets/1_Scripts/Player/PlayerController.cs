@@ -225,8 +225,8 @@ public class PlayerController : MonoBehaviour
 
     private void UnmapPlayerActions()
     {
-        input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
-        input.actions["Potion2"].performed += context => { UsePotion(PotionTypes.MANA); };  // Map whichever potion
+        input.actions["Potion1"].performed -= context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
+        input.actions["Potion2"].performed -= context => { UsePotion(PotionTypes.MANA); };  // Map whichever potion
     }
 
     // Potion Usage

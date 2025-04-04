@@ -163,6 +163,9 @@ public class Inventory : MonoBehaviour
     public event InventoryEvent OnItemReleased;
     public void FireReleasedItem(InventoryEventArgs e) { if (OnItemReleased != null) OnItemReleased(e); }
 
+    public event InventoryEvent OnItemPickup;
+    public void FireItemPickedUp(InventoryEventArgs e) { if (OnItemPickup != null) OnItemPickup(e); }
+
     // Per play inventory, this system needs to know when a player exists
     // It also needs to maintain relative data for each class, handling their individual inventories
 
@@ -487,6 +490,8 @@ public class Inventory : MonoBehaviour
         //Image gImage = ghost.GetComponent<Image>();
         //gImage.sprite = sourceSlot.img.sprite;
 
+        HighlightRuneSlots(ghostItem);
+
         RectTransform rt = ghost.GetComponent<RectTransform>();
         rt.sizeDelta = sourceSlot.GetComponent<RectTransform>().sizeDelta;
         //rt.localScale = new Vector3(100,100);
@@ -500,6 +505,34 @@ public class Inventory : MonoBehaviour
         Destroy(ghost);
     }
 
+    public void HighlightRuneSlots(ItemData item)
+    {
+        RuneData rune = item as RuneData;
+        if (rune == null) { CleanupRuneHighlights(); return; }
+        foreach (RuneSlot rs in runeSlots)
+        {
+            if (rs.type == rune.runeType && !rs.HasItem)    // Only highlight if matching type, and no rune embedded
+            {
+                rs.HighlightSlot(true);
+                //Debug.Log("Highlighted Rune Slot: " + rs.name);
+            }
+            else
+            {
+                rs.HighlightSlot(false);
+            }
+        }
+    }
+    
+    public void CleanupRuneHighlights()
+    {
+        foreach (RuneSlot rs in runeSlots)
+        {
+            rs.HighlightSlot(false);
+        }
+    }
+
+
+    
     void ReleaseItem()
     {
 
@@ -507,6 +540,7 @@ public class Inventory : MonoBehaviour
         {
             // This is fired whenever the mouse is released
             ItemSlot slot = GetSlotFromPos(mousePos);
+            HighlightRuneSlots(null);
 
             if (slot != null)
             {
@@ -516,6 +550,11 @@ public class Inventory : MonoBehaviour
                     // Revert item back to slot
 
                     sourceSlot.SetItem(ghostItem);
+                    // if the reversion slot was a rune slot
+                    if (slot is RuneSlot rs)
+                    {
+                        rs.ApplyRuneEffects();
+                    }
                     //sourceSlot.item = ghostItem;
                     //sourceSlot.img = ghostItem.itemIcon;
                     //ghostItem.LoadSpriteToImage(sourceSlot.img);
@@ -545,6 +584,11 @@ public class Inventory : MonoBehaviour
                             {
                                 Debug.Log("[Inventory]: Slot is for " + runeSlot.type + " defaulting");
                                 sourceSlot.SetItem(ghostItem);
+
+                                if (sourceSlot is RuneSlot rs)
+                                {
+                                    rs.ApplyRuneEffects();
+                                }
                                 //sourceSlot.item = ghostItem;
                                 //sourceSlot.img = ghostItem.itemIcon;
                                 //ghostItem.LoadSpriteToImage(sourceSlot.img);
@@ -571,10 +615,6 @@ public class Inventory : MonoBehaviour
                     }
                 }
                 ghostItem = null;
-
-                InventoryEventArgs args = new InventoryEventArgs();
-                args.data = slot.item;
-                FireReleasedItem(args);
             }
             else
             {
@@ -586,6 +626,9 @@ public class Inventory : MonoBehaviour
                 //sourceSlot.img = ghostItem.itemIcon;
                 //ghostItem.LoadSpriteToImage(sourceSlot.img);
             }
+            InventoryEventArgs args = new InventoryEventArgs();
+            args.data = slot.item;
+            FireReleasedItem(args);
         }
 
         // Play the release audio from Game Manager source

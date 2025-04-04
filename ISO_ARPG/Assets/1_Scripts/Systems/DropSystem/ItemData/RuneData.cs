@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // Rune types must match the rune slot for it to be set properly, if it is not - it is an invalid slot
@@ -26,45 +27,94 @@ public class RuneData : ItemData
     public int destroyAmount;   // The amount of dust returned on rune destruction
     public virtual void ApplyStats(ref PlayerStats stats)
     {
-        if (mainStat != null && mainStat.Length > 0)
+        foreach (Stat listStat in stats.statList)
         {
-            foreach (MainStat listStat in stats.statList)
+            if (listStat is MainStat && mainStat != null && mainStat.Length > 0)
             {
+                MainStat ms = listStat as MainStat;
                 foreach (MainStat stat in mainStat)
                 {
-                    if (listStat.type == stat.type)
+                    if (ms.type == stat.type)
                     {
-                        listStat.Value += stat.Value;
+                        ms.Value += stat.Value;
+                        Debug.Log("[Runes]: Added " + stat.Value + " " + stat.type);
                     }
                 }
             }
-        }
-        else if (trackedStat != null && trackedStat.Length > 0)
-        {
-            foreach (TrackedStat listStat in stats.statList)
+            else if (listStat is TrackedStat && trackedStat != null && trackedStat.Length > 0)
             {
+                TrackedStat ts = listStat as TrackedStat;
                 foreach (TrackedStat stat in trackedStat)
                 {
-                    if (listStat.type == stat.type)
+                    if (ts.type == stat.type)
                     {
-                        listStat.Value += stat.Value;
+                        ts.Value += stat.Value;
+                        Debug.Log("[Runes]: Added " + stat.Value + " " + stat.type);
                     }
                 }
             }
-        }
-        else if (subStat != null && subStat.Length > 0)
-        {
-            foreach (SubStat listStat in stats.statList)
+            else if (listStat is SubStat && subStat != null && subStat.Length > 0)
             {
+                SubStat ss = listStat as SubStat;
                 foreach (SubStat stat in subStat)
                 {
-                    if (listStat.type == stat.type)
+                    if (ss.type == stat.type)
                     {
-                        listStat.Value += stat.Value;
+                        ss.Value += stat.Value;
+                        Debug.Log("[Runes]: Added " + stat.Value + " " + stat.type);
                     }
                 }
             }
         }
+
+
+        // if (mainStat != null && mainStat.Length > 0)
+        // {
+        //     foreach (Stat listStat in stats.statList)
+        //     {
+        //         if (listStat is MainStat)
+        //         {
+        //             //MainStat ms = listStat as MainStat;
+        //             foreach (MainStat stat in mainStat)
+        //             {
+        //                 if (listStat.type == stat.type)
+        //                 {
+        //                     listStat.Value += stat.Value;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // else if (trackedStat != null && trackedStat.Length > 0)
+        // {
+        //     foreach (Stat listStat in stats.statList)
+        //     {
+        //         if (listStat is TrackedStat)
+        //         {
+        //             //listStat as TrackedStat;
+        //             foreach (TrackedStat stat in trackedStat)
+        //             {
+        //                 if (listStat.type == stat.type)
+        //                 {
+        //                     listStat.Value += stat.Value;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // else if (subStat != null && subStat.Length > 0)
+        // {
+        //     foreach (SubStat listStat in stats.statList)
+        //     {
+        //         foreach (SubStat stat in subStat)
+        //         {
+        //             if (listStat.type == stat.type)
+        //             {
+        //                 listStat.Value += stat.Value;
+        //             }
+        //         }
+        //     }
+        // }
 
         //foreach (Stat stat in stats.statList)
         //{
@@ -93,41 +143,41 @@ public class RuneData : ItemData
     }
     public virtual void RemoveStats(ref PlayerStats stats)
     {
-        if (mainStat != null && mainStat.Length > 0)
+        foreach (Stat listStat in stats.statList)
         {
-            foreach (MainStat listStat in stats.statList)
+            if (listStat is MainStat && mainStat != null && mainStat.Length > 0)
             {
+                MainStat ms = listStat as MainStat;
                 foreach (MainStat stat in mainStat)
                 {
-                    if (listStat.type == stat.type)
+                    if (ms.type == stat.type)
                     {
-                        listStat.Value -= stat.Value;
+                        ms.Value -= stat.Value;
+                        Debug.Log("[Runes]: Removed " + stat.Value + " " + stat.type);
                     }
                 }
             }
-        }
-        else if (trackedStat != null && trackedStat.Length > 0)
-        {
-            foreach (TrackedStat listStat in stats.statList)
+            else if (listStat is TrackedStat && trackedStat != null && trackedStat.Length > 0)
             {
+                TrackedStat ts = listStat as TrackedStat;
                 foreach (TrackedStat stat in trackedStat)
                 {
-                    if (listStat.type == stat.type)
+                    if (ts.type == stat.type)
                     {
-                        listStat.Value -= stat.Value;
+                        ts.Value -= stat.Value;
+                        Debug.Log("[Runes]: Removed " + stat.Value + " " + stat.type);
                     }
                 }
             }
-        }
-        else if (subStat != null && subStat.Length > 0)
-        {
-            foreach (SubStat listStat in stats.statList)
+            else if (listStat is SubStat && subStat != null && subStat.Length > 0)
             {
+                SubStat ss = listStat as SubStat;
                 foreach (SubStat stat in subStat)
                 {
-                    if (listStat.type == stat.type)
+                    if (ss.type == stat.type)
                     {
-                        listStat.Value -= stat.Value;
+                        ss.Value -= stat.Value;
+                        Debug.Log("[Runes]: Removed " + stat.Value + " " + stat.type);
                     }
                 }
             }
