@@ -184,6 +184,7 @@ public class HUDController : MonoBehaviour
 
     public void ShowCooldownText(UIAbility ui, Ability ab)
     {
+        if (ab.UseCooldown)
         ui.cooldown.gameObject.SetActive(ab.OnCooldown);
     }
 

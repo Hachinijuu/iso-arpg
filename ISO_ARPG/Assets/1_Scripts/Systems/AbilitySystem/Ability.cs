@@ -35,6 +35,7 @@ public abstract class Ability : ScriptableObject
     public Sprite Icon { get { return abilityIcon; } }
     public string Name { get { return abilityName; } }
     public string Description { get { return abilityDescription; } }
+    public bool UseCooldown { get { return useCooldown; } }
     public float Cooldown { get { return cooldown; } }
     public float CurrCooldown { get { return currCooldown; } set { currCooldown = value; FireCooldownChanged(currCooldown); } }
     public bool OnCooldown { get { return currCooldown > 0; } }
@@ -54,6 +55,7 @@ public abstract class Ability : ScriptableObject
 
     #region Timers 
     [Header("Timing")]
+    [SerializeField] protected bool useCooldown = false;
     [SerializeField] protected float cooldown = -1f;        // the cooldown time before the skill can be used again
     #endregion
 

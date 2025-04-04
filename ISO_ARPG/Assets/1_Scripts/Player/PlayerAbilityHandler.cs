@@ -381,7 +381,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         // This will be defined by the abilities interval
         do
         {
-            yield return new WaitForSeconds(used.Interval);
+            yield return new WaitForSeconds(used.Interval * (1 + (stats.AttackSpeed.Value / 100))); // Faster ticks with more attack speed
             // Once the time has passed
             if (showDebug) Debug.Log("[AbilityHandler] Using " + used.Name);
             if ((stats.Mana.Value - used.Cost) < 0) // If the consumed mana would result in no remaining mana
@@ -437,7 +437,16 @@ public class PlayerAbilityHandler : MonoBehaviour
         // With this wrapper functionality, PlayerAbilityHandler do calculations here (if CDR) and have updated cooldown values.
         // If theres a reference to the HUD controller, then the HUD's cooldown can also be called here for 1:1 timer
 
-        float currTime = used.Cooldown * (1 - stats.CooldownReduction.Value);   // CDR value is a decimal, reflected amount visually is * 10
+        float currTime = used.Cooldown;
+        if (used.UseCooldown)
+        {
+            currTime *= (1 - stats.CooldownReduction.Value);
+        }
+        else
+        {
+            currTime *= (1 + (stats.AttackSpeed.Value / 100));  // 10% increase = 1.1
+        }
+        //float currTime = used.Cooldown * (1 - stats.CooldownReduction.Value);   // CDR value is a decimal, reflected amount visually is * 10
         
         while (currTime > 0)
         {
