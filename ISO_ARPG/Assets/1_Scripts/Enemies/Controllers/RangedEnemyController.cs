@@ -23,7 +23,7 @@ public class RangedEnemyController : EnemyControllerV2
                 p.FireProjectile();
             }
             //Debug.Log("Performed Attack");
-            //animator.SetTrigger(animId);
+            animator.SetTrigger(animId);
 
             //hitbox.AttackForTime(hitboxUptime);
             //hitbox.AllowDamageForTime(hitboxUptime);

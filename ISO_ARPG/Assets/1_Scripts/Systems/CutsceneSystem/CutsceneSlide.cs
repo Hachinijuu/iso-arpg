@@ -34,6 +34,18 @@ public class CutsceneSlide : MonoBehaviour
         StartCoroutine(HandleSubtitles(subtitleTime));
     }
 
+    public void EnterSlide(TutorialManager manager)
+    {
+        if (slideVoiceover != null)
+        {
+            if (manager.Source != null)
+            {
+                manager.Source.clip = slideVoiceover;
+                manager.Source.Play();
+            }
+        }
+    }
+
     public void ExitSlide(CutscenePlayer player)
     {
         // Can do stuff here, play transition noise, fade nicely, pause audio if once clip, test.

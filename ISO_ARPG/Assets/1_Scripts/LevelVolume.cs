@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class LevelVolume : MonoBehaviour
 {
+    public GameObject levelList;    // Level List, 
     public GameManager.eLevel toLoad;
     private void OnTriggerEnter(Collider other)
     {
@@ -16,8 +17,16 @@ public class LevelVolume : MonoBehaviour
             //    return;
             //}
 
-            GameManager.Instance.level = toLoad;
-            GameManager.Instance.LevelLoad();
+            if (levelList == null)
+            {
+                GameManager.Instance.level = toLoad;
+                GameManager.Instance.LevelLoad();
+            }
+            else
+            { 
+                levelList.SetActive(true);
+                GameManager.Instance.PauseGame();
+            }
         }
     }
 }

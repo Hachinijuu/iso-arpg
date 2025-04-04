@@ -22,7 +22,7 @@ public class EnemyControllerV2 : MonoBehaviour
 
     public EntityStats stats;
     public Animator Animator { get { return animator; } }
-    [SerializeField] Animator animator;
+    [SerializeField] protected Animator animator;
 
     // Possibly FSM v2 which contains the states and the state transitions?
 

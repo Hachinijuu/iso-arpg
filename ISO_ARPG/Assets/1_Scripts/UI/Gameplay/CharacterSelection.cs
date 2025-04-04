@@ -68,6 +68,7 @@ public class CharacterSelection : MonoBehaviour
     public void Start()
     {
         source = GameManager.Instance.GlobalAudio;
+        BerserkerClicked(); // Sets the default character
     }
 
     public void SetGhostCharacter()
