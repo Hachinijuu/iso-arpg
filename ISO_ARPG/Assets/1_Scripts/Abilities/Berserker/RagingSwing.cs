@@ -11,7 +11,7 @@ public class RagingSwing : StackAbility
     PlayerStats stats;
     ProjectileSource shootSource;
     PlayerParticleHandler particles;
-    public float damageMultipler = 1.0f;
+    //public float damageMultipler = 1.0f;
     float damage;
     GameObject body;
     int animCounter;
@@ -45,7 +45,7 @@ public class RagingSwing : StackAbility
         // Call calculator on the relevant hitboxes ... kind of messy in terms of how projectiles run and apply damage
         // Generate damage values and then pass to init?
 
-        damage = stats.Damage.Value + damageMultipler * (stats.STR.Value * GameManager.Instance.MainConvert);
+        damage = (stats.Damage.Value * stats.SecondaryDamage.Value) + (stats.STR.Value * GameManager.Instance.MainConvert);
         //Debug.Log(damage);
         //Debug.Log(stats.STR.Value * GameManager.Instance.MainConvert);
         // Listen the the hitboxes for their events, if something was hit, regain mana - if nothing is hit, don't

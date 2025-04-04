@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Fireball", menuName = "sykcorSystems/Abilities/Elementalist/Fireball", order = 4)]
@@ -28,7 +29,7 @@ public class Fireball : Ability
         anim.SetTrigger(animId);
         //stats.ID_Bar.Value += stats.IDGain.Value;
 
-        damage = (stats.Damage.Value * damageMultipler) + (stats.INT.Value * GameManager.Instance.MainConvert);
+        damage = (stats.Damage.Value * stats.PrimaryDamage.Value) + (stats.INT.Value * GameManager.Instance.MainConvert);
         for (int i = 0; i < stats.Projectiles.Value; i++)
         {
             Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.FIREBALL, i);

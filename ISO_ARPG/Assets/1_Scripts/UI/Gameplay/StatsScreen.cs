@@ -53,22 +53,22 @@ public class StatsScreen : MonoBehaviour
             stats.Health.Changed += context => { UpdateStat(health, stats.Health.MaxValue); };
             stats.Mana.Changed += context => { UpdateStat(mana, stats.Mana.MaxValue); };
             stats.Damage.Changed += context => { UpdateStat(damage, context); };
-            stats.PrimaryDamage.Changed += context => { UpdateStat(primaryDamage, context); };
-            stats.SecondaryDamage.Changed += context => { UpdateStat(secondaryDamage, context); };
-            stats.AttackSpeed.Changed += context => { UpdateStat(attackSpeed, context); };
-            stats.CritChance.Changed += context => { UpdateStat(critChance, context); };
-            stats.CritDamage.Changed += context => { UpdateStat(critDamage, context); };
+            stats.PrimaryDamage.Changed += context => { UpdateStatPercent(primaryDamage, context); };
+            stats.SecondaryDamage.Changed += context => { UpdateStatPercent(secondaryDamage, context); };
+            stats.AttackSpeed.Changed += context => { UpdateStatPercent(attackSpeed, context); };
+            stats.CritChance.Changed += context => { UpdateStatPercent(critChance, context); };
+            stats.CritDamage.Changed += context => { UpdateStatPercent(critDamage, context); };
             stats.Projectiles.Changed += context => { UpdateStat(projectiles, context); };
             stats.Chains.Changed += context => { UpdateStat(chains, context); };
             stats.Armour.Changed += context => { UpdateStat(armour, context); };
-            stats.Dodge.Changed += context => { UpdateStat(dodge, context); };
-            stats.DamageFromMana.Changed += context => { UpdateStat(dmgMana, context); };
-            stats.HealthRegen.Changed += context => { UpdateStat(healthRegen, context); };
-            stats.MoveSpeed.Changed += context => { UpdateStat(moveSpeed, context); };
-            stats.CooldownReduction.Changed += context => { UpdateStat(cdr, context); };
-            stats.ManaRegen.Changed += context => { UpdateStat(manaRegen, context); };
+            stats.Dodge.Changed += context => { UpdateStatPercent(dodge, context); };
+            stats.DamageFromMana.Changed += context => { UpdateStatPercent(dmgMana, context); };
+            stats.HealthRegen.Changed += context => { UpdateStatPerSecond(healthRegen, context); };
+            stats.MoveSpeed.Changed += context => { UpdateStatPercent(moveSpeed, context); };
+            stats.CooldownReduction.Changed += context => { UpdateStatPercent(cdr, context); };
+            stats.ManaRegen.Changed += context => { UpdateStatPerSecond(manaRegen, context); };
             stats.ManaOnHit.Changed += context => { UpdateStat(manaOnHit, context); };
-            stats.IDGain.Changed += context => { UpdateStat(idGain, context); };
+            stats.IDGain.Changed += context => { UpdateStatPercent(idGain, context); };
         }
     }
 
@@ -92,22 +92,22 @@ public class StatsScreen : MonoBehaviour
             UpdateStat(health, stats.Health.MaxValue);
             UpdateStat(mana, stats.Mana.MaxValue);
             UpdateStat(damage, stats.Damage.Value);
-            UpdateStat(primaryDamage, stats.PrimaryDamage.Value);
-            UpdateStat(secondaryDamage, stats.SecondaryDamage.Value);
-            UpdateStat(attackSpeed, stats.AttackSpeed.Value);
-            UpdateStat(critChance, stats.CritChance.Value);
-            UpdateStat(critDamage, stats.CritDamage.Value);
+            UpdateStatPercent(primaryDamage, stats.PrimaryDamage.Value);
+            UpdateStatPercent(secondaryDamage, stats.SecondaryDamage.Value);
+            UpdateStatPercent(attackSpeed, stats.AttackSpeed.Value);
+            UpdateStatPercent(critChance, stats.CritChance.Value);
+            UpdateStatPercent(critDamage, stats.CritDamage.Value);
             UpdateStat(projectiles, stats.Projectiles.Value);
             UpdateStat(chains, stats.Chains.Value);
             UpdateStat(armour, stats.Armour.Value);
-            UpdateStat(dodge, stats.Dodge.Value);
-            UpdateStat(dmgMana, stats.DamageFromMana.Value);
-            UpdateStat(healthRegen, stats.HealthRegen.Value);
-            UpdateStat(moveSpeed, stats.MoveSpeed.Value);
-            UpdateStat(cdr, stats.CooldownReduction.Value);
-            UpdateStat(manaRegen, stats.ManaRegen.Value);
+            UpdateStatPercent(dodge, stats.Dodge.Value);
+            UpdateStatPercent(dmgMana, stats.DamageFromMana.Value);
+            UpdateStatPerSecond(healthRegen, stats.HealthRegen.Value);
+            UpdateStatPercent(moveSpeed, stats.MoveSpeed.Value);
+            UpdateStatPercent(cdr, stats.CooldownReduction.Value);
+            UpdateStatPerSecond(manaRegen, stats.ManaRegen.Value);
             UpdateStat(manaOnHit, stats.ManaOnHit.Value);
-            UpdateStat(idGain, stats.IDGain.Value);
+            UpdateStatPercent(idGain, stats.IDGain.Value);
     }
 
     public void UnlistenStats()
@@ -120,20 +120,20 @@ public class StatsScreen : MonoBehaviour
             stats.Health.Changed -= context => { UpdateStat(health, stats.Health.MaxValue); };
             stats.Mana.Changed -= context => { UpdateStat(mana, stats.Mana.MaxValue); };
             stats.Damage.Changed -= context => { UpdateStat(damage, context); };
-            stats.PrimaryDamage.Changed -= context => { UpdateStat(primaryDamage, context); };
-            stats.SecondaryDamage.Changed -= context => { UpdateStat(secondaryDamage, context); };
-            stats.AttackSpeed.Changed -= context => { UpdateStat(attackSpeed, context); };
-            stats.CritChance.Changed -= context => { UpdateStat(critChance, context); };
-            stats.CritDamage.Changed -= context => { UpdateStat(critDamage, context); };
+            stats.PrimaryDamage.Changed -= context => { UpdateStatPercent(primaryDamage, context); };
+            stats.SecondaryDamage.Changed -= context => { UpdateStatPercent(secondaryDamage, context); };
+            stats.AttackSpeed.Changed -= context => { UpdateStatPercent(attackSpeed, context); };
+            stats.CritChance.Changed -= context => { UpdateStatPercent(critChance, context); };
+            stats.CritDamage.Changed -= context => { UpdateStatPercent(critDamage, context); };
             stats.Projectiles.Changed -= context => { UpdateStat(projectiles, context); };
             stats.Chains.Changed -= context => { UpdateStat(chains, context); };
             stats.Armour.Changed -= context => { UpdateStat(armour, context); };
-            stats.Dodge.Changed -= context => { UpdateStat(dodge, context); };
-            stats.DamageFromMana.Changed -= context => { UpdateStat(dmgMana, context); };
-            stats.HealthRegen.Changed -= context => { UpdateStat(healthRegen, context); };
+            stats.Dodge.Changed -= context => { UpdateStatPercent(dodge, context); };
+            stats.DamageFromMana.Changed -= context => { UpdateStatPercent(dmgMana, context); };
+            stats.HealthRegen.Changed -= context => { UpdateStatPerSecond(healthRegen, context); };
             stats.MoveSpeed.Changed -= context => { UpdateStat(moveSpeed, context); };
-            stats.CooldownReduction.Changed -= context => { UpdateStat(cdr, context); };
-            stats.ManaRegen.Changed -= context => { UpdateStat(manaRegen, context); };
+            stats.CooldownReduction.Changed -= context => { UpdateStatPercent(cdr, context); };
+            stats.ManaRegen.Changed -= context => { UpdateStatPerSecond(manaRegen, context); };
             stats.ManaOnHit.Changed -= context => { UpdateStat(manaOnHit, context); };
             stats.IDGain.Changed -= context => { UpdateStat(idGain, context); };
         }
@@ -143,6 +143,16 @@ public class StatsScreen : MonoBehaviour
     {
         uiText.text = value.ToString();
         //Debug.Log("Set " + uiText + " to :" + uiText.text);
+    }
+
+    void UpdateStatPercent(TMP_Text uiText, float value)
+    {
+        uiText.text = value.ToString() + "%";
+    }
+
+    void UpdateStatPerSecond(TMP_Text uiText, float value)
+    {
+        uiText.text = value.ToString()+ "/s";
     }
 
     void UpdateFusion()

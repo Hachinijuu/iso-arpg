@@ -39,7 +39,7 @@ public class HyperBarrage : ChannelAbility
     protected override void Fire(ref AbilityEventArgs e)
     {
         // Calculate damage
-        damage = stats.Damage.Value + damageMultipler * (stats.DEX.Value * GameManager.Instance.MainConvert);
+        damage = (stats.Damage.Value * stats.PrimaryDamage.Value) + (stats.DEX.Value * GameManager.Instance.MainConvert);
         GameManager.Instance.CoroutineStarter(BarrageSequence());
         
         //BarrageSequence();  // This will not work

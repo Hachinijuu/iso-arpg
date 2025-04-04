@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 
@@ -65,6 +64,8 @@ public class PlayerController : MonoBehaviour
     ChainHandler chainHandler;
     [SerializeField] GameObject body;
     NavMeshAgent agent;
+
+    [SerializeField] float regenInterval = 1.0f;
 
     //[SerializeField] GameObject auraSource;
     #endregion
@@ -146,6 +147,7 @@ public class PlayerController : MonoBehaviour
         EnablePlayer(true);
         //animator.SetTrigger(respawnID);
         stats.Respawn();
+        StartRegens();
 
         // Reset the ability handler
         handler.Respawn();
@@ -156,6 +158,7 @@ public class PlayerController : MonoBehaviour
     public void Died()
     {
         animator.SetTrigger("Death");
+        StopAllCoroutines();
         EnablePlayer(false);
     }
 
@@ -189,34 +192,12 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region PLAYER ACTIONS
-    // Handle targetting
-    //public void SetBody(BodyNumber body)
-    //{
-    //    switch (body)
-    //    {
-    //        case BodyNumber.ALT:
-    //            if (body)
-    //            altBody.SetActive(true); 
-    //        break;
-    //        case BodyNumber.MAIN:
-    //        default:
-    //            
-    //        break;
-    //    }
-    //}
     public IEnumerator HandleStop(int duration)
     {
         movement.HandleStops(true);
         yield return new WaitForSeconds(duration);
         movement.HandleStops(false);
     }
-    // public void SetAura(bool value)
-    // {
-    //     if (auraSource)
-    //     {
-    //         auraSource.SetActive(value);
-    //     }
-    // }
     private void MapPlayerActions()
     {
         input.actions["Potion1"].performed += context => { UsePotion(PotionTypes.HEALTH); };  // Map whichever potion
@@ -269,6 +250,22 @@ public class PlayerController : MonoBehaviour
         // and play the unable sound
 
         // Where are potions stored
+    }
+
+    // Regen Handler
+    public void StartRegens()
+    {
+        StartCoroutine(GiveResource());
+    }
+
+    IEnumerator GiveResource()
+    {
+        while (true)
+        {
+            stats.Mana.Value += stats.ManaRegen.Value;
+            stats.Health.Value += stats.HealthRegen.Value;
+            yield return new WaitForSeconds(regenInterval);
+        }
     }
 
     #endregion
