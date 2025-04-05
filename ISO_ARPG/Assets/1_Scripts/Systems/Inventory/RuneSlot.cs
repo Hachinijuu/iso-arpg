@@ -2,6 +2,7 @@ using UnityEngine;
 public class RuneSlot : ItemSlot
 {
     // Unique slots, intended for stat applications to happen when bound to the character
+    public GearSlotType gearSlot;
     public RuneType type;
     private PlayerStats stats;
     // The current issue is that the inventory is not bound by character, but rather by player.

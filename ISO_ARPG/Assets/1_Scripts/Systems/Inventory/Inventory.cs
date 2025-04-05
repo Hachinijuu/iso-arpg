@@ -110,6 +110,16 @@ public class Inventory : MonoBehaviour
     public int maxRuneDust = 100000;
     public int maxWoodAmount = 100000;
     public int maxStoneAmount = 100000;
+
+    public delegate void DustChanged(int value);
+    public DustChanged OnDustChanged;
+    public void FireDustChanged(int value) {if (OnDustChanged != null) OnDustChanged(value); }
+    public delegate void WoodChanged(int value);
+    public WoodChanged OnWoodChanged;
+    public void FireWoodChanged(int value) {if (OnWoodChanged != null) OnWoodChanged(value); }
+    public delegate void StoneChanged(int value);
+    public StoneChanged OnStoneChanged;
+    public void FireStoneChanged(int value) {if (OnStoneChanged != null) OnStoneChanged(value); }
     public int RuneDust
     {
         get { return runeDust; }
@@ -120,6 +130,7 @@ public class Inventory : MonoBehaviour
             else if (runeDust + value < 0) { runeDust = 0; }
             else { runeDust = value; }
             if (dustText != null) { dustText.text = runeDust.ToString(); }
+            FireDustChanged(runeDust);
         }
     }
     private int runeDust;
@@ -134,6 +145,7 @@ public class Inventory : MonoBehaviour
             else if (woodAmount + value < 0) { woodAmount = 0; }
             else { woodAmount = value; }
             if (woodText != null) { woodText.text = woodAmount.ToString(); }
+            FireWoodChanged(woodAmount);
         }
     }
 
@@ -149,6 +161,7 @@ public class Inventory : MonoBehaviour
             else if (stoneAmount + value < 0) { stoneAmount = 0; }
             else { stoneAmount = value; }
             if (stoneText != null) { stoneText.text = stoneAmount.ToString(); }
+            FireStoneChanged(stoneAmount);
         }
     }
     private int stoneAmount;

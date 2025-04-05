@@ -4,6 +4,19 @@ using System.Linq;
 using UnityEngine;
 
 // Rune types must match the rune slot for it to be set properly, if it is not - it is an invalid slot
+public enum GearSlotType
+{
+    NONE,
+    HEAD,
+    CHEST,
+    LEGS,
+    BOOTS,
+    NECKLACE,
+    RING,
+    BELT,
+    WEAPON
+}
+
 public enum RuneType
 {
     NONE,
@@ -15,6 +28,7 @@ public enum RuneType
 [CreateAssetMenu(fileName = "Rune", menuName = "sykcorSystems/Drops/Rune", order = 3)]
 public class RuneData : ItemData
 {
+    public Sprite runeGlyph;
     // How to do typematching for stats...
     // If no stat exists, don't display the value visually in tooltips
     // Only display if the statType is not none

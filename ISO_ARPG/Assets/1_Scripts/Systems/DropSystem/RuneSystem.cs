@@ -20,7 +20,6 @@ public struct SubStatRoll
     public float maxValue;
 }
 
-
 public class RuneSystem : MonoBehaviour
 {
     private static RuneSystem instance;
@@ -35,6 +34,8 @@ public class RuneSystem : MonoBehaviour
             return instance;
         }
     }
+    public Sprite[] rarityIcons;                        // This will map to rarity and set accordingly
+    public GameObject[] rarityPrefabs;                  // This will map to rarity and set accordingly
     public List<MainStatRoll> mainStatRolls;
     public List<TrackedStatRoll> trackedStatRolls;
     public List<SubStatRoll> substatRolls;
@@ -96,6 +97,10 @@ public class RuneSystem : MonoBehaviour
                 rune.rarity = chance.rarity;
             }
         }
+        if (rarityIcons != null || rarityIcons.Length > 0)
+        {
+            rune.itemIcon = rarityIcons[(int)rune.rarity];
+        }
         rune = RollRuneStats(rune);
         return rune; // Roll for the stats
     }
@@ -107,6 +112,10 @@ public class RuneSystem : MonoBehaviour
         RuneData rune = template;
         rune.rarity = rarity;
         rune = RollRuneStats(rune);
+        if (rarityIcons != null || rarityIcons.Length > 0)
+        {
+            rune.itemIcon = rarityIcons[(int)rune.rarity];
+        }
         return rune;
     }
 

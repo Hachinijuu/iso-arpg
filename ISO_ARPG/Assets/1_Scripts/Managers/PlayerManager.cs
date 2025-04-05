@@ -3,6 +3,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum GoX_Class { NONE, BERSERKER, HUNTER, ELEMENTALIST }
+public enum GoX_Body { ONE, TWO }
 
 [System.Serializable]
 public struct CharacterPair

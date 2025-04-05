@@ -440,7 +440,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         float currTime = used.Cooldown;
         if (used.UseCooldown)
         {
-            currTime *= (1 - stats.CooldownReduction.Value);
+            currTime *= (1 - (stats.CooldownReduction.Value / 100));
         }
         else
         {

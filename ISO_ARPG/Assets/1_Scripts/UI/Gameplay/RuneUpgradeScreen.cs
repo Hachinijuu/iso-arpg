@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,15 +18,29 @@ public class RuneUpgradeScreen : MonoBehaviour
     [SerializeField] Button upgradeButton;
     [SerializeField] Button destroyButton;
 
+    [SerializeField] TMP_Text dustText;
+    [SerializeField] TMP_Text createText;
+    [SerializeField] TMP_Text upgradeText;
+    [SerializeField] TMP_Text destroyText;
+
     public void Start()
     {
         Inventory.Instance.OnItemReleased += context => { UpdateGhostRune(); };
+        Inventory.Instance.OnDustChanged += UpdateDustText;
         UpdateGhostRune();
     }
     public int CalculateCost()
     {
         return (int)(baseCost * (1 + (rarityCostModifier * (int)rank)));
     }
+
+    public void OnEnable()
+    {
+        UpdateGhostRune();
+        UpdateDustText(Inventory.Instance.RuneDust);      
+    }
+
+    int upgradeCost;
     public void UpgradeClicked()
     {
         // When the upgrade button is clicked
@@ -44,16 +59,25 @@ public class RuneUpgradeScreen : MonoBehaviour
             {
                 rune.rarity += 1;               // Increase the rarirty rank of the rune
             }
+            if (Inventory.Instance.RuneDust >= upgradeCost)
+            {
+                Inventory.Instance.RuneDust -= upgradeCost;
+                rune = RuneSystem.Instance.RollRune(rune, rune.rarity);
+                upgradeSlot.SetItem(rune);
+            }
+            else
+            {
+                PublicEventManager.Instance.FireOnCannot();
+            }
             
             // Otherwise, regardless of the rank increase, roll for the rune upgrade
 
             // Although this has a potential to roll LESS than what the rune already has...
             // Do we modify the range of this rune roll so that the upgraded rune is next tier + guaranteed better stats on the given rolls?
-            rune = RuneSystem.Instance.RollRune(rune, rune.rarity);
+            //rune = RuneSystem.Instance.RollRune(rune, rune.rarity);
             // The rune in the slot should be upgraded
         }
     }
-
     public void UpdateGhostRune()
     {
         if (upgradeSlot.HasItem)
@@ -62,6 +86,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             createButton.interactable = false;
             upgradeButton.interactable = true;
             destroyButton.interactable = true;
+            upgradeCost = CalculateCost();
         }
         else
         {
@@ -77,6 +102,23 @@ public class RuneUpgradeScreen : MonoBehaviour
 
             upgradeButton.interactable = false;
             destroyButton.interactable = false;
+        }
+        UpdateButtonText();
+    }
+
+    public void UpdateButtonText()
+    {
+        createText.text = "Create" + " (" + buildCost + ")";
+        
+        if (upgradeSlot.HasItem  && upgradeSlot.item is RuneData rs)
+        {
+            upgradeText.text = "Upgrade" + " (" + upgradeCost + ")";
+            destroyText.text = "Destroy" + " (" + rs.destroyAmount + ")";
+        }
+        else
+        {
+            upgradeText.text = "Upgrade";
+            destroyText.text = "Destroy";
         }
     }
     public RuneData ghostRune;
@@ -121,6 +163,11 @@ public class RuneUpgradeScreen : MonoBehaviour
     public void SubStatClicked(SubStatTypes type)
     {
         ghostRune = RuneSystem.Instance.CreateSubStatRune(rank, type);
+    }
+
+    public void UpdateDustText(int value)
+    {
+        dustText.text = Inventory.Instance.RuneDust.ToString();
     }
 
     public void ConfirmClicked()

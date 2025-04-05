@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Vector2Int index;
+    public Image overlapImage;
     public Image image;
     //public Sprite icon;
     public GameObject selectedIndicator;
@@ -29,6 +30,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             c.a = 1.0f;
             image.sprite = data.itemIcon;
             image.color = c;
+            if (data is RuneData rs && overlapImage != null)
+            {
+                overlapImage.sprite = rs.runeGlyph;
+                overlapImage.color = c;
+            }
         }
         else
         {
@@ -37,6 +43,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             c.a = 0.0f;
             image.color = c;
             image.sprite = null;
+            if(overlapImage != null)
+            {
+                overlapImage.color = c;
+                overlapImage.sprite = null;
+            }
         }
     }
 

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6dcedc15266f04ca5739c34a8a46a0, type: 3}
   m_Name: Critical Hit Damage
   m_EditorClassIdentifier: 
+  ITEM_ID: 11
   itemName: 
   itemDescription: 
   itemIcon: {fileID: 694344032, guid: 8acf273e6bb447944ad0ca5adcf05caa, type: 3}
@@ -20,14 +21,15 @@ MonoBehaviour:
   prefab: {fileID: 618651129449046816, guid: a442c9105ecbbd64494ad83f0ef7df2e, type: 3}
   dropChance: 5
   showPopup: 1
+  runeGlyph: {fileID: 1791554633, guid: 25eb129eda94c45418267aba41383a6a, type: 3}
   runeType: 1
   mainStat:
-  - value: 0
-    maxValue: 0
-    type: 0
+  - value: 98
+    maxValue: 100
+    type: 1
   trackedStat: []
   subStat:
-  - value: 0
+  - value: 15
     maxValue: 15
     type: 11
   destroyAmount: 10

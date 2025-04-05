@@ -18,6 +18,7 @@ public struct ItemEventArgs
 [CreateAssetMenu(fileName = "Item", menuName = "sykcorSystems/Drops/Item", order = 2)]
 public class ItemData : ScriptableObject
 {
+    public int ITEM_ID;                 // This is crucial for the saving and loading system,
     #region VARIABLES
     #region Item Details
     [Header("Descriptions")]
