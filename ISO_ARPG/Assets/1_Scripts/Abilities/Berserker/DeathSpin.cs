@@ -84,17 +84,27 @@ public class DeathSpin : ChannelAbility
         move.UseAnimations = true;
         move.CanRotate = true;
 
+        shootSource.transform.rotation = Quaternion.identity;
+
         particles.HandleAbility2Particles(false);
         base.EndAbility(e);
     }
 
+    float currentStep = 0;
+    public float angleStep = 120;
     public override void OnTick()
     {
         //stats.ID_Bar.Value += stats.IDGain.Value;
-        
+        // Affect the attack speed values, 
 
         if (stats.Projectiles.Value > 0)
         {
+            // Rotate the projectile source to shoot in different locations
+
+            // 360 degree steps
+            currentStep++;
+            shootSource.transform.Rotate(0, (currentStep * angleStep), 0);
+
             // If there are projectiles to shoot
             for (int i = 0; i < stats.Projectiles.Value; i++)
             {
@@ -104,6 +114,10 @@ public class DeathSpin : ChannelAbility
                     projectile.SetDamage(damage);
                     projectile.FireProjectile();
                 }
+            }
+            if (currentStep == 2)
+            {
+                currentStep = 0;
             }
         }
         FireAbilityUsed(args);

@@ -91,10 +91,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     public float outlineThickness = 0.05f;
+    public float weaponThickness = 0.005f;
     public void ShowOutline()
     {
         bodyShader.SetFloat("_OutlineThickness" , outlineThickness);   // ONLY SET WHEN ACTIVE
-        weaponShader.SetFloat("_OutlineThickness", outlineThickness);
+        weaponShader.SetFloat("_OutlineThickness", weaponThickness);
     }
 
     public void HideOutline()
