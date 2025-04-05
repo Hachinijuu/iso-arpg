@@ -40,12 +40,14 @@ public class GameplayUIController : MonoBehaviour
     public void ShutoffElements()
     {
         //hud.gameObject.SetActive(false);
-        //statsScreen.SetActive(false);
-        //inventoryScreen.SetActive(false);
-        Inventory.Instance.ShowCharacterScreen();
-        Inventory.Instance.ShowInventory();
+        statsScreen.SetActive(false);
+        inventoryScreen.SetActive(false);
+        UIUtility.FlushUIElements();
+        //Inventory.Instance.ShowCharacterScreen();
+        //Inventory.Instance.ShowInventory();
         stashScreen.SetActive(false);
         smithScreen.gameObject.SetActive(false);
+        GameManager.Instance.FixCamera();
     }
 
     public void TurnOnRelevantElements()

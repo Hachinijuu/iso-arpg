@@ -277,6 +277,7 @@ public class GameManager : MonoBehaviour
             loadingScreen.gameObject.SetActive(isLoading);
         }
 
+        FixCamera();
         // If the level manager exists, do the stuff
         if (LevelManager.Instance)  // ASSUME PLAYABLE IF A LEVEL MANAGER EXISTS
         {
@@ -346,9 +347,15 @@ public class GameManager : MonoBehaviour
         // }
     }
 
+    public void HandleNewGame()
+    {
+        UIUtility.FlushUIElements();
+    }
+
     public void LoadCharacterSelect()
     {
         //PlayerManager.Instance.DeactivatePlayer();
+        HandleNewGame();
         PlayerManager.Instance.DeactivatePlayer();
         LoadLevelByID(eLevel.CHARACTER_SELECT);
         currGameState = GameState.SELECT;
@@ -379,6 +386,14 @@ public class GameManager : MonoBehaviour
     public void CoroutineStarter(IEnumerator coroutine)
     {
         StartCoroutine(coroutine);
+    }
+
+    public void FixCamera()
+    {
+        // This is to fix the camera after any loading issues / previous hud displays
+        Camera cam = Camera.main;
+        Rect defaultCam = new Rect(0,0, 1, 1);
+        cam.rect = defaultCam;
     }
 
     #endregion
