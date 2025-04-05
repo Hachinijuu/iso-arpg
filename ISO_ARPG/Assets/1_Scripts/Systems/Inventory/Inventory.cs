@@ -744,12 +744,21 @@ public class Inventory : MonoBehaviour
 
                 // If release position is outside of the canvas --> we can detect to drop the item / discard
                 sourceSlot.SetItem(ghostItem);
+                ghostItem = null;
+                Destroy(ghost);
                 //sourceSlot.item = ghostItem;
                 //sourceSlot.img = ghostItem.itemIcon;
                 //ghostItem.LoadSpriteToImage(sourceSlot.img);
             }
             InventoryEventArgs args = new InventoryEventArgs();
-            args.data = slot.item;
+            if (slot != null && slot.item != null)
+            {
+                args.data = slot.item;
+            }
+            if (sourceSlot.item != null)
+            {
+                args.data = sourceSlot.item;
+            }
             FireReleasedItem(args);
         
             // Play the release audio from Game Manager source
