@@ -26,6 +26,8 @@ public class Inventory : MonoBehaviour
         }
     }
     [SerializeField] HUDController hud;
+    [SerializeField] StashSystem stashSystem;
+    [SerializeField] RuneUpgradeScreen runeUpgradeSystem;
     [SerializeField] GameObject inventoryScreen;
     [SerializeField] GameObject statsScreen;
     [SerializeField] GameObject stashScreen;
@@ -171,14 +173,13 @@ public class Inventory : MonoBehaviour
 
     public void OnEnable()
     {
-
         SetupInventory();
     }
 
-    public void OnDisable()
-    {
-        CleanupInventory();
-    }
+    //public void OnDisable()
+    //{
+    //    CleanupInventory();
+    //}
     public void SetupInventory()
     {
         input = PlayerManager.Instance.currentPlayer.Input;
@@ -189,6 +190,11 @@ public class Inventory : MonoBehaviour
         InitUISlots();
         InitItemList();
         MapActions();
+    }
+
+    public void NewGame()
+    {
+        CleanupInventory();
     }
 
     //public void SetupInventory(PlayerController controller)
@@ -214,6 +220,15 @@ public class Inventory : MonoBehaviour
 
         foreach (ItemSlot slot in slots)
         {
+            slot.SetItem(null);
+        }
+
+        foreach (RuneSlot slot in runeSlots)
+        {
+            if (slot.HasItem)
+            {
+                slot.RemoveRuneEffects();
+            }
             slot.SetItem(null);
         }
 
@@ -299,30 +314,50 @@ public class Inventory : MonoBehaviour
         };
     }
 
+    // public void HideSmithingScreen()
+    // {
+    //     if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+    //     {
+    //         GameplayUIController.Instance.HideSmith();
+    //     }
+    // }
+
     public void ShowInventory()
     {
-        UIUtility.ToggleUIElementShift(inventoryScreen);
-        //if (!inventoryScreen.activeInHierarchy)
-        //{
-        //    //input.SwitchCurrentActionMap("UI");
-        //}
-        //input.SwitchCurrentActionMap("Player");
-
-        // swap action map to UI -- temporary
+        UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
+        // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
+        if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        {
+            GameplayUIController.Instance.HideSmith();
+        }
         HandlePause();
     }
     public void ShowCharacterScreen()
     {
-        UIUtility.ToggleUIElementShift(statsScreen);
-        // if (statsScreen.activeInHierarchy)
-        // {
-        //     statsScreen.SetActive(false);
-        // }
-        // else
-        // {
-        //     statsScreen.SetActive(true);
-        // }
+        if (!GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        {
+            UIUtility.ToggleUIElementShift(statsScreen);
+            HandlePause();
+        }
+    }
+
+    public void ShowInventory(bool value)
+    {
+        UIUtility.ToggleUIElementShift(inventoryScreen, value);    // Turns the element on, and shifts the camera to the side
+        // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
+        if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        {
+            GameplayUIController.Instance.HideSmith();
+        }
         HandlePause();
+    }
+    public void ShowCharacterScreen(bool value)
+    {
+        if (!GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        {
+            UIUtility.ToggleUIElementShift(statsScreen, value);
+            HandlePause();
+        }
     }
 
     public void HandlePause()
@@ -401,6 +436,19 @@ public class Inventory : MonoBehaviour
         ItemSlot found = null;
 
         // instead of loop, try doing grid estimation relative to origin point of grid and go based off indicies, do this as a test
+        //found = GetSlotFromPos(pos, slots);
+        //if (found == null)
+        //{
+        //    found = GetSlotFromPos(pos, runeSlots);
+        //}
+        //if (found == null && stashScreen.activeInHierarchy)
+        //{
+        //    found = GetSlotFromPos(pos, stashSystem.slots);
+        //}
+        //if (found == null && runeUpgradeSystem.gameObject.activeInHierarchy)
+        //{
+        //    found = GetSlotFromPos(pos, runeUpgradeSystem.upgradeSlot);   
+        //}
         foreach (ItemSlot slot in slots)
         {
             RectTransform rt = slot.GetComponent<RectTransform>();
@@ -414,21 +462,95 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        foreach (ItemSlot slot in runeSlots)
+        if (runeSlots != null && runeSlots.Length > 0)
         {
-            RectTransform rt = slot.GetComponent<RectTransform>();
-            //Debug.Log(rt);
+            foreach (ItemSlot slot in runeSlots)
+            {
+                RectTransform rt = slot.GetComponent<RectTransform>();
+                //Debug.Log(rt);
+                if (rt)
+                {
+                    if (RectTransformUtility.RectangleContainsScreenPoint(rt, pos))
+                    {
+                        found = slot;
+                        break;
+                    }
+                }
+            }
+        }
+        if (stashScreen.activeInHierarchy)  // If the stash is open
+        {
+            foreach (ItemSlot slot in stashSystem.slots)
+            {
+                RectTransform rt = slot.GetComponent<RectTransform>();
+                //Debug.Log(rt);
+                if (rt)
+                {
+                    if (RectTransformUtility.RectangleContainsScreenPoint(rt, pos))
+                    {
+                        found = slot;
+                        break;
+                    }
+                }
+            }
+        }
+        if (runeUpgradeSystem.gameObject.activeInHierarchy)
+        {
+            RectTransform rt = runeUpgradeSystem.upgradeSlot.GetComponent<RectTransform>();
             if (rt)
             {
                 if (RectTransformUtility.RectangleContainsScreenPoint(rt, pos))
                 {
-                    found = slot;
-                    break;
+                    found = runeUpgradeSystem.upgradeSlot;
                 }
             }
         }
+
+
+        // if the stash is screen is active, then check stash slots
+        // if (stashScreen.activeInHierarchy)
+        // {
+        //     foreach ()
+        // }
+
+        // if rune upgrade screen is active, then check smith slots
+
         return found;
     }
+
+    // ItemSlot GetSlotFromPos(Vector2 pos, ItemSlot[] toSearch)
+    // {
+    //     ItemSlot found = null;
+    //     foreach (ItemSlot slot in runeSlots)
+    //     {
+    //         RectTransform rt = slot.GetComponent<RectTransform>();
+    //         //Debug.Log(rt);
+    //         if (rt)
+    //         {
+    //             if (RectTransformUtility.RectangleContainsScreenPoint(rt, pos))
+    //             {
+    //                 found = slot;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     return found;
+    // }
+
+    // ItemSlot GetSlotFromPos(Vector2 pos, ItemSlot toSearch)
+    // {
+    //     ItemSlot found = null;
+    //     RectTransform rt = slotHolder.GetComponentInChildren<RectTransform>();
+    //     if (rt)
+    //     {
+    //         if (RectTransformUtility.RectangleContainsScreenPoint(rt, pos))
+    //         {
+    //             found = toSearch;
+    //         }
+    //     }
+
+    //     return found;
+    // }
 
     bool CheckClickedItem()
     {
@@ -629,11 +751,10 @@ public class Inventory : MonoBehaviour
             InventoryEventArgs args = new InventoryEventArgs();
             args.data = slot.item;
             FireReleasedItem(args);
+        
+            // Play the release audio from Game Manager source
+            GameManager.Instance.PlayOneShotClip(releaseItem);
         }
-
-        // Play the release audio from Game Manager source
-        GameManager.Instance.PlayOneShotClip(releaseItem);
-
 
         // NOTE: ISSUE WITH GHOST PLACEMENTS, STUCK IN CURSOR ON INVALID POSITIONS
         if (ghost)

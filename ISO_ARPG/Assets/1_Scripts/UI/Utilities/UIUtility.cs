@@ -21,7 +21,7 @@ public class UIUtility : MonoBehaviour
     private static Dictionary<GameObject, float> UIElements = new Dictionary<GameObject, float>();
 
     #region Camera Toggling
-    public static void ToggleUIElementShift(GameObject toToggle, Camera cam = null)
+    public static void ToggleUIElementShift(GameObject toToggle, bool value = true, Camera cam = null)
     {
         RectTransform rt = toToggle.GetComponent<RectTransform>();
         if (cam == null)
@@ -31,7 +31,7 @@ public class UIUtility : MonoBehaviour
 
         if (rt != null)
         {
-            if (!toToggle.activeInHierarchy)    // If it is not active, turn it on
+            if (!toToggle.activeInHierarchy && value)    // If it is not active, turn it on
             {
                 if (UIElements.Count == 0)      // If there are NO UI ELEMENTS
                 {

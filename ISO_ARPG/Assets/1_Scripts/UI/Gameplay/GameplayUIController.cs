@@ -20,11 +20,11 @@ public class GameplayUIController : MonoBehaviour
     }
 
     // This has references to the hud elements and disable or enable accordingly
-    [SerializeField] HUDController hud;
-    [SerializeField] GameObject statsScreen;
-    [SerializeField] GameObject inventoryScreen;
-    [SerializeField] GameObject stashScreen;
-    [SerializeField] RuneUpgradeScreen smithScreen;
+    [SerializeField] public HUDController hud;
+    [SerializeField] public GameObject statsScreen;
+    [SerializeField] public GameObject inventoryScreen;
+    [SerializeField] public GameObject stashScreen;
+    [SerializeField] public RuneUpgradeScreen smithScreen;
 
     private void OnEnable()
     {
@@ -40,8 +40,10 @@ public class GameplayUIController : MonoBehaviour
     public void ShutoffElements()
     {
         //hud.gameObject.SetActive(false);
-        statsScreen.SetActive(false);
-        inventoryScreen.SetActive(false);
+        //statsScreen.SetActive(false);
+        //inventoryScreen.SetActive(false);
+        Inventory.Instance.ShowCharacterScreen();
+        Inventory.Instance.ShowInventory();
         stashScreen.SetActive(false);
         smithScreen.gameObject.SetActive(false);
     }
@@ -53,14 +55,24 @@ public class GameplayUIController : MonoBehaviour
 
     public void ShowSmith()
     {
-        Debug.Log("Showing smithing screen");
+        //Debug.Log("Showing smithing screen");
         smithScreen.gameObject.SetActive(true);
     }
 
     public void HideSmith()
     {
-        Debug.Log("Hiding smithing screen");
+        //Debug.Log("Hiding smithing screen");
         smithScreen.gameObject.SetActive(false);
+    }
+
+    public void ShowStats()
+    {
+        statsScreen.SetActive(false);
+    }
+
+    public void HideStats()
+    {
+        statsScreen.SetActive(false);
     }
 
 

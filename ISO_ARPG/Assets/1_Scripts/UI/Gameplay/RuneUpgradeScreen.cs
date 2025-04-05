@@ -7,7 +7,7 @@ public class RuneUpgradeScreen : MonoBehaviour
 {
     public ItemRarity rank; // this will be swapped via toggles
     [SerializeField] GameObject runeList;
-    [SerializeField] ItemSlot upgradeSlot;
+    [SerializeField] public ItemSlot upgradeSlot;
 
     [SerializeField] int buildCost;
     [SerializeField] int baseCost;
