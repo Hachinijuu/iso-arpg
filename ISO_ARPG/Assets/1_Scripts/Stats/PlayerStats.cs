@@ -244,22 +244,30 @@ public class PlayerStats : EntityStats
 
     public void SetFusion(IdentityAbility fusion)
     {
-        // Instead of setting it like this, make a LOCAL copy so that it is persistent like the rest of the abilities
-        PlayerController controller = PlayerManager.Instance.currentPlayer;
-        Debug.Log("[PlayerStats]: " + fusion.Name + " assigned to player, apply effects");
-        ID_Fusion = Instantiate(fusion);    // Create a 'new' identity based on what the class has for game use
-        ID_Fusion.asFusion = true;
-        AbilityEventArgs args = new AbilityEventArgs(ID_Fusion, controller);
-        ID_Fusion.InitAbility(args);
-        ID_Fusion.UseAbility(args);
-        foreach (Ability ab in Abilities)
+        if (fusion != null)
         {
-            ab.InitAbility(args);
+            // Instead of setting it like this, make a LOCAL copy so that it is persistent like the rest of the abilities
+            PlayerController controller = PlayerManager.Instance.currentPlayer;
+            Debug.Log("[PlayerStats]: " + fusion.Name + " assigned to player, apply effects");
+            ID_Fusion = Instantiate(fusion);    // Create a 'new' identity based on what the class has for game use
+            ID_Fusion.asFusion = true;
+            AbilityEventArgs args = new AbilityEventArgs(ID_Fusion, controller);
+            ID_Fusion.InitAbility(args);
+            ID_Fusion.UseAbility(args);
+            foreach (Ability ab in Abilities)
+            {
+                ab.InitAbility(args);
+            }
+            Debug.Log("[PlayerStats]: Finished setting up " + fusion.Name);
+            PlayerManager.Instance.ShowOutline();
+            FireFusionSelected();
+            //ID_Fusion.asFusion = true;
+            //ID_Fusion.UseAbility(gameObject);
         }
-        Debug.Log("[PlayerStats]: Finished setting up " + fusion.Name);
-        FireFusionSelected();
-        //ID_Fusion.asFusion = true;
-        //ID_Fusion.UseAbility(gameObject);
+        else
+        {
+            PlayerManager.Instance.HideOutline();
+        }
     }
 
     public delegate void FusionSelected();

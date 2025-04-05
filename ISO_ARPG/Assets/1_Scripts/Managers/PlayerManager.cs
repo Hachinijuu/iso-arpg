@@ -58,6 +58,51 @@ public class PlayerManager : MonoBehaviour
     public GoX_Class currentClass;
     public PlayerController currentPlayer;
 
+    public Material bodyShader;
+    public Material weaponShader;
+    //public Shader weaponShader;
+    //public Shader bodyShader;
+    public Color berserkerColor;
+    public Color hunterColor;
+    public Color elementalistColor;
+
+    public void SetShaderColor()
+    {
+        //bodyShader.SetFloat("_OutlineThickness" , 0.05f);   // ONLY SET WHEN ACTIVE
+        //weaponShader.SetFloat("_OutlineThickness", 0.05f);
+
+        switch (currentClass)
+        {
+            case GoX_Class.BERSERKER:
+                bodyShader.SetColor("_Outline_Color", berserkerColor);
+                weaponShader.SetColor("_Outline_Color", berserkerColor);
+            break;
+            case GoX_Class.HUNTER:
+                bodyShader.SetColor("_Outline_Color", hunterColor);
+                weaponShader.SetColor("_Outline_Color", hunterColor);
+            break;
+            case GoX_Class.ELEMENTALIST:
+                bodyShader.SetColor("_Outline_Color", elementalistColor);
+                weaponShader.SetColor("_Outline_Color", elementalistColor);
+            break;
+        }
+        //Debug.LogWarning("SHADER:" + bodyShader.shader);
+        //Debug.LogWarning("SHADER:" + weaponShader.shader);
+    }
+
+    public float outlineThickness = 0.05f;
+    public void ShowOutline()
+    {
+        bodyShader.SetFloat("_OutlineThickness" , outlineThickness);   // ONLY SET WHEN ACTIVE
+        weaponShader.SetFloat("_OutlineThickness", outlineThickness);
+    }
+
+    public void HideOutline()
+    {
+        bodyShader.SetFloat("_OutlineThickness" , 0.0f);   // ONLY SET WHEN ACTIVE
+        weaponShader.SetFloat("_OutlineThickness", 0.0f);
+    }
+
     public delegate void PlayerChanged(PlayerSelectionArgs e);
     public event PlayerChanged onPlayerChanged;
 
@@ -121,6 +166,9 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("Added death listeners");
             }
         }
+
+        SetShaderColor();
+        HideOutline();
     }
 
     public void GivePlayerTrackedStat(TrackedStatTypes type, float value)
@@ -222,6 +270,7 @@ public class PlayerManager : MonoBehaviour
         {
             currentClass = toActivate;
             currentPlayer = controller;
+            SetShaderColor();
         }
     }
     public void ActivatePlayer(GoX_Class toActivate)
