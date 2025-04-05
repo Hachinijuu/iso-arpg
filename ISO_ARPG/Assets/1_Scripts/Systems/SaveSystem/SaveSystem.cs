@@ -20,15 +20,22 @@ public class SaveSystem : MonoBehaviour
     }
 
     public PlayerProfile[] playerSaves;
+    public string[] saveFiles;
 
     public void SaveProfiles()
     {
         // Saves all the loaded profiles to the filepath
+        foreach (PlayerProfile profile in playerSaves)
+        {
+            string saveFile = profile.SavePlayerProfile();    // Save each file to it's own path and data 
+        }
     }
     
     public void LoadProfiles()
     {
         // Loads all the files at the filepath
+        // Get each folder in and load it to a profile
+        //foreach (string filePath in )
     }
 
     PlayerProfile currentProfile;
@@ -36,10 +43,12 @@ public class SaveSystem : MonoBehaviour
     public void SaveProfile()
     {
         // Saves the current profile to files
+        string saveFile = currentProfile.SavePlayerProfile();
     }
 
-    public void LoadProfile()
+    public void LoadProfile(string saveData)
     {
         // Loads the current profile into game data
+        currentProfile = currentProfile.LoadPlayerProfile(saveData);
     }
 }

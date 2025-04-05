@@ -64,21 +64,41 @@ public class HyperBarrage : ChannelAbility
             anim.SetTrigger(animID);
             // Fire out five projectiles in succession
 
-            for (int shots = 0; shots < numShots; shots++)
+            // Hyper barrage
+            for (int shots = 0; shots < numShots + stats.Projectiles.Value; shots++)
             {
-                for (int pos = 0; pos < stats.Projectiles.Value; pos++)
+                //for (int pos = 0; pos < stats.Projectiles.Value; pos++)
+                //{
+                //}
+
+                Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, 0);
+                if (p != null)
                 {
-                    Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, pos);
-                    if (p != null)
-                    {
-                        args.Hitboxes.Add(p);
-                        p.transform.position += p.transform.forward * arrowOffset * shots;
-                        p.SetDamage(damage);
-                        p.FireProjectile();
-                    }
+                    args.Hitboxes.Add(p);
+                    p.transform.position += p.transform.forward * arrowOffset * shots;
+                    p.SetDamage(damage);
+                    p.FireProjectile();
                 }
                 yield return new WaitForSeconds(timeBetween); //shootSource.WaitForTime(timeBetween);
+                Debug.Log("[HyperBarrage]: Shot: " + (shots + 1 ) + " / " + (numShots + stats.Projectiles.Value));
             }
+
+            // OLD PROJECTILE SPREAD SEQUENCE
+            // for (int shots = 0; shots < numShots; shots++)
+            // {
+            //     for (int pos = 0; pos < stats.Projectiles.Value; pos++)
+            //     {
+            //         Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, pos);
+            //         if (p != null)
+            //         {
+            //             args.Hitboxes.Add(p);
+            //             p.transform.position += p.transform.forward * arrowOffset * shots;
+            //             p.SetDamage(damage);
+            //             p.FireProjectile();
+            //         }
+            //     }
+            //     yield return new WaitForSeconds(timeBetween); //shootSource.WaitForTime(timeBetween);
+            // }
             stats.Mana.Value -= cost;
             finishedSequence = true;
         }

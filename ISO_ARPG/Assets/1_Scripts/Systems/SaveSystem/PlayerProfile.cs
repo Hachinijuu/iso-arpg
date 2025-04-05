@@ -22,6 +22,15 @@ public class PlayerProfile
     // The player's stats
     // All stats should be known via the base class + the player's inventory and equipped gear
 
+    public PlayerProfile LoadPlayerProfile(string jsonData)
+    {
+        return JsonUtility.FromJson<PlayerProfile>(jsonData);
+    }
+
+    public string SavePlayerProfile()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }
 
 [System.Serializable]
@@ -32,6 +41,16 @@ public class PlayerGameData
     public bool seenRune;
     public bool seenHendok;
     public bool seenIdentity;
+
+    public PlayerGameData LoadGameData(string jsonData)
+    {
+        return JsonUtility.FromJson<PlayerGameData>(jsonData);
+    }
+
+    public string SaveGameDataToJSON()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }
 
 [System.Serializable]
@@ -43,6 +62,15 @@ public class InventoryData
     public int stoneAmount;
     public SavedRuneData[] equippedRunes;
     public SavedItemData[] items;
+
+    public InventoryData LoadInventory(string jsonData)
+    {
+        return JsonUtility.FromJson<InventoryData>(jsonData);
+    }
+    public string SaveInventoryToJSON()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }
 
 [System.Serializable]
@@ -53,6 +81,15 @@ public class SavedItemData
     // Save the unique information of the RUNE / ITEM
     public int ItemID;
     public ItemRarity rarity;
+    public SavedItemData LoadItemData(string jsonData)
+    {
+        return JsonUtility.FromJson<SavedRuneData>(jsonData);
+    }
+
+    public string SaveItemToJSON()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }
 
 public class SavedRuneData : SavedItemData
@@ -62,4 +99,13 @@ public class SavedRuneData : SavedItemData
     public MainStat[] mainStats;
     public TrackedStat[] trackedStats;
     public SubStat[] subStats;
+
+    public SavedRuneData LoadRuneData(string jsonData)
+    {
+        return JsonUtility.FromJson<SavedRuneData>(jsonData);
+    }
+    public string SaveRuneToJSON()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }

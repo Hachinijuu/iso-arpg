@@ -216,6 +216,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     #region FUNCTIONALITY - ABILITY HANDLING
     void AbilityBegan(Ability ab)
     {   
+        if (GameManager.Instance.currGameState != GameManager.GameState.PLAYING) { return; }    // If the player is not playing, don't use any abilities
         // What does a basic input action need to account for
         // Ability begans need to know if the input is held
 

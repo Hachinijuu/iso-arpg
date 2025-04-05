@@ -71,11 +71,14 @@ public class Hurtbox : MonoBehaviour
             // How to get the inversed? 1 - 0.25 = 0.75
             ps.Health.Value -= recalc * (1 - percent);
             ps.Mana.Value -= recalc * percent;
+            Debug.Log("[HurtboxSource]: Took: " + (recalc * (1 - percent)) + " from health");
+            Debug.Log("[HurtboxSource]: Took: " + (recalc * percent) + " from mana");
         }
         else
         {
             // Standard health deduction
             stats.Health.Value -= recalc;
+            Debug.Log("[HurtboxSource]: Took: " + recalc);
         }
 
         if (applyKnockback)

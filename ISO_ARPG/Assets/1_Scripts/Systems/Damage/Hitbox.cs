@@ -117,6 +117,7 @@ public class Hitbox : MonoBehaviour
         {
             DamageArgs args = GetArgs(hb);
             hb.TakeDamage(args);
+            Debug.Log("[HitboxSource]: Dealt" + args.amount);
             FireDamageDealt(args);
         }
 
