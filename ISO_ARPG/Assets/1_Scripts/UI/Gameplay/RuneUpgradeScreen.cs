@@ -62,7 +62,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             if (Inventory.Instance.RuneDust >= upgradeCost)
             {
                 Inventory.Instance.RuneDust -= upgradeCost;
-                rune = RuneSystem.Instance.RollRune(rune, rune.rarity);
+                rune = RuneSystem.Instance.RollRune(rune, rune.rarity, true);
                 upgradeSlot.SetItem(rune);
             }
             else
@@ -136,7 +136,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         // Only allow a rune to be clicked if there is no rune occupying the slot already
         if (ghostRune != null && upgradeSlot.item !=null ) { Debug.Log("[RuneUpgrades]: Slot is already occupied"); return; }
         RuneData createdRune = new RuneData();
-        createdRune = RuneSystem.Instance.RollRuneStats(data);  // Given the new rune instance
+        createdRune = RuneSystem.Instance.RollRuneStats(data, true);  // Given the new rune instance
 
         ghostRune = createdRune;
         upgradeSlot.SetItem(ghostRune);
@@ -195,6 +195,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             Inventory.Instance.RuneDust += rune.destroyAmount;
             Destroy(rune);
             upgradeSlot.SetItem(null);
+            UpdateGhostRune();
         }
     }
 }

@@ -62,6 +62,8 @@ public class RuneData : ItemData
                 {
                     if (ts.type == stat.type)
                     {
+                        // NOTE, only if it is a tracked stat, can the value exceed the maximum, this is because the maximum values are GAMEPLAY max's
+                        ts.MaxValue += stat.MaxValue;
                         ts.Value += stat.Value;
                         Debug.Log("[Runes]: Added " + stat.Value + " " + stat.type);
                     }
@@ -179,6 +181,7 @@ public class RuneData : ItemData
                     if (ts.type == stat.type)
                     {
                         ts.Value -= stat.Value;
+                        ts.MaxValue -= stat.MaxValue;
                         Debug.Log("[Runes]: Removed " + stat.Value + " " + stat.type);
                     }
                 }

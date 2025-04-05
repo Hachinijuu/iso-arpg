@@ -119,7 +119,19 @@ public class RuneSystem : MonoBehaviour
         return rune;
     }
 
-    public RuneData RollRuneStats(RuneData template)
+    public RuneData RollRune(RuneData template, ItemRarity rarity, bool upgrade)
+    {
+        RuneData rune = template;
+        rune.rarity = rarity;
+        rune = RollRuneStats(rune, upgrade);
+        if (rarityIcons != null || rarityIcons.Length > 0)
+        {
+            rune.itemIcon = rarityIcons[(int)rune.rarity];
+        }
+        return rune;
+    }
+
+    public RuneData RollRuneStats(RuneData template, bool upgrade = false)
     {
         RuneData rune = template;
         // Create a copy of the rune that should be rolled for
@@ -159,7 +171,7 @@ public class RuneSystem : MonoBehaviour
                     }
                     if (mainStat.type == rollRange.type)  // If the stat to change matches the rollRange -- if the rune has a strength stat, look for the strength roll
                     {
-                        if (mainStat.Value > 0) // If the value is defined, keep that value instead continue
+                        if (mainStat.Value > 0 && !upgrade) // If the value is defined, keep that value instead continue
                             continue;
 
                         // rarity tier 3 --> 3 * maxRollDifficultyStep = 0.6 + 1 = 1.6, base and increase * default max
@@ -167,8 +179,10 @@ public class RuneSystem : MonoBehaviour
                         float minRoll = maxRoll * minimumPercentage;                      // 60% of max roll, min can be 40% lower
 
                         // Set the max value here
-                        mainStat.MaxValue = maxRoll;
-                        mainStat.Value = (int)Random.Range(minRoll, maxRoll);     // Roll for the stat based on the number
+                        int rollValue = (int)Random.Range(minRoll, maxRoll);
+
+                        mainStat.MaxValue = rollValue;
+                        mainStat.Value = rollValue;     // Roll for the stat based on the number
                     }
                 }
             }
@@ -181,11 +195,13 @@ public class RuneSystem : MonoBehaviour
                 {
                     if (trackedStat.type == rollRange.type)
                     {
-                        if (trackedStat.Value > 0)
+                        if (trackedStat.Value > 0 && !upgrade)
                             continue;
                         float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
                         float minRoll = maxRoll * minimumPercentage;
-                        trackedStat.Value = (int)Random.Range(minRoll, maxRoll);
+                        int rollValue = (int)Random.Range(minRoll, maxRoll);
+                        trackedStat.MaxValue = rollValue;
+                        trackedStat.Value = rollValue;
                     }
                 }
             }
@@ -198,12 +214,14 @@ public class RuneSystem : MonoBehaviour
                 {
                     if (subStat.type == rollRange.type)
                     {
-                        if (subStat.Value > 0)  // IF THE VALUE ALREADY EXISTS IN THE RUNE,  DO NOT RANDOMIZE IT
+                        if (subStat.Value > 0 && !upgrade)  // IF THE VALUE ALREADY EXISTS IN THE RUNE,  DO NOT RANDOMIZE IT
                             continue;
                         float maxRoll = rollRange.maxValue * (1 + ((int)rune.rarity * maxRollDifficultyStep));
                         float minRoll = maxRoll * minimumPercentage;
 
-                        subStat.Value = (int)Random.Range(minRoll, maxRoll);
+                        int rollValue = (int)Random.Range(minRoll, maxRoll);
+                        subStat.MaxValue = rollValue;
+                        subStat.Value = rollValue;
                     }
                 }
             }
