@@ -188,6 +188,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7854636135352107823}
     m_Modifications:
+    - target: {fileID: 1107342312826377387, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107342312826377387, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107342312826377387, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3434370302502903785, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.643
+      objectReference: {fileID: 0}
     - target: {fileID: 4188906848098933784, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -228,9 +244,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4717238216663080658, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.643
+      objectReference: {fileID: 0}
     - target: {fileID: 5369806839503133483, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
       propertyPath: m_Name
       value: ArrowTrailVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.38364768
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.3179296
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775183823676339423, guid: 6766d60489a137d4f8e5f7595c6fddf9, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.31246775
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
