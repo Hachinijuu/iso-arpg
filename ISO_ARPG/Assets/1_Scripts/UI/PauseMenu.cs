@@ -15,7 +15,9 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (canPause && GameManager.Instance.currGameState != GameManager.GameState.MENU && GameManager.Instance.level != GameManager.eLevel.CUTSCENE && GameManager.Instance.level != GameManager.eLevel.TRANSITION)
+            if (canPause && GameManager.Instance.currGameState != GameManager.GameState.MENU && 
+                GameManager.Instance.level != GameManager.eLevel.CUTSCENE && 
+                GameManager.Instance.level != GameManager.eLevel.TRANSITION)
             {
                 if (!panel.activeInHierarchy && !settingsOn)
                 {
@@ -29,6 +31,10 @@ public class PauseMenu : MonoBehaviour
                         settingsPanel.SetActive(false);
                         settingsOn = false;
                     }
+                    //else if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy) // If hendok is open
+                    //{
+                    //    GameplayUIController.Instance.HideSmith();
+                    //}
                     else
                     {
                         panel.SetActive(false);
