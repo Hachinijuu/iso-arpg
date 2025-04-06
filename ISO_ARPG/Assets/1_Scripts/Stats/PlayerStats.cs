@@ -259,6 +259,22 @@ public class PlayerStats : EntityStats
                 ab.InitAbility(args);
             }
             Debug.Log("[PlayerStats]: Finished setting up " + fusion.Name);
+
+            // Show the colour OF the fusion
+
+            if (fusion is TigersRage)
+            {
+                PlayerManager.Instance.SetShaderColor(GoX_Class.BERSERKER);
+            }
+            else if (fusion is PhoenixSwiftness)
+            {
+                PlayerManager.Instance.SetShaderColor(GoX_Class.HUNTER);
+            }
+            else if (fusion is SalamanderGift)
+            {
+                PlayerManager.Instance.SetShaderColor(GoX_Class.ELEMENTALIST);
+            }
+
             PlayerManager.Instance.ShowOutline();
             FireFusionSelected();
             //ID_Fusion.asFusion = true;

@@ -90,6 +90,30 @@ public class PlayerManager : MonoBehaviour
         //Debug.LogWarning("SHADER:" + weaponShader.shader);
     }
 
+    public void SetShaderColor(GoX_Class _class)
+    {
+        //bodyShader.SetFloat("_OutlineThickness" , 0.05f);   // ONLY SET WHEN ACTIVE
+        //weaponShader.SetFloat("_OutlineThickness", 0.05f);
+
+        switch (_class)
+        {
+            case GoX_Class.BERSERKER:
+                bodyShader.SetColor("_Outline_Color", berserkerColor);
+                weaponShader.SetColor("_Outline_Color", berserkerColor);
+            break;
+            case GoX_Class.HUNTER:
+                bodyShader.SetColor("_Outline_Color", hunterColor);
+                weaponShader.SetColor("_Outline_Color", hunterColor);
+            break;
+            case GoX_Class.ELEMENTALIST:
+                bodyShader.SetColor("_Outline_Color", elementalistColor);
+                weaponShader.SetColor("_Outline_Color", elementalistColor);
+            break;
+        }
+        //Debug.LogWarning("SHADER:" + bodyShader.shader);
+        //Debug.LogWarning("SHADER:" + weaponShader.shader);
+    }
+
     public float outlineThickness = 0.05f;
     public float weaponThickness = 0.005f;
     public void ShowOutline()

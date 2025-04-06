@@ -45,7 +45,9 @@ public class PhoenixSwiftness : IdentityAbility
             Debug.Log("Added Stats to: " + stats);
 
             if (!asFusion)
+            {
                 particles.ActivateAura();
+            }
         }
     }
 
@@ -56,7 +58,10 @@ public class PhoenixSwiftness : IdentityAbility
         stats.Dodge.Value -= dodgeIncrease;                 // Add 25% more dodge -- flat number
         stats.Projectiles.Value -= projectileIncrease;      // Add # of projectiles
 
-        particles.DeactivateAura();
+        if (!asFusion)
+        {
+            particles.DeactivateAura();
+        }
         //stats.CopyFromStats(defaultCopy);
     }
     #endregion

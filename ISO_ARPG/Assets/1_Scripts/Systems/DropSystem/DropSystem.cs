@@ -212,12 +212,12 @@ public class DropSystem : MonoBehaviour
             // I have an 80% chance NOT to get the item 20-100
             if (dropValue <= (runeModifer.item.dropChance + runeModifer.dropModifier))
             {
-                ItemData item = runeModifer.item;
+                RuneData item = runeModifer.item as RuneData;
                 if (item == null) { return; }
                 if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
                 {
                     // Do another roll for the rune rarity, this is relative to the difficulty
-                    rune = RuneSystem.Instance.RollRune(rune);
+                    item = RuneSystem.Instance.RollRune(rune);
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
                 Debug.Log("[DropSystem]: Dropped an item");
@@ -278,12 +278,12 @@ public class DropSystem : MonoBehaviour
             // I have an 80% chance NOT to get the item 20-100
             if (dropValue <= (runeModifer.item.dropChance + runeModifer.dropModifier))
             {
-                ItemData item = runeModifer.item;
+                RuneData item = runeModifer.item as RuneData;
                 if (item == null) { return; }
                 if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
                 {
                     // Do another roll for the rune rarity, this is relative to the difficulty
-                    rune = RuneSystem.Instance.RollRune(rune);
+                    item = RuneSystem.Instance.RollRune(rune);
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
                 Debug.Log("[DropSystem]: Dropped an item");

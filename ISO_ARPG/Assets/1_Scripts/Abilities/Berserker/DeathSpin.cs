@@ -115,7 +115,7 @@ public class DeathSpin : ChannelAbility
                     projectile.FireProjectile();
                 }
             }
-            if (currentStep == 2)
+            if (currentStep == 3)
             {
                 currentStep = 0;
             }

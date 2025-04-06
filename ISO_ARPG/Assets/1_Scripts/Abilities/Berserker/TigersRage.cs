@@ -52,7 +52,9 @@ public class TigersRage : IdentityAbility
                 source.PlayOneShot(abilityActivated);
 
             if (!asFusion)
+            {
                 particles.ActivateAura();
+            }
             //controller.SetAura(true);
 
             // add increased stats
@@ -75,7 +77,10 @@ public class TigersRage : IdentityAbility
             Debug.Log("Reset Values");
             //controller.transform.localScale = defaultScale;              // Return the character to normal size
 
-            particles.DeactivateAura();
+            if (!asFusion)
+            {
+                particles.DeactivateAura();
+            }
             //controller.SetAura(false);
 
             //stats.CopyFromStats(defaultCopy);
