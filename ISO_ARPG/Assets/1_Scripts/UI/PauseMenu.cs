@@ -21,8 +21,36 @@ public class PauseMenu : MonoBehaviour
             {
                 if (!panel.activeInHierarchy && !settingsOn)
                 {
-                    GameManager.Instance.PauseGame();
-                    panel.SetActive(true);
+                    if (GameManager.Instance.currGameState != GameManager.GameState.PAUSE)
+                    {
+                        if (GameplayUIController.Instance.inventoryScreen.gameObject.activeInHierarchy)
+                        {
+                            Inventory.Instance.ShowInventory();
+                        }
+                        else if (GameplayUIController.Instance.statsScreen.gameObject.activeInHierarchy)
+                        {
+                            Inventory.Instance.ShowCharacterScreen();
+                        }
+                        else
+                        {
+                            GameManager.Instance.PauseGame();
+                            panel.SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy) // If Hendok is open
+                        {
+                            Inventory.Instance.ShowInventory(); // This should fix inventory interaction
+                            //GameplayUIController.Instance.HideSmith();
+                        }
+                        else if (GameplayUIController.Instance.inventoryScreen.gameObject.activeInHierarchy && GameplayUIController.Instance.statsScreen.activeInHierarchy)
+                        {
+                            Inventory.Instance.ShowCharacterScreen();
+                            Inventory.Instance.ShowInventory();
+                            // These will both handle the pause
+                        }
+                    }
                 }
                 else    // 2 step back out if settings is active (back button)
                 {
@@ -31,10 +59,6 @@ public class PauseMenu : MonoBehaviour
                         settingsPanel.SetActive(false);
                         settingsOn = false;
                     }
-                    //else if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy) // If hendok is open
-                    //{
-                    //    GameplayUIController.Instance.HideSmith();
-                    //}
                     else
                     {
                         panel.SetActive(false);

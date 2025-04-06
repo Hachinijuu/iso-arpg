@@ -127,7 +127,6 @@ public class GameplayUIController : MonoBehaviour
             rect.position = e.screenPos;
             rt.SetRuneData(e.item as RuneData);
         }
-
         do
         {
             yield return new WaitForEndOfFrame();
