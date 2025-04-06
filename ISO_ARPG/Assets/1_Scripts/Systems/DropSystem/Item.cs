@@ -59,6 +59,14 @@ public class Item : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
+            else if (itemData is RuneData rune && !requiresClick)
+            {
+                RuneInteract interact = GetComponent<RuneInteract>();
+                if (interact != null)
+                {
+                    interact.OnInteract();
+                }
+            }
         }
     }
     void OnTriggerEnter(Collider other)

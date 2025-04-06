@@ -34,6 +34,11 @@ public class RuneUpgradeScreen : MonoBehaviour
         return (int)(baseCost * (1 + (rarityCostModifier * (int)rank)));
     }
 
+    public int CalculateCost(int nextRank)
+    {
+        return (int)(baseCost * (1 + (rarityCostModifier * nextRank)));
+    }
+
     public void OnEnable()
     {
         UpdateGhostRune();
@@ -54,16 +59,18 @@ public class RuneUpgradeScreen : MonoBehaviour
         RuneData rune = upgradeSlot.item as RuneData;   // Get the rune from the slot
         if (rune != null)
         {
-            // If the rune exists, increase the rarity of the rune
-            if (rune.rarity < ItemRarity.RELIC) // If its not already relic tier
-            {
-                rune.rarity += 1;               // Increase the rarirty rank of the rune
-            }
             if (Inventory.Instance.RuneDust >= upgradeCost)
             {
+                // If the rune exists, increase the rarity of the rune
+                if (rune.rarity < ItemRarity.RELIC) // If its not already relic tier
+                {
+                    rune.rarity += 1;               // Increase the rarirty rank of the rune
+                }
+
                 Inventory.Instance.RuneDust -= upgradeCost;
                 rune = RuneSystem.Instance.RollRune(rune, rune.rarity, true);
                 upgradeSlot.SetItem(rune);
+                UpdateGhostRune();
             }
             else
             {
@@ -77,6 +84,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             //rune = RuneSystem.Instance.RollRune(rune, rune.rarity);
             // The rune in the slot should be upgraded
         }
+        upgradeCost = CalculateCost();
     }
     public void UpdateGhostRune()
     {
@@ -86,7 +94,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             createButton.interactable = false;
             upgradeButton.interactable = true;
             destroyButton.interactable = true;
-            upgradeCost = CalculateCost();
+            upgradeCost = CalculateCost((int)(ghostRune.rarity + 1));
         }
         else
         {
@@ -112,7 +120,14 @@ public class RuneUpgradeScreen : MonoBehaviour
         
         if (upgradeSlot.HasItem  && upgradeSlot.item is RuneData rs)
         {
-            upgradeText.text = "Upgrade" + " (" + upgradeCost + ")";
+            if (rs.rarity == ItemRarity.RELIC)
+            {
+                upgradeText.text = "Reroll" + " (" + upgradeCost + ")";
+            }
+            else
+            {
+                upgradeText.text = "Upgrade" + " (" + upgradeCost + ")";
+            }
             destroyText.text = "Destroy" + " (" + rs.destroyAmount + ")";
         }
         else
@@ -134,7 +149,7 @@ public class RuneUpgradeScreen : MonoBehaviour
     public void RuneClicked(RuneData data)
     {
         // Only allow a rune to be clicked if there is no rune occupying the slot already
-        if (ghostRune != null && upgradeSlot.item !=null ) { Debug.Log("[RuneUpgrades]: Slot is already occupied"); return; }
+        if (ghostRune != null && upgradeSlot.item != null ) { Debug.Log("[RuneUpgrades]: Slot is already occupied"); return; }
         RuneData createdRune = new RuneData();
         createdRune = RuneSystem.Instance.RollRuneStats(data, true);  // Given the new rune instance
 
@@ -184,7 +199,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         } 
         // If the player does not have enough dust, do nothing, disable button prematurely, play error(?)
         Inventory.Instance.AddItem(ghostRune);
-        Inventory.Instance.RuneDust -= CalculateCost();
+        Inventory.Instance.RuneDust -= cost;
     }
     public void DismantleClicked()
     {        
