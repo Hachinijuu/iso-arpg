@@ -2455,6 +2455,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FwdBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 8608358093117350188, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608358093117350188, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dabdadc3cc3b7834897e2a49ea103c85, type: 3}
+    - target: {fileID: 9219918553068152986, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2613,19 +2625,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
-      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
-      propertyPath: m_AnchorMin.y
+      propertyPath: m_AnchorMin.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2665,11 +2677,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1870
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2686,6 +2698,18 @@ PrefabInstance:
     - target: {fileID: 8229444343719480209, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_Name
       value: OffBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608358093117350188, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608358093117350188, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ebf50ff98fe5f2347bd43530ad4a44d2, type: 3}
+    - target: {fileID: 9219918553068152986, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Sprite
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2719,7 +2743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2727,7 +2751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2771,7 +2795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2788,6 +2812,18 @@ PrefabInstance:
     - target: {fileID: 8229444343719480209, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_Name
       value: SettingsBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608358093117350188, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608358093117350188, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ff3003b79c76e3459dc6d80c27a8a07, type: 3}
+    - target: {fileID: 9219918553068152986, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_Sprite
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
