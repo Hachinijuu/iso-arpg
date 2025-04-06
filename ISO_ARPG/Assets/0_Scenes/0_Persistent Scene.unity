@@ -1616,6 +1616,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1801451133241696745, guid: 93d12a94aed54a946b33cdd7e25603ce, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 479.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2076825499059823322, guid: 93d12a94aed54a946b33cdd7e25603ce, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -29332,46 +29336,46 @@ MonoBehaviour:
     maxValue: 10
   trackedStatRolls:
   - type: 1
-    maxValue: 500
-  - type: 2
     maxValue: 100
+  - type: 2
+    maxValue: 20
   substatRolls:
   - type: 1
     maxValue: 50
   - type: 2
-    maxValue: 50
+    maxValue: 5
   - type: 3
-    maxValue: 50
+    maxValue: 2
   - type: 4
-    maxValue: 50
+    maxValue: 3
   - type: 5
-    maxValue: 50
+    maxValue: 2
   - type: 6
-    maxValue: 50
+    maxValue: 3
   - type: 7
-    maxValue: 50
+    maxValue: 5
   - type: 8
-    maxValue: 50
+    maxValue: 5
   - type: 9
-    maxValue: 50
+    maxValue: 4
   - type: 10
-    maxValue: 50
+    maxValue: 5
   - type: 11
-    maxValue: 50
+    maxValue: 10
   - type: 12
     maxValue: 1
   - type: 13
     maxValue: 1
   - type: 14
-    maxValue: 250
-  - type: 15
     maxValue: 50
+  - type: 15
+    maxValue: 4
   - type: 16
-    maxValue: 25
+    maxValue: 5
   - type: 17
-    maxValue: 100
+    maxValue: 10
   - type: 18
-    maxValue: 100
+    maxValue: 10
   maxRollDifficultyStep: 0.2
   minimumPercentage: 0.6
   upgradeUI: {fileID: 0}
@@ -30957,6 +30961,8 @@ MonoBehaviour:
   destroyTime: 0.25
   dropTables:
   - {fileID: 11400000, guid: 1e36b00058fe79545a39e10d5c02f5e0, type: 2}
+  - {fileID: 11400000, guid: 5fff5225a2bab924eace2fbc4df34b4c, type: 2}
+  - {fileID: 11400000, guid: e46dec1de0f5943479bde653f76cd05d, type: 2}
   destructionParticles:
   - {fileID: 1209941290443649877, guid: 61032362699115f49a53641c8273bbbe, type: 3}
   - {fileID: 9156644003663617846, guid: 34b2b980e2826bb4fa94ca8f9e9868ce, type: 3}
