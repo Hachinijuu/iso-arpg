@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -37,6 +36,8 @@ public class DebugMenu : MonoBehaviour
 
     public enum DebugMath { ADD, SUBTRACT, MUTIPLY, DIVIDE };
     public DebugMath resourceMath;
+
+    public RuneTable runes;
 
     public bool debugOn;
 
@@ -87,7 +88,7 @@ public class DebugMenu : MonoBehaviour
             levelDropdown.value = (int)GameManager.Instance.level;
     }
 
-    public void LevelHandler(Int32 value)
+    public void LevelHandler(int value)
     {
         GameManager.Instance.level = (GameManager.eLevel)value;
         GameManager.Instance.LevelLoad();
@@ -98,9 +99,9 @@ public class DebugMenu : MonoBehaviour
     {
         if (RuneSystem.Instance != null)
         {
-            RuneData rune = RuneSystem.Instance.CreateMainStatRune(ItemRarity.COMMON, MainStatTypes.NONE);
-            // This creates a rune and adds it to the inventory
-            // The problem is the created run is fake
+            int runeRoll = Random.Range(0, runes.runes.Count);
+            RuneData rune = RuneSystem.Instance.RollRune(runes.runes[runeRoll].item as RuneData); 
+            //new RuneData(RuneSystem.Instance.RollRune(runes.runes[runeRoll].item as RuneData));
             if (rune != null)
             {
                 Inventory.Instance.AddItem(rune);
@@ -120,7 +121,7 @@ public class DebugMenu : MonoBehaviour
     }
 
 
-    public void ResourceHandler(Int32 value)
+    public void ResourceHandler(int value)
     {
         resourceMath = (DebugMath)value;
     }

@@ -38,6 +38,15 @@ public class RuneData : ItemData
     public TrackedStat[] trackedStat;
     public SubStat[] subStat;
 
+    // public void RuneData(RuneData copy)
+    // {
+    //     runeGlyph = copy.runeGlyph;
+    //     runeType = copy.runeType;
+    //     mainStat = copy.mainStat;
+    //     trackedStat = copy.trackedStat;
+    //     subStat = copy.subStat;
+    // }
+
     public int destroyAmount;   // The amount of dust returned on rune destruction
     public virtual void ApplyStats(ref PlayerStats stats)
     {
@@ -64,7 +73,7 @@ public class RuneData : ItemData
                     {
                         // NOTE, only if it is a tracked stat, can the value exceed the maximum, this is because the maximum values are GAMEPLAY max's
                         ts.MaxValue += stat.MaxValue;
-                        ts.Value += stat.Value;
+                        //ts.Value += stat.Value;
                         Debug.Log("[Runes]: Added " + stat.Value + " " + stat.type);
                     }
                 }

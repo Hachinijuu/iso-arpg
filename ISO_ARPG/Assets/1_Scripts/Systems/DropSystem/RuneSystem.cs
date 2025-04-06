@@ -80,7 +80,7 @@ public class RuneSystem : MonoBehaviour
 
     public RuneData RollRune(RuneData template)
     {
-        RuneData rune = template;
+        RuneData rune = Instantiate(template);
         float rarityRoll = Random.Range(0, 100f);
         // Roll for the difficulty
 
@@ -109,7 +109,7 @@ public class RuneSystem : MonoBehaviour
     // I.e, for the upgrade, the rarity is increased by 1 in the upgrade screen
     public RuneData RollRune(RuneData template, ItemRarity rarity)
     {
-        RuneData rune = template;
+        RuneData rune = Instantiate(template);
         rune.rarity = rarity;
         rune = RollRuneStats(rune);
         if (rarityIcons != null || rarityIcons.Length > 0)
@@ -121,7 +121,7 @@ public class RuneSystem : MonoBehaviour
 
     public RuneData RollRune(RuneData template, ItemRarity rarity, bool upgrade)
     {
-        RuneData rune = template;
+        RuneData rune = Instantiate(template);
         rune.rarity = rarity;
         rune = RollRuneStats(rune, upgrade);
         if (rarityIcons != null || rarityIcons.Length > 0)
