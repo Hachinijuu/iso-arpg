@@ -14,7 +14,15 @@ public class SettingsController : MonoBehaviour
     [SerializeField] GameObject videoTab;
     [SerializeField] GameObject audioTab;
 
+    public void ShowSettingsScreen()
+    {
+        settingsScreen.SetActive(true);
+    }
 
+    public void HideSettingsScreen()
+    {
+        settingsScreen.SetActive(false);
+    }
 
     // Get references to each toggle
     // When the toggles are pressed, enable the other groups

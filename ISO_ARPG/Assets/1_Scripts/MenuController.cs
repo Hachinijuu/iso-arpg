@@ -12,6 +12,7 @@ public class MenuController : MonoBehaviour
     public void ContinueClicked()
     {
         // Load the hub, preloaded character from previous save file
+        GameManager.Instance.LoadHub();
     }
 
     public void SettingClicked()

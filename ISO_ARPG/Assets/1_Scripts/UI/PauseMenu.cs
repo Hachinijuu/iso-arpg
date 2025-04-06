@@ -31,6 +31,10 @@ public class PauseMenu : MonoBehaviour
                         {
                             Inventory.Instance.ShowCharacterScreen();
                         }
+                        else if (settingsPanel.activeInHierarchy)
+                        {
+                            settingsPanel.SetActive(false);
+                        }
                         else
                         {
                             GameManager.Instance.PauseGame();

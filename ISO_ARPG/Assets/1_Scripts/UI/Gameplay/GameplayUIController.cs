@@ -25,6 +25,7 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] public GameObject inventoryScreen;
     [SerializeField] public GameObject stashScreen;
     [SerializeField] public RuneUpgradeScreen smithScreen;
+    [SerializeField] public SettingsController settings;
 
     private void OnEnable()
     {

@@ -406,7 +406,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1214664188120137282}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
         m_MethodName: ConfirmClicked
         m_Mode: 1
@@ -1011,7 +1011,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5315660382047544965}
-  - component: {fileID: 1214664188120137282}
+  - component: {fileID: 5211397607641611847}
   m_Layer: 0
   m_Name: CharLoad
   m_TagString: Untagged
@@ -1035,7 +1035,7 @@ Transform:
   - {fileID: 6519778429274990867}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1214664188120137282
+--- !u!114 &5211397607641611847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1044,30 +1044,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2959266263289799271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08db13910a4e1c343bb0b1d7163f3530, type: 3}
+  m_Script: {fileID: 11500000, guid: 96bb0790c900b1148bf5a65c2bd50736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugSelection: 0
-  panel: {fileID: 6866493937293365561}
-  characterInfo:
-    characterName: {fileID: 0}
-    description: {fileID: 7962729936030043745}
-    characterIcon: {fileID: 0}
-    ab1Icon: {fileID: 0}
-    ab2Icon: {fileID: 0}
-  currentClass: 0
-  bodies:
-  - mainBody: {fileID: 0}
-    altBody: {fileID: 919132149155446097, guid: 861f57cc8645d2842b30a6faec61f6da, type: 3}
-  - mainBody: {fileID: 0}
-    altBody: {fileID: 919132149155446097, guid: cc004834b411c334e8b99f54c1d24565, type: 3}
-  - mainBody: {fileID: 0}
-    altBody: {fileID: 919132149155446097, guid: 8b384fc42037bec43a59d2864fd1a9b7, type: 3}
-  clips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  source: {fileID: 0}
 --- !u!1 &3445719516894498899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,6 +2308,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreateCharBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5211397607641611847}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharacterLoad, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177687410842764331, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CharacterSelection, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8892116641396929460, guid: 40804d668ba042245b7361c2a77e28d5, type: 3}
       propertyPath: m_text
       value: Create
@@ -2615,6 +2622,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6519778429274990867}
     m_Modifications:
+    - target: {fileID: 4354752530075656111, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5211397607641611847}
+    - target: {fileID: 4354752530075656111, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 4354752530075656111, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharacterLoad, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2729,6 +2748,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6519778429274990867}
     m_Modifications:
+    - target: {fileID: 4354752530075656111, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5211397607641611847}
+    - target: {fileID: 4354752530075656111, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SettingsClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 4354752530075656111, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharacterLoad, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5411595107041215400, guid: 65b5d82c41dd3a44ab14079e5ac1b944, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
