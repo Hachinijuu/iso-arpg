@@ -147,10 +147,10 @@ public class HyperBarrage : ChannelAbility
         // }
     }
 
-    public override void EndAbility()
+    public override void EndAbility(AbilityEventArgs e)
     {
         particles.HandleAbility2Particles(false);
-        base.EndAbility();
+        base.EndAbility(e);
         //anim.SetBool(animID, false);
     }
 }

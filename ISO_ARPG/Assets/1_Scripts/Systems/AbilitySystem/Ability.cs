@@ -96,11 +96,6 @@ public abstract class Ability : ScriptableObject
     { 
         FireAbilityEnded(e);
     }
-    // NO ARGS ENDING
-    public virtual void EndAbility()
-    {
-        FireAbilityEnded(new AbilityEventArgs());
-    }
     #endregion
 
     #region EVENT SETUP

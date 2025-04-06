@@ -116,16 +116,17 @@ public class PlayerAbilityHandler : MonoBehaviour
     {
         Debug.Log("Actions unmapped");
         UnmapPlayerActions();
+        //ResetCooldowns();
         // Deactivate any existing abilities
-        foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
-        {
-            // If you can't use the ability because it has been activated
-            if (abilityUsage.Value == false)
-            {
-                abilityUsage.Key.EndAbility(new AbilityEventArgs(abilityUsage.Key, controller));  // Stop using the ability
-            }
-            // This will shrink the player if they have 
-        }
+        //foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
+        //{
+        //    // If you can't use the ability because it has been activated
+        //    if (abilityUsage.Value == false)
+        //    {
+        //    }
+        //    abilityUsage.Key.EndAbility(new AbilityEventArgs(abilityUsage.Key, controller));  // Stop using the ability
+        //    // This will shrink the player if they have 
+        //}
     }
 
     // ON ENABLE ON DISABLE SELECTED WILL BREAK GAME LOGIC IF THE PLAYER RETURNS TO THE MENU
@@ -165,18 +166,28 @@ public class PlayerAbilityHandler : MonoBehaviour
 
     public void ResetCooldowns()
     {
+        // End all abilities
         StopAllCoroutines();    // THIS MIGHT BREAK THE PASSIVE HANDLING, SIMPLY RESTART PASSIVES ON RESPAWN
         // foreach (KeyValuePair<Ability, bool> abilityUsage in canUseAbility)
         // {
-        //     Debug.Log(canUseAbility[abilityUsage.Key]);
+        //     //Debug.Log(canUseAbility[abilityUsage.Key]);
+        //     abilityUsage.Key.EndAbility(new AbilityEventArgs(abilityUsage.Key, controller));
         //     canUseAbility[abilityUsage.Key] = true;     // Allow the ability to be used
+        //     abilityUsage.Key.CurrCooldown = 0.0f;
         //     //abilityUsage.Key.CurrCooldown = 0.0f;       // Reset the clock
         // }
-        foreach (Ability ab in stats.Abilities)
+
+        List<Ability> toReset = new List<Ability>(canUseAbility.Keys);
+        foreach (Ability ab in toReset)
         {
-            canUseAbility[ab] = true;
-            ab.CurrCooldown = 0.0f;
+            if (canUseAbility[ab] != true)
+            {
+                ab.EndAbility(new AbilityEventArgs(ab, controller));
+                canUseAbility[ab] = true;
+                ab.CurrCooldown = 0.0f;
+            }
         }
+        
     }
     public void AddPassiveListeners()
     {

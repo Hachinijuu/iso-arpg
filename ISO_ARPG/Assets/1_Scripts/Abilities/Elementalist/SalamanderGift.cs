@@ -40,14 +40,14 @@ public class SalamanderGift : IdentityAbility
         // This will require a rework to the hurtbox input
     }
 
-    public override void EndAbility()
+    public override void EndAbility(AbilityEventArgs e)
     {
         stats.Mana.MaxValue /= manaMultipler;
         stats.Chains.Value -= 1;
         stats.DamageFromMana.Value -= dmgFromMana;
 
         particles.DeactivateAura();
-        base.EndAbility();
+        base.EndAbility(e);
     }
 
 

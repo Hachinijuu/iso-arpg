@@ -43,9 +43,9 @@ public class Fireball : Ability
         PlayerManager.Instance.SetGiveDamage(true);
     }
 
-    public override void EndAbility()
+    public override void EndAbility(AbilityEventArgs e)
     {
         PlayerManager.Instance.SetGiveDamage(false);
-        base.EndAbility();
+        base.EndAbility(e);
     }
 }

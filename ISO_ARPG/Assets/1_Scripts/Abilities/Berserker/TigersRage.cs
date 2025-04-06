@@ -51,7 +51,8 @@ public class TigersRage : IdentityAbility
             if (abilityActivated)
                 source.PlayOneShot(abilityActivated);
 
-            particles.ActivateAura();
+            if (!asFusion)
+                particles.ActivateAura();
             //controller.SetAura(true);
 
             // add increased stats

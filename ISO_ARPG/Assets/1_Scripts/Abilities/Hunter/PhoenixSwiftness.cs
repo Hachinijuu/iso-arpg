@@ -49,7 +49,7 @@ public class PhoenixSwiftness : IdentityAbility
         }
     }
 
-    public override void EndAbility()
+    public override void EndAbility(AbilityEventArgs e)
     {
         // Remove stats
         stats.MoveSpeed.Value /= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
