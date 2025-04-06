@@ -23,10 +23,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Multiplicative, keep default of 1
+    // damage = (stats.Damage.Value * stats.SecondaryDamage.Value) + (stats.STR.Value * GameManager.Instance.MainConvert);
+    // float recalc = args.amount * Mathf.Clamp01(1.0f - ((stats.Armour.Value * GameManager.Instance.ArmourConvert) / 100));
     [Header("Balancing Values")]
-    [Range(1, 2)] public float MainConvert = 1.012f;
-    [Range(1, 2)] public float ArmourConvert = 0.05f;
+    [Range(0, 2.0f)] public float MainConvert = 0.2f;
+    [Range(0, 2.0f)] public float ArmourConvert = 0.05f;
 
     [Header("Global References")]
     [SerializeField] private AudioSource audioSource;

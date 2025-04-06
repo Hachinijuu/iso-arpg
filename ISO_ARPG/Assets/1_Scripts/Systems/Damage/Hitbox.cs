@@ -142,6 +142,15 @@ public class Hitbox : MonoBehaviour
         StartCoroutine(HitWindow());            // This will detect the hits
         StartCoroutine(DamageWindow(window));   // This will determine how long the hits are allowed
     }
+
+    public void AllowDamageForTime(float window, bool value)
+    {
+        //Debug.Log("I want to allow damage for: " + window);
+        //Debug.Log("Got into damage");
+        StopAllCoroutines();
+        StartCoroutine(HitWindow(value));       // This will detect the hits
+        StartCoroutine(DamageWindow(window));   // This will determine how long the hits are allowed
+    }
     protected virtual void StartDamageWindow()
     {
         applyDamage = true;
@@ -156,7 +165,7 @@ public class Hitbox : MonoBehaviour
     {
         if (applyDamage)
         { 
-            StartCoroutine(HitWindow());
+            StartCoroutine(HitWindow(true));
         }
     }
 
@@ -171,10 +180,20 @@ public class Hitbox : MonoBehaviour
     {
         do
         {
-            HandleHits();        // By default, only look for single target per frame
+            HandleHit();        // By default, only look for single target per frame
             yield return null;
         } while (applyDamage);
     }
+
+    IEnumerator HitWindow(bool continous)
+    {
+        do 
+        {
+            HandleHits();
+            yield return null;
+        } while (applyDamage);
+    }
+
     #endregion
     #region DEBUG
     private void OnDrawGizmos()

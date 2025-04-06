@@ -68,7 +68,7 @@ public class AIChaseState : AIState
         // This will call the movement functionality
         //if (e.cellTarget == null) { return; }
         EnemyControllerV2 agent = e.agent;
-        agent.MoveAgent();
+        agent.MoveAgent(e.player.transform);
         //agent.AnimateAgentMove();
         //agent.MoveAgent(e.cellTarget);
 
