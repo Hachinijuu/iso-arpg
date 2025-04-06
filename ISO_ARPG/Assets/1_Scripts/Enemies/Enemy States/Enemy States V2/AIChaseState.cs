@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ChaseState", menuName = "sykcorSystems/AI/States/ChaseState", order = 1)]
-public class AIChaseState : AIState, IPhysicsState
+public class AIChaseState : AIState
 {
     // public override void EnterState(AgentStateArgs e)
     // {
@@ -68,7 +68,8 @@ public class AIChaseState : AIState, IPhysicsState
         // This will call the movement functionality
         //if (e.cellTarget == null) { return; }
         EnemyControllerV2 agent = e.agent;
-        agent.AnimateAgentMove();
+        agent.MoveAgent();
+        //agent.AnimateAgentMove();
         //agent.MoveAgent(e.cellTarget);
 
         // BECAUSE THE RANGE OF THE CHASE IS SMALL, SIMPLY MOVE THE AGENT TO THE PLAYER
@@ -84,13 +85,13 @@ public class AIChaseState : AIState, IPhysicsState
         // Should movement be passed to this function, probably, considering target driven movement is different
     }
 
-    void IPhysicsState.FixedAct(AgentStateArgs e)
-    {
-        Vector3 target = e.player.transform.position;
-        if (target == null) { return; }
-        EnemyControllerV2 agent = e.agent;
-        agent.MoveAgent(target);
-        agent.HandleRotation(target);
-    }
+    // void IPhysicsState.FixedAct(AgentStateArgs e)
+    // {
+    //     Vector3 target = e.player.transform.position;
+    //     if (target == null) { return; }
+    //     EnemyControllerV2 agent = e.agent;
+    //     agent.MoveAgent(target);
+    //     agent.HandleRotation(target);
+    // }
 
 }

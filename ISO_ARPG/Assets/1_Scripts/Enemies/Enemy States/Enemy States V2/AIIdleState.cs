@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Idle", menuName = "sykcorSystems/AI/States/Idle", order = 0)]
-public class AIIdleState : AIState, IPhysicsState
+public class AIIdleState : AIState
 {
     // In the idle state, do not do much, mayble play animations, mostly decision making to check if the player is in range
 
@@ -28,25 +28,12 @@ public class AIIdleState : AIState, IPhysicsState
 
     public override void Act(AgentStateArgs e)
     {
-        //Debug.Log("Idling");
-        if (e.agent != null)
-        {
-            e.agent.AnimateAgentMove();
-        }
+        return;
+        // //Debug.Log("Idling");
+        // if (e.agent != null)
+        // {
+        //     e.agent.AnimateAgentMove();
+        // }
 
-    }
-
-    void IPhysicsState.FixedAct(AgentStateArgs e)
-    {
-        // Shift away from agent and then stop
-
-        // Space out and wander
-        // Small deviation from current position
-
-        if (e.agent == null) { return; }
-        EnemyControllerV2 agent = e.agent;
-        Vector3 target = GetCirclePoint(minRoam, maxRoam, agent.transform);
-        // Move the agent to the target
-        agent.MoveAgent(target);
     }
 }
