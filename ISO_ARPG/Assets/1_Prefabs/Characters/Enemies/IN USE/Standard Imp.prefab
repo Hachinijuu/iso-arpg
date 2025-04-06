@@ -1091,6 +1091,7 @@ GameObject:
   - component: {fileID: 750419005341385754}
   - component: {fileID: 1081736335433214754}
   - component: {fileID: 9169883723987307114}
+  - component: {fileID: -109464226449069674}
   m_Layer: 7
   m_Name: Standard Imp
   m_TagString: Enemy
@@ -1223,6 +1224,28 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!195 &-109464226449069674
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2503497217363545633}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 0
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &2780024520403227889
 GameObject:
   m_ObjectHideFlags: 0

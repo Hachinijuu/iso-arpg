@@ -5,12 +5,21 @@ using UnityEngine;
 public class ChestInteract : InteractableObject
 {
     [SerializeField] EntityStats stats;
+    [SerializeField] Animator chestAnimator;
+    static string chestTrigger = "OpenChest";
+    static int chestAnimID = Animator.StringToHash(chestTrigger);
 
     public void Awake()
     {
         if (stats == null)
             stats = GetComponent<EntityStats>();
     }
+
+    public void OnEnable()
+    {
+        DropSystem.Instance.RegisterChestDrops(stats);
+    }
+
     //[SerializeField] Transform dropPosition;
     //public void CreateDroppedItems()
     //{
@@ -32,6 +41,11 @@ public class ChestInteract : InteractableObject
     protected override void InteractAction()
     {
         stats.Health.Value -= 1;    // Kill the chest, will allow the drop system to handle the drop
+        // Play the animation of opening, sound is handled on the interact
+        if (chestAnimator != null) { chestAnimator.SetTrigger(chestAnimID); }
+
+        Destroy(gameObject, 2);
+        // Destroy the chest
     }
     //protected override void InteractAction()
     //{

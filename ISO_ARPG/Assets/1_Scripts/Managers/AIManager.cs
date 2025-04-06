@@ -954,26 +954,26 @@ public class AIManager : MonoBehaviour
 
         foreach (EnemyControllerV2 enemy in aliveEnemies)
         {
-           agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
-           enemy.HandleState(agentArgs);
+            agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
+            enemy.HandleState(agentArgs);
         }
     }
-    public void FixedUpdate()
-    {
-        // Only update if a player exists
-        if (player == null) { return; }
+    // public void FixedUpdate()
+    // {
+    //     // Only update if a player exists
+    //     if (player == null) { return; }
 
-        // State handling can be pushed onto coroutine loops for interval steps and non update on irrelevant agents
-        if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
-        foreach (EnemyControllerV2 enemy in aliveEnemies)
-        {
-            if (enemy.State is IPhysicsState phyState)
-            {
-                agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
-                phyState.FixedAct(agentArgs);
-            }
-        }
-    }
+    //     // State handling can be pushed onto coroutine loops for interval steps and non update on irrelevant agents
+    //     if (aliveEnemies == null || aliveEnemies.Count <= 0) { return; }
+    //     foreach (EnemyControllerV2 enemy in aliveEnemies)
+    //     {
+    //         if (enemy.State is IPhysicsState phyState)
+    //         {
+    //             agentArgs.agent = enemy;        // Dynamically reassign the agent to the current enemy that is being evaluated
+    //             phyState.FixedAct(agentArgs);
+    //         }
+    //     }
+    // }
     // public IEnumerator UpdateDistanceGroup(UpdateInterval group)
     // {
     //     if (group == nearInterval) { nearUpdating = true; }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.AI;
 
 public class EnemyControllerV2 : MonoBehaviour
 {
@@ -55,7 +56,13 @@ public class EnemyControllerV2 : MonoBehaviour
     private Vector3 destination;
     public Vector3 Destination { get {return destination; } set {destination = value; } }
 
+    private NavMeshAgent agent;
+
     #region Initalization
+    void Awake()
+    {
+        if (agent == null) { agent = GetComponent<NavMeshAgent>(); }
+    }
     private void Start()
     {
         Initialize();
@@ -94,6 +101,7 @@ public class EnemyControllerV2 : MonoBehaviour
         //animator.SetTrigger("Respawn");
         //animator.SetInteger("Death", 0 );  // Set to invalid value so that the death animation is not played
         stats.Health.Value = stats.Health.MaxValue; // reset the health value to max
+        agent.enabled = true;
         AIManager.Instance.RegisterToList(this);
         isDead = false;
         hurtbox.applyKnockback = true;
@@ -123,6 +131,7 @@ public class EnemyControllerV2 : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
+            agent.enabled = false;
             hurtbox.applyKnockback = false;
             //int range = Random.Range(1, 3);   // max exclusive upper, 0 - 1
             //animator.SetInteger("Death", range);
@@ -424,11 +433,15 @@ public class EnemyControllerV2 : MonoBehaviour
         //Vector3 movement = Vector3.MoveTowards(transform.position, offset, ((stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) + minSpeed) * Time.deltaTime);
         //movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
         
-        Vector3 movement = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        movement.y = 0;
-        transform.position = movement;
+        //Vector3 movement = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        //movement.y = 0;
 
-        currSpeed = (transform.position - target).magnitude;    // Magnitude of the direction
+        agent.destination = target;
+        //transform.position = movement;
+
+        currSpeed = agent.velocity.magnitude;
+
+        //currSpeed = (transform.position - target).magnitude;    // Magnitude of the direction
         //Debug.Log(speed);
         //Debug.Log(agent.desiredVelocity);
         //speed = body.velocity.magnitude;//(transform.position - moveTarget).magnitude;    // Magnitude of the direction
