@@ -122,7 +122,7 @@ public class DropSystem : MonoBehaviour
     public void HandleChestDrop(GameObject go)
     {
         EntityStats stats = go.GetComponent<EntityStats>();
-        CheckDrop(stats);
+        CheckDrop(stats, true);
         FadeObject(go);
     }
 
@@ -217,7 +217,7 @@ public class DropSystem : MonoBehaviour
                 if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
                 {
                     // Do another roll for the rune rarity, this is relative to the difficulty
-                    rune = RuneSystem.Instance.RollRuneStats(rune);
+                    rune = RuneSystem.Instance.RollRune(rune);
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
                 Debug.Log("[DropSystem]: Dropped an item");
@@ -262,11 +262,6 @@ public class DropSystem : MonoBehaviour
             {
                 ItemData item = tableMod.item;
                 if (item == null) { return; }
-                if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
-                {
-                    // Do another roll for the rune rarity, this is relative to the difficulty
-                    rune = RuneSystem.Instance.RollRuneStats(rune);
-                }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
                 Debug.Log("[DropSystem]: Dropped an item");
                 if (repeat) { continue; } else { return; }
@@ -288,7 +283,7 @@ public class DropSystem : MonoBehaviour
                 if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
                 {
                     // Do another roll for the rune rarity, this is relative to the difficulty
-                    rune = RuneSystem.Instance.RollRuneStats(rune);
+                    rune = RuneSystem.Instance.RollRune(rune);
                 }
                 CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
                 Debug.Log("[DropSystem]: Dropped an item");
