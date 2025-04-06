@@ -1,35 +1,36 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class FusionSelection : MonoBehaviour
 {
     public bool shouldConfirm;
     public GameObject selectPopup;
     private IdentityAbility fusion;
-    public Button RageButton;
-    public Button SwiftButton;
-    public Button GiftButton;
+    public GameObject Rage;
+    public GameObject Swiftness;
+    public GameObject Gift;
 
-    public void OEnable()
+    public void OnEnable()
     {
         CheckForClass();
     }
 
     public void CheckForClass()
     {
-        // Disable same class buttons
-        // switch(GameManager.Instance.playerClass)
-        // {
-        //     case GameManager.eClass.BERSERKER:
-        //         RageButton.interactable = false;
-        //     break;
-        //     case GameManager.eClass.HUNTER:
-        //         SwiftButton.interactable = false;
-        //     break;
-        //     case GameManager.eClass.ELEMENTALIST:
-        //         GiftButton.interactable = false;
-        //     break;
-        // }
+        //Disable same class buttons
+        switch(PlayerManager.Instance.currentClass)
+        {
+            case GoX_Class.BERSERKER:
+                Rage.SetActive(false);
+            break;
+            case GoX_Class.HUNTER:
+                Swiftness.SetActive(false);
+            break;
+            case GoX_Class.ELEMENTALIST:
+                Gift.SetActive(false);
+            break;
+        }
     }
     public void SelectionClicked(IdentityAbility selectedFusion)
     {
