@@ -339,10 +339,10 @@ public class PlayerAbilityHandler : MonoBehaviour
             }
             else
             {
-                if (PublicEventManager.Instance != null)
-                {
-                    PublicEventManager.Instance.FireOnCannot();
-                }
+                // if (PublicEventManager.Instance != null)
+                // {
+                //     PublicEventManager.Instance.FireOnCannot();
+                // }
             }
                 Debug.Log("[AbilityHandler]: Cannot use: " + ab.Name);
         }
@@ -381,10 +381,10 @@ public class PlayerAbilityHandler : MonoBehaviour
                     if (showDebug) Debug.Log("[AbilityHandler] Used: " + ab.Name);    // Output ability used
                 }
             }
-            if (PublicEventManager.Instance != null)
-            {
-                PublicEventManager.Instance.FireOnCannot();
-            }
+            // if (PublicEventManager.Instance != null)
+            // {
+            //     PublicEventManager.Instance.FireOnCannot();
+            // }
         }
     }
     IEnumerator HandleHeld(ChannelAbility used)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -35,7 +36,7 @@ public class RuneSystem : MonoBehaviour
         }
     }
     public Sprite[] rarityIcons;                        // This will map to rarity and set accordingly
-    public GameObject[] rarityPrefabs;                  // This will map to rarity and set accordingly
+    public Material[] rarityMaterials;                  // This will map to rarity and set accordingly
     public List<MainStatRoll> mainStatRolls;
     public List<TrackedStatRoll> trackedStatRolls;
     public List<SubStatRoll> substatRolls;
@@ -81,18 +82,18 @@ public class RuneSystem : MonoBehaviour
     public RuneData RollRune(RuneData template)
     {
         RuneData rune = Instantiate(template);
-        float rarityRoll = Random.Range(0, 100f);
         // Roll for the difficulty
 
         DifficultySetting difficultyMod = GameManager.Instance.currDifficulty;
         foreach (RarityChances chance in difficultyMod.dropModifiers)
         {
+            float rarityRoll = Random.Range(0, 100f);
             // If I get a 30 roll on dropValue
             // And the chance for a Relic tier rune is 5%, I get that rune
             // Since the loop will check for the chances based on sequential order, (common -> relic)
             // The rarity will be update based on the lowest drop chance value
 
-            if (chance.dropChance < rarityRoll)
+            if (rarityRoll < chance.dropChance)
             {
                 rune.rarity = chance.rarity;
             }
@@ -101,6 +102,12 @@ public class RuneSystem : MonoBehaviour
         {
             rune.itemIcon = rarityIcons[(int)rune.rarity];
         }
+        // if (rarityMaterials != null || rarityMaterials.Length > 0)
+        // {
+        //     Material mat = rune.prefab.GetComponent<Material>();
+        //     if (mat != null) { mat = rarityMaterials[(int)rune.rarity]; }
+        //     //rune.itemIcon = rarityIcons[(int)rune.rarity];
+        // }
         rune = RollRuneStats(rune);
         return rune; // Roll for the stats
     }
@@ -116,6 +123,12 @@ public class RuneSystem : MonoBehaviour
         {
             rune.itemIcon = rarityIcons[(int)rune.rarity];
         }
+        // if (rarityMaterials != null || rarityMaterials.Length > 0)
+        // {
+        //     Material mat = rune.prefab.GetComponent<Material>();
+        //     if (mat != null) { mat = rarityMaterials[(int)rune.rarity]; }
+        //     //rune.itemIcon = rarityIcons[(int)rune.rarity];
+        // }
         return rune;
     }
 
@@ -129,6 +142,18 @@ public class RuneSystem : MonoBehaviour
             rune.itemIcon = rarityIcons[(int)rune.rarity];
         }
         return rune;
+    }
+
+    public Material SetRuneMaterial(ItemRarity rarity)
+    {
+        if (rarityMaterials != null || rarityMaterials.Length > 0)
+        {
+            return rarityMaterials[(int)rarity];
+            ////Material mat = rune.prefab.GetComponent<Material>();
+            //if (mat != null) { mat = rarityMaterials[(int)rune.rarity]; }
+            ////rune.itemIcon = rarityIcons[(int)rune.rarity];
+        }
+        return null;
     }
 
     public RuneData RollRuneStats(RuneData template, bool upgrade = false)

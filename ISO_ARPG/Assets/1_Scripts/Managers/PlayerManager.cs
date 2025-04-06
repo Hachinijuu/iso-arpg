@@ -247,10 +247,10 @@ public class PlayerManager : MonoBehaviour
         {
             StartCoroutine(OnDamagedGiver);
         }
-        else
-        {
-            StopCoroutine(OnDamagedGiver);
-        }
+        //else
+        //{
+        //    StopCoroutine(OnDamagedGiver);
+        //}
         //canGiveOnDamage = value;
     }
 

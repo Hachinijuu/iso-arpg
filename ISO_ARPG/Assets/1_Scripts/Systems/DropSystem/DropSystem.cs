@@ -307,7 +307,15 @@ public class DropSystem : MonoBehaviour
 
         GameObject go = GameObject.Instantiate(droppedItem.prefab);
         // This creates the object, but where does it create the object...
-        // Create it at the parent of whoever called this 
+        // Create it at the parent of whoever called this
+        if (droppedItem is RuneData)
+        {
+            MeshRenderer render = go.GetComponent<MeshRenderer>();
+            if (render != null)
+            {
+                render.material = RuneSystem.Instance.SetRuneMaterial(droppedItem.rarity);
+            }
+        }
 
         // Call specific functions based on the type it is, pickup vs interactable
         // Let the created object know what kind of item it is

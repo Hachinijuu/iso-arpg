@@ -173,12 +173,12 @@ public class EnemyControllerV2 : MonoBehaviour
             if (animValue == 1)
             {
                 animator.SetTrigger("HitLeft");
-                //return;
+                return;
             }
             else if (animValue == 2)
             {
                 animator.SetTrigger("HitRight");
-                //return;
+                return;
             }
             //animator.SetInteger("Hurt", animValue); // allow the left / right animation to play
             //animator.SetInteger("Hurt", 0);         // reset back to default so trigger is not enabled

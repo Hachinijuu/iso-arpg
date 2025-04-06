@@ -11,6 +11,8 @@ public class RagingSwing : StackAbility
     PlayerStats stats;
     ProjectileSource shootSource;
     PlayerParticleHandler particles;
+    
+    public float checkOnHitWindow = 1.5f;
     //public float damageMultipler = 1.0f;
     float damage;
     GameObject body;
@@ -131,7 +133,7 @@ public class RagingSwing : StackAbility
 
         particles.HandleAbility1Particles(true);
 
-        PlayerManager.Instance.SetGiveDamage(true, 0.75f);
+        PlayerManager.Instance.SetGiveDamage(true, checkOnHitWindow);
     }
 
     public override void EndAbility(AbilityEventArgs e)
