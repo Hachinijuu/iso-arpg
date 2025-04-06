@@ -64,7 +64,14 @@ public class Projectile : Hitbox
     public void FireProjectile()
     {
         // Apply force to this object in the forward direction
-        AllowDamageForTime(uptime);
+        if (pierces)
+        {
+            AllowDamageForTime(uptime, true);
+        }
+        else
+        {
+            AllowDamageForTime(uptime);
+        }
         // Move the object
         //rb.AddForce(transform.forward * speed, ForceMode.Impulse);
         //StopAllCoroutines();

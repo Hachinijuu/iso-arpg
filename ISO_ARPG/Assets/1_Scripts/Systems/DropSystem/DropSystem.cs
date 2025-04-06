@@ -185,15 +185,35 @@ public class DropSystem : MonoBehaviour
             return;
 
         // Drop rolling
-        foreach (ItemData item in dropTable.items)
+        foreach (DropTableModifier tableMod in dropTable.items)
         {
             float dropValue = Random.Range(0, 100f);
 
             // If I get 80 and I have a 20% chance to drop an item
             // I do not get the item, because I rolled an 80.
             // I have an 80% chance NOT to get the item 20-100
-            if (dropValue <= item.dropChance)
+            if (dropValue <= (tableMod.item.dropChance + tableMod.dropModifier))
             {
+                ItemData item = tableMod.item;
+                if (item == null) { return; }
+                CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
+                Debug.Log("[DropSystem]: Dropped an item");
+                return;
+            }
+        }
+
+        if (dropTable.runesTable == null) { return; }
+        foreach (DropTableModifier runeModifer in dropTable.runesTable.runes)
+        {
+            float dropValue = Random.Range(0, 100f);
+
+            // If I get 80 and I have a 20% chance to drop an item
+            // I do not get the item, because I rolled an 80.
+            // I have an 80% chance NOT to get the item 20-100
+            if (dropValue <= (runeModifer.item.dropChance + runeModifer.dropModifier))
+            {
+                ItemData item = runeModifer.item;
+                if (item == null) { return; }
                 if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
                 {
                     // Do another roll for the rune rarity, this is relative to the difficulty
@@ -212,6 +232,69 @@ public class DropSystem : MonoBehaviour
         //else
         //    Debug.Log("[DropSystem]: No drops");
         //Debug.Log("Will I drop something?");
+    }
+
+    private void CheckDrop(EntityStats whoDied, bool repeat) // check the thing and map it to what it is supposed to drop
+    {
+        // match the entity to the drop table
+        DropTable dropTable = null;
+        foreach (DropTable table in dropTables)
+        {
+            if (table.dropId == whoDied.id)
+            {
+                dropTable = table;
+                break;
+            }
+        }
+        //Debug.Log(dropTable.dropId);
+        if (dropTable == null)
+            return;
+
+        // Drop rolling
+        foreach (DropTableModifier tableMod in dropTable.items)
+        {
+            float dropValue = Random.Range(0, 100f);
+
+            // If I get 80 and I have a 20% chance to drop an item
+            // I do not get the item, because I rolled an 80.
+            // I have an 80% chance NOT to get the item 20-100
+            if (dropValue <= tableMod.item.dropChance + tableMod.dropModifier)
+            {
+                ItemData item = tableMod.item;
+                if (item == null) { return; }
+                if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
+                {
+                    // Do another roll for the rune rarity, this is relative to the difficulty
+                    rune = RuneSystem.Instance.RollRuneStats(rune);
+                }
+                CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
+                Debug.Log("[DropSystem]: Dropped an item");
+                if (repeat) { continue; } else { return; }
+            }
+        }
+
+        if (dropTable.runesTable == null) { return; }
+        foreach (DropTableModifier runeModifer in dropTable.runesTable.runes)
+        {
+            float dropValue = Random.Range(0, 100f);
+
+            // If I get 80 and I have a 20% chance to drop an item
+            // I do not get the item, because I rolled an 80.
+            // I have an 80% chance NOT to get the item 20-100
+            if (dropValue <= (runeModifer.item.dropChance + runeModifer.dropModifier))
+            {
+                ItemData item = runeModifer.item;
+                if (item == null) { return; }
+                if (item is RuneData rune && item.type == ItemTypes.RUNE) // If the item that dropped is a rune, do a roll in the rune system to generate the stats
+                {
+                    // Do another roll for the rune rarity, this is relative to the difficulty
+                    rune = RuneSystem.Instance.RollRuneStats(rune);
+                }
+                CreatedDroppedObject(whoDied.transform.position, item); // This will create the rune item with the modded data?
+                Debug.Log("[DropSystem]: Dropped an item");
+                if (repeat) { continue; } else { return; }
+            }
+        }
     }
 
     // Create dropped object

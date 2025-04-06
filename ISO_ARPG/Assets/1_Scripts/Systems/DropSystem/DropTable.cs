@@ -6,5 +6,15 @@ using UnityEngine;
 public class DropTable : ScriptableObject
 {
     public EntityID dropId;
-    public List<ItemData> items;
+    public List<DropTableModifier> items;
+    public RuneTable runesTable;
+}
+
+[System.Serializable]
+public class DropTableModifier
+{
+    public ItemData item;
+    
+    [Range(0, 100)]
+    public int dropModifier = 0;
 }
