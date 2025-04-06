@@ -10,6 +10,7 @@ public class Fireball : Ability
     AudioSource source;
     PlayerStats stats;
     ProjectileSource shootSource;
+    float damageUptime;
     public float damageMultipler = 1.0f;
     float damage;
 
@@ -36,16 +37,17 @@ public class Fireball : Ability
             if (p != null)
             {
                 e.Hitboxes.Add(p);
+                damageUptime = p.uptime;
                 p.SetDamage(damage);
                 p.FireProjectile();
             }
         }
-        PlayerManager.Instance.SetGiveDamage(true);
+        PlayerManager.Instance.SetGiveDamage(true, damageUptime);
     }
 
     public override void EndAbility(AbilityEventArgs e)
     {
-        PlayerManager.Instance.SetGiveDamage(false);
+        PlayerManager.Instance.SetGiveDamage(false, damageUptime);
         base.EndAbility(e);
     }
 }

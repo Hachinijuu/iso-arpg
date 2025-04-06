@@ -60,12 +60,22 @@ public class Hitbox : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, damageLayer); // Get what was collided with in a given space
         foreach (Collider hit in hitColliders)
         {
+            if (hit.gameObject.CompareTag("Obstacle"))
+            {
+                HitBlock();
+                return;
+            }
             Hurtbox hb = hit.GetComponent<Hurtbox>();
             if (hb != null)
             {
                 HandleCollision(hb);
             }
         }
+    }
+
+    public virtual void HitBlock()
+    {
+        Debug.Log("Early eject the hit");
     }
 
     // This is different from handle HITS, it will early return after the collision has been accounted for
@@ -76,6 +86,11 @@ public class Hitbox : MonoBehaviour
         //Debug.Log(hitColliders.Length);
         foreach (Collider hit in hitColliders)
         {
+            if (hit.gameObject.CompareTag("Obstacle"))
+            {
+                HitBlock();
+                return;
+            }
             //Debug.Log(hit.transform.name);
             Hurtbox hb = hit.GetComponent<Hurtbox>();
             if (hb != null)
@@ -200,7 +215,10 @@ public class Hitbox : MonoBehaviour
     {
         Gizmos.color = Color.red;
         if (applyDamage)
-            Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
+        {
+            Gizmos.DrawSphere(transform.position, attackRange);
+            //Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
+        }
     }
     #endregion
 }

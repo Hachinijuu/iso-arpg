@@ -9,6 +9,7 @@ public class HighPrecisionShot : Ability
     PlayerStats stats;
     ProjectileSource shootSource;
     public float damageMultipler = 1.0f;
+    float damageUptime;
     float damage;
     private int animID = Animator.StringToHash("Ability1");
 
@@ -37,16 +38,17 @@ public class HighPrecisionShot : Ability
             if (projectile != null)
             {
                 e.Hitboxes.Add(projectile);
+                damageUptime = projectile.uptime;
                 projectile.SetDamage(damage);
                 projectile.FireProjectile();
             }
         }
-        PlayerManager.Instance.SetGiveDamage(true);
+        PlayerManager.Instance.SetGiveDamage(true, damageUptime);
     }
 
     public override void EndAbility(AbilityEventArgs e)
     {
-        PlayerManager.Instance.SetGiveDamage(false);
+        PlayerManager.Instance.SetGiveDamage(false, damageUptime);
         base.EndAbility(e);
     }
 }

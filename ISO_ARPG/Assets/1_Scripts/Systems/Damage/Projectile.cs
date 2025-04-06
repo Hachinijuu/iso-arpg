@@ -12,7 +12,7 @@ public class Projectile : Hitbox
 
     [Header("Projectile Settings")]
     [SerializeField] bool pierces;
-    [SerializeField] float uptime;
+    [SerializeField] public float uptime;
     [SerializeField] float speed;
     [SerializeField] bool destroyAfterDone;
 
@@ -52,6 +52,18 @@ public class Projectile : Hitbox
     //         }
     //     }
     // }
+
+    public override void HitBlock()
+    {
+        if (destroyAfterDone)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
     protected override void HandleCollision(Hurtbox hb)
     {
         base.HandleCollision(hb);   // apply damage

@@ -131,7 +131,7 @@ public class RagingSwing : StackAbility
 
         particles.HandleAbility1Particles(true);
 
-        PlayerManager.Instance.SetGiveDamage(true);
+        PlayerManager.Instance.SetGiveDamage(true, 0.75f);
     }
 
     public override void EndAbility(AbilityEventArgs e)
@@ -142,7 +142,7 @@ public class RagingSwing : StackAbility
             animCounter = 0;
         }
         SetDamageDetection(false);
-        PlayerManager.Instance.SetGiveDamage(false);
+        PlayerManager.Instance.SetGiveDamage(false, 0.75f);
     }
 
     #region HELPER FUNCTIONS

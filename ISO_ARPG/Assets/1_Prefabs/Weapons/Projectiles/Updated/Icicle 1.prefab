@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1260777537772316879}
   - component: {fileID: 1964730601004383495}
   - component: {fileID: 7803421755681105388}
-  - component: {fileID: 2820554518690268553}
   m_Layer: 0
   m_Name: Icicle 1
   m_TagString: Untagged
@@ -84,32 +83,13 @@ MonoBehaviour:
   pierces: 0
   uptime: 3
   speed: 65
+  destroyAfterDone: 0
   destructionEffect: {fileID: 3111253671294482354, guid: 72148fbfc21a3604790098056cb2aae8, type: 3}
   explosionRadius: 2
   particleTime: 0.25
   detectionLayer:
     serializedVersion: 2
     m_Bits: 384
---- !u!114 &2820554518690268553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3255630867382275880}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca24199dcbf89b34d8ba92f4e7b7c059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
-  stats: {fileID: 0}
-  chainLimit: 2
-  chainRange: 2.5
-  detectionLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  defaultChain: 1
 --- !u!1001 &3368812096025079365
 PrefabInstance:
   m_ObjectHideFlags: 0

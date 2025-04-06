@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum GoX_Class { NONE, BERSERKER, HUNTER, ELEMENTALIST }
@@ -216,9 +216,25 @@ public class PlayerManager : MonoBehaviour
 
     bool canGiveOnDamage = false;
 
-    public void SetGiveDamage(bool value)
+    public void SetGiveDamage(bool value, float duration)
     {
-        canGiveOnDamage = value;
+        IEnumerator OnDamagedGiver = HandleDamageGiver(duration);
+        if (value)
+        {
+            StartCoroutine(OnDamagedGiver);
+        }
+        else
+        {
+            StopCoroutine(OnDamagedGiver);
+        }
+        //canGiveOnDamage = value;
+    }
+
+    IEnumerator HandleDamageGiver(float duration)
+    {
+        canGiveOnDamage = true;
+        yield return new WaitForSeconds(duration);
+        canGiveOnDamage = false;
     }
 
     public void GiveResourceOnDamage()
@@ -229,6 +245,7 @@ public class PlayerManager : MonoBehaviour
 
         PlayerStats stats = currentPlayer.Stats;
         stats.Mana.Value += stats.ManaOnHit.Value;
+        Debug.Log("[PlayerManager]: Gave " + stats.ManaOnHit.Value + " Mana on hit");
     }
 
     public void GiveResourceOnKill()

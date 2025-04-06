@@ -49,9 +49,12 @@ MonoBehaviour:
   source: {fileID: 0}
   damage: 5
   attackRange: 0.5
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   damageLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 6144
   rb: {fileID: 7453641252691755552}
   pierces: 0
   uptime: 3
