@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05bbe9036cfa4dafa2fe332d5b7d2, type: 3}
   m_Name: 4_Disaster
   m_EditorClassIdentifier: 
-  healthMultiplier: 1
-  damageMultiplier: 1
-  enemyMultipler: 1
-  dropModifiers: []
+  healthMultiplier: 3
+  damageMultiplier: 2.5
+  enemyMultipler: 5
+  dropModifiers:
+  - rarity: 2
+    dropChance: 20
+  - rarity: 3
+    dropChance: 50
+  - rarity: 4
+    dropChance: 30

@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05bbe9036cfa4dafa2fe332d5b7d2, type: 3}
   m_Name: 2_God
   m_EditorClassIdentifier: 
-  healthMultiplier: 1
-  damageMultiplier: 1
-  enemyMultipler: 1
-  dropModifiers: []
+  healthMultiplier: 1.7
+  damageMultiplier: 1.3
+  enemyMultipler: 3
+  dropModifiers:
+  - rarity: 1
+    dropChance: 30
+  - rarity: 2
+    dropChance: 60
+  - rarity: 3
+    dropChance: 10
