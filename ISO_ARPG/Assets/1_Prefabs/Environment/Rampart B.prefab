@@ -9,12 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9090908830312729581}
+  - component: {fileID: 7863272636929205447}
+  - component: {fileID: 599110337542943461}
   m_Layer: 0
   m_Name: Rampart B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &9090908830312729581
 Transform:
@@ -46,6 +48,43 @@ Transform:
   - {fileID: 45491501019091724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7863272636929205447
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108672265467083212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.661335, y: 1, z: 10.327847}
+  m_Center: {x: -0.0072737336, y: 0, z: 0.012130737}
+--- !u!208 &599110337542943461
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108672265467083212}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.335, y: 0.5, z: 5.175}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &493170633083713625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58,6 +97,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (54)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
       value: 140.00003
@@ -68,31 +111,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.35
+      value: -0.30643478
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.668
+      value: 0.408
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.081999
+      value: -3.519908
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7040882
+      value: 0.627818
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.42818323
+      value: -0.5600417
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.17728406
+      value: -0.36471134
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5380421
+      value: 0.39897802
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -128,37 +171,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (46)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140
+      value: 139.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 140.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 139.99998
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.585217
+      value: 0.15769371
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.465151
+      value: 0.2051506
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.429125
+      value: -2.8199263
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.64238054
+      value: 0.5410856
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.47201124
+      value: -0.6017905
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.2766445
+      value: -0.44318318
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5366754
+      value: 0.38556883
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -194,41 +249,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (53)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
       value: 140.00003
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 139.99998
+      value: 139.99995
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.844627
+      value: 0.3131388
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.376185
+      value: 0.11618519
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.515085
+      value: 2.0975666
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.65961593
+      value: 0.5672955
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.47402468
+      value: -0.60211456
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.24170025
+      value: -0.41435254
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.53083754
+      value: 0.37940204
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -264,41 +323,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (35)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140
+      value: 139.99997
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 140.00002
+      value: 140.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 140.00005
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.048676
+      value: -0.059534222
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.461293
+      value: 0.20129299
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.489344
+      value: 4.1933594
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.61256254
+      value: 0.49781287
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4485831
+      value: -0.58603126
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.3295937
+      value: -0.48584694
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.56116694
+      value: 0.41557488
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -334,37 +401,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (51)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00002
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 139.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 139.99998
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.710743
+      value: -0.06766716
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.4561405
+      value: 0.19614029
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20.04463
+      value: 4.84334
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.63793343
+      value: 0.5482464
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.56073517
+      value: -0.6693687
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.23520933
+      value: -0.40212983
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.47253966
+      value: 0.29943812
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -400,41 +479,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (45)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00003
+      value: 140.00009
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 140.00002
+      value: 140.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 140.00003
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.37898
+      value: 0.42342553
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.3314
+      value: 0.07139969
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.051222
+      value: 2.799069
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6264643
+      value: 0.5138938
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4282685
+      value: -0.56821394
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.31974125
+      value: -0.4802137
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.56735724
+      value: 0.42713112
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -470,9 +557,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00005
+      value: 140.00002
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.y
@@ -480,35 +571,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 140.00002
+      value: 139.99997
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.104303
+      value: 0.41099343
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.414008
+      value: 0.15400791
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.122263
+      value: -4.203104
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6389221
+      value: 0.53442985
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.451499
+      value: -0.5862706
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.2887167
+      value: -0.45383206
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5518785
+      value: 0.40584245
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -544,37 +635,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (57)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00003
+      value: 140.00002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 140.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 139.99998
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.874
+      value: -0.0039350092
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.348
+      value: 0.087999344
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.468
+      value: 0.66387904
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6962147
+      value: 0.61177504
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.3568724
+      value: -0.5050343
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.20799385
+      value: -0.3920556
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5870825
+      value: 0.46579403
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -610,37 +713,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (62)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
       value: 140.00002
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 139.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.249943
+      value: 0.1486071
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.474327
+      value: 0.21432686
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.981962
+      value: -2.1734324
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6271217
+      value: 0.51659554
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4342153
+      value: -0.57363456
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.31224078
+      value: -0.47318593
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5662873
+      value: 0.42446157
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -676,37 +787,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (58)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00002
+      value: 140.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 140.00003
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.829975
+      value: 0.06667885
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.520841
+      value: 0.26084042
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.611786
+      value: -5.020804
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.63137835
+      value: 0.5226648
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.43656963
+      value: -0.57516885
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.30507407
+      value: -0.46747229
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5636473
+      value: 0.42127433
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -742,37 +861,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00003
+      value: 140.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 139.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 139.99998
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.432
+      value: -0.5569478
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.832
+      value: 0.57199955
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.021002
+      value: -1.3892504
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70102704
+      value: 0.6307111
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.48122913
+      value: -0.6012445
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.1561398
+      value: -0.34354344
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.50259334
+      value: 0.35026646
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -808,41 +939,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (49)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00003
+      value: 140.00009
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 139.99995
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 140.00002
+      value: 140.00006
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.979
+      value: -0.3830358
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.579
+      value: 0.31900024
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.416998
+      value: -0.81325114
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.62863237
+      value: 0.5191787
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.44532517
+      value: -0.58207315
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.30814224
+      value: -0.4696635
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5581714
+      value: 0.41359478
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -878,37 +1017,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (61)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
+      value: 139.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 140.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
       value: 140.00002
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.444122
+      value: -0.05159393
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.456939
+      value: 0.19693851
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.842524
+      value: 3.435275
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7077156
+      value: 0.6392193
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4277909
+      value: -0.5608298
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.14860484
+      value: -0.33814698
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.54226404
+      value: 0.40314424
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -944,37 +1095,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (37)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
       value: 140.00002
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.532112
+      value: -0.021719128
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.47178
+      value: 0.2117796
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.0478
+      value: 1.336737
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.62623334
+      value: 0.5139087
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.41458797
+      value: -0.55804455
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.31888264
+      value: -0.4793247
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.57815444
+      value: 0.4412845
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1010,37 +1165,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 6305866235150746496, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 140.00002
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 139.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 139.99995
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.154
+      value: 0.10833153
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.36
+      value: 0.09999943
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.809
+      value: -0.043283105
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6414823
+      value: 0.5377591
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.447854
+      value: -0.58321834
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.28556985
+      value: -0.451514
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5535134
+      value: 0.4084198
       objectReference: {fileID: 0}
     - target: {fileID: 6685944677897214266, guid: fb52543d7aad09c4fabfe3c78d22091e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
