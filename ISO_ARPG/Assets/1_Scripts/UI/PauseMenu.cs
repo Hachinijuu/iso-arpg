@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class PauseMenu : MonoBehaviour 
 {
-    [SerializeField] GameObject panel;
+    [SerializeField] public GameObject panel;
     public bool CanPause {get { return canPause; } set { canPause = true; } }
     private bool canPause = true;
 

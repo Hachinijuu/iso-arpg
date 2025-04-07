@@ -350,7 +350,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     void AbilityEnded(Ability ab)
     {
         // Cooldowns will be activated based on key release - DO NOT WANT THIS TO HAPPEN
-
+        if (GameManager.Instance.currGameState == GameManager.GameState.PAUSE) { return; }
         if (ab != null)
         {
             held = false;                       // Key is not held anymore

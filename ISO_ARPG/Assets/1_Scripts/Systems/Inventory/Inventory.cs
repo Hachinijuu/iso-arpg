@@ -337,39 +337,59 @@ public class Inventory : MonoBehaviour
 
     public void ShowInventory()
     {
-        UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
-        // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
-        if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        if (!GameplayUIController.Instance.pauseScreen.panel.activeInHierarchy)
         {
-            GameplayUIController.Instance.HideSmith();
+            UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
+            // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
+            if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+            {
+                GameplayUIController.Instance.HideSmith();
+            }
+            HandlePause();
         }
-        HandlePause();
+
+        // UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
+        // // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
+        // if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        // {
+        //     GameplayUIController.Instance.HideSmith();
+        // }
+        // HandlePause();
     }
     public void ShowCharacterScreen()
     {
-        if (!GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        if (!GameplayUIController.Instance.pauseScreen.panel.activeInHierarchy)
         {
-            UIUtility.ToggleUIElementShift(statsScreen);
-            HandlePause();
+            if (!GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+            {
+                UIUtility.ToggleUIElementShift(statsScreen);
+                HandlePause();
+            }
         }
     }
 
     public void ShowInventory(bool value)
     {
-        UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
-        // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
-        if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        if (!GameplayUIController.Instance.pauseScreen.panel.activeInHierarchy)
         {
-            GameplayUIController.Instance.HideSmith();
+            UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
+            // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
+            if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+            {
+                GameplayUIController.Instance.HideSmith();
+            }
+            HandlePause();
         }
-        HandlePause();
     }
     public void ShowCharacterScreen(bool value)
     {
-        if (!GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+        if (!GameplayUIController.Instance.pauseScreen.panel.activeInHierarchy)
         {
-            UIUtility.ToggleUIElementShift(statsScreen);
-            HandlePause();
+            if (!GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)
+            {
+                UIUtility.ToggleUIElementShift(statsScreen);
+                HandlePause();
+            }
         }
     }
 

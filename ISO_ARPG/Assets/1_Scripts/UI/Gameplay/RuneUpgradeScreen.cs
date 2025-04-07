@@ -84,7 +84,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             //rune = RuneSystem.Instance.RollRune(rune, rune.rarity);
             // The rune in the slot should be upgraded
         }
-        upgradeCost = CalculateCost();
+        //upgradeCost = CalculateCost();
     }
     public void UpdateGhostRune()
     {
