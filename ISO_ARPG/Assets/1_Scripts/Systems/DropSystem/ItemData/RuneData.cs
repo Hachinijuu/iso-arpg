@@ -189,7 +189,7 @@ public class RuneData : ItemData
                 {
                     if (ts.type == stat.type)
                     {
-                        ts.Value -= stat.Value;
+                        //ts.Value -= stat.Value;
                         ts.MaxValue -= stat.MaxValue;
                         Debug.Log("[Runes]: Removed " + stat.Value + " " + stat.type);
                     }
