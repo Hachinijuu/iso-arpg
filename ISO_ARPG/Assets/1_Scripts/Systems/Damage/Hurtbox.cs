@@ -18,6 +18,8 @@ public class Hurtbox : MonoBehaviour
     public delegate void OnDamaged(float value);
     public OnDamaged onDamaged;
     private void FireOnDamaged(float value) { if (onDamaged != null) { onDamaged(value); } }
+
+    //Rigidbody rb;
     #endregion
     #region UNITY FUNCTIONS
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class Hurtbox : MonoBehaviour
                 DropSystem.Instance.RegisterDestructibleDrop(stats);
             //Debug.Log("Registered to drop system");
         }
+        //rb = GetComponent<Rigidbody>();
     }
     #endregion
     #region FUNCTIONALITY
@@ -94,9 +97,14 @@ public class Hurtbox : MonoBehaviour
     public virtual void HandleKnockback(DamageArgs args)
     {
         if (!applyKnockback || args.source == null) { return; }    // If you cannot knockback, or the source of the damage is null, return
+        // Rigidbody rb = GetComponent<Rigidbody>();
+        // if (rb != null)
+        // {
+        //     rb.AddForce(dir * knockbackForce * Time.deltaTime);
+        // }  
         Vector3 dir = (transform.position - args.source.transform.position);    // my position - where was the damage from
         dir.y = 0;
-        transform.position += dir * knockbackForce * Time.deltaTime;
+        transform.position += dir * knockbackForce; // * Time.deltaTime;
     }
     #endregion
 

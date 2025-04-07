@@ -6,7 +6,7 @@ public class ChestInteract : InteractableObject
 {
     [SerializeField] EntityStats stats;
     [SerializeField] Animator chestAnimator;
-    static string chestTrigger = "OpenChest";
+    static string chestTrigger = "OnInteract";
     static int chestAnimID = Animator.StringToHash(chestTrigger);
 
     public void Awake()

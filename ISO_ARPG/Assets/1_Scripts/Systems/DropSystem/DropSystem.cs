@@ -123,7 +123,7 @@ public class DropSystem : MonoBehaviour
     {
         EntityStats stats = go.GetComponent<EntityStats>();
         CheckDrop(stats, true);
-        FadeObject(go);
+        //FadeObject(go);
     }
 
     public void FadeObject(GameObject source)

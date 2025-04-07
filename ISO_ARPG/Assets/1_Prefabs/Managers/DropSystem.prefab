@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4987536186815281306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4276148251741983807}
+  - component: {fileID: 3528815314724430712}
+  m_Layer: 0
+  m_Name: DropSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4276148251741983807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4987536186815281306}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3528815314724430712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4987536186815281306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dcf81f50abc664080e987c8b08e48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupPanel: {fileID: 0}
+  popupPrefab: {fileID: 910378141600749511, guid: 9e0b1e1ee4a04c44b91e9188a1d9d2bf, type: 3}
+  destroyTime: 0.25
+  dropTables:
+  - {fileID: 11400000, guid: 1e36b00058fe79545a39e10d5c02f5e0, type: 2}
+  - {fileID: 11400000, guid: 5fff5225a2bab924eace2fbc4df34b4c, type: 2}
+  - {fileID: 11400000, guid: e46dec1de0f5943479bde653f76cd05d, type: 2}
+  destructionParticles:
+  - {fileID: 1209941290443649877, guid: 61032362699115f49a53641c8273bbbe, type: 3}
+  - {fileID: 9156644003663617846, guid: 34b2b980e2826bb4fa94ca8f9e9868ce, type: 3}
+  - {fileID: 1623036369095217591, guid: 8d3ca53ad5ed3f3488abe3286913e7ba, type: 3}
+  - {fileID: 1209941290443649877, guid: ad36b5ca25c4932429b6586147c6be94, type: 3}
+  - {fileID: 1209941290443649877, guid: 3eac2f0ff074fad489018eb7e2381684, type: 3}
+  objectFadeRate: 0.25
