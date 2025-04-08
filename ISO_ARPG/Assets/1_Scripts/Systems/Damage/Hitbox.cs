@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public struct DamageArgs
@@ -130,6 +131,8 @@ public class Hitbox : MonoBehaviour
         CritCalculation();
         if (!hb.Stats.isDead)
         {
+            if (hb.GetComponent<AttackMarker>() != null) { return; }
+            hb.AddComponent<AttackMarker>();
             DamageArgs args = GetArgs(hb);
             hb.TakeDamage(args);
             Debug.Log("[HitboxSource]: Dealt " + args.amount);

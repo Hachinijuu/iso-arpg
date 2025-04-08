@@ -155,7 +155,7 @@ public class RagingSwing : StackAbility
         {
             for (int i = 0; i < hitboxes.Length; i++)
             {
-                hitboxes[i].AllowDamageForTime(0.75f);
+                hitboxes[i].AllowDamageForTime(0.75f, true);
                 hitboxes[i].SetDamage(damage);
             }
         }

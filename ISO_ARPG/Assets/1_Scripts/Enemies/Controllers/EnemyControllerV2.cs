@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class EnemyControllerV2 : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class EnemyControllerV2 : MonoBehaviour
     private Vector3 destination;
     public Vector3 Destination { get {return destination; } set {destination = value; } }
 
+    //public Collider collider;
+
     private NavMeshAgent agent;
 
     #region Initalization
@@ -106,6 +109,9 @@ public class EnemyControllerV2 : MonoBehaviour
         isDead = false;
         hurtbox.applyKnockback = true;
 
+        GetComponent<Collider>().enabled = true;
+        despawnHandler = null;
+
         if (currState == null && states != null)
         {
             if (states.stateMap.Count > 0)
@@ -150,12 +156,26 @@ public class EnemyControllerV2 : MonoBehaviour
 
             // Simple, do not diable the agent, let the agent play the animation and then disable afterwards
             int animValue = Random.Range(1, 3);    // Max exclusive upper 1 - 2
+            GetComponent<Collider>().enabled = false;
             animator.SetInteger("Death", animValue);
+            if (despawnHandler == null)
+            { 
+                despawnHandler = StartCoroutine(WaitForDespawn());
+            }
+            
             return;
             // Animation event on the end to cleanup entity
             //this.enabled = false;   // disable the script
             //gameObject.SetActive(false);    // Disable the agent
         }
+    }
+
+    public static float despawnTime = 5.0f;
+    Coroutine despawnHandler;
+    public IEnumerator WaitForDespawn()
+    {
+        yield return new WaitForSeconds(despawnTime);
+        gameObject.SetActive(false);
     }
     public void OnDamaged()
     {
