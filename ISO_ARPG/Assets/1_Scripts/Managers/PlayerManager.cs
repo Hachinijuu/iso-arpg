@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum GoX_Class { NONE, BERSERKER, HUNTER, ELEMENTALIST }
@@ -9,6 +10,7 @@ public enum GoX_Body { ONE, TWO }
 public struct CharacterPair
 {
     public GoX_Class Guardian;
+    public GoX_Body Body;
     public PlayerController Character;
 }
 
@@ -53,8 +55,8 @@ public class PlayerManager : MonoBehaviour
     public event MovementChanged OnMovementChanged;
     public void FireMovementChanged() { if (OnMovementChanged != null) OnMovementChanged(); }
     [SerializeField] HUDController HUD;
-    public List<CharacterPair> characters;
-    public Dictionary<GoX_Class, PlayerController> playableCharacters;
+    public CharacterPair[] playableCharacters;
+    //public Dictionary<GoX_Class, PlayerController> playableCharacters;
     public GoX_Class currentClass;
     public PlayerController currentPlayer;
 
@@ -162,33 +164,39 @@ public class PlayerManager : MonoBehaviour
     public void Start()
     {
         Debug.Log("[PlayerManager]: Loading characters into gameplay");
-        if (characters != null)
-        {
-            if (playableCharacters == null)
-                playableCharacters = new Dictionary<GoX_Class, PlayerController>();
-            foreach (CharacterPair c in characters)
-            {
-                playableCharacters.Add(c.Guardian, c.Character);
-                c.Character.InitializePlayer();
-                Debug.Log("[PlayerManager]: Loaded " + c.Character.Stats.Class.entityName + " as a playable character");
-                if (c.Character.gameObject.activeInHierarchy)
-                {
-                    c.Character.gameObject.SetActive(false);
-                }
+        // if (characters != null)
+        // {
+        //     if (playableCharacters == null)
+        //         playableCharacters = new Dictionary<GoX_Class, PlayerController>();
+        //     foreach (CharacterPair c in characters)
+        //     {
+        //         playableCharacters.Add(c.Guardian, c.Character);
+        //         c.Character.InitializePlayer();
+        //         Debug.Log("[PlayerManager]: Loaded " + c.Character.Stats.Class.entityName + " as a playable character");
+        //         if (c.Character.gameObject.activeInHierarchy)
+        //         {
+        //             c.Character.gameObject.SetActive(false);
+        //         }
 
-                // How to account for male / female variations?
-                // Add more GoX_Classes? Add gender to player controller?
-            }
-        }
+        //         // How to account for male / female variations?
+        //         // Add more GoX_Classes? Add gender to player controller?
+        //     }
+        // }
 
-        if (playableCharacters != null && playableCharacters.Count > 0)
+        if (playableCharacters != null && playableCharacters.Length > 0)
         {
-            foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+            foreach (CharacterPair pair in playableCharacters)
             {
-                PlayerStats stats = pair.Value.Stats;
+                PlayerStats stats = pair.Character.Stats;
+                pair.Character.InitializePlayer();
                 //pair.valu.InitializePlayer();
                 stats.OnDied += context => { HandleDeath(); };
                 Debug.Log("Added death listeners");
+                Debug.Log("[PlayerManager]: Loaded " + pair.Character.Stats.Class.entityName + " as a playable character");
+                if (pair.Character.gameObject.activeInHierarchy)
+                {
+                    pair.Character.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -281,13 +289,19 @@ public class PlayerManager : MonoBehaviour
 
     public void OnDisable()
     {
-        if (playableCharacters != null && playableCharacters.Count > 0)
+        if (playableCharacters != null && playableCharacters.Length > 0)
         {
-            foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+            foreach (CharacterPair pair in playableCharacters)
             {
-                PlayerStats stats = pair.Value.Stats;
+                PlayerStats stats = pair.Character.Stats;
                 stats.OnDied -= context => { HandleDeath(); };
             }
+
+            // foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+            // {
+            //     PlayerStats stats = pair.Value.Stats;
+            //     stats.OnDied -= context => { HandleDeath(); };
+            // }
         }
     }
     public void HandleDeath()
@@ -305,20 +319,59 @@ public class PlayerManager : MonoBehaviour
         EnableCharacters(false);
     }
 
-    public void SetPlayer(GoX_Class toActivate)
+    public void SetPlayer(GoX_Class toActivate, GoX_Body bodyId)
     {
-        playableCharacters.TryGetValue(toActivate, out PlayerController controller);
+        foreach (CharacterPair pair in playableCharacters)
+        {
+            if (pair.Guardian == toActivate && pair.Body == bodyId)
+            {
+                currentClass = pair.Guardian;
+                currentPlayer = pair.Character;
+                SetShaderColor();
+                break;
+            }
+        }
+        // playableCharacters.TryGetValue(toActivate, out PlayerController controller);
+        // if (controller != null)
+        // {
+        //     currentClass = toActivate;
+        //     currentPlayer = controller;
+        //     SetShaderColor();
+        // }
+    }
+
+    public void ActivatePlayer()
+    {
+        PlayerController controller = currentPlayer;
         if (controller != null)
         {
-            currentClass = toActivate;
-            currentPlayer = controller;
-            SetShaderColor();
+            foreach (CharacterPair pair in playableCharacters)
+            {
+                if (pair.Guardian != currentClass && pair.Character.gameObject.activeInHierarchy)
+                {
+                    pair.Character.gameObject.SetActive(false);
+                    pair.Character.EnablePlayer(false);
+                }
+            }
+            PlayerSelectionArgs arg = new PlayerSelectionArgs(currentClass, currentPlayer);
+            FirePlayerChanged(arg);
         }
     }
-    public void ActivatePlayer(GoX_Class toActivate)
+    public void ActivatePlayer(GoX_Class toActivate, GoX_Body bodyId)
     {
         // Given the class passed to this fuction, see which character should be activated
-        playableCharacters.TryGetValue(toActivate, out PlayerController controller);
+
+        PlayerController controller = null;
+        foreach (CharacterPair pair in playableCharacters)
+        {
+            if (pair.Guardian == toActivate && pair.Body == bodyId)
+            {
+                controller = pair.Character;
+                break;
+            }
+        }
+
+        //playableCharacters.TryGetValue(toActivate, out PlayerController controller);
         if (controller != null)
         {
             if (!controller.gameObject.activeInHierarchy)
@@ -336,12 +389,12 @@ public class PlayerManager : MonoBehaviour
                 //}
                 //HUD.SetPlayer(currentPlayer);
             }
-            foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+            foreach (CharacterPair pair in playableCharacters)
             {
-                if (pair.Key != currentClass && pair.Value.gameObject.activeInHierarchy)
+                if (pair.Guardian != currentClass && pair.Character.gameObject.activeInHierarchy)
                 {
-                    pair.Value.gameObject.SetActive(false);
-                    pair.Value.EnablePlayer(false);
+                    pair.Character.gameObject.SetActive(false);
+                    pair.Character.EnablePlayer(false);
                 }
             }
             PlayerSelectionArgs arg = new PlayerSelectionArgs(currentClass, currentPlayer);
@@ -354,10 +407,16 @@ public class PlayerManager : MonoBehaviour
     // (Don't want to have all the characters enabled at once)
     public void EnableCharacters(bool on)
     {
-        foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+        // foreach (KeyValuePair<GoX_Class, PlayerController> pair in playableCharacters)
+        // {
+        //     pair.Value.EnablePlayer(on);
+        //     pair.Value.gameObject.SetActive(on);
+        // }
+
+        foreach (CharacterPair pair in playableCharacters)
         {
-            pair.Value.EnablePlayer(on);
-            pair.Value.gameObject.SetActive(on);
+            pair.Character.EnablePlayer(on);
+            pair.Character.gameObject.SetActive(on);
         }
     }
 

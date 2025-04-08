@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask moveMask;
     [SerializeField] int raycastLength = 50;
     [SerializeField] GameObject characterBody;  // This refers to the bones in this case
-    [SerializeField] Rigidbody body;
+    //[SerializeField] Rigidbody body;
 
     // Classes
     PlayerInput input;

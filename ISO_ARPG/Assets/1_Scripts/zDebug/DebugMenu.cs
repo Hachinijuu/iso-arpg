@@ -215,7 +215,7 @@ public class DebugMenu : MonoBehaviour
                 Hurtbox hb = playerHurtbox[i];
                 if (hb == null)
                 {
-                    hb = PlayerManager.Instance.characters[i].Character.GetComponent<Hurtbox>();
+                    hb = PlayerManager.Instance.playableCharacters[i].Character.GetComponent<Hurtbox>();
                 }
                 if (hb != null)
                 {

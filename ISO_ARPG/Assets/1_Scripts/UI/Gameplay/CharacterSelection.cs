@@ -78,13 +78,21 @@ public class CharacterSelection : MonoBehaviour
         for (int i = 0; i < bodies.Count; i++)
         {
             bodies[i].mainBody.SetActive(false);
+            bodies[i].altBody.SetActive(false);
         }
         //foreach (BodySelection body in bodies)
         //{
         //    body.mainBody.SetActive(false);
         //}
 
-        bodies[index].mainBody.SetActive(true);
+        if (bodySelection == 0)
+        {
+            bodies[index].mainBody.SetActive(true);
+        }
+        else
+        {
+            bodies[index].altBody.SetActive(true);
+        }
 
         if (source != null)
         {
@@ -94,8 +102,9 @@ public class CharacterSelection : MonoBehaviour
     }
     public void BerserkerClicked()
     {
+        bodySelection = 0;
         currentClass = GoX_Class.BERSERKER;
-        PlayerManager.Instance.SetPlayer(currentClass);
+        PlayerManager.Instance.SetPlayer(currentClass, (GoX_Body)bodySelection);
         // Change the UI to display berserker information
         if (!debugSelection)
         {
@@ -105,8 +114,9 @@ public class CharacterSelection : MonoBehaviour
     }
     public void HunterClicked()
     {
+        bodySelection = 0;
         currentClass = GoX_Class.HUNTER;
-        PlayerManager.Instance.SetPlayer(currentClass);
+        PlayerManager.Instance.SetPlayer(currentClass, (GoX_Body)bodySelection);
 
         // Change the UI to display hunter information
         //ClassClicked(GoX_Class.HUNTER);
@@ -117,10 +127,13 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
+    public int bodySelection = 0;
+
     public void ElementalistClicked()
     {
+        bodySelection = 0;
         currentClass = GoX_Class.ELEMENTALIST;
-        PlayerManager.Instance.SetPlayer(currentClass);
+        PlayerManager.Instance.SetPlayer(currentClass, (GoX_Body)bodySelection);
 
         // Change the UI to display elementalist information
         //ClassClicked(GoX_Class.ELEMENTALIST);
@@ -133,12 +146,24 @@ public class CharacterSelection : MonoBehaviour
 
     public void ConfirmClicked()
     {
-        PlayerManager.Instance.ActivatePlayer(currentClass);    // This transitions into gameplay activation
+        //PlayerManager.Instance.ActivatePlayer(currentClass, GoX_Body.ONE);    // This transitions into gameplay activation
+        PlayerManager.Instance.ActivatePlayer();
         if (!debugSelection)
         {
             GameManager.Instance.LoadLevelByID(GameManager.eLevel.CUTSCENE);
         }
         //ShowCharacterSelection(false);
+    }
+
+    public void AltArrowClicked()
+    {
+        bodySelection++;
+        if (bodySelection == 2)
+        {
+            bodySelection = 0;
+        }
+        SetGhostCharacter();
+        PlayerManager.Instance.SetPlayer(currentClass, (GoX_Body)bodySelection);
     }
     public void ShowCharacterSelection(bool value)
     {
