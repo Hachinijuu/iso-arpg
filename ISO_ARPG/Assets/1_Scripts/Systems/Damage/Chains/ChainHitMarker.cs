@@ -18,10 +18,13 @@ public class ChainHitMarker : MonoBehaviour
         chainID = id;
     }
 
+
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.alignment = TextAnchor.MiddleCenter;
         Handles.Label(transform.position, "ChainID: " + chainID.ToString(), style);
     }
+#endif
 }
