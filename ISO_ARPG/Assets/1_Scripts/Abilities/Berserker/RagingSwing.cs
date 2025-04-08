@@ -12,7 +12,7 @@ public class RagingSwing : StackAbility
     ProjectileSource shootSource;
     PlayerParticleHandler particles;
     
-    public float checkOnHitWindow = 1.5f;
+    public float checkOnHitWindow = 0.5f;
     //public float damageMultipler = 1.0f;
     float damage;
     GameObject body;
@@ -138,7 +138,7 @@ public class RagingSwing : StackAbility
         //throw new System.NotImplementedException();
 
         //particles.HandleAbility1Particles(true);
-        particles.PlayParticlesFor(checkOnHitWindow);
+        particles.StartParticlesFor(checkOnHitWindow);
         PlayerManager.Instance.SetGiveDamage(true, checkOnHitWindow);
     }
 

@@ -67,7 +67,10 @@ public class SaveSystem : MonoBehaviour
         if (!Directory.Exists(savePath))
             Directory.CreateDirectory(savePath);
 
-        UpdateInventoryData();
+        if (Inventory.Instance != null)
+        { 
+            UpdateInventoryData();
+        }
 
 
         // Instead of saving a new slot, use an existing slot if ID exists
@@ -76,7 +79,7 @@ public class SaveSystem : MonoBehaviour
         string saveFile = currentProfile.SavePlayerProfile();
         string saveID = savePath + "Save" + currentProfile.saveID.ToString() + ".dat";
         StreamWriter saveStream = new StreamWriter(saveID, true);
-        saveStream.Write(saveFile);
+        saveStream.WriteLine(saveFile);
         saveStream.Close();
         Debug.Log("Saved: " + saveFile + "\n To: " + savePath);
     }
@@ -133,6 +136,7 @@ public class SaveSystem : MonoBehaviour
         currentProfile.gameData = new PlayerGameData();
         currentProfile.inventoryData = new InventoryData();
         saveCounter++;
+        SaveProfile();
     }
 
 

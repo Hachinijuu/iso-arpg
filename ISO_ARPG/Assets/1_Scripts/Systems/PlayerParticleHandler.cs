@@ -22,7 +22,7 @@ public class PlayerParticleHandler : MonoBehaviour
     { 
         StartCoroutine(PlayParticlesFor(timeFor));
     }
-
+    
     public IEnumerator PlayParticlesFor(float timeFor)
     {
         HandleAbility1Particles(true);

@@ -55,11 +55,11 @@ public class Inventory : MonoBehaviour
     public Dictionary<RuneData, int> GetEquippedItems()
     {
         Dictionary<RuneData, int> list = new Dictionary<RuneData, int>();
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < runeSlots.Length; i++)
         {
-            if (slots[i].HasItem)
+            if (runeSlots[i].HasItem)
             {
-                RuneData rune = slots[i].item as RuneData;
+                RuneData rune = runeSlots[i].item as RuneData;
                 list.Add(rune, i);
             }
         }
