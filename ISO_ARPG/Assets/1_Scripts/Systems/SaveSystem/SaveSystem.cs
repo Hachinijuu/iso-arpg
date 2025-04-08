@@ -20,6 +20,18 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    public void Awake()
+    {
+        saveCounter = 0;
+
+        // Load the characters
+
+        if (playerSaves != null && playerSaves.Length > 0)
+        { 
+            saveCounter = playerSaves.Length;
+        }
+    }
+
     public PlayerProfile[] playerSaves;
     public string[] saveFiles;
 
@@ -34,7 +46,8 @@ public class SaveSystem : MonoBehaviour
 
         // do a string write containing the profile data
     }
-    
+
+    int saveCounter;
     public void LoadProfiles()
     {
         // Loads all the files at the filepath
@@ -56,9 +69,13 @@ public class SaveSystem : MonoBehaviour
 
         UpdateInventoryData();
 
+
+        // Instead of saving a new slot, use an existing slot if ID exists
+        // Each save is it's own files
+
         string saveFile = currentProfile.SavePlayerProfile();
-        //
-        StreamWriter saveStream = new StreamWriter(savePath + "file.txt", true);
+        string saveID = "Save" + currentProfile.saveID.ToString();
+        StreamWriter saveStream = new StreamWriter(savePath + ".dat", true);
         saveStream.WriteLine(saveFile);
         saveStream.Close();
         Debug.Log("Saved: " + saveFile + "\n To: " + savePath);
@@ -105,10 +122,12 @@ public class SaveSystem : MonoBehaviour
         currentProfile = currentProfile.LoadPlayerProfile(saveData);
     }
 
-    public void CreateNewProfile()
+    public void CreateNewProfile(string name = "test")
     {
         Debug.LogWarning("Created a new profile");
         currentProfile = new PlayerProfile();
+        currentProfile.name = name;
+        currentProfile.saveID = saveCounter;
         currentProfile.difficulty = GameManager.Instance.currDifficulty.difficulty;
         currentProfile.character = PlayerManager.Instance.currentCharacter;
         currentProfile.gameData = new PlayerGameData();

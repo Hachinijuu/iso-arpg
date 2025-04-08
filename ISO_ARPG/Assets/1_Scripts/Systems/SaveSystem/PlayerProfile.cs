@@ -7,6 +7,8 @@ public class PlayerProfile
 {
     //public GoX_Class playerClass;
     //public GoX_Body body;
+    public int saveID;
+    public string name;
     public CharacterPair character;
     public GoX_Difficulties difficulty;
     

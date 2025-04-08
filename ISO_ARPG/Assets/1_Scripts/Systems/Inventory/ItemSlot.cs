@@ -26,6 +26,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (data != null)
         {
             // Setup the image
+            Inventory.Instance.Items.Remove(data);
             Color c = Color.white;
             c.a = 1.0f;
             image.sprite = data.itemIcon;

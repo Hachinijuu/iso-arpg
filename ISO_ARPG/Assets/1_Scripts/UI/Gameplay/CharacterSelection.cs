@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ public class CharacterSelection : MonoBehaviour
 
     // Once the character has been confirmed
     // Then handle the gameplay transition
+    [SerializeField] TMP_InputField characterName;
 
     public GoX_Class currentClass;
 
@@ -70,7 +72,6 @@ public class CharacterSelection : MonoBehaviour
         source = GameManager.Instance.GlobalAudio;
         BerserkerClicked(); // Sets the default character
     }
-
     public void SetGhostCharacter()
     {
         int index = (int)currentClass - 1;
@@ -148,7 +149,17 @@ public class CharacterSelection : MonoBehaviour
     {
         //PlayerManager.Instance.ActivatePlayer(currentClass, GoX_Body.ONE);    // This transitions into gameplay activation
         PlayerManager.Instance.ActivatePlayer();
-        SaveSystem.Instance.CreateNewProfile();
+
+        // If there is no name, prompt them to select a name (name popup)
+
+        if (characterName != null)
+        {
+            SaveSystem.Instance.CreateNewProfile(characterName.text);
+        }
+        else
+        {
+            SaveSystem.Instance.CreateNewProfile(); // No name, default
+        }
         if (!debugSelection)
         {
             GameManager.Instance.LoadLevelByID(GameManager.eLevel.CUTSCENE);
