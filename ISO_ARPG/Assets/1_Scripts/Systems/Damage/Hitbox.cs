@@ -79,6 +79,8 @@ public class Hitbox : MonoBehaviour
         Debug.Log("Early eject the hit");
     }
 
+    public string[] hitblockers;
+
     // This is different from handle HITS, it will early return after the collision has been accounted for
     public virtual void HandleHit()
     {
@@ -87,11 +89,20 @@ public class Hitbox : MonoBehaviour
         //Debug.Log(hitColliders.Length);
         foreach (Collider hit in hitColliders)
         {
-            if (hit.gameObject.CompareTag("Obstacle"))
+            foreach (string s in hitblockers)
             {
-                HitBlock();
-                return;
+                if (hit.gameObject.CompareTag(s))
+                {
+                    HitBlock();
+                    return;
+                }
             }
+
+            //if (hit.gameObject.CompareTag("Obstacle"))
+            //{
+            //    HitBlock();
+            //    return;
+            //}
             //Debug.Log(hit.transform.name);
             Hurtbox hb = hit.GetComponent<Hurtbox>();
             if (hb != null)
