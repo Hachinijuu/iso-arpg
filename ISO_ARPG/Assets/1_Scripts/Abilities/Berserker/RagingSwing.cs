@@ -137,8 +137,8 @@ public class RagingSwing : StackAbility
         //Debug.Log("Raging Swing");
         //throw new System.NotImplementedException();
 
-        particles.HandleAbility1Particles(true);
-
+        //particles.HandleAbility1Particles(true);
+        particles.PlayParticlesFor(checkOnHitWindow);
         PlayerManager.Instance.SetGiveDamage(true, checkOnHitWindow);
     }
 

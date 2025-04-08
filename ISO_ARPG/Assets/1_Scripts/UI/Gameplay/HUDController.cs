@@ -102,6 +102,43 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    public void OpenCharacter()
+    {
+        //GameplayUIController.Instance.statsScreen.SetActive(true);
+        if (GameplayUIController.Instance.statsScreen.activeInHierarchy)
+        { 
+            GameplayUIController.Instance.statsScreen.SetActive(false);
+        }
+        {
+            GameplayUIController.Instance.statsScreen.SetActive(true);
+        }
+    }
+
+    public void OpenInventory()
+    { 
+        //GameplayUIController.Instance.inventoryScreen.SetActive(true);
+        if (GameplayUIController.Instance.inventoryScreen.activeInHierarchy)
+        {
+            GameplayUIController.Instance.inventoryScreen.SetActive(false);
+        }
+        {
+            GameplayUIController.Instance.inventoryScreen.SetActive(true);
+        }
+    }
+
+    public void OpenSettings()
+    { 
+        //GameplayUIController.Instance.settings.settingsScreen.SetActive(true);
+        //GameplayUIController.Instance.settings.SetActive(true);
+        if (GameplayUIController.Instance.settings.settingsScreen.activeInHierarchy)
+        {
+            GameplayUIController.Instance.settings.settingsScreen.SetActive(false);
+        }
+        {
+            GameplayUIController.Instance.settings.settingsScreen.SetActive(true);
+        }
+    }
+
     // EVENT MAPPING
     private void AddEventListeners()
     {

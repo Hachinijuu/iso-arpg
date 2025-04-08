@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerParticleHandler : MonoBehaviour
 {
@@ -15,6 +16,18 @@ public class PlayerParticleHandler : MonoBehaviour
                 particle.SetActive(on);
             }
         }
+    }
+
+    public void StartParticlesFor(float timeFor)
+    { 
+        StartCoroutine(PlayParticlesFor(timeFor));
+    }
+
+    public IEnumerator PlayParticlesFor(float timeFor)
+    {
+        HandleAbility1Particles(true);
+        yield return new WaitForSeconds(timeFor);
+        HandleAbility2Particles(false);
     }
 
     public void HandleAbility2Particles(bool on)
