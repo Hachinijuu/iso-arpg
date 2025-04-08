@@ -7,6 +7,7 @@ public enum GoX_Difficulties { MORTAL, DEMIGOD, GOD, DEITY, DISASTER }
 [CreateAssetMenu(fileName = "Difficulty", menuName = "sykcorSystems/Difficulty", order = 1)]
 public class DifficultySetting : ScriptableObject
 {
+    public GoX_Difficulties difficulty;
     public float healthMultiplier = 1.0f;
     public float damageMultiplier = 1.0f;
     public float enemyMultipler = 1.0f;

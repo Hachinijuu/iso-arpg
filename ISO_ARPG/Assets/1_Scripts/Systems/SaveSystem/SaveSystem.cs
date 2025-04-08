@@ -38,7 +38,7 @@ public class SaveSystem : MonoBehaviour
         //foreach (string filePath in )
     }
 
-    PlayerProfile currentProfile;
+    public PlayerProfile currentProfile;
 
     public void SaveProfile()
     {
@@ -50,5 +50,15 @@ public class SaveSystem : MonoBehaviour
     {
         // Loads the current profile into game data
         currentProfile = currentProfile.LoadPlayerProfile(saveData);
+    }
+
+    public void CreateNewProfile()
+    {
+        Debug.LogWarning("Created a new profile");
+        currentProfile = new PlayerProfile();
+        currentProfile.difficulty = GameManager.Instance.currDifficulty.difficulty;
+        currentProfile.character = PlayerManager.Instance.currentCharacter;
+        currentProfile.gameData = new PlayerGameData();
+        currentProfile.inventoryData = new InventoryData();
     }
 }

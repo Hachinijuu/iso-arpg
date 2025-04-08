@@ -5,8 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerProfile
 {
-    public GoX_Class playerClass;
-    public GoX_Body body;
+    //public GoX_Class playerClass;
+    //public GoX_Body body;
+    public CharacterPair character;
     public GoX_Difficulties difficulty;
     
     // Need to know the ID of the identity skill to preload
