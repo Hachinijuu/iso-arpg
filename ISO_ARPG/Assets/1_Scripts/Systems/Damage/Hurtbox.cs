@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
@@ -94,6 +95,7 @@ public class Hurtbox : MonoBehaviour
     }
 
     [SerializeField] float knockbackForce = 1.0f;
+    [SerializeField] float knockbackTime = 0.5f;
     public virtual void HandleKnockback(DamageArgs args)
     {
         if (!applyKnockback || args.source == null) { return; }    // If you cannot knockback, or the source of the damage is null, return
@@ -102,9 +104,34 @@ public class Hurtbox : MonoBehaviour
         // {
         //     rb.AddForce(dir * knockbackForce * Time.deltaTime);
         // }  
+        //applyKnockback = false;
         Vector3 dir = (transform.position - args.source.transform.position);    // my position - where was the damage from
-        dir.y = 0;
-        transform.position += dir * knockbackForce; // * Time.deltaTime;
+        dir.y = 0.0f;
+        if (knockback != null)
+        {
+            StopCoroutine(knockback);
+        }
+        knockback = StartCoroutine(ApplyKnockback(dir));
+        //dir.y = 0;
+        //transform.position += dir * knockbackForce; // * Time.deltaTime;
+    }
+
+    Coroutine knockback;
+
+    IEnumerator ApplyKnockback(Vector3 dir)
+    {
+        float timer = 0.0f;
+        Vector3 start = transform.position;
+        Vector3 end = start + dir * knockbackForce;
+        while (timer < knockbackTime)
+        {
+            float offset = timer / knockbackTime;
+            transform.position = Vector3.Lerp(start, end, offset);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = end;
+        //applyKnockback = true;
     }
     #endregion
 

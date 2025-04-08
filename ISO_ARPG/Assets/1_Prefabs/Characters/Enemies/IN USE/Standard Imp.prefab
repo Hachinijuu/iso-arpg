@@ -1092,7 +1092,6 @@ GameObject:
   - component: {fileID: 1081736335433214754}
   - component: {fileID: 9169883723987307114}
   - component: {fileID: -109464226449069674}
-  - component: {fileID: 9180830173336994752}
   m_Layer: 7
   m_Name: Standard Imp
   m_TagString: Enemy
@@ -1165,7 +1164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 750419005341385754}
   applyKnockback: 1
-  knockbackForce: 0.5
+  knockbackForce: 1.5
+  knockbackTime: 0.5
 --- !u!114 &750419005341385754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,33 +1247,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
---- !u!54 &9180830173336994752
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2503497217363545633}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &2780024520403227889
 GameObject:
   m_ObjectHideFlags: 0

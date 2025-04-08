@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class CombatFeedbackManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public AudioSource audioSource;
+    
 
-    // Update is called once per frame
-    void Update()
+    public void PlayHitSounds()
     {
-        
+
     }
 }
