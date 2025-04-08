@@ -82,6 +82,12 @@ public class SavedItemData
     // Save the unique information of the RUNE / ITEM
     public int ItemID;
     public ItemRarity rarity;
+
+    public virtual void GetDataFromItem(ItemData item)
+    {
+        ItemID = item.ITEM_ID;
+        rarity = item.rarity;
+    }
     public SavedItemData LoadItemData(string jsonData)
     {
         return JsonUtility.FromJson<SavedRuneData>(jsonData);
@@ -95,11 +101,24 @@ public class SavedItemData
 
 public class SavedRuneData : SavedItemData
 {
-    public GearSlotType gearSlot;
-    public RuneType runeType;
     public MainStat[] mainStats;
     public TrackedStat[] trackedStats;
     public SubStat[] subStats;
+    public int itemSlot;
+    public override void GetDataFromItem(ItemData item)
+    {
+        base.GetDataFromItem(item);
+        RuneData rune = item as RuneData;
+        mainStats = rune.mainStat;
+        trackedStats = rune.trackedStat;
+        subStats = rune.subStat;
+    }
+
+    public virtual void GetDataFromItem(ItemData item, int slotIndex)
+    {
+        GetDataFromItem(item);
+        itemSlot = slotIndex;
+    }
 
     public SavedRuneData LoadRuneData(string jsonData)
     {

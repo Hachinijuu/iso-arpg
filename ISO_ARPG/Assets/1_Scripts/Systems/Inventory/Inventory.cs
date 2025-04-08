@@ -47,6 +47,33 @@ public class Inventory : MonoBehaviour
     [SerializeField] private List<ItemData> items;   // The actual items the player has  //// This might be better stored in player
     [SerializeField] private List<PotionData> potions;   // Potions are mapped to the HUD
 
+    public List<ItemData> Items { get { return items; } }
+    public List<PotionData> Potions { get { return potions; } }
+    public Dictionary<RuneData, int> EquippedItems { get { return GetEquippedItems(); } }
+
+    // Returns a list with the associated slot indices for re-equipping
+    public Dictionary<RuneData, int> GetEquippedItems()
+    {
+        Dictionary<RuneData, int> list = new Dictionary<RuneData, int>();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].HasItem)
+            {
+                RuneData rune = slots[i].item as RuneData;
+                list.Add(rune, i);
+            }
+        }
+        //foreach (RuneSlot slot in runeSlots)
+        //{
+        //    if (slot.HasItem)
+        //    {
+        //        RuneData rune = slot.item as RuneData;
+        //        list.Add(rune);
+        //    }
+        //}
+        return list;
+    }
+
     public int maxHealthPotions = 3;
     public int maxManaPotions = 3;
 

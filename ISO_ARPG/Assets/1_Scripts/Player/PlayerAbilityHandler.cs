@@ -456,7 +456,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         }
         else
         {
-            currTime *= (1 + (stats.AttackSpeed.Value / 100));  // 10% increase = 1.1
+            currTime -= (used.Cooldown * (stats.AttackSpeed.Value / 100));  // 10% increase = 1.1
         }
         //float currTime = used.Cooldown * (1 - stats.CooldownReduction.Value);   // CDR value is a decimal, reflected amount visually is * 10
         
