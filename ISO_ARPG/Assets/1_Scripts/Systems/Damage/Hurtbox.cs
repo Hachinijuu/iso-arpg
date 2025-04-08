@@ -47,6 +47,11 @@ public class Hurtbox : MonoBehaviour
         if (dodge <= stats.Dodge.Value)
             return;
 
+        if (args.isCrit)
+            CombatFeedbackManager.Instance.PlayCritParticles(transform.position);
+        else
+            CombatFeedbackManager.Instance.PlayHitParticles(transform.position);
+
         float recalc = args.amount * Mathf.Clamp01(1.0f - ((stats.Armour.Value * GameManager.Instance.ArmourConvert) / 100));
         // 100 damage incoming - 400 armour stat, conversion is 0.05
         // 100 * # between 0-1 -> 1 would be no resistance, 0 would full resistance

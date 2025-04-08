@@ -20,7 +20,8 @@ public class ChainAttack : MonoBehaviour
     {
         GameObject go = Instantiate(prefab, pos, Quaternion.identity);  // Get a chain attack at the position
         ChainAttack attack = go.GetComponent<ChainAttack>();        // Get the chain attack component
-        
+        CombatFeedbackManager.Instance.PlayChainParticles(pos);
+
         attack.InitChain(e);
         attack.HandleAttack(e);                                           // Tell the attack to handle the chain
         return attack;

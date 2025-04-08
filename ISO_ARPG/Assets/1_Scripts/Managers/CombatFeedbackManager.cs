@@ -17,8 +17,10 @@ public class CombatFeedbackManager : MonoBehaviour
         }
     }
 
-    public GameObject[] hitParticles;
+    public GameObject[] hitParticles;    
     public GameObject[] chainParticles;
+    public GameObject[] critParticles;
+
     public AudioClip[] hitSounds;
 
 
@@ -32,8 +34,27 @@ public class CombatFeedbackManager : MonoBehaviour
     {
     }
 
-    public void PlayHitParticles()
-    { 
-        
+    public void PlayHitParticles(Vector3 particlePos)
+    {
+            int randomParticle = Random.Range(0, hitParticles.Length);
+
+            GameObject particles = GameObject.Instantiate(hitParticles[randomParticle]);
+            particles.transform.position = particlePos;
+    }
+
+    public void PlayCritParticles(Vector3 particlePos)
+    {
+        int randomParticle = Random.Range(0, critParticles.Length);
+
+        GameObject particles = GameObject.Instantiate(critParticles[randomParticle]);
+        particles.transform.position = particlePos;
+    }
+
+    public void PlayChainParticles(Vector3 particlePos)
+    {
+        int randomParticle = Random.Range(0, chainParticles.Length);
+
+        GameObject particles = GameObject.Instantiate(chainParticles[randomParticle]);
+        particles.transform.position = particlePos;
     }
 }
