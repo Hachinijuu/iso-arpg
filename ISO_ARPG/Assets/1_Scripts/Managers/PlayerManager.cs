@@ -59,6 +59,7 @@ public class PlayerManager : MonoBehaviour
     //public Dictionary<GoX_Class, PlayerController> playableCharacters;
     public GoX_Class currentClass;
     public PlayerController currentPlayer;
+    public CharacterPair currentCharacter;
 
     public Material bodyShader;
     public Material weaponShader;
@@ -325,6 +326,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (pair.Guardian == toActivate && pair.Body == bodyId)
             {
+                currentCharacter = pair;
                 currentClass = pair.Guardian;
                 currentPlayer = pair.Character;
                 SetShaderColor();
@@ -349,6 +351,7 @@ public class PlayerManager : MonoBehaviour
             {
                 if (pair.Guardian != currentClass && pair.Character.gameObject.activeInHierarchy)
                 {
+                    currentCharacter = pair;
                     pair.Character.gameObject.SetActive(false);
                     pair.Character.EnablePlayer(false);
                 }

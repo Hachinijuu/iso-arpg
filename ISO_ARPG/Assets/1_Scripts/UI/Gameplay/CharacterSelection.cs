@@ -148,6 +148,7 @@ public class CharacterSelection : MonoBehaviour
     {
         //PlayerManager.Instance.ActivatePlayer(currentClass, GoX_Body.ONE);    // This transitions into gameplay activation
         PlayerManager.Instance.ActivatePlayer();
+        SaveSystem.Instance.CreateNewProfile();
         if (!debugSelection)
         {
             GameManager.Instance.LoadLevelByID(GameManager.eLevel.CUTSCENE);
