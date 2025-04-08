@@ -151,7 +151,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         // Only allow a rune to be clicked if there is no rune occupying the slot already
         if (ghostRune != null && upgradeSlot.item != null ) { Debug.Log("[RuneUpgrades]: Slot is already occupied"); return; }
         RuneData createdRune = new RuneData();
-        createdRune = RuneSystem.Instance.RollRuneStats(data, true);  // Given the new rune instance
+        createdRune = RuneSystem.Instance.RollRune(data, ItemRarity.COMMON, false);  // Given the new rune instance
 
         ghostRune = createdRune;
         upgradeSlot.SetItem(ghostRune);
@@ -163,6 +163,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         // I can only create more runes from this menu, IF A RUNE DOES NOT EXIST IN THE SLOT
 
         // How to verify the rune creation, is there no confirmation button or such? Is there 2-step verification?
+        runeList.SetActive(false);
     }
     
     public void SetRarity(ItemRarity rarity)
