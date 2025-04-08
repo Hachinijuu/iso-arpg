@@ -35,6 +35,7 @@ public class FrozenSpikes : Ability
             {
                 e.Hitboxes.Add(p);
                 p.SetDamage(damage);
+                p.InitHitbox(stats);
                 p.FireProjectile();
 
                 // Fireballs will have the chain effect on them, which will handle the ability chaining

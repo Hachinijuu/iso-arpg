@@ -39,6 +39,7 @@ public class Fireball : Ability
                 e.Hitboxes.Add(p);
                 damageUptime = p.uptime;
                 p.SetDamage(damage);
+                p.InitHitbox(stats);
                 p.FireProjectile();
             }
         }

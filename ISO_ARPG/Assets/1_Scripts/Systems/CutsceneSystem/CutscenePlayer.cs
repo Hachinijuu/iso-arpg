@@ -16,6 +16,8 @@ public class CutscenePlayer : MonoBehaviour
 
     [SerializeField] private float skipTime = 1.0f;
     [SerializeField] Slider skipSlider;
+
+    [SerializeField] AudioClip cutsceneAudio;
     public void UpdateSkipSlider()
     {
         skipSlider.value = skipCounter;
@@ -35,6 +37,7 @@ public class CutscenePlayer : MonoBehaviour
     #region FUNCTIONALITY
     public void StartCutscene()
     {
+        MusicManager.Instance.PlayMusicClip(cutsceneAudio);
         if (slides != null && slides.Count > 0)
         {
             StartCoroutine(HandleCutscene());

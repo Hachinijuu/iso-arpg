@@ -58,4 +58,11 @@ public class MusicManager : MonoBehaviour
         audioSource.clip = battleMusic;
         audioSource.Play();
     }
+
+    public void PlayMusicClip(AudioClip clip)
+    {
+        if (clip == null) { return; }
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
 }

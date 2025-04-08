@@ -77,6 +77,7 @@ public class HyperBarrage : ChannelAbility
                     args.Hitboxes.Add(p);
                     p.transform.position += p.transform.forward * arrowOffset * shots;
                     p.SetDamage(damage);
+                    p.InitHitbox(stats);
                     p.FireProjectile();
                 }
                 yield return new WaitForSeconds(timeBetween); //shootSource.WaitForTime(timeBetween);
