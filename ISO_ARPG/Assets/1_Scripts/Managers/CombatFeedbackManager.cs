@@ -17,9 +17,9 @@ public class CombatFeedbackManager : MonoBehaviour
         }
     }
 
-    GameObject[] hitParticles;
-    GameObject[] chainParticles;
-    AudioClip[] hitSounds;
+    public GameObject[] hitParticles;
+    public GameObject[] chainParticles;
+    public AudioClip[] hitSounds;
 
 
     public AudioSource audioSource;

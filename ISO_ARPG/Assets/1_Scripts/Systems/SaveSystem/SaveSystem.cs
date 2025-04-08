@@ -19,6 +19,7 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    public static string SavePath = Application.persistentDataPath + "/saves/";
     public PlayerProfile[] playerSaves;
     public string[] saveFiles;
 
@@ -29,6 +30,8 @@ public class SaveSystem : MonoBehaviour
         {
             string saveFile = profile.SavePlayerProfile();    // Save each file to it's own path and data 
         }
+
+        // do a string write containing the profile data
     }
     
     public void LoadProfiles()
@@ -60,5 +63,14 @@ public class SaveSystem : MonoBehaviour
         currentProfile.character = PlayerManager.Instance.currentCharacter;
         currentProfile.gameData = new PlayerGameData();
         currentProfile.inventoryData = new InventoryData();
+    }
+
+
+    public void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            SaveProfile();
+        }
     }
 }
