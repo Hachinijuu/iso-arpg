@@ -29,17 +29,18 @@ public class DeathSpin : ChannelAbility
         anim = e.Actor.Animator;
         source = e.Actor.SFXSource;
         hitboxes = e.Actor.hitboxes; //e.Actor.GetComponentsInChildren<Hitbox>();
-        
-        foreach (Hitbox hb in hitboxes)
-        {
-            e.Hitboxes.Add(hb);
-        }
-        
+
         stats = e.Actor.Stats;
         move = e.Actor.Movement;
         shootSource = e.Actor.ShootSource;
         particles = e.Actor.Particles;
         args = e;
+
+        foreach (Hitbox hb in hitboxes)
+        {
+            e.Hitboxes.Add(hb);
+            hb.InitHitbox(stats);
+        }
     }
     protected override void Fire(ref AbilityEventArgs e)
     {

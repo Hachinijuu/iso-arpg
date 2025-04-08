@@ -7,6 +7,7 @@ public struct DamageArgs
     public Hitbox source;
     public float amount;
     public Hurtbox hit;
+    public bool isCrit;
 }
 
 public class Hitbox : MonoBehaviour
@@ -33,10 +34,11 @@ public class Hitbox : MonoBehaviour
     private void FireDamageDealt(DamageArgs e) { if (onDamageDealt != null) onDamageDealt(e); }
     #endregion
     #region UNITY FUNCTIONS
-    void Start()
-    {
-        InitHitbox();
-    }
+    //void Start()
+    //{
+    //
+    //    InitHitbox();
+    //}
 
     // Should the hitbox get a reference to the player, or be passed a reference to the relevant values when loaded --> pass a reference and then it set's it's own information
     public void SetDamage(float damage)
@@ -48,8 +50,10 @@ public class Hitbox : MonoBehaviour
     #region FUNCTIONALITY
 
     // Call this function when we need to check for hits
-    public void InitHitbox()
+
+    public void InitHitbox(EntityStats stats)
     {
+        this.stats = stats;
         if (stats != null)
         {
             damage = stats.Damage.Value;
@@ -139,19 +143,19 @@ public class Hitbox : MonoBehaviour
     protected virtual void HandleCollision(Hurtbox hb)
     {
         // Before telling the hurtbox to take damage, do a crit roll to see if hitbox should take additional damage
-        CritCalculation();
         if (!hb.Stats.isDead)
         {
             if (hb.GetComponent<AttackMarker>() != null) { return; }
             hb.AddComponent<AttackMarker>();
             DamageArgs args = GetArgs(hb);
+            CritCalculation(ref args);
             hb.TakeDamage(args);
             Debug.Log("[HitboxSource]: Dealt " + args.amount);
             FireDamageDealt(args);
         }
 
     }
-    protected virtual void CritCalculation()
+    protected virtual void CritCalculation(ref DamageArgs args)
     {
         if (stats is PlayerStats ps)
         {
@@ -159,6 +163,7 @@ public class Hitbox : MonoBehaviour
             if (critRoll <= ps.CritChance.Value)
             {
                 damage += damage * ps.CritDamage.Value; // Additive damage
+                args.isCrit = true;
             } 
         }
     }

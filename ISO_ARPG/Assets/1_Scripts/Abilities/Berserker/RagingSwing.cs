@@ -30,15 +30,21 @@ public class RagingSwing : StackAbility
         stats = e.Actor.Stats;
         hitboxes = e.Actor.hitboxes; //e.Actor.transform.GetComponentsInChildren<Hitbox>();
 
-        foreach (Hitbox hb in hitboxes)
-        {
-            e.Hitboxes.Add(hb);
-        }
+        //foreach (Hitbox hb in hitboxes)
+        //{
+        //    e.Hitboxes.Add(hb);
+        //}
 
         shootSource = e.Actor.ShootSource;
         particles = e.Actor.Particles;
         body = e.Actor.Body;
         animCounter = 0;
+
+        foreach (Hitbox hb in hitboxes)
+        {
+            e.Hitboxes.Add(hb);
+            hb.InitHitbox(stats);
+        }
 
         shootSource.InitFirePositions();
     }

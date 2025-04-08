@@ -40,6 +40,7 @@ public class HighPrecisionShot : Ability
                 e.Hitboxes.Add(projectile);
                 damageUptime = projectile.uptime;
                 projectile.SetDamage(damage);
+                projectile.InitHitbox(stats);
                 projectile.FireProjectile();
             }
         }

@@ -74,8 +74,8 @@ public class SaveSystem : MonoBehaviour
         // Each save is it's own files
 
         string saveFile = currentProfile.SavePlayerProfile();
-        string saveID = "Save" + currentProfile.saveID.ToString();
-        StreamWriter saveStream = new StreamWriter(savePath + ".dat", true);
+        string saveID = savePath + "Save" + currentProfile.saveID.ToString() + ".txt";
+        StreamWriter saveStream = new StreamWriter(saveID, true);
         saveStream.WriteLine(saveFile);
         saveStream.Close();
         Debug.Log("Saved: " + saveFile + "\n To: " + savePath);
@@ -132,6 +132,7 @@ public class SaveSystem : MonoBehaviour
         currentProfile.character = PlayerManager.Instance.currentCharacter;
         currentProfile.gameData = new PlayerGameData();
         currentProfile.inventoryData = new InventoryData();
+        saveCounter++;
     }
 
 
