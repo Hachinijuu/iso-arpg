@@ -95,6 +95,7 @@ public class TutorialManager : MonoBehaviour
 
     IEnumerator HandlePopup(GameObject popup)
     {
+        if (popup == null) { yield break; }
         GameObject go = popup.gameObject;
         CutsceneSlide slide = go.GetComponent<CutsceneSlide>();
         go.SetActive(true);

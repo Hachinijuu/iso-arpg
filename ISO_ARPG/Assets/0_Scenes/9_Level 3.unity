@@ -20277,7 +20277,7 @@ MonoBehaviour:
   - {fileID: 840143840}
   eliteSpawnPoints:
   - {fileID: 2144353578}
-  type: 1
+  type: 2
   details:
     enemiesToSpawn:
     - entity: {fileID: 5571526629560849239, guid: 2416fe9db6e82674dbe6e6142e42901f, type: 3}
@@ -20286,9 +20286,12 @@ MonoBehaviour:
     - entity: {fileID: 2503497217363545633, guid: 16976591a3ba6b84b84bbd1777aedc90, type: 3}
       minSpawn: 25
       maxSpawn: 75
+    - entity: {fileID: 8384860076378447906, guid: 6e4f3547eae3c7d4ba169349b2a1d847, type: 3}
+      minSpawn: 1
+      maxSpawn: 1
     destructiblesToSpawn: []
     enemiesToKill: 200
-    elitesToKill: 0
+    elitesToKill: 1
     hordes:
     - hordeCondition: 2
       enemiesToSpawn:

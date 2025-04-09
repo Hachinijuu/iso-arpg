@@ -14,6 +14,7 @@ public class FusionSelection : MonoBehaviour
     public void OnEnable()
     {
         CheckForClass();
+        TutorialManager.Instance.BeginIdentityTutorial();
     }
 
     public void CheckForClass()

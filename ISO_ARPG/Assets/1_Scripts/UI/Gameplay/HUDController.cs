@@ -274,7 +274,15 @@ public class HUDController : MonoBehaviour
     public void UpdateEnemyNumber()
     {
         if (LevelManager.Instance == null) { return; }
-        objectiveCounter.text = LevelManager.Instance.numKilled + " / " + LevelManager.Instance.Details.enemiesToKill;
+
+        if (LevelManager.Instance.type == LevelManager.LevelType.ELITE)
+        {
+            objectiveCounter.text = LevelManager.Instance.numEliteKilled + " / " + LevelManager.Instance.Details.elitesToKill;
+        }
+        else
+        { 
+            objectiveCounter.text = LevelManager.Instance.numKilled + " / " + LevelManager.Instance.Details.enemiesToKill;
+        }
         // Rework tracking to maintain enemy amount with remains logic
     }
 

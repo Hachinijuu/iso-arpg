@@ -50,6 +50,10 @@ public class CharacterClass : EntityData
     public SubStat ManaRegen;
     public SubStat ManaOnHit;
 
+
+    [Header("Base Values")]
+    public int baseMoveSpeed;
+
     #endregion
 
     #region Abilities
