@@ -8,6 +8,8 @@ public class BodySelection
 {
     public GameObject mainBody;
     public GameObject altBody;
+    public AudioClip mainVoice;
+    public AudioClip altVoice;
 }
 
 [System.Serializable]
@@ -64,7 +66,7 @@ public class CharacterSelection : MonoBehaviour
     // }
 
     public List<BodySelection> bodies;
-    public AudioClip[] clips;
+    //public AudioClip[] clips;
     public AudioSource source;
 
     public void Start()
@@ -97,7 +99,18 @@ public class CharacterSelection : MonoBehaviour
 
         if (source != null)
         {
-            source.clip = clips[index];
+            if (bodySelection == 0)
+            {
+                if (bodies[index].mainVoice != null)
+                    source.clip = bodies[index].mainVoice;
+            }
+            else
+            {
+                if (bodies[index].altVoice != null)
+                    source.clip = bodies[index].altVoice;
+            }
+
+            //source.clip = clips[index];
             source.Play();
         }
     }

@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
     private int respawnID = Animator.StringToHash("Respawn");
     public void Respawn()
     {
+        InitializePlayer();
         if (transform.localScale != Vector3.one)
             transform.localScale = Vector3.one;
         EnablePlayer(true);
