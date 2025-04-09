@@ -4,7 +4,7 @@ using UnityEngine;
 public class PhoenixSwiftness : IdentityAbility
 {
     #region VARIABLES
-    public float movespeedIncrease = 1f;
+    public int movespeedIncrease = 1;
     public int dodgeIncrease = 1;
     public int projectileIncrease = 1;
 
@@ -39,7 +39,7 @@ public class PhoenixSwiftness : IdentityAbility
             //defaultCopy.CopyFromStats(stats);
 
             // add the increased stats
-            stats.MoveSpeed.Value *= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
+            stats.MoveSpeed.Value += movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
             stats.Dodge.Value += dodgeIncrease;                 // Add 25% more dodge -- flat number
             stats.Projectiles.Value += projectileIncrease;      // Add # of projectiles
             Debug.Log("Added Stats to: " + stats);
@@ -54,7 +54,7 @@ public class PhoenixSwiftness : IdentityAbility
     public override void EndAbility(AbilityEventArgs e)
     {
         // Remove stats
-        stats.MoveSpeed.Value /= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
+        stats.MoveSpeed.Value -= movespeedIncrease;         // Add * 1.2 multiplier to speed = 20% increase
         stats.Dodge.Value -= dodgeIncrease;                 // Add 25% more dodge -- flat number
         stats.Projectiles.Value -= projectileIncrease;      // Add # of projectiles
 

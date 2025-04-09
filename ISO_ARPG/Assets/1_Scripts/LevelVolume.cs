@@ -20,6 +20,18 @@ public class LevelVolume : MonoBehaviour
 
             if (levelList == null)
             {
+
+                // No level list, check if they've seen the transition selection
+
+                if (toLoad == GameManager.eLevel.TRANSITION && SaveSystem.Instance.currentProfile.gameData.seenIdentity)
+                {
+                    // If the loader should load the transition, and the identity was already seen -- edge case scenario
+                    int nextID = (int)GameManager.eLevel.TRANSITION;
+                    nextID++;
+                    GameManager.Instance.LevelLoad();
+                    GameManager.Instance.level = (GameManager.eLevel)nextID;
+                    return;
+                }
                 GameManager.Instance.level = toLoad;
                 GameManager.Instance.LevelLoad();
             }

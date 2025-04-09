@@ -58,7 +58,7 @@ public class PauseMenu : MonoBehaviour
                 }
                 else    // 2 step back out if settings is active (back button)
                 {
-                    if (settingsOn)
+                    if (settingsOn || settingsPanel.activeInHierarchy)
                     {
                         settingsPanel.SetActive(false);
                         settingsOn = false;
