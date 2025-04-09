@@ -35,7 +35,14 @@ public class GameplayUIController : MonoBehaviour
     public void ShowGameIndicators(bool on)
     {
         minimap.SetActive(on);
-        objectiveText.SetActive(on);
+        if (LevelManager.Instance != null && LevelManager.Instance.type != LevelManager.LevelType.NONE)
+        {
+            objectiveText.SetActive(on);
+        }
+        else
+        {
+            objectiveText.SetActive(false);
+        }
     }
 
     private void OnEnable()

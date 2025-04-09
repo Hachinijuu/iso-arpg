@@ -9,10 +9,17 @@ public class RuneSlot : ItemSlot
     // Should the inventory be bound to character or just player overall?
     public void OnEnable()
     {
-        if (stats == null)
-            stats = PlayerManager.Instance.currentPlayer.Stats;
+        InitSlot();
+        //if (stats == null)
+        //    stats = PlayerManager.Instance.currentPlayer.Stats;
             //stats = GetComponent<PlayerStats>();
         //Inventory.Instance.OnItemReleased += CheckHasItem;
+    }
+
+    public void InitSlot()
+    {
+        if (stats == null)
+            stats = PlayerManager.Instance.currentPlayer.Stats;
     }
 
     // public override void SetItem(ItemData data)

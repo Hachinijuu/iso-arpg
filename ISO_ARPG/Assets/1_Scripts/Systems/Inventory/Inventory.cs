@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -218,7 +219,15 @@ public class Inventory : MonoBehaviour
     public void OnEnable()
     {
         SetupInventory();
+        StartCoroutine(LoadDelay());
+    }
+
+    //public float delayTime = 0.2
+    public IEnumerator LoadDelay()
+    {
+        yield return new WaitForEndOfFrame();
         LoadInventory();
+        GameManager.Instance.PlayerRespawn();
     }
 
     public bool inventoryLoaded = false;
@@ -416,6 +425,13 @@ public class Inventory : MonoBehaviour
         // Get a reference to the rune slots if they do not exist.
         if (runeSlots == null)
             runeSlots = inventoryScreen.GetComponentsInChildren<RuneSlot>();
+
+        if (runeSlots == null || runeSlots.Length <= 0) { return; }
+        foreach (RuneSlot rs in runeSlots)
+        {
+            rs.InitSlot();
+        }
+        
     }
 
     void InitItemList()
@@ -462,6 +478,15 @@ public class Inventory : MonoBehaviour
     {
         if (!GameplayUIController.Instance.pauseScreen.panel.activeInHierarchy)
         {
+            if (inventoryScreen.activeInHierarchy)
+            {
+                GameplayUIController.Instance.ShowGameIndicators(true);
+            }
+            else
+            {
+                GameplayUIController.Instance.ShowGameIndicators(false);
+            }
+
             UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
             // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
             if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)

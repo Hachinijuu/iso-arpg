@@ -36,10 +36,12 @@ public class CombatFeedbackManager : MonoBehaviour
 
     public void PlayHitParticles(Vector3 particlePos)
     {
+        if (hitParticlePool.Length <= 0 || hitParticlePool == null) { return; }
         int randomParticle = Random.Range(0, hitParticlePool.Length);
         GameObject particle = hitParticlePool[randomParticle].GetPooledObject();
         particle.transform.position = particlePos;
 
+        StartCoroutine(HandleParticle(particle));
             // GameObject particles = GameObject.Instantiate(hitParticles[randomParticle]);
             // particles.transform.position = particlePos;
     }
@@ -56,15 +58,22 @@ public class CombatFeedbackManager : MonoBehaviour
 
     public void PlayCritParticles(Vector3 particlePos)
     {
+        if (critParticlePool.Length <= 0 || critParticlePool == null) { return; }
         int randomParticle = Random.Range(0, critParticlePool.Length);
         GameObject particle = critParticlePool[randomParticle].GetPooledObject();
         particle.transform.position = particlePos;
+        StartCoroutine(HandleParticle(particle));
+
     }
 
     public void PlayChainParticles(Vector3 particlePos)
     {
+        if (chainParticlePool.Length <= 0 || chainParticlePool == null) { return; }
+        Debug.Log("I built chain particles");
         int randomParticle = Random.Range(0, chainParticlePool.Length);
         GameObject particle = chainParticlePool[randomParticle].GetPooledObject();
         particle.transform.position = particlePos;
+        StartCoroutine(HandleParticle(particle));
+
     }
 }

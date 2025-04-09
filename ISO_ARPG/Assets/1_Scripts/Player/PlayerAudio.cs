@@ -29,6 +29,7 @@ public class PlayerAudio : MonoBehaviour
     public void PlayEffort()
     { 
         // Cycle between the efforts and play a sound
+        if (efforts.sounds.Length <= 0 && efforts.sounds == null) { return; }
         int index = Random.Range(0, efforts.sounds.Length);
         voiceSource.clip = efforts.sounds[index];
 
@@ -40,7 +41,8 @@ public class PlayerAudio : MonoBehaviour
     public void PlayHurt()
     {
         // Cycle between hurt sounds and play a hurt sound
-        int index = Random.Range(0, efforts.sounds.Length);
+        if (hurts.sounds.Length <= 0 && hurts.sounds == null) { return; }
+        int index = Random.Range(0, hurts.sounds.Length);
         voiceSource.clip = hurts.sounds[index];
 
         // do pitch adjustment for variable sounds
