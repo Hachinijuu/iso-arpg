@@ -33,6 +33,11 @@ public class HUDController : MonoBehaviour
     //     PlayerManager.Instance.onPlayerChanged += context => { SetPlayer(context.player); };
     // }
 
+    public TMP_Text difficultyText;
+    public void UpdateDifficultyDisplay()
+    {
+        if (difficultyText != null) difficultyText.text = GameManager.Instance.currDifficulty.difficulty.ToString();
+    }
     private void OnEnable()
     {
         InitHud();
@@ -64,6 +69,8 @@ public class HUDController : MonoBehaviour
             mana = playerStats.Mana;
             idBar = playerStats.ID_Bar;
         }
+
+        UpdateDifficultyDisplay();
 
         if (healthSlider != null)
             UpdateHealthSlider(health.Value);
