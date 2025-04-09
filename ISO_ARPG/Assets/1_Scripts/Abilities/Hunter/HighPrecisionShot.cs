@@ -31,7 +31,7 @@ public class HighPrecisionShot : Ability
         //stats.ID_Bar.Value += stats.IDGain.Value;
 
         // Calculate damage
-        damage = (stats.Damage.Value * stats.SecondaryDamage.Value) + (stats.DEX.Value * GameManager.Instance.MainConvert);
+        damage = stats.Damage.Value * (1 + (stats.PrimaryDamage.Value / 100)) + (stats.DEX.Value * GameManager.Instance.MainConvert);
         for (int i = 0; i < stats.Projectiles.Value; i++)
         {
             Projectile projectile = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ARROW_PROJECTILE, i);

@@ -15,6 +15,9 @@ public class Projectile : Hitbox
     [SerializeField] public float uptime;
     [SerializeField] float speed;
     [SerializeField] bool destroyAfterDone;
+    public int pierceLimit = 4; // Set this value for the things, will only use if piercing is active;
+
+    int pierceCounter = 0;
 
     #endregion
     #region FUNCTIONALITY
@@ -67,8 +70,19 @@ public class Projectile : Hitbox
     protected override void HandleCollision(Hurtbox hb)
     {
         base.HandleCollision(hb);   // apply damage
+
         if (!pierces)               // if it does not pierece
             gameObject.SetActive(false);    // deactivate
+
+        // it does pierce, handle the counter
+        if (pierces)
+        {
+            pierceCounter++;
+            if (pierceCounter == pierceLimit)
+            {
+                gameObject.SetActive(false);
+            }
+        }
 
         if (destroyAfterDone)
             Destroy(gameObject);

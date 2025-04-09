@@ -320,6 +320,13 @@ public class Inventory : MonoBehaviour
     //    SetupInventory();
     //}
 
+    public float inventoryDelay = 0.25f;
+    public IEnumerator DelayUpdate()
+    {
+        yield return new WaitForSeconds(inventoryDelay);
+        ReequipRunes();
+    }
+
     public void ReequipRunes()
     {
         foreach (RuneSlot rs in runeSlots)

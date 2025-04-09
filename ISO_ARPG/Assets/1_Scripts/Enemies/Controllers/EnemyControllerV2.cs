@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 public class EnemyControllerV2 : MonoBehaviour
 {
@@ -453,15 +452,15 @@ public class EnemyControllerV2 : MonoBehaviour
         //Vector3 movement = Vector3.MoveTowards(transform.position, offset, ((stats.MoveSpeed.Value * (1 - (speedShift * avoid.magnitude))) + minSpeed) * Time.deltaTime);
         //movement.y = 0; // This is expected 0, y-level for all levels, otherwise, movement will not look as expected
         
-        //Vector3 movement = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        //movement.y = 0;
+        Vector3 movement = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        movement.y = 0;
 
-        agent.destination = target;
-        //transform.position = movement;
+        //agent.destination = target;
+        transform.position = movement;
 
-        currSpeed = agent.velocity.magnitude;
+        //currSpeed = agent.velocity.magnitude;
 
-        //currSpeed = (transform.position - target).magnitude;    // Magnitude of the direction
+        currSpeed = (transform.position - target).magnitude;    // Magnitude of the direction
         //Debug.Log(speed);
         //Debug.Log(agent.desiredVelocity);
         //speed = body.velocity.magnitude;//(transform.position - moveTarget).magnitude;    // Magnitude of the direction

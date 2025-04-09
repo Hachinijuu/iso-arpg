@@ -11,7 +11,6 @@ public class HUDController : MonoBehaviour
     [SerializeField] TMP_Text healthText;
     [SerializeField] Slider manaSlider;
     [SerializeField] TMP_Text manaText;
-
     [SerializeField] Slider idSlider;
 
     [SerializeField] UIAbility ab1;
@@ -105,25 +104,29 @@ public class HUDController : MonoBehaviour
     public void OpenCharacter()
     {
         //GameplayUIController.Instance.statsScreen.SetActive(true);
-        if (GameplayUIController.Instance.statsScreen.activeInHierarchy)
-        { 
-            GameplayUIController.Instance.statsScreen.SetActive(false);
-        }
-        {
-            GameplayUIController.Instance.statsScreen.SetActive(true);
-        }
+        // if (GameplayUIController.Instance.statsScreen.activeInHierarchy)
+        // { 
+        //     GameplayUIController.Instance.statsScreen.SetActive(false);
+        // }
+        // else
+        // {
+        //     GameplayUIController.Instance.statsScreen.SetActive(true);
+        // }
+        GameplayUIController.Instance.ShowCharacterScreen();
     }
 
     public void OpenInventory()
     { 
         //GameplayUIController.Instance.inventoryScreen.SetActive(true);
-        if (GameplayUIController.Instance.inventoryScreen.activeInHierarchy)
-        {
-            GameplayUIController.Instance.inventoryScreen.SetActive(false);
-        }
-        {
-            GameplayUIController.Instance.inventoryScreen.SetActive(true);
-        }
+        // if (GameplayUIController.Instance.inventoryScreen.activeInHierarchy)
+        // {
+        //     GameplayUIController.Instance.inventoryScreen.SetActive(false);
+        // }
+        // else
+        // {
+        //     GameplayUIController.Instance.inventoryScreen.SetActive(true);
+        // }
+        GameplayUIController.Instance.ShowInventory();
     }
 
     public void OpenSettings()
@@ -133,9 +136,12 @@ public class HUDController : MonoBehaviour
         if (GameplayUIController.Instance.settings.settingsScreen.activeInHierarchy)
         {
             GameplayUIController.Instance.settings.settingsScreen.SetActive(false);
+            GameManager.Instance.UnpauseGame();
         }
+        else
         {
             GameplayUIController.Instance.settings.settingsScreen.SetActive(true);
+            GameManager.Instance.PauseGame();
         }
     }
 

@@ -27,7 +27,7 @@ public class FrozenSpikes : Ability
         anim.SetTrigger(animId);
         stats.ID_Bar.Value += stats.IDGain.Value;
 
-        damage = (stats.Damage.Value * stats.SecondaryDamage.Value) + (stats.INT.Value * GameManager.Instance.MainConvert);
+        damage = stats.Damage.Value * (1 + (stats.SecondaryDamage.Value / 100)) + (stats.INT.Value * GameManager.Instance.MainConvert);
         for (int i = 0; i < stats.Projectiles.Value; i++)
         {
             Projectile p = shootSource.GetPooledProjectile(ObjectPoolManager.PoolTypes.ICICLE, i);

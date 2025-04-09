@@ -69,6 +69,7 @@ public class AIChaseState : AIState
         //if (e.cellTarget == null) { return; }
         EnemyControllerV2 agent = e.agent;
         agent.MoveAgent(e.player.transform);
+        agent.HandleRotation(e.player.transform.position);
         //agent.AnimateAgentMove();
         //agent.MoveAgent(e.cellTarget);
 

@@ -29,6 +29,15 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] public RuneUpgradeScreen smithScreen;
     [SerializeField] public SettingsController settings;
 
+    public GameObject minimap;
+    public GameObject objectiveText;
+
+    public void ShowGameIndicators(bool on)
+    {
+        minimap.SetActive(on);
+        objectiveText.SetActive(on);
+    }
+
     private void OnEnable()
     {
         TurnOnRelevantElements();
@@ -57,6 +66,16 @@ public class GameplayUIController : MonoBehaviour
     public void TurnOnRelevantElements()
     {
         hud.gameObject.SetActive(true);
+    }
+
+    public void ShowInventory()
+    {
+        Inventory.Instance.ShowInventory();
+    }
+
+    public void ShowCharacterScreen()
+    {
+        Inventory.Instance.ShowCharacterScreen();
     }
 
     public void ShowSmith()
