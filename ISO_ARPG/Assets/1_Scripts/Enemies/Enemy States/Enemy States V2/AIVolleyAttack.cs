@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "VolleyAttack", menuName = "sykcorSystems/AI/States/VolleyAttack", order = 3)]
 public class AIVolleyAttack : AIState
 {
     public override void Reason(AgentStateArgs e)

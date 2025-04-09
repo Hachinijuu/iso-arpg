@@ -47,7 +47,10 @@ public class AIRangedAttack : AIState
             // If the target is not in ranged attack distance (further range)
             if (agent.stats.id != EntityID.ELITE)
             {
-                if (!(IsInCurrentRange(playerPos, agentPos, )))
+                if (!(IsInCurrentRange(playerPos, agentPos, AIManager.SPECIAL_RANGE)))
+                {
+                    agent.SetState(StateId.SpecialAttack);
+                }
             }
             else
             {
