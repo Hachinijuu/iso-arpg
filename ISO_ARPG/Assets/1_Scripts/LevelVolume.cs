@@ -9,6 +9,7 @@ public class LevelVolume : MonoBehaviour
         //Debug.Log("Collided with " + other.name);
         if (other.CompareTag("Player"))
         {
+            SaveSystem.Instance.SaveProfile();
             // Dirty solution fix later
             //if (!GameManager.Instance.CutscenePlayed)
             //{

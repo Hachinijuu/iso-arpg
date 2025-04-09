@@ -326,6 +326,7 @@ public class GameManager : MonoBehaviour
         //LoadLevelFromString((levelNames[(int)eLevel.MENU]));
         LoadLevelByID(eLevel.MENU);
         currGameState = GameState.MENU;
+        PlayerManager.Instance.DeactivatePlayer();
         MusicManager.Instance.SetTitleMusic();
         Inventory.Instance.CleanupInventory();
     }
