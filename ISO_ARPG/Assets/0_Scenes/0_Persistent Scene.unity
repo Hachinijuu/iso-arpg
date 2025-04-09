@@ -2181,6 +2181,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 668824968966268751, guid: 40f721aa09ac745409d71360b062d957, type: 3}
   m_PrefabInstance: {fileID: 152716449}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &926513066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9098883774343670341, guid: ab1f83b057c2fec4cb5e312699ef9b5e, type: 3}
+  m_PrefabInstance: {fileID: 8430052008355111181}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &987140214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5606567382423295807, guid: 3a93d55df6b7f2a4190b61bceba16882, type: 3}
@@ -4309,9 +4314,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1377085191}
     - target: {fileID: 8185437888897526048, guid: ab1f83b057c2fec4cb5e312699ef9b5e, type: 3}
+      propertyPath: charScreens
+      value: 
+      objectReference: {fileID: 926513066}
+    - target: {fileID: 8185437888897526048, guid: ab1f83b057c2fec4cb5e312699ef9b5e, type: 3}
       propertyPath: pauseScreen
       value: 
       objectReference: {fileID: 1059348741}
+    - target: {fileID: 9098883774343670341, guid: ab1f83b057c2fec4cb5e312699ef9b5e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

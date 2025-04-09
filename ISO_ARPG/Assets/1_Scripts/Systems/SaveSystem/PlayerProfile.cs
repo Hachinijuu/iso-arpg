@@ -11,6 +11,7 @@ public class PlayerProfile
     public string name;
     public CharacterPair character;
     public GoX_Difficulties difficulty;
+    public Ability fusionAbility;
     
     // Need to know the ID of the identity skill to preload
     // What will a player profile keep track of?
@@ -25,7 +26,7 @@ public class PlayerProfile
     // The player's stats
     // All stats should be known via the base class + the player's inventory and equipped gear
 
-    public PlayerProfile LoadPlayerProfile(string jsonData)
+    public static PlayerProfile LoadPlayerProfile(string jsonData)
     {
         return JsonUtility.FromJson<PlayerProfile>(jsonData);
     }
@@ -64,7 +65,7 @@ public class InventoryData
     public int woodAmount;
     public int stoneAmount;
     public SavedRuneData[] equippedRunes;
-    public SavedItemData[] items;
+    public SavedRuneData[] items;
 
     public InventoryData LoadInventory(string jsonData)
     {
@@ -101,25 +102,30 @@ public class SavedItemData
     }
 }
 
+[System.Serializable]
 public class SavedRuneData : SavedItemData
 {
     public MainStat[] mainStats;
     public TrackedStat[] trackedStats;
     public SubStat[] subStats;
     public int itemSlot;
-    public override void GetDataFromItem(ItemData item)
+    // public override void GetDataFromItem(ItemData item)
+    // {
+    //     base.GetDataFromItem(item);
+    //     RuneData rune = item as RuneData;
+    //     mainStats = rune.mainStat;
+    //     trackedStats = rune.trackedStat;
+    //     subStats = rune.subStat;
+    // }
+
+    public virtual void GetDataFromItem(ItemData item, int slotIndex = -1)
     {
         base.GetDataFromItem(item);
+        itemSlot = slotIndex;
         RuneData rune = item as RuneData;
         mainStats = rune.mainStat;
         trackedStats = rune.trackedStat;
         subStats = rune.subStat;
-    }
-
-    public virtual void GetDataFromItem(ItemData item, int slotIndex)
-    {
-        GetDataFromItem(item);
-        itemSlot = slotIndex;
     }
 
     public SavedRuneData LoadRuneData(string jsonData)

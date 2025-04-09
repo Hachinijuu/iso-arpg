@@ -327,6 +327,7 @@ public class GameManager : MonoBehaviour
         LoadLevelByID(eLevel.MENU);
         currGameState = GameState.MENU;
         MusicManager.Instance.SetTitleMusic();
+        Inventory.Instance.CleanupInventory();
     }
 
     public void LoadHub()

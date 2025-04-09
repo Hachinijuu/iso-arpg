@@ -360,6 +360,21 @@ public class PlayerManager : MonoBehaviour
             FirePlayerChanged(arg);
         }
     }
+
+    public PlayerController GetControllerFromClassBody(GoX_Class toActivate, GoX_Body bodyId)
+    {
+        PlayerController controller = null;
+        foreach (CharacterPair pair in playableCharacters)
+        {
+            if (pair.Guardian == toActivate && pair.Body == bodyId)
+            {
+                controller = pair.Character;
+                return controller;
+            }
+        }
+        return controller;
+
+    }
     public void ActivatePlayer(GoX_Class toActivate, GoX_Body bodyId)
     {
         // Given the class passed to this fuction, see which character should be activated

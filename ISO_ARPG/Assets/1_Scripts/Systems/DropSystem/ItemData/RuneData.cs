@@ -47,6 +47,14 @@ public class RuneData : ItemData
     //     subStat = copy.subStat;
     // }
 
+    public void LoadFromSave(SavedRuneData saveData)
+    {
+        rarity = saveData.rarity;
+        mainStat = saveData.mainStats;
+        trackedStat = saveData.trackedStats;
+        subStat = saveData.subStats;
+    }
+
     public int destroyAmount;   // The amount of dust returned on rune destruction
     public virtual void ApplyStats(ref PlayerStats stats)
     {

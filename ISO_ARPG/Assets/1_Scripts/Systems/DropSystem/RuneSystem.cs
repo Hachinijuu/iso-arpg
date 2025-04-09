@@ -144,6 +144,17 @@ public class RuneSystem : MonoBehaviour
         return rune;
     }
 
+    public RuneData CreateFromSavedata(RuneData template, SavedRuneData data)
+    {
+        RuneData rune = Instantiate(template);
+        rune.LoadFromSave(data);
+        if (rarityIcons != null || rarityIcons.Length > 0)
+        {
+            rune.itemIcon = rarityIcons[(int)rune.rarity];
+        }
+        return rune;
+    }
+
     public Material SetRuneMaterial(ItemRarity rarity)
     {
         if (rarityMaterials != null || rarityMaterials.Length > 0)

@@ -15,6 +15,18 @@ public class RuneSlot : ItemSlot
         //Inventory.Instance.OnItemReleased += CheckHasItem;
     }
 
+    // public override void SetItem(ItemData data)
+    // {
+    //     base.SetItem(data);
+    //     if (HasItem)
+    //     {
+    //         ApplyRuneEffects();
+    //     }
+    //     else
+    //     {
+    //         RemoveRuneEffects();
+    //     }
+    // }
     // public void OnDisable() 
     // {
     //     Inventory.Instance.OnItemReleased -= CheckHasItem;

@@ -20,6 +20,7 @@ public class GameplayUIController : MonoBehaviour
     }
 
     // This has references to the hud elements and disable or enable accordingly
+    [SerializeField] public GameObject charScreens;
     [SerializeField] public HUDController hud;
     [SerializeField] public GameObject statsScreen;
     [SerializeField] public GameObject inventoryScreen;
@@ -31,6 +32,7 @@ public class GameplayUIController : MonoBehaviour
     private void OnEnable()
     {
         TurnOnRelevantElements();
+        charScreens.SetActive(true);
     }
 
     private void OnDisable()

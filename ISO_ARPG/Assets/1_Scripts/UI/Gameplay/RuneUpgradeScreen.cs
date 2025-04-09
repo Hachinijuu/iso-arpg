@@ -211,6 +211,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             Inventory.Instance.RuneDust += rune.destroyAmount;
             Destroy(rune);
             upgradeSlot.SetItem(null);
+            Inventory.Instance.RemoveItem(rune);
             UpdateGhostRune();
         }
     }

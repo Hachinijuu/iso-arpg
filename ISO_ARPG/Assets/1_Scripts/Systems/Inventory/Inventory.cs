@@ -61,6 +61,10 @@ public class Inventory : MonoBehaviour
             {
                 RuneData rune = runeSlots[i].item as RuneData;
                 list.Add(rune, i);
+                if (items.Contains(rune))
+                {
+                    items.Remove(rune);
+                }
             }
         }
         //foreach (RuneSlot slot in runeSlots)
@@ -184,7 +188,7 @@ public class Inventory : MonoBehaviour
         set
         {
             // If the incoming is greater than the max - force to max
-            if (stoneAmount + value > stoneAmount) { stoneAmount = maxStoneAmount; }
+            if (stoneAmount + value > maxStoneAmount) { stoneAmount = maxStoneAmount; }
             else if (stoneAmount + value < 0) { stoneAmount = 0; }
             else { stoneAmount = value; }
             if (stoneText != null) { stoneText.text = stoneAmount.ToString(); }
@@ -214,6 +218,79 @@ public class Inventory : MonoBehaviour
     public void OnEnable()
     {
         SetupInventory();
+        LoadInventory();
+    }
+
+    public bool inventoryLoaded = false;
+    public void LoadInventory()
+    {
+        if (SaveSystem.Instance.currentProfile != null && !inventoryLoaded)
+        {
+            InventoryData data = SaveSystem.Instance.currentProfile.inventoryData;
+
+            RuneDust = data.dustAmount;
+            WoodAmount = data.woodAmount;
+            StoneAmount = data.stoneAmount;
+
+            foreach (SavedRuneData savedRune in data.items)
+            {
+                RuneData template = SaveSystem.Instance.GetTemplateByID(savedRune.ItemID);
+                RuneData loadedRune = RuneSystem.Instance.CreateFromSavedata(template, savedRune);
+                AddItem(loadedRune);
+            }
+
+            foreach (SavedRuneData savedRune in data.equippedRunes)
+            {
+                RuneData template = SaveSystem.Instance.GetTemplateByID(savedRune.ItemID);
+                RuneData loadedRune = RuneSystem.Instance.CreateFromSavedata(template, savedRune);
+                EquipItem(loadedRune, savedRune.itemSlot);
+            }
+
+            foreach (RuneSlot slot in runeSlots)
+            {
+                slot.ApplyRuneEffects();
+            }
+            inventoryLoaded = true;
+            // foreach (DropTableModifier runeMod in SaveSystem.Instance.runes.runes)
+            // {
+            //     // Foreach rune that exists in the game.
+
+            //     // If the rune that I have, matches the given id.
+            //     foreach (SavedRuneData savedRune in data.equippedRunes)
+            //     {
+            //         RuneData loadedRune = RuneSystem.Instance.CreateFromSavedata(runeMod.item as RuneData, savedRune);
+            //         //AddItem(loadedRune);
+            //         EquipItem(loadedRune, savedRune.itemSlot);
+            //     }
+            //     foreach (SavedItemData savedItem in data.items)
+            //     {
+            //         if (savedItem is SavedRuneData savedRune)
+            //         {
+            //             RuneData loadedRune = RuneSystem.Instance.CreateFromSavedata(runeMod.item as RuneData, savedRune);
+            //             AddItem(loadedRune);
+            //         }
+            //     }
+            // }
+
+            // for (int i = 0; i < runeSlots.Length; i++)
+            // {
+            //     foreach (SavedRuneData savedRune in data.equippedRunes)
+            //     {
+            //         if (i == savedRune.itemSlot)
+            //         {
+            //             SaveSystem.Instance.runes.runes[]
+            //             SaveSystem.Instance.runes.runes[]
+            //             RuneData loadedRune = new RuneData();
+            //             loadedRune.
+            //         }
+
+            //     }
+            // }
+            // foreach (SavedRuneData runeData in data.equippedRunes)
+            // {
+            //     if (runeSlots[])
+            // }
+        }
     }
 
     //public void OnDisable()
@@ -243,6 +320,17 @@ public class Inventory : MonoBehaviour
     //    SetupInventory();
     //}
 
+    public void ReequipRunes()
+    {
+        foreach (RuneSlot rs in runeSlots)
+        {
+            if (rs.HasItem)
+            {
+                rs.ApplyRuneEffects();
+            }
+        }
+    }
+
     public void CleanupInventory()
     {
         if (items != null && items.Count > 0)
@@ -271,6 +359,7 @@ public class Inventory : MonoBehaviour
             }
             slot.SetItem(null);
         }
+        inventoryLoaded = false;
 
         // Update the HUD -- how?
     }
@@ -453,6 +542,37 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void EquipItem(ItemData data, int slot)
+    {
+        runeSlots[slot].SetItem(data);
+        items.Add(data);
+        // ItemSlot slotToUse = FindFreeSlot();
+        // // ONLY ADD TO THE SLOTS IF THERE IS ENOUGH SPACE AS WELL
+        // if (items.Count <= maxSlots)
+        // {
+        //     if (slotToUse != null)
+        //     {
+        //         slotToUse.SetItem(data);
+
+        //         //slotToUse.item = data;
+        //         //Image img = slotToUse.GetComponent<Image>();
+        //         //if (img != null)
+        //         //data.LoadSpriteToImage(slotToUse.img);
+        //         items.Add(data);
+        //     }
+        // }
+    }
+
+    public void RemoveItem(ItemData data)
+    {
+        //ItemSlot slotToUse = FindFreeSlot();
+        // ONLY ADD TO THE SLOTS IF THERE IS ENOUGH SPACE AS WELL
+        if (items.Count <= maxSlots)
+        {
+            items.Remove(data);
+        }
+    }
+    
     public ItemSlot FindFreeSlot()
     {
         foreach (ItemSlot slot in slots)

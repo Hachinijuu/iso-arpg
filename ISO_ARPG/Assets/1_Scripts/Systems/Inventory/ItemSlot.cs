@@ -20,13 +20,13 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         selectedIndicator.SetActive(show);
     }
 
-    public void SetItem(ItemData data)
+    public virtual void SetItem(ItemData data)
     {
         item = data;    // The the value of the item, null works
         if (data != null)
         {
             // Setup the image
-            Inventory.Instance.Items.Remove(data);
+            
             Color c = Color.white;
             c.a = 1.0f;
             image.sprite = data.itemIcon;
@@ -40,6 +40,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         else
         {
             // Data is set to null, shutoff the alpha
+            Inventory.Instance.Items.Remove(data);
             Color c = Color.white;
             c.a = 0.0f;
             image.color = c;
