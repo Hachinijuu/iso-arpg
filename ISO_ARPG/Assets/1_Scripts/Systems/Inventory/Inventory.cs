@@ -520,6 +520,15 @@ public class Inventory : MonoBehaviour
     {
         if (!GameplayUIController.Instance.pauseScreen.panel.activeInHierarchy)
         {
+            if (inventoryScreen.activeInHierarchy)
+            {
+                GameplayUIController.Instance.ShowGameIndicators(true);
+            }
+            else
+            {
+                GameplayUIController.Instance.ShowGameIndicators(false);
+            }
+
             UIUtility.ToggleUIElementShift(inventoryScreen);    // Turns the element on, and shifts the camera to the side
             // With the given toggle, IF the smithingScreen is active, I want to shut off the smithing screen too (seamless smithing & character bind)
             if (GameplayUIController.Instance.smithScreen.gameObject.activeInHierarchy)

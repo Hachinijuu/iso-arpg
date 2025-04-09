@@ -24,6 +24,15 @@ public class AIIdleState : AIState
             e.agent.SetState(StateId.Chase);   // Transition to the chase state
             return; // Early return to prevent any further logic from executing in the reason, decision has been made to transition into cjase state
         }
+
+        if (e.agent is EliteController)
+        {
+            if (IsInCurrentRange(playerPos, agentPos, AIManager.SPECIAL_RANGE))
+            { 
+                e.agent.SetState(StateId.SpecialAttack);
+                return;
+            }
+        }
     }
 
     public override void Act(AgentStateArgs e)

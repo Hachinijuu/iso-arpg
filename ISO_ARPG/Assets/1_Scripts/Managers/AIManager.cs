@@ -105,6 +105,7 @@ public class AIManager : MonoBehaviour
         aliveEnemies = new List<EnemyControllerV2>();
         movingEnemies = new List<EnemyControllerV2>();
         spawnPoints = new List<EnemySpawnPoint>();
+        eliteSpawnPoints = new List<EnemySpawnPoint>();
         spawnDots = new List<Vector3>();
 
         if (enemyStates != null)

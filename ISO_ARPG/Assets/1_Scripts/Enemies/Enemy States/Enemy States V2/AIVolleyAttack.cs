@@ -17,25 +17,16 @@ public class AIVolleyAttack : AIState
         // Only check for melee transition if the agent is an elite
         if (agent.stats.id == EntityID.ELITE || agent.stats.id == EntityID.BIG_ELITE)
         {
-            if (IsInCurrentRange(playerPos, agentPos, AIManager.MELEE_RANGE))
+            if (IsInCurrentRange(playerPos, agentPos, AIManager.MELEE_RANGE))   // If in melee range
             {
                 agent.SetState(StateId.MeleeAttack);
                 return;
             }
-        }
-        else
-        {
-            // If the target is not in ranged attack distance (further range)
-            if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
+            else if (IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE))
             {
-                agent.SetState(StateId.Chase);
-                return;
+                agent.SetState(StateId.RangedAttack);
             }
         }
-
-
-
-
     }
 
     public override void Act(AgentStateArgs e)
