@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EliteController : EnemyControllerV2
@@ -45,20 +46,24 @@ public class EliteController : EnemyControllerV2
             canAttack = false;
             // Circle creation
             // Build the damage volume at this location after the time has passed
-
             animator.SetTrigger(specialID);
+            Vector3 pos = launchLocation.position;
+            pos.y = 0f;
+            StartCoroutine(DelayedAttack(pos));
             StartCoroutine(AttackTimer());
         }
     }
 
-    IEnumerator DelayedAttack()
+    IEnumerator DelayedAttack(Vector3 pos)
     { 
         yield return new WaitForSeconds(attackDelay);
         // Standard, ranged attack
         if (specialShot == null) { Debug.Log("Ranged Enemy Missing Shot Prefab"); yield break; }
         GameObject firedProjectile = GameObject.Instantiate(specialShot);
+        firedProjectile.transform.position = pos;
         // Tell the hitbox
         Hitbox hb = firedProjectile.GetComponent<Hitbox>();
         hb.AllowDamageForTime(hitboxUptime);
+        Destroy(firedProjectile, hitboxUptime);
     }
 }

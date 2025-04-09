@@ -72,6 +72,8 @@ public class AIManager : MonoBehaviour
     LevelDetails details;
 
     List<EnemySpawnPoint> spawnPoints;    // This will get the points from the level ON LOAD, and cleanup for different levels ON UNLOAD
+    List<EnemySpawnPoint> eliteSpawnPoints;    // This will get the points from the level ON LOAD, and cleanup for different levels ON UNLOAD
+
 
     List<Vector3> spawnDots;
     public List<EnemyControllerV2> aliveEnemies;
@@ -204,12 +206,18 @@ public class AIManager : MonoBehaviour
 
     public void LoadSpawnPoints()
     {
-        spawnPoints = LevelManager.Instance.EnemySpawnPoints;
+        if (spawnPoints != null) { spawnPoints = LevelManager.Instance.EnemySpawnPoints; }
+        if (eliteSpawnPoints != null) { eliteSpawnPoints = LevelManager.Instance.EliteSpawnPoints; }
+        
+        
     }
 
     public void UnloadSpawnPoints()
     {
-        spawnPoints.Clear();
+        if (spawnPoints != null) { spawnPoints.Clear(); }
+        if (eliteSpawnPoints != null) { eliteSpawnPoints.Clear(); }
+        //spawnPoints.Clear();
+        //eliteSpawnPoints.Clear();
     }
     #endregion
     #region HELPER FUNCTIONS
@@ -398,11 +406,28 @@ public class AIManager : MonoBehaviour
                     int numSpawns = Random.Range(group.minSpawn, group.maxSpawn);
                     Debug.Log("[AIManager]: Spawning " + numSpawns + " " + enemy.name);
                     // To know how much enemies to spawn at each spawnpoint, take the total number of spawns / number of locations
-                    int perPoint = numSpawns / spawnPoints.Count;
-                    for (int pointIndex = 0; pointIndex < spawnPoints.Count; pointIndex++)
+                    EnemyControllerV2 controller = pool.Prefab.GetComponent<EnemyControllerV2>();
+                    if (controller != null)
                     {
-                        SpawnEnemyBatch(spawnPoints[pointIndex], perPoint, pool);
-                        yield return new WaitForSeconds(spawnInterval);
+                        if (controller.stats.id == EntityID.BIG_ELITE)
+                        {
+                            // If it is an elite enemy
+                            int perPoint = numSpawns / eliteSpawnPoints.Count;
+                            for (int pointIndex = 0; pointIndex < eliteSpawnPoints.Count; pointIndex++)
+                            {
+                                SpawnEnemyBatch(spawnPoints[pointIndex], perPoint, pool);
+                                yield return new WaitForSeconds(spawnInterval);
+                            }
+                        }
+                        else
+                        {
+                            int perPoint = numSpawns / spawnPoints.Count;
+                            for (int pointIndex = 0; pointIndex < spawnPoints.Count; pointIndex++)
+                            {
+                                SpawnEnemyBatch(spawnPoints[pointIndex], perPoint, pool);
+                                yield return new WaitForSeconds(spawnInterval);
+                            }
+                        }
                     }
                 }
             }

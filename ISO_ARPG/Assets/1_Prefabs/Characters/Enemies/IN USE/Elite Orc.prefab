@@ -2455,6 +2455,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5501968309372669456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6833717504954274837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6971700835475248242}
+  m_Layer: 0
+  m_Name: Shoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6971700835475248242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6833717504954274837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9157737223302691480}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6960003018976950233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,11 +2942,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8138542232417773764}
   - {fileID: 694479015441172111}
+  - {fileID: 6971700835475248242}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1411202283825235372
@@ -2940,7 +2972,7 @@ MonoBehaviour:
   hitbox: {fileID: 3349814943916213483}
   stats: {fileID: 1175454995469766009}
   animator: {fileID: -2999641860030127247}
-  states: {fileID: 0}
+  states: {fileID: 11400000, guid: 1682841be879eae46813660d45e97328, type: 2}
   rotationSpeed: 20
   moveSpeed: 0
   hitboxUptime: 0.5
@@ -2949,9 +2981,9 @@ MonoBehaviour:
   attackCooldown: 5
   canAttack: 1
   canMove: 1
-  shotPrefab: {fileID: 0}
-  shootLocation: {fileID: 0}
-  specialShot: {fileID: 0}
+  shotPrefab: {fileID: 8263715514157930732, guid: 2ad5df0b9c309644e80e1371950ec28b, type: 3}
+  shootLocation: {fileID: 6971700835475248242}
+  specialShot: {fileID: 6448780569341837952, guid: 24915a91f2608114eb7d88992a72cb48, type: 3}
   attackDelay: 1.5
 --- !u!195 &5343478897503380851
 NavMeshAgent:
@@ -2988,7 +3020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1175454995469766009}
-  applyKnockback: 0
+  applyKnockback: 1
   knockbackForce: 1
   knockbackTime: 0.5
 --- !u!114 &1175454995469766009

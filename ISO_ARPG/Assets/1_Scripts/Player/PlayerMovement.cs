@@ -288,7 +288,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
-        float moveSpeed = stats.Class.baseMoveSpeed * (1 + (stats.MoveSpeed.Value)) * Time.deltaTime;
+        float moveSpeed = stats.Class.baseMoveSpeed * (1 + (stats.MoveSpeed.Value / 100)) * Time.deltaTime;
         Vector3 movement = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed);
         //movement.y = 0;
 
