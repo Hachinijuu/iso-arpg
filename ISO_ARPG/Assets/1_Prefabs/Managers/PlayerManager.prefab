@@ -46,15 +46,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveType: 0
   HUD: {fileID: 0}
-  characters:
+  playableCharacters:
   - Guardian: 1
+    Body: 0
     Character: {fileID: 0}
   - Guardian: 2
+    Body: 0
     Character: {fileID: 0}
   - Guardian: 3
+    Body: 0
+    Character: {fileID: 0}
+  - Guardian: 1
+    Body: 1
+    Character: {fileID: 0}
+  - Guardian: 2
+    Body: 1
+    Character: {fileID: 0}
+  - Guardian: 3
+    Body: 1
     Character: {fileID: 0}
   currentClass: 0
   currentPlayer: {fileID: 0}
+  currentCharacter:
+    Guardian: 0
+    Body: 0
+    Character: {fileID: 0}
   bodyShader: {fileID: 2100000, guid: 076424592f6e9ab4da1de92394978b25, type: 2}
   weaponShader: {fileID: 2100000, guid: 7cd695ed36099724686964885064ef93, type: 2}
   berserkerColor: {r: 0.9528302, g: 0.17528482, b: 0.17528482, a: 1}
