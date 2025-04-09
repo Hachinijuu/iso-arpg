@@ -35,6 +35,9 @@ public class ExplodingProjectile : Projectile
         }
         GameObject effect = Instantiate(destructionEffect);
         effect.transform.position = transform.position;
+
+        // Shut off functionality, but leave lag for things to happen, then shutoff
+
         Destroy(effect, particleTime);
 
         base.HandleCollision(hb);

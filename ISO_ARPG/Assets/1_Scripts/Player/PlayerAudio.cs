@@ -26,11 +26,6 @@ public class PlayerAudio : MonoBehaviour
     [Header("Audio Settings")]
     public float minPitch = 0.0f;
     public float maxPitch = 1.0f;
-
-    public void PlaySelection()
-    { 
-        
-    }
     public void PlayEffort()
     { 
         // Cycle between the efforts and play a sound

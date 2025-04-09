@@ -10,6 +10,7 @@ public class PlayerAbilityHandler : MonoBehaviour
     PlayerController controller;
     PlayerStats stats;
     PlayerInput input;
+    PlayerAudio audioHandler;
     MouseTarget mouseTarget;
     PlayerMovement movement;
 
@@ -89,6 +90,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         input = GetComponent<PlayerInput>();
         mouseTarget = GetComponent<MouseTarget>();
         movement = GetComponent<PlayerMovement>();
+        audioHandler = GetComponent<PlayerAudio>();
 
         // Listen for passive ability activation
         //if (stats != null)
@@ -315,6 +317,8 @@ public class PlayerAbilityHandler : MonoBehaviour
                 held = true;                    // Set value to keypressed (held)
                 stats.Mana.Value -= ab.Cost;    // Consume the cost of mana
                 ab.UseAbility(new AbilityEventArgs(ab, controller));      // Use the ability
+
+                audioHandler.PlayEffort();
 
                 // Set the ability to used
                 canUseAbility[ab] = false;

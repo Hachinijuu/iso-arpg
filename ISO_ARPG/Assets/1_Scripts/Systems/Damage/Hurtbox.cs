@@ -47,6 +47,12 @@ public class Hurtbox : MonoBehaviour
         if (dodge <= stats.Dodge.Value)
             return;
 
+        if (gameObject.CompareTag("Player"))
+        {
+            PlayerAudio audioHandler = GetComponent<PlayerAudio>();
+            audioHandler.PlayHurt();
+        }
+
         if (args.isCrit)
             CombatFeedbackManager.Instance.PlayCritParticles(transform.position);
         else
