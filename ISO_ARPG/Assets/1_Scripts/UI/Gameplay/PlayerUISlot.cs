@@ -16,6 +16,7 @@ public class PlayerUISlot : MonoBehaviour
     public void LoadPlayerSlot(PlayerProfile profile)
     {
         this.profile = profile;
+        if (this.profile == null) { return; } // If the profile is null, skip it
         playerImage.sprite = profile.character.Character.Stats.Class.icon;
         playerName.text = profile.name;
         if (profile.character.Character.Stats.Class.entityName != null)
