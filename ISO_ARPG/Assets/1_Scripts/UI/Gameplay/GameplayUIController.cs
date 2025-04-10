@@ -107,6 +107,11 @@ public class GameplayUIController : MonoBehaviour
         statsScreen.SetActive(false);
     }
 
+    public void ShowSettings()
+    {
+        pauseScreen.SettingsClicked();
+    }
+
 
     // Find an inexpensive way to handle hovers, probably back to mouse detection / raycasts for physics layers
 

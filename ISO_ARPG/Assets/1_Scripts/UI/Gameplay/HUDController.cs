@@ -138,18 +138,19 @@ public class HUDController : MonoBehaviour
 
     public void OpenSettings()
     { 
+        GameplayUIController.Instance.ShowSettings();
         //GameplayUIController.Instance.settings.settingsScreen.SetActive(true);
         //GameplayUIController.Instance.settings.SetActive(true);
-        if (GameplayUIController.Instance.settings.settingsScreen.activeInHierarchy)
-        {
-            GameplayUIController.Instance.settings.settingsScreen.SetActive(false);
-            GameManager.Instance.UnpauseGame();
-        }
-        else
-        {
-            GameplayUIController.Instance.settings.settingsScreen.SetActive(true);
-            GameManager.Instance.PauseGame();
-        }
+        // if (GameplayUIController.Instance.settings.settingsScreen.activeInHierarchy)
+        // {
+        //     GameplayUIController.Instance.settings.settingsScreen.SetActive(false);
+        //     GameManager.Instance.UnpauseGame();
+        // }
+        // else
+        // {
+        //     GameplayUIController.Instance.settings.settingsScreen.SetActive(true);
+        //     GameManager.Instance.PauseGame();
+        // }
     }
 
     // EVENT MAPPING

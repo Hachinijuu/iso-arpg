@@ -63,6 +63,11 @@ public class PauseMenu : MonoBehaviour
                         settingsPanel.SetActive(false);
                         settingsOn = false;
                     }
+                    else if (GameManager.Instance.currGameState == GameManager.GameState.PAUSE)
+                    {
+                        if (panel.activeInHierarchy) { panel.SetActive(false); }
+                        GameManager.Instance.UnpauseGame();
+                    }
                     else
                     {
                         panel.SetActive(false);
