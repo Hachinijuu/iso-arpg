@@ -256,6 +256,7 @@ public class PlayerController : MonoBehaviour
     // Regen Handler
     public void StartRegens()
     {
+        StopAllCoroutines();
         StartCoroutine(GiveResource());
     }
 

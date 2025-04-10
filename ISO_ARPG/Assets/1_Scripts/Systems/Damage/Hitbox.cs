@@ -230,6 +230,7 @@ public class Hitbox : MonoBehaviour
 
     #endregion
     #region DEBUG
+    public bool debugDraw = false;
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -237,6 +238,10 @@ public class Hitbox : MonoBehaviour
         {
             Gizmos.DrawSphere(transform.position, attackRange);
             //Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
+        }
+        if (debugDraw)
+        {
+            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
     }
     #endregion

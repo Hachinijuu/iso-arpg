@@ -2983,6 +2983,7 @@ MonoBehaviour:
   canMove: 1
   shotPrefab: {fileID: 8263715514157930732, guid: 2ad5df0b9c309644e80e1371950ec28b, type: 3}
   shootLocation: {fileID: 6971700835475248242}
+  attackIndicator: {fileID: 6403209393294335074, guid: ecbcdc7e98d2ce340aa1b28ad96bfed2, type: 3}
   specialShot: {fileID: 6448780569341837952, guid: 24915a91f2608114eb7d88992a72cb48, type: 3}
   attackDelay: 1.5
 --- !u!195 &5343478897503380851
@@ -3101,6 +3102,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   hitblockers: []
+  debugDraw: 0
 --- !u!1 &8525568886033678085
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,8 +59,16 @@ public class AIMeleeAttack : AIState//, IPhysicsState//, ICoroutineState
         Vector3 playerPos = e.player.transform.position;
         if (!(IsInCurrentRange(playerPos, agentPos, AIManager.MELEE_RANGE)))    // If the player is NOT in melee range, enter chase
         { 
-            agent.SetState(StateId.Chase, e);
-            return;
+            if (agent.stats.id == EntityID.BIG_ELITE)
+            {
+                agent.SetState(StateId.RangedAttack, e);
+                return;
+            }
+            else
+            {
+                agent.SetState(StateId.Chase, e);
+                return;
+            }
         }
     }
 
