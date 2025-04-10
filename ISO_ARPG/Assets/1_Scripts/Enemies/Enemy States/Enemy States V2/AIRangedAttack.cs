@@ -44,14 +44,23 @@ public class AIRangedAttack : AIState
         }
         else
         {
-            // If the target is not in ranged attack distance (further range)
-            if (agent.stats.id != EntityID.ELITE)
+            if (agent.stats.id == EntityID.ELITE)   // If I am an elite enemy
             {
-                if (!(IsInCurrentRange(playerPos, agentPos, AIManager.SPECIAL_RANGE)))
+                // And the target is outside of my ranged attack range
+                if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
                 {
-                    agent.SetState(StateId.SpecialAttack);
+                    // Check if I am low on health, if I am regen.
+                    if (agent.stats.Health.Value < agent.stats.Health.MaxValue)
+                    {
+                        agent.SetState(StateId.Regenerating);
+                    }
+                    else
+                    {
+                        agent.SetState(StateId.SpecialAttack);
+                    }
                 }
             }
+            // If the target is not in ranged attack distance (further range)
             else
             {
                 if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
@@ -71,7 +80,21 @@ public class AIRangedAttack : AIState
         //throw new System.NotImplementedException();
         EnemyControllerV2 agent = e.agent;
         agent.HandleRotation(e.player.transform.position);
-        if (agent.canAttack) { agent.Attack(); }
+        if (agent.canAttack) 
+        { 
+            if (agent.stats.id == EntityID.BIG_ELITE)
+            {
+                EliteController elite = agent as EliteController;
+                if (elite)
+                {
+                    elite.RangedAttack();
+                }
+            }
+            else
+            {
+                agent.Attack();
+            }
+        }
 
         if (!moveAfterAttacks) { return; }
         if (!agent.canAttack)   // If the agent has performed their attack

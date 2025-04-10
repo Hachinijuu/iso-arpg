@@ -318,7 +318,7 @@ public class PlayerAbilityHandler : MonoBehaviour
                 stats.Mana.Value -= ab.Cost;    // Consume the cost of mana
                 ab.UseAbility(new AbilityEventArgs(ab, controller));      // Use the ability
 
-                if (!(ab is IdentityAbility))
+                if (!(ab is IdentityAbility) && !(ab is DeathSpin))  // Hardcode
                 { 
                     audioHandler.PlayEffort();
                 }

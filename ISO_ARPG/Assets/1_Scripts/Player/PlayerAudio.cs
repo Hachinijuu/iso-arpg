@@ -29,7 +29,8 @@ public class PlayerAudio : MonoBehaviour
     public void PlayEffort()
     { 
         // Cycle between the efforts and play a sound
-        if (efforts.sounds.Length <= 0 && efforts.sounds == null) { return; }
+        if (efforts == null || efforts.sounds.Length <= 0) { return; }
+        //if (efforts.sounds.Length <= 0 && efforts.sounds == null) { return; }
         int index = Random.Range(0, efforts.sounds.Length);
         voiceSource.clip = efforts.sounds[index];
 
@@ -41,7 +42,8 @@ public class PlayerAudio : MonoBehaviour
     public void PlayHurt()
     {
         // Cycle between hurt sounds and play a hurt sound
-        if (hurts.sounds.Length <= 0 && hurts.sounds == null) { return; }
+        if (hurts == null || hurts.sounds.Length <= 0) { return; }
+        //if (hurts.sounds.Length <= 0 && hurts.sounds == null) { return; }
         int index = Random.Range(0, hurts.sounds.Length);
         voiceSource.clip = hurts.sounds[index];
 

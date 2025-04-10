@@ -15,6 +15,7 @@ public class EliteController : EnemyControllerV2
     protected int specialID = Animator.StringToHash(SpecialTrigger);
 
 
+    [SerializeField] AttackIndicator attackIndicator;
     [SerializeField] GameObject specialShot;
     [SerializeField] float attackDelay = 0.5f;
 
@@ -38,6 +39,25 @@ public class EliteController : EnemyControllerV2
             StartCoroutine(AttackTimer());
         }
     }
+
+            //     // Perform the attack (play the animation)
+            // canAttack = false;
+
+            // GameObject firedProjectile = GameObject.Instantiate(shotPrefab);
+            // Projectile p = firedProjectile.GetComponent<Projectile>();
+            // if (firedProjectile != null && p != null)
+            // {
+            //     firedProjectile.transform.position = shootLocation.transform.position;
+            //     firedProjectile.transform.rotation = shootLocation.transform.rotation;
+            //     p.FireProjectile();
+            // }
+            // //Debug.Log("Performed Attack");
+            // animator.SetTrigger(animId);
+
+            // //hitbox.AttackForTime(hitboxUptime);
+            // //hitbox.AllowDamageForTime(hitboxUptime);
+            // //Invoke(nameof(ResetAttack), attackCooldown);
+            // StartCoroutine(AttackTimer());
     public virtual void SpecialAttack(Transform launchLocation)
     {
         // Special, volley launcher, red indicated attack
@@ -56,6 +76,9 @@ public class EliteController : EnemyControllerV2
 
     IEnumerator DelayedAttack(Vector3 pos)
     { 
+        GameObject indicator = GameObject.Instantiate(attackIndicator.gameObject);
+        attackIndicator.attackWait = attackDelay;
+        indicator.transform.position = pos;
         yield return new WaitForSeconds(attackDelay);
         // Standard, ranged attack
         if (specialShot == null) { Debug.Log("Ranged Enemy Missing Shot Prefab"); yield break; }
