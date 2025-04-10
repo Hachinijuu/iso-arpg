@@ -151,7 +151,6 @@ public class GameManager : MonoBehaviour
             controller.Movement.HandleStops(true);    // Tell the movement to stop where they are
             Debug.Log("[GameManager]: Player Position: " + controller.transform.position + ", Level Spawn Point: " + LevelManager.Instance.PlayerSpawnPoint + ", Player Move Target: " + controller.Movement.MoveTarget);
             controller.Respawn();   // Tell the player to respawn themselves
-
         }
         else
         {

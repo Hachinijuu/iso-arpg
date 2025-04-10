@@ -340,6 +340,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (RuneSlot rs in runeSlots)
         {
+            rs.RemoveRuneEffects();
             if (rs.HasItem)
             {
                 rs.ApplyRuneEffects();

@@ -154,6 +154,7 @@ public class PlayerController : MonoBehaviour
         handler.Respawn();
         movement.Respawn();
         animator.SetTrigger("Respawn");
+        Inventory.Instance.ReequipRunes();
     }
 
     public void Died()
