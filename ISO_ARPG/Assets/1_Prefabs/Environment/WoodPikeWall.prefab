@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1593744109984593410}
   - component: {fileID: 4415474265167265489}
-  m_Layer: 0
+  - component: {fileID: 1233504849814357736}
+  m_Layer: 12
   m_Name: WoodPikeWall
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,6 +65,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.01, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &1233504849814357736
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916575717551204856}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.002, y: 0.03, z: 0.03}
+  m_Center: {x: 0, y: 0.01, z: 0}
 --- !u!1001 &637396828451237587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,6 +153,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -210,6 +236,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -287,6 +317,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -366,6 +400,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -443,6 +481,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -522,6 +564,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -599,6 +645,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -678,6 +728,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -755,6 +809,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -834,6 +892,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -911,6 +973,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -990,6 +1056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1067,6 +1137,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1146,6 +1220,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1224,6 +1302,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoXWoodPike (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1301,6 +1383,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
       propertyPath: m_Name
       value: GoXWoodPike (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b15dfabe84b3b144ea8474411d5e7ad6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

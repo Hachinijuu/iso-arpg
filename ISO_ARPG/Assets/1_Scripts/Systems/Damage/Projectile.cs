@@ -104,6 +104,26 @@ public class Projectile : Hitbox
         StartCoroutine(ProjectileMotion());
     }
 
+    public void FireAimedProjectile(Vector3 target)
+    {
+        // Apply force to this object in the forward direction
+        Vector3 dir = (target - transform.position).normalized;
+        transform.rotation = Quaternion.LookRotation(dir);
+
+        if (pierces)
+        {
+            AllowDamageForTime(uptime, true);
+        }
+        else
+        {
+            AllowDamageForTime(uptime);
+        }
+        // Move the object
+        //rb.AddForce(transform.forward * speed, ForceMode.Impulse);
+        //StopAllCoroutines();
+        StartCoroutine(ProjectileMotion());
+    }
+
     IEnumerator ProjectileMotion()
     {
         while (true)

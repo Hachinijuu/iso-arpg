@@ -19,7 +19,7 @@ public class EliteController : EnemyControllerV2
     [SerializeField] GameObject specialShot;
     [SerializeField] float attackDelay = 0.5f;
 
-    public virtual void RangedAttack()
+    public virtual void RangedAttack(Vector3 target)
     {
         // Standard, ranged attack
         if (shotPrefab == null) { Debug.Log("Ranged Enemy Missing Shot Prefab"); return; }
@@ -32,7 +32,8 @@ public class EliteController : EnemyControllerV2
             {
                 firedProjectile.transform.position = shootLocation.transform.position;
                 firedProjectile.transform.position = shootLocation.transform.position;
-                p.FireProjectile();
+                // This projectile is targeted to the player
+                p.FireAimedProjectile(target);
             }
 
             animator.SetTrigger(rangedID);

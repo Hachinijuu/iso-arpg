@@ -36,6 +36,8 @@ public abstract class AIState : ScriptableObject
     protected virtual bool IsInCurrentRange(Vector3 start, Vector3 goal, int range)
     {
         bool inRange = false;
+        start.y = 0;
+        goal.y = 0;
 
         // Transform is the goal, pos is the start
         float dist = GetSquareDistance(start, goal);
@@ -50,6 +52,8 @@ public abstract class AIState : ScriptableObject
     protected virtual bool IsInCurrentRange(Vector3 start, Vector3 goal, float range)
     {
         bool inRange = false;
+        start.y = 0;
+        goal.y = 0;
 
         // Transform is the goal, pos is the start
         float dist = GetSquareDistance(start, goal);

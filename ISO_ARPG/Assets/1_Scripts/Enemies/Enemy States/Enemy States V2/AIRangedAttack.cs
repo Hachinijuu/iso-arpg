@@ -87,7 +87,7 @@ public class AIRangedAttack : AIState
                 EliteController elite = agent as EliteController;
                 if (elite)
                 {
-                    elite.RangedAttack();
+                    elite.RangedAttack(e.player.transform.position);
                 }
             }
             else
@@ -103,7 +103,9 @@ public class AIRangedAttack : AIState
             if (dist < moveThreshold)
             {
                 Vector3 shiftPos = GetCirclePoint(minMoveDistance, maxMoveDistance, agent.transform);   // This just causes agent jittering
-                agent.Destination = shiftPos;
+                // Get the direction away from the player
+                Vector3 dir = (agent.transform.position - e.player.transform.position).normalized;
+                agent.Destination = shiftPos + dir;
             }
             // Check the distance between the agent and their destination, it if is small, then move them again
 
