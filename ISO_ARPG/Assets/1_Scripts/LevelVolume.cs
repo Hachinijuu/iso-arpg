@@ -4,6 +4,7 @@ public class LevelVolume : MonoBehaviour
 {
     public GameObject levelList;    // Level List, 
     public GameManager.eLevel toLoad;
+    public bool diffUp;
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Collided with " + other.name);
@@ -32,14 +33,24 @@ public class LevelVolume : MonoBehaviour
                     GameManager.Instance.level = (GameManager.eLevel)nextID;
                     return;
                 }
+                if (diffUp == true)
+                {
+                    if (GameManager.Instance.currDifficulty.difficulty != GoX_Difficulties.DISASTER)
+                    {
+                        int currDifficulty = (int)GameManager.Instance.currDifficulty.difficulty++;
+                        GameManager.Instance.currDifficulty = GameManager.Instance.difficulties[currDifficulty];
+                    }
+                }
                 GameManager.Instance.level = toLoad;
                 GameManager.Instance.LevelLoad();
+
             }
             else
             { 
                 levelList.SetActive(true);
                 GameManager.Instance.PauseGame();
             }
+            
         }
     }
 }
