@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -219,6 +218,11 @@ public class Inventory : MonoBehaviour
     public void OnEnable()
     {
         SetupInventory();
+        StartCoroutine(LoadDelay());
+    }
+
+    public void ReloadEquips()
+    {
         StartCoroutine(LoadDelay());
     }
 
@@ -825,7 +829,6 @@ public class Inventory : MonoBehaviour
     IEnumerator HandleGhostItem()
     {
         ghost = GameObject.Instantiate(sourceSlot.gameObject, canvas.transform); // probably don't instantiate, just active existing ghost set to mouse position
-
         ItemSlot ghostSlot = ghost.GetComponent<ItemSlot>();
         //ghostSlot.img = sourceSlot.img;
         ghostSlot.SetItem(sourceSlot.item);
@@ -981,6 +984,7 @@ public class Inventory : MonoBehaviour
             {
                 args.data = sourceSlot.item;
             }
+            TooltipSystem.Instance.CleanupTooltips();
             FireReleasedItem(args);
         
             // Play the release audio from Game Manager source

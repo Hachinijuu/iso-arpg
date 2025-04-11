@@ -28,6 +28,7 @@ public static class StatLimits
 
 #region STAT TYPES
 // Main Stat types are stats that every class will have by default, they are STANDALONE stats that INFLUENCE other stats
+[System.Serializable]
 public enum MainStatTypes
 {
     NONE,
@@ -37,6 +38,7 @@ public enum MainStatTypes
 }
 
 // Tracked Stats are stats that will change in value during gameplay, they keep track of current and maximum values
+[System.Serializable]
 public enum TrackedStatTypes
 {
     NONE,
@@ -46,6 +48,7 @@ public enum TrackedStatTypes
 }
 
 // Substats are stats that have a direct purpose, they may be infuenced by mains states
+[System.Serializable]
 public enum SubStatTypes
 {
     NONE,

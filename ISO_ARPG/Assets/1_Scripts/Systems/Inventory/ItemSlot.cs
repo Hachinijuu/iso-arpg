@@ -69,7 +69,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 // hover works with clicking, perhaps tooltip on click
                 // that would work with existing inventory framework calls
 
-                GameplayUIController.Instance.CreateRuneTooltip(args);
+                //GameplayUIController.Instance.CreateRuneTooltip(args);
+                TooltipSystem.Instance.ShowTooltip(TooltipSystem.TooltipTypes.Rune, args);
             }
         }
         //throw new System.NotImplementedException();
@@ -80,6 +81,24 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         hovered = false;
         ToolTipArgs args = new ToolTipArgs();
         args.over = hovered;
-        GameplayUIController.Instance.CreateRuneTooltip(args);
+        TooltipSystem.Instance.HideTooltip(TooltipSystem.TooltipTypes.Rune, args);
     }
+    // void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    // {
+    //     ToolTipArgs args = new ToolTipArgs();
+    //     if (item != null) { args.item = item; hovered = true; }
+    //     if (HasItem)
+    //     {
+    //         TooltipSystem.Instance.ShowTooltip(TooltipSystem.TooltipTypes.Rune, args);
+    //     }
+    //     else
+    //     {
+    //         TooltipSystem.Instance.HideTooltip(TooltipSystem.TooltipTypes.Rune);
+    //     }
+    // }
+
+    // void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+    // {
+    //     TooltipSystem.Instance.HideTooltip(TooltipSystem.TooltipTypes.Rune);
+    // }
 }

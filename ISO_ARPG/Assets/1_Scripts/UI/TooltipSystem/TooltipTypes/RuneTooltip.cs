@@ -25,7 +25,9 @@ public class RuneTooltip : MonoBehaviour
         }
         else if (rune.trackedStat.Length > 0)
         {
-            affixText.text = rune.trackedStat[0].type.ToString();
+            string updatedAffix = rune.trackedStat[0].type.ToString();
+            string formatted = updatedAffix.Replace("_", " ");
+            affixText.text = formatted;
             affixAmount.text = rune.trackedStat[0].Value.ToString();
         }
     }

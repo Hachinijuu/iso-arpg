@@ -869,7 +869,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2480424179796364653}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -2085,7 +2085,6 @@ MonoBehaviour:
   states: {fileID: 11400000, guid: eb6c16e886244204fbe3c031b7b0852a, type: 2}
   rotationSpeed: 20
   moveSpeed: 0
-  collider: {fileID: -4820062227637708546}
   hitboxUptime: 0.5
   attackRange: 1
   attackClock: 0
@@ -2126,6 +2125,8 @@ MonoBehaviour:
   damageLayer:
     serializedVersion: 2
     m_Bits: 2048
+  hitblockers: []
+  debugDraw: 0
 --- !u!114 &-627725551869220418
 MonoBehaviour:
   m_ObjectHideFlags: 0

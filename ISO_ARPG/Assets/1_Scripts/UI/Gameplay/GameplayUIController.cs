@@ -133,41 +133,6 @@ public class GameplayUIController : MonoBehaviour
         if (OnHoverExit != null) { OnHoverExit(new MouseHoverEventArgs(null)); }    // When mouse exits a valid hover, FORCE to null
     }
 
-
-    [SerializeField] GameObject infoTooltip;    // This is for displaying general information -- What does an ability do?
-    [SerializeField] GameObject runeTooltip;    // This is for displaying information that is RUNE data
-    // TOOLTIPS
-    GameObject tooltip;
-    public void CreateRuneTooltip(ToolTipArgs e)
-    {
-        tipActive = e.over;
-        if (tipActive && tooltip == null)
-        {
-            StartCoroutine(HandleRuneTooltip(e));
-        }
-    }
-
-    bool tipActive;
-
-    // The p
-    IEnumerator HandleRuneTooltip(ToolTipArgs e)
-    {
-        tooltip = Instantiate(runeTooltip, inventoryScreen.transform);   // Parent it to the inventory
-        RectTransform rect = tooltip.GetComponent<RectTransform>();
-        RuneTooltip rt = tooltip.GetComponent<RuneTooltip>();       
-        
-        if (!(e.item is RuneData)) { yield break; } // If the item is not rune data, eject
-        if (rt != null)
-        {
-            rect.position = e.screenPos;
-            rt.SetRuneData(e.item as RuneData);
-        }
-        do
-        {
-            yield return new WaitForEndOfFrame();
-        } while (tipActive);
-        Destroy(tooltip);
-    }
 }
 
 public class MouseHoverEventArgs
@@ -178,11 +143,4 @@ public class MouseHoverEventArgs
     {
         hovered = go;
     }
-}
-
-public class ToolTipArgs
-{
-    public Vector2 screenPos;
-    public bool over;
-    public ItemData item;
 }
