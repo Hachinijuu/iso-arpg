@@ -2033,6 +2033,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5396809368262634646, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
+      propertyPath: efforts
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5566678593245308486, guid: a77ddcefa3556f342a2d89027b56b7b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3693,6 +3697,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1215489931 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2715079596109012745, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+  m_PrefabInstance: {fileID: 4236933832071789844}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1245929809
 GameObject:
   m_ObjectHideFlags: 0
@@ -6436,6 +6451,34 @@ PrefabInstance:
     - target: {fileID: 4934378726279895154, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: DefeatScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: difficultyDesc
+      value: 
+      objectReference: {fileID: 1215489931}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: diffText.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: diffText.Array.data[0]
+      value: 'Difficulty: Mortal'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: diffText.Array.data[1]
+      value: 'Difficulty: DemiGod'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: diffText.Array.data[2]
+      value: 'Difficulty: God'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: diffText.Array.data[3]
+      value: 'Difficulty: Deity'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001023804362331312, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
+      propertyPath: diffText.Array.data[4]
+      value: 'Difficulty: Disaster'
       objectReference: {fileID: 0}
     - target: {fileID: 6778630305882937808, guid: 662a9ebb27c728a46b0dcb661a16de5a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameSettings : MonoBehaviour
 {
     public Slider difficultySlider; // might be a segmented button
+    
+    public TMP_Text difficultyDesc;
 
     public Toggle mouseKeyboard;
     public Toggle controller;
@@ -14,9 +17,12 @@ public class GameSettings : MonoBehaviour
     public Toggle directional;
     public Toggle clickToMove;
 
+    public string[] diffText;
+
     public void Awake()
     {
-        difficultySlider.value = (float)GoX_Difficulties.GOD;
+        difficultySlider.value = (float)GoX_Difficulties.MORTAL;
+        UpdateDifficulty(difficultySlider.value);
         SwitchMovement();
     }
     public void SwitchMovement()
@@ -58,5 +64,10 @@ public class GameSettings : MonoBehaviour
         // The base difficulty class can contain health scaling, damage scaling, enemy quantity scaling
         GameManager.Instance.currDifficulty = GameManager.Instance.difficulties[(int)value];
         GameManager.Instance.FireDifficultyChanged();
+        DifficultyDescription((int)value);
+    }
+    public void DifficultyDescription(int currDifficulty)
+    {
+        difficultyDesc.text = diffText[currDifficulty];
     }
 }
