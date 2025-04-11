@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 110, y: 110, z: 110}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,11 +106,13 @@ MonoBehaviour:
     m_Bits: 4480
   hitblockers:
   - Obstacle
+  debugDraw: 0
   rb: {fileID: 6667247622329995865}
   pierces: 1
   uptime: 3
   speed: 35
   destroyAfterDone: 0
+  pierceLimit: 4
 --- !u!54 &6667247622329995865
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -28,11 +28,11 @@ MonoBehaviour:
     maxValue: 200
     type: 9
   Armour:
-    value: 10
-    maxValue: 400
+    value: 30
+    maxValue: 210
     type: 14
   Dodge:
-    value: 10
+    value: 0
     maxValue: 400
     type: 15
   MoveSpeed:
@@ -40,8 +40,8 @@ MonoBehaviour:
     maxValue: 100
     type: 2
   Mana:
-    value: 100
-    maxValue: 100
+    value: 200
+    maxValue: 200
     type: 2
   Strength:
     value: 10
@@ -83,7 +83,7 @@ MonoBehaviour:
     maxValue: 10
     type: 13
   TakeFromMana:
-    value: 0
+    value: 10
     maxValue: 50
     type: 16
   HealthRegen:

@@ -248,10 +248,14 @@ MonoBehaviour:
   damageLayer:
     serializedVersion: 2
     m_Bits: 4480
+  hitblockers: []
+  debugDraw: 0
   rb: {fileID: 1964730601004383495}
   pierces: 0
   uptime: 3
   speed: 65
+  destroyAfterDone: 0
+  pierceLimit: 4
   destructionEffect: {fileID: 5180035714564875265, guid: da9cd5f39e17bb04397438d5a404f01e, type: 3}
   explosionRadius: 2
   particleTime: 0.25
