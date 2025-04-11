@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
         if (LevelManager.Instance != null)
         {
             LevelManager.Instance.LevelLoading();
-            if (LevelManager.Instance.type == LevelManager.LevelType.CLEAR)
+            if (LevelManager.Instance.type == LevelManager.LevelType.CLEAR || LevelManager.Instance.type == LevelManager.LevelType.ELITE)
             {
                 hud.ShowLevelObjectives();
             }
@@ -284,6 +284,7 @@ public class GameManager : MonoBehaviour
             // If the levelManager is NOT NONE condition, then play the battle music
             if (LevelManager.Instance.type == LevelManager.LevelType.CLEAR || LevelManager.Instance.type == LevelManager.LevelType.ELITE)
             {
+                hud.ShowLevelObjectives();
                 MusicManager.Instance.SetBattleMusic();
             }
 

@@ -16,7 +16,7 @@ public class HendokInteract : InteractableObject
             Inventory.Instance.ShowInventory(true);
         }
         GameplayUIController.Instance.ShowSmith();
-        GameManager.Instance.PauseGame();
+        //GameManager.Instance.PauseGame();
         // If the player moves too far, shut off the screen
 
         // When shutting the screen off, cleanup

@@ -26,6 +26,17 @@ public class AIVolleyAttack : AIState
             {
                 agent.SetState(StateId.RangedAttack);
             }
+            else if (!(IsInCurrentRange(playerPos, agentPos, AIManager.SPECIAL_RANGE)))
+            {
+                if (agent.stats.Health.Value < agent.stats.Health.MaxValue)
+                {
+                    agent.SetState(StateId.Regenerating);
+                }
+                else
+                {
+                    agent.SetState(StateId.Idle);
+                }
+            }
         }
     }
 

@@ -100,6 +100,7 @@ public class PauseMenu : MonoBehaviour
             panel.SetActive(false);
             GameManager.Instance.LoadHub();
             GameManager.Instance.UnpauseGame();
+            SaveSystem.Instance.SaveProfile();
         }
     }
 
@@ -108,11 +109,13 @@ public class PauseMenu : MonoBehaviour
         panel.SetActive(false);
         GameManager.Instance.LoadMainMenu();
         GameManager.Instance.UnpauseGame();
+        SaveSystem.Instance.SaveProfile();
     }
 
     public void QuitClicked()
     {
         GameManager.Instance.QuitGame();
         GameManager.Instance.UnpauseGame();
+        SaveSystem.Instance.SaveProfile();
     }
 }

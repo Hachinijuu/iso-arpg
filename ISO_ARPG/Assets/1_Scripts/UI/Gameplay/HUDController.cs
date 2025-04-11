@@ -41,6 +41,7 @@ public class HUDController : MonoBehaviour
     private void OnEnable()
     {
         InitHud();
+        RemoveLevelObjective();
     }
     void OnDisable()
     {

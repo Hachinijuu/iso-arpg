@@ -44,7 +44,7 @@ public class AIRangedAttack : AIState
         }
         else
         {
-            if (agent.stats.id == EntityID.ELITE)   // If I am an elite enemy
+            if (agent.stats.id == EntityID.ELITE || agent.stats.id == EntityID.BIG_ELITE)   // If I am an elite enemy
             {
                 // And the target is outside of my ranged attack range
                 if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
@@ -53,10 +53,12 @@ public class AIRangedAttack : AIState
                     if (agent.stats.Health.Value < agent.stats.Health.MaxValue)
                     {
                         agent.SetState(StateId.Regenerating);
+                        return;
                     }
                     else
                     {
                         agent.SetState(StateId.SpecialAttack);
+                        return;
                     }
                 }
             }
@@ -65,8 +67,24 @@ public class AIRangedAttack : AIState
             {
                 if (!(IsInCurrentRange(playerPos, agentPos, AIManager.RANGED_RANGE)))
                 {
-                    agent.SetState(StateId.Chase);
-                    return;
+                    if (agent.stats.id == EntityID.ELITE || agent.stats.id == EntityID.BIG_ELITE)
+                    {
+                        if (agent.stats.Health.Value < agent.stats.Health.MaxValue)
+                        {
+                            agent.SetState(StateId.Regenerating);
+                            return;
+                        }
+                        else
+                        {
+                            agent.SetState(StateId.Idle);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        agent.SetState(StateId.Chase);
+                        return;
+                    }
                 }
             }
         }
