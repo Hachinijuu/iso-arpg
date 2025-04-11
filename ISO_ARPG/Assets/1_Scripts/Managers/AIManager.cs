@@ -656,7 +656,7 @@ public class AIManager : MonoBehaviour
     public void UpdateDeathNumbers(EnemyControllerV2 agent)
     {
         if (agent == null) { return; }
-        if (agent.stats.id == EntityID.ELITE)
+        if (agent.stats.id == EntityID.ELITE || agent.stats.id == EntityID.BIG_ELITE)
         {
             numElites--;
             LevelManager.Instance.numEliteKilled++;

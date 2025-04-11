@@ -67,7 +67,7 @@ public class TooltipSystem : MonoBehaviour
                 CreateRuneTooltip(e);
             break;
             case TooltipTypes.Gear:
-                CreateGearTooltip();
+                CreateGearTooltip(e);
             break;
             case TooltipTypes.Ability:
             break;
@@ -84,6 +84,7 @@ public class TooltipSystem : MonoBehaviour
     {
         // Get the information from the hovered element
         //if (e.over) { return; }
+        if (tooltip != null) { return; }
         tooltip = Instantiate(runeTooltip, tooltipCanvas.transform);
         RuneTooltip info = tooltip.GetComponent<RuneTooltip>();
         RectTransform rt = tooltip.GetComponent<RectTransform>();
@@ -114,21 +115,43 @@ public class TooltipSystem : MonoBehaviour
                 tooltipPos.y = Screen.height - tooltipHeight;
             }
             rt.position = tooltipPos;
-
-            
         }
     }
 
-    public void CreateGearTooltip()
+    public void CreateGearTooltip(ToolTipArgs e)
     {
         // Get the information from the hovered element
-
+        if (tooltip != null) { return; }
         tooltip = Instantiate(gearTooltip, tooltipCanvas.transform);
+        GearTooltip info = tooltip.GetComponent<GearTooltip>();
         RectTransform rt = tooltip.GetComponent<RectTransform>();
+
+        info.LoadFromGear(e.gearSlot);
+        Vector2 tooltipPos = e.screenPos;
 
         if (rt != null)
         {
-            rt.position = Input.mousePosition;
+            float tooltipWidth = rt.rect.width;
+            float tooltipHeight = rt.rect.height;
+            // x bounds checks
+            if (tooltipPos.x + rt.rect.width > Screen.width)
+            {
+                tooltipPos.x = Screen.width - tooltipWidth;
+            }
+            if (tooltipPos.x < 0)
+            {
+                tooltipPos.x = 0;
+            }
+            // y bounds checks
+            if (tooltipPos.y - tooltipHeight < 0)
+            {
+                tooltipPos.y = tooltipWidth;
+            }
+            if (tooltipPos.y + tooltipHeight > Screen.height)
+            {
+                tooltipPos.y = Screen.height - tooltipHeight;
+            }
+            rt.position = tooltipPos;
         }
     }
 
@@ -163,9 +186,14 @@ public class TooltipSystem : MonoBehaviour
 
     public void CleanupTooltips()
     {
-        RuneTooltip[] tooltips = tooltipCanvas.GetComponentsInChildren<RuneTooltip>();
-        if (tooltips == null && tooltips.Length <= 0) { return; }
-        foreach (RuneTooltip tooltip in tooltips)
+        RuneTooltip[] runeTooltips = tooltipCanvas.GetComponentsInChildren<RuneTooltip>();
+        if (runeTooltips == null && runeTooltips.Length <= 0) { return; }
+        foreach (RuneTooltip tooltip in runeTooltips)
+        {
+            Destroy(tooltip.gameObject);
+        }
+        GearTooltip[] gearTooltips = tooltipCanvas.GetComponentsInChildren<GearTooltip>();
+        foreach (GearTooltip tooltip in gearTooltips)
         {
             Destroy(tooltip.gameObject);
         }
@@ -178,4 +206,5 @@ public class ToolTipArgs
     public ItemData item;
     public Vector2 screenPos;
     public Ability ability;
+    public GearSlot gearSlot;
 }

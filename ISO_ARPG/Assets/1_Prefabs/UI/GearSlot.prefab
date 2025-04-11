@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 927744340119004065}
   - component: {fileID: 6797575650710259986}
   - component: {fileID: 474714878592785650}
+  - component: {fileID: 2076151316375379346}
   m_Layer: 5
   m_Name: GearSlot
   m_TagString: Untagged
@@ -455,6 +456,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
+--- !u!114 &2076151316375379346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3937970563875138296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf01982be8768d14086322c7fb1b2b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot1: {fileID: 7576312142883527560}
+  slot2: {fileID: 8698538050511374721}
 --- !u!1 &4589828016732747702
 GameObject:
   m_ObjectHideFlags: 0

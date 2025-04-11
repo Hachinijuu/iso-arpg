@@ -53,11 +53,11 @@ public class StatsScreen : MonoBehaviour
             stats.Health.Changed += context => { UpdateStat(health, stats.Health.MaxValue); };
             stats.Mana.Changed += context => { UpdateStat(mana, stats.Mana.MaxValue); };
             stats.Damage.Changed += context => { UpdateStat(damage, context); };
-            stats.PrimaryDamage.Changed += context => { UpdateStatPercent(primaryDamage, context); };
-            stats.SecondaryDamage.Changed += context => { UpdateStatPercent(secondaryDamage, context); };
+            stats.PrimaryDamage.Changed += context => { UpdateStat(primaryDamage, context); };
+            stats.SecondaryDamage.Changed += context => { UpdateStat(secondaryDamage, context); };
             stats.AttackSpeed.Changed += context => { UpdateStatPercent(attackSpeed, context); };
             stats.CritChance.Changed += context => { UpdateStatPercent(critChance, context); };
-            stats.CritDamage.Changed += context => { UpdateStatPercent(critDamage, context); };
+            stats.CritDamage.Changed += context => { UpdateStat(critDamage, context); };
             stats.Projectiles.Changed += context => { UpdateStat(projectiles, context); };
             stats.Chains.Changed += context => { UpdateStat(chains, context); };
             stats.Armour.Changed += context => { UpdateStat(armour, context); };
@@ -92,11 +92,11 @@ public class StatsScreen : MonoBehaviour
             UpdateStat(health, stats.Health.MaxValue);
             UpdateStat(mana, stats.Mana.MaxValue);
             UpdateStat(damage, stats.Damage.Value);
-            UpdateStatPercent(primaryDamage, stats.PrimaryDamage.Value);
-            UpdateStatPercent(secondaryDamage, stats.SecondaryDamage.Value);
+            UpdateStat(primaryDamage, stats.PrimaryDamage.Value);
+            UpdateStat(secondaryDamage, stats.SecondaryDamage.Value);
             UpdateStatPercent(attackSpeed, stats.AttackSpeed.Value);
             UpdateStatPercent(critChance, stats.CritChance.Value);
-            UpdateStatPercent(critDamage, stats.CritDamage.Value);
+            UpdateStat(critDamage, stats.CritDamage.Value);
             UpdateStat(projectiles, stats.Projectiles.Value);
             UpdateStat(chains, stats.Chains.Value);
             UpdateStat(armour, stats.Armour.Value);
@@ -120,11 +120,11 @@ public class StatsScreen : MonoBehaviour
             stats.Health.Changed -= context => { UpdateStat(health, stats.Health.MaxValue); };
             stats.Mana.Changed -= context => { UpdateStat(mana, stats.Mana.MaxValue); };
             stats.Damage.Changed -= context => { UpdateStat(damage, context); };
-            stats.PrimaryDamage.Changed -= context => { UpdateStatPercent(primaryDamage, context); };
-            stats.SecondaryDamage.Changed -= context => { UpdateStatPercent(secondaryDamage, context); };
+            stats.PrimaryDamage.Changed -= context => { UpdateStat(primaryDamage, context); };
+            stats.SecondaryDamage.Changed -= context => { UpdateStat(secondaryDamage, context); };
             stats.AttackSpeed.Changed -= context => { UpdateStatPercent(attackSpeed, context); };
             stats.CritChance.Changed -= context => { UpdateStatPercent(critChance, context); };
-            stats.CritDamage.Changed -= context => { UpdateStatPercent(critDamage, context); };
+            stats.CritDamage.Changed -= context => { UpdateStat(critDamage, context); };
             stats.Projectiles.Changed -= context => { UpdateStat(projectiles, context); };
             stats.Chains.Changed -= context => { UpdateStat(chains, context); };
             stats.Armour.Changed -= context => { UpdateStat(armour, context); };
@@ -141,6 +141,64 @@ public class StatsScreen : MonoBehaviour
 
     void UpdateStat(TMP_Text uiText, float value)
     {
+        if (uiText == damage)
+        {
+            GoX_Class currClass = PlayerManager.Instance.currentClass;
+            int mainValue = 0;
+            switch (currClass)
+            {
+                case GoX_Class.BERSERKER:
+                    mainValue = (int)stats.STR.Value;
+                break;
+                case GoX_Class.HUNTER:
+                    mainValue = (int)stats.DEX.Value;
+                break;
+                case GoX_Class.ELEMENTALIST:
+                    mainValue = (int)stats.INT.Value;
+                break;
+            }
+            uiText.text = (stats.Damage.Value + (mainValue * GameManager.Instance.MainConvert)).ToString();
+            return;
+        }
+        if (uiText == primaryDamage)
+        {
+            GoX_Class currClass = PlayerManager.Instance.currentClass;
+            int mainValue = 0;
+            switch (currClass)
+            {
+                case GoX_Class.BERSERKER:
+                    mainValue = (int)stats.STR.Value;
+                break;
+                case GoX_Class.HUNTER:
+                    mainValue = (int)stats.DEX.Value;
+                break;
+                case GoX_Class.ELEMENTALIST:
+                    mainValue = (int)stats.INT.Value;
+                break;
+            }
+            uiText.text = (stats.Damage.Value + (mainValue * GameManager.Instance.MainConvert) + stats.PrimaryDamage.Value).ToString();
+            return;
+        }
+        if (uiText == secondaryDamage)
+        {
+            GoX_Class currClass = PlayerManager.Instance.currentClass;
+            int mainValue = 0;
+            switch (currClass)
+            {
+                case GoX_Class.BERSERKER:
+                    mainValue = (int)stats.STR.Value;
+                break;
+                case GoX_Class.HUNTER:
+                    mainValue = (int)stats.DEX.Value;
+                break;
+                case GoX_Class.ELEMENTALIST:
+                    mainValue = (int)stats.INT.Value;
+                break;
+            }
+            uiText.text = (stats.Damage.Value + (mainValue * GameManager.Instance.MainConvert) + stats.SecondaryDamage.Value).ToString();
+            return;
+        }
+
         uiText.text = value.ToString();
         //Debug.Log("Set " + uiText + " to :" + uiText.text);
     }

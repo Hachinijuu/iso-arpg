@@ -162,7 +162,9 @@ public class Hitbox : MonoBehaviour
             float critRoll = Random.Range(0.0f, 100.0f);
             if (critRoll <= ps.CritChance.Value)
             {
-                damage += damage * (1 + (ps.CritDamage.Value / 100)); // Additive damage
+                damage += ps.CritDamage.Value; // Tweaked calc 
+                
+                //* (1 + (ps.CritDamage.Value / 100)); // Additive damage
                 args.isCrit = true;
             } 
         }
