@@ -12,6 +12,7 @@ public class RuneUpgradeScreen : MonoBehaviour
 
     [SerializeField] int buildCost;
     [SerializeField] int baseCost;
+    [SerializeField] float rarityDestroyModifer = 2.5f;
     [SerializeField] float rarityCostModifier;
 
     [SerializeField] Button createButton;
@@ -152,6 +153,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         if (ghostRune != null && upgradeSlot.item != null ) { Debug.Log("[RuneUpgrades]: Slot is already occupied"); return; }
         RuneData createdRune = new RuneData();
         createdRune = RuneSystem.Instance.RollRune(data, ItemRarity.COMMON, false);  // Given the new rune instance
+        Inventory.Instance.RuneDust -= CalculateCost();
 
         ghostRune = createdRune;
         upgradeSlot.SetItem(ghostRune);
@@ -208,7 +210,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         if (rune != null)
         {
             // Add dust to the player's inventory
-            Inventory.Instance.RuneDust += rune.destroyAmount;
+            Inventory.Instance.RuneDust += (int)(rune.destroyAmount * ((int)rune.rarity * rarityDestroyModifer));
             Destroy(rune);
             upgradeSlot.SetItem(null);
             Inventory.Instance.RemoveItem(rune);

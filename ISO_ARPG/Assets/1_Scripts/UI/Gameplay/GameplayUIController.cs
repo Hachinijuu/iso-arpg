@@ -95,6 +95,10 @@ public class GameplayUIController : MonoBehaviour
     {
         //Debug.Log("Hiding smithing screen");
         smithScreen.gameObject.SetActive(false);
+        if (GameManager.Instance.currGameState == GameManager.GameState.PAUSE)  // Force stop for edge cases
+        {
+            GameManager.Instance.UnpauseGame();
+        }
     }
 
     public void ShowStats()

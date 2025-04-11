@@ -41,7 +41,6 @@ public class HUDController : MonoBehaviour
     private void OnEnable()
     {
         InitHud();
-        objectivePanel.SetActive(false);
     }
     void OnDisable()
     {
