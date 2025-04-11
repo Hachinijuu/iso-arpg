@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IdentityAbility : PassiveAbility
 {
+    [SerializeField] public AudioClip altSound;
     public bool asFusion = false;
 
     // when an identity ability is used as a fusion, it has reduced values.

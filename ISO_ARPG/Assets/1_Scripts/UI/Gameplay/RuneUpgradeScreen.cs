@@ -129,7 +129,7 @@ public class RuneUpgradeScreen : MonoBehaviour
             {
                 upgradeText.text = "Upgrade" + " (" + upgradeCost + ")";
             }
-            destroyText.text = "Destroy" + " (" + rs.destroyAmount + ")";
+            destroyText.text = "Destroy" + " (" + (rs.destroyAmount * ((int)(1 + rs.rarity) * rarityDestroyModifer)).ToString() + ")";
         }
         else
         {
@@ -157,6 +157,7 @@ public class RuneUpgradeScreen : MonoBehaviour
 
         ghostRune = createdRune;
         upgradeSlot.SetItem(ghostRune);
+        UpdateGhostRune();
 
         // I create a rune
         // I place it in the ghost slot
@@ -210,7 +211,7 @@ public class RuneUpgradeScreen : MonoBehaviour
         if (rune != null)
         {
             // Add dust to the player's inventory
-            Inventory.Instance.RuneDust += (int)(rune.destroyAmount * ((int)rune.rarity * rarityDestroyModifer));
+            Inventory.Instance.RuneDust += (int)(rune.destroyAmount * ((int)(1 + rune.rarity) * rarityDestroyModifer));
             Destroy(rune);
             upgradeSlot.SetItem(null);
             Inventory.Instance.RemoveItem(rune);

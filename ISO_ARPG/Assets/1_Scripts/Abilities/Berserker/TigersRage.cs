@@ -49,7 +49,19 @@ public class TigersRage : IdentityAbility
             defaultCopy.CopyFromStats(stats);
 
             if (abilityActivated)
-                source.PlayOneShot(abilityActivated);
+            {
+                if (PlayerManager.Instance.currentCharacter.Body == GoX_Body.ONE)
+                {
+                    source.PlayOneShot(abilityActivated);
+                }
+                else
+                {
+                    if (altSound != null)
+                    {
+                        source.PlayOneShot(altSound);
+                    }
+                }
+            }
 
             if (!asFusion)
             {

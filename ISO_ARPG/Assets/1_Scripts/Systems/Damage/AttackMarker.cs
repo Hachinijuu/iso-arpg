@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackMarker : MonoBehaviour
 {
-    public static float hitResetTime = 0.25f;
+    public static float hitResetTime = 0.005f;
     public void OnEnable()
     {
         Destroy(this, hitResetTime);
