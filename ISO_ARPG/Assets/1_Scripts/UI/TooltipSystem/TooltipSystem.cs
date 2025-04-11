@@ -28,6 +28,37 @@ public class TooltipSystem : MonoBehaviour
         }
     }    
 
+    public Color commonColour;
+    public Color uncommonColour;
+    public Color rareColour;
+    public Color epicColour;
+    public Color relicColour;
+
+    public Color GetColourFromRarity(ItemRarity rarity)
+    {
+        Color c = commonColour;
+        switch (rarity)
+        {
+            case ItemRarity.COMMON:
+            default:
+                c = commonColour;
+                break;
+            case ItemRarity.UNCOMMON:
+                c = uncommonColour; 
+                break;
+            case ItemRarity.RARE:
+                c = rareColour;
+                break;
+            case ItemRarity.EPIC:
+                c = epicColour;
+                break;
+            case ItemRarity.RELIC:
+                c = relicColour;
+                break;
+        }
+        return c;
+    }
+
     public void ShowTooltip(TooltipTypes type, ToolTipArgs e)
     {
         switch (type)
@@ -59,7 +90,6 @@ public class TooltipSystem : MonoBehaviour
 
         info.SetRuneData(e.item as RuneData);
         Vector2 tooltipPos = e.screenPos;
-
 
         if (rt != null)
         {

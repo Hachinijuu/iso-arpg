@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6440823767401701409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4145325953995130471}
+  - component: {fileID: 5478280873307356388}
+  m_Layer: 0
+  m_Name: TooltipSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4145325953995130471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440823767401701409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5478280873307356388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440823767401701409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 154a6fd0f08d0f64092634a476a34dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runeTooltip: {fileID: 2297758180474040749, guid: 03a4aab6710e7234ea55f76936b3316c, type: 3}
+  gearTooltip: {fileID: 2297758180474040749, guid: 495c5b799edf2cd48a071c83dbfce25e, type: 3}
+  abilityTooltip: {fileID: 2297758180474040749, guid: e38b51945aa519d4fbf08fc229b26812, type: 3}
+  tooltipCanvas: {fileID: 0}
+  commonColour: {r: 0.45490196, g: 0.45490196, b: 0.45490196, a: 1}
+  uncommonColour: {r: 0.21176471, g: 0.5686275, b: 0.2509804, a: 1}
+  rareColour: {r: 0.2, g: 0.22352941, b: 0.70980394, a: 1}
+  epicColour: {r: 0.7058824, g: 0.19607843, b: 0.63529414, a: 1}
+  relicColour: {r: 0.77254903, g: 0.5921569, b: 0.18431373, a: 1}

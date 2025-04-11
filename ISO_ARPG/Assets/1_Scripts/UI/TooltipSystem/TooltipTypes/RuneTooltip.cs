@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RuneTooltip : MonoBehaviour
 {
+    [SerializeField] Image rarityBG; 
     [SerializeField] TMP_Text rarityText;
     [SerializeField] TMP_Text attributeText;
     [SerializeField] TMP_Text affixText;
@@ -14,6 +16,7 @@ public class RuneTooltip : MonoBehaviour
     public void SetRuneData(RuneData rune)
     {
         rarityText.text = rune.rarity.ToString();
+        rarityBG.color = TooltipSystem.Instance.GetColourFromRarity(rune.rarity);
         attributeText.text = rune.mainStat[0].type.ToString();
         attributeAmount.text = rune.mainStat[0].Value.ToString();
         if (rune.subStat == null || rune.trackedStat == null) { return; }
