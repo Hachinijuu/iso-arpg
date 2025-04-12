@@ -276,9 +276,9 @@ public class HUDController : MonoBehaviour
 
     public void UpdateAbilityDisplays(UIAbility uiAbility, Ability ab)
     {
-        UpdateCooldownSlider(ab1, ab.CurrCooldown); 
-        ShowCooldownText(ab1, ab); 
-        UpdateCooldownText(ab1, ab.CurrCooldown);
+        UpdateCooldownSlider(uiAbility, ab.CurrCooldown); 
+        ShowCooldownText(uiAbility, ab); 
+        UpdateCooldownText(uiAbility, ab.CurrCooldown);
     }
 
     public void ShowLevelObjectives()

@@ -182,7 +182,7 @@ public class PlayerAbilityHandler : MonoBehaviour
         List<Ability> toReset = new List<Ability>(canUseAbility.Keys);
         foreach (Ability ab in toReset)
         {
-            if (canUseAbility[ab] != true)
+            if (canUseAbility[ab] == false || ab.CurrCooldown > 0)
             {
                 ab.EndAbility(new AbilityEventArgs(ab, controller));
                 canUseAbility[ab] = true;
