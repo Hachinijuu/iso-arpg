@@ -70,7 +70,14 @@ public class HUDController : MonoBehaviour
             mana = playerStats.Mana;
             idBar = playerStats.ID_Bar;
         }
+        UpdateHudValues();
 
+        LoadAbilities();
+        AddEventListeners();
+    }
+
+    public void UpdateHudValues()
+    {
         UpdateDifficultyDisplay();
 
         if (healthSlider != null)
@@ -93,9 +100,6 @@ public class HUDController : MonoBehaviour
         {
             UpdatePotions();
         }
-
-        LoadAbilities();
-        AddEventListeners();
     }
     #endregion
     #region INTIALIZATION
@@ -237,7 +241,9 @@ public class HUDController : MonoBehaviour
     public void ShowCooldownText(UIAbility ui, Ability ab)
     {
         if (ab.UseCooldown)
-        ui.cooldown.gameObject.SetActive(ab.OnCooldown);
+        {
+            ui.cooldown.gameObject.SetActive(ab.OnCooldown);
+        }
     }
 
     public void UpdateCooldownSlider(UIAbility ui, float value)
@@ -258,6 +264,21 @@ public class HUDController : MonoBehaviour
 
     [SerializeField] GameObject objectivePanel;
     [SerializeField] TMP_Text objectiveCounter;
+
+    public void Reload()
+    {
+        UpdateHudValues();
+        UpdateAbilityDisplays(ab1, playerStats.Abilities[0]);
+        UpdateAbilityDisplays(ab2, playerStats.Abilities[1]);
+        UpdateAbilityDisplays(idAbility, playerStats.Identity);
+    }
+
+    public void UpdateAbilityDisplays(UIAbility uiAbility, Ability ab)
+    {
+        UpdateCooldownSlider(ab1, ab.CurrCooldown); 
+        ShowCooldownText(ab1, ab); 
+        UpdateCooldownText(ab1, ab.CurrCooldown);
+    }
 
     public void ShowLevelObjectives()
     {

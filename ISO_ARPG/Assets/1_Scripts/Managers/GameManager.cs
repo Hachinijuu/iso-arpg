@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour
             controller.Movement.HandleStops(true);    // Tell the movement to stop where they are
             Debug.Log("[GameManager]: Player Position: " + controller.transform.position + ", Level Spawn Point: " + LevelManager.Instance.PlayerSpawnPoint + ", Player Move Target: " + controller.Movement.MoveTarget);
             controller.Respawn();   // Tell the player to respawn themselves
+            hud.Reload();
         }
         else
         {
@@ -281,17 +282,17 @@ public class GameManager : MonoBehaviour
         // If the level manager exists, do the stuff
         if (LevelManager.Instance)  // ASSUME PLAYABLE IF A LEVEL MANAGER EXISTS
         {
+
+            SetGameState(GameState.PLAYING);
+            //currGameState = GameState.PLAYING;
+            // Load the player
+            GameUI.SetActive(true);
             // If the levelManager is NOT NONE condition, then play the battle music
             if (LevelManager.Instance.type == LevelManager.LevelType.CLEAR || LevelManager.Instance.type == LevelManager.LevelType.ELITE)
             {
                 hud.ShowLevelObjectives();
                 MusicManager.Instance.SetBattleMusic();
             }
-
-            SetGameState(GameState.PLAYING);
-            //currGameState = GameState.PLAYING;
-            // Load the player
-            GameUI.SetActive(true);
             if (controller)         // If the player exists, load the player -- there should be no player by default
             {
                 PlayerRespawn();
