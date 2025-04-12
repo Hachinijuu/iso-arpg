@@ -21,6 +21,7 @@ public class HUDController : MonoBehaviour
 
     [SerializeField] TMP_Text healthPotionText;
     [SerializeField] TMP_Text manaPotionText;
+    [SerializeField] TMP_Text objectiveText;
 
     // Get references to the relevant stats
     TrackedStat health;
@@ -307,11 +308,13 @@ public class HUDController : MonoBehaviour
 
         if (LevelManager.Instance.type == LevelManager.LevelType.ELITE)
         {
+            objectiveText.text = "Kill Elite Commander to Open Portal : ";
             objectiveCounter.text = LevelManager.Instance.numEliteKilled + " / " + LevelManager.Instance.Details.elitesToKill;
         }
         else
-        { 
-            objectiveCounter.text = LevelManager.Instance.numKilled + " / " + LevelManager.Instance.Details.enemiesToKill;
+        {
+            objectiveText.text = "Kill Enemies to Open Portal :";
+            objectiveCounter.text =  LevelManager.Instance.numKilled + " / " + LevelManager.Instance.Details.enemiesToKill;
         }
         // Rework tracking to maintain enemy amount with remains logic
     }
